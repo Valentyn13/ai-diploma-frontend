@@ -2,6 +2,7 @@
 import StoreUpdate from '@common/storeUpdate';
 import theme from '@common/theme';
 import colors from '@common/theme/colors';
+import { NavigationContainer } from '@react-navigation/native';
 import * as Sentry from '@sentry/react-native';
 import useSyncUserData from '@services/hooks/useSyncUserData';
 import React, { useEffect } from 'react';
@@ -59,19 +60,21 @@ const App = () => {
   }, []);
 
   return (
-    <Provider {...{ store }}>
-      <PersistGate loading={null} persistor={persistor}>
-        <StatusBar barStyle="dark-content" />
-        <ThemeProvider {...{ theme }}>
-          <StoreUpdate>
-            <RootView>
-              <SyncedRootNavigator />
-            </RootView>
-          </StoreUpdate>
-        </ThemeProvider>
-      </PersistGate>
-    </Provider>
+    <NavigationContainer>
+      <Provider {...{ store }}>
+        <PersistGate loading={null} persistor={persistor}>
+          <StatusBar barStyle="dark-content" />
+          <ThemeProvider {...{ theme }}>
+            <StoreUpdate>
+              <RootView>
+                <SyncedRootNavigator />
+              </RootView>
+            </StoreUpdate>
+          </ThemeProvider>
+        </PersistGate>
+      </Provider>
+    </NavigationContainer>
   );
 };
 // App = codePush(codePushOptions)(App);
-export default Sentry.wrap(App);
+export default App;

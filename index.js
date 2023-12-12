@@ -3,10 +3,12 @@
  */
 import messaging from '@react-native-firebase/messaging';
 import '@services/localization/i18n';
-import { AppRegistry, Text } from 'react-native';
+import { AppRegistry, I18nManager, Text } from 'react-native';
 
 import App from './App';
 import { name as appName } from './app.json';
+
+I18nManager.allowRTL(true);
 
 if (Text.defaultProps) {
   Text.defaultProps.allowFontScaling = false;

@@ -1,10 +1,11 @@
+import { useRoute } from '@react-navigation/native';
 import React from 'react';
-import {WebView as RNWebView} from 'react-native-webview';
-import {useNavigationParam} from 'react-navigation-hooks';
+import { WebView as RNWebView } from 'react-native-webview';
 
 const WebView = () => {
-  const uri = useNavigationParam('uri');
-  return <RNWebView source={{uri}} style={{flex: 1}} />;
+  const route = useRoute();
+  const uri = route.params?.uri;
+  return <RNWebView source={{ uri }} style={{ flex: 1 }} />;
 };
 
 export default WebView;

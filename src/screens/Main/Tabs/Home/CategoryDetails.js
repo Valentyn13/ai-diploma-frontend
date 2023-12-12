@@ -8,10 +8,10 @@ import {
   TopTitle,
   TouchableIcon,
 } from '@common/components/Styled';
+import { useNavigation, useRoute } from '@react-navigation/native';
 import i18n from '@services/localization/i18n';
 import { categoryMeditations } from '@utils/dbQueries';
 import React from 'react';
-import { useNavigation, useNavigationParam } from 'react-navigation-hooks';
 import styled from 'styled-components';
 
 import { courses } from '../../../../db';
@@ -45,8 +45,9 @@ const CoursesCarouselWrapper = styled.View`
 `;
 
 const CategoryDetails = () => {
+  const route = useRoute();
   const { goBack } = useNavigation();
-  const { id, name, info } = useNavigationParam('category');
+  const { id, name, info } = route.params.category || {};
   const onClose = () => goBack();
   return (
     <Screen>

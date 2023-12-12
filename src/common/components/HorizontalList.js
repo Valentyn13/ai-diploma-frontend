@@ -1,5 +1,5 @@
 import { captureMessage } from '@sentry/react-native';
-import PropTypes from 'deprecated-react-native-prop-types';
+import PropTypes from 'prop-types';
 import React from 'react';
 import { FlatList } from 'react-native';
 import styled from 'styled-components';

@@ -8,8 +8,9 @@ import {
   Title,
 } from '@common/components/Styled';
 import { ProgressView } from '@react-native-community/progress-view';
+import { useNavigation } from '@react-navigation/native';
 import { captureMessage } from '@sentry/react-native';
-import PropTypes from 'deprecated-react-native-prop-types';
+import PropTypes from 'prop-types';
 import React, { useState } from 'react';
 import {
   Dimensions,
@@ -20,7 +21,6 @@ import {
   View,
 } from 'react-native';
 import { scale } from 'react-native-size-matters';
-import { useNavigation } from 'react-navigation-hooks';
 import { useDispatch } from 'react-redux';
 import { chooseCategories } from 'store/actions';
 import styled from 'styled-components';

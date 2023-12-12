@@ -13,6 +13,11 @@ import {
 } from '@common/components/Styled';
 import { SHOULD_SHOW_REMINDER_POPUP_STATUS_TURNED_ON } from '@common/constants';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import {
+  useFocusEffect,
+  useNavigation,
+  useRoute,
+} from '@react-navigation/native';
 import useAppData from '@services/hooks/useAppData';
 import useAppState from '@services/hooks/useAppState';
 import useArticleData from '@services/hooks/useArticleData';
@@ -22,11 +27,6 @@ import isLowResolution from '@utils/isLowResolution';
 import React, { useCallback, useEffect, useState } from 'react';
 import { Image, ScrollView, View } from 'react-native';
 import { scale } from 'react-native-size-matters';
-import {
-  useFocusEffect,
-  useNavigation,
-  useNavigationParam,
-} from 'react-navigation-hooks';
 import { useDispatch, useSelector } from 'react-redux';
 import { turnOffShowReminderPopup } from 'store/actions';
 import {
@@ -105,13 +105,14 @@ const Info = () => {
 };
 
 const Home = () => {
+  const route = useRoute();
   const { getAppData } = useAppData();
   const { getArticleData } = useArticleData();
   const navigation = useNavigation();
   const { email } = useSelector(state => state.userDetails);
   const { articles } = useSelector(state => state.articleData);
   const { hasPremium, setPurchaserIdentity, identify } = usePurchases();
-  const navigateToItem = useNavigationParam('navigateToItem');
+  const navigateToItem = route.params?.navigateToItem;
   const [isfocus, setIsFocus] = useState(false);
   const [showNotificationModal, setshowNotificationModal] = useState(false);
 

@@ -1,8 +1,8 @@
 import { Container, Icon, TopTitle } from '@common/components/Styled';
+import { useNavigation } from '@react-navigation/native';
 import useAppData from '@services/hooks/useAppData';
 import React, { useEffect } from 'react';
 import Sound from 'react-native-sound';
-import { useNavigation } from 'react-navigation-hooks';
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
 
@@ -10,7 +10,7 @@ const AppNameTitle = styled(TopTitle)`
   margin-top: 19px;
 `;
 
-const Splash = () => {
+const Splash = ({ navigation }) => {
   const { navigate } = useNavigation();
   const { getAppData } = useAppData();
   const dispatch = useDispatch();
@@ -25,11 +25,11 @@ const Splash = () => {
       if (accessToken) {
         getAppData();
       } else {
-        navigate('IntroSleep');
+        navigation.navigate('IntroScreens');
       }
     }, 2000);
     return () => clearTimeout(timer);
-  }, [accessToken, getAppData, navigate]);
+  }, [accessToken, getAppData, navigate, navigation]);
 
   useEffect(() => {
     if (appDataloaded) {

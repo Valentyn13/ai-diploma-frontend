@@ -32,9 +32,9 @@ export default function usePurchases() {
     Purchases.setDebugLogsEnabled(true);
     if (id) {
       // userid use as a appUserID to identify unique
-      Purchases.setup(REVENUECAT_PUB_KEY, id);
+      Purchases.configure({ apiKey: REVENUECAT_PUB_KEY, appUserID: id });
     } else {
-      Purchases.setup(REVENUECAT_PUB_KEY);
+      Purchases.configure({ apiKey: REVENUECAT_PUB_KEY });
     }
     getOfferings();
   }, [getOfferings, id]);

@@ -1,9 +1,9 @@
 import { BoldSubTitle, SmallText } from '@common/components/Styled';
 import theme from '@common/theme';
-import PropTypes from 'deprecated-react-native-prop-types';
+import { useNavigation } from '@react-navigation/native';
+import PropTypes from 'prop-types';
 import React from 'react';
 import { Platform } from 'react-native';
-import { useNavigation } from 'react-navigation-hooks';
 import styled from 'styled-components';
 
 const ITEM_WIDTH = Math.round(theme.dimens.winWidth * 0.85);

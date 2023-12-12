@@ -1,80 +1,58 @@
-import {createAppContainer, createSwitchNavigator} from 'react-navigation';
-import {createStackNavigator, CardStyleInterpolators} from 'react-navigation-stack';
+import { createStackNavigator } from '@react-navigation/stack';
+import React from 'react';
 import IntroRelax from 'screens/IntroRelax';
-import Register from 'screens/Register';
 import PreLogin from 'screens/PreLogin';
 import PrivacyPolicy from 'screens/PrivacyPolicy';
-import Splash from './Splash';
-import Login from './Login';
+import Register from 'screens/Register';
+
+import CategoriesSelector from './CategoriesSelector';
+import ChooseSex from './ChooseSex';
 import Intro from './Intro';
 import IntroSleep from './IntroSleep';
 import IntroStudy from './IntroStudy';
-import CategoriesSelector from './CategoriesSelector';
+import Login from './Login';
 import Main from './Main';
-import ChooseSex from './ChooseSex';
 import PickExperience from './PickExperience';
+import Splash from './Splash';
 
-const IntroScreensNavigator = createStackNavigator(
-  {
-    Intro: {
-      screen: Intro,
-    },
-    IntroSleep: {
-      screen: IntroSleep,
-    },
-    IntroStudy: {
-      screen: IntroStudy,
-    },
-    IntroRelax: {
-      screen: IntroRelax,
-    },
-    ChooseSex: {
-      screen: ChooseSex,
-    },
-    CategoriesSelector: {
-      screen: CategoriesSelector,
-    },
-    PickExperience: {
-      screen: PickExperience,
-    },
-    Login: {
-      screen: Login,
-    },
-    Register: {
-      screen: Register,
-    },
-    PrivacyPolicy: {
-      screen: PrivacyPolicy,
-    },
-    PreLogin: {
-      screen: PreLogin,
-    },
-  },
-  {
-    defaultNavigationOptions: {
-      headerShown: false,
-      gestureEnabled: false,
-      swipeEnabled: false,
-      gestureDirection: 'horizontal-inverted',
-      cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
-    },
-  },
-  {
-    headerMode: 'none',
-    initialRouteName: 'IntroStudy',
-  },
-);
+const Stack = createStackNavigator();
 
-const Navigator = createSwitchNavigator({
-  Splash: {
-    screen: Splash,
-  },
-  IntroScreens: {
-    screen: IntroScreensNavigator,
-  },
-  Main: {
-    screen: Main,
-  },
-});
+const IntroScreensNavigator = () => {
+  return (
+    <Stack.Navigator
+      initialRouteName="IntroStudy"
+      screenOptions={{
+        headerShown: false,
+        gestureEnabled: false,
+        swipeEnabled: false,
+      }}>
+      <Stack.Screen name="Intro" component={Intro} />
+      <Stack.Screen name="IntroSleep" component={IntroSleep} />
+      <Stack.Screen name="IntroStudy" component={IntroStudy} />
+      <Stack.Screen name="IntroRelax" component={IntroRelax} />
+      <Stack.Screen name="ChooseSex" component={ChooseSex} />
+      <Stack.Screen name="CategoriesSelector" component={CategoriesSelector} />
+      <Stack.Screen name="PickExperience" component={PickExperience} />
+      <Stack.Screen name="Login" component={Login} />
+      <Stack.Screen name="Register" component={Register} />
+      <Stack.Screen name="PrivacyPolicy" component={PrivacyPolicy} />
+      <Stack.Screen name="PreLogin" component={PreLogin} />
+    </Stack.Navigator>
+  );
+};
 
-export default createAppContainer(Navigator);
+const Navigator = () => {
+  return (
+    <Stack.Navigator
+      initialRouteName="Splash"
+      screenOptions={{
+        headerShown: false,
+      }}>
+      <Stack.Screen name="Splash" component={Splash} />
+      <Stack.Screen name="IntroScreens" component={IntroScreensNavigator} />
+      <Stack.Screen name="Main" component={Main} />
+    </Stack.Navigator>
+  );
+};
+
+export default Navigator;

@@ -19,7 +19,7 @@ import useDeleteData from '@services/hooks/useDeleteData';
 import useUpdateProfile from '@services/hooks/useUpdateProfile';
 import { logEvent } from '@utils/analytics';
 import { fbLogout } from '@utils/facebook';
-import PropTypes from 'deprecated-react-native-prop-types';
+import PropTypes from 'prop-types';
 import React, { useEffect } from 'react';
 import {
   Alert,

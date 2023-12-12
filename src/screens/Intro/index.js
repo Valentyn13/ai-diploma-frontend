@@ -7,9 +7,9 @@ import {
   TopTitle,
   TouchableIcon,
 } from '@common/components/Styled';
-import PropTypes from 'deprecated-react-native-prop-types';
+import { useNavigation } from '@react-navigation/native';
+import PropTypes from 'prop-types';
 import React from 'react';
-import { useNavigation } from 'react-navigation-hooks';
 import styled from 'styled-components';
 
 export const BgImage = styled.ImageBackground.attrs(({ name, isFirst }) => ({

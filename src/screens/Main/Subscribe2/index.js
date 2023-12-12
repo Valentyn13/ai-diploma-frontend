@@ -1,5 +1,6 @@
 import { TouchableIcon } from '@common/components/Styled';
 import SubscriptionPoint from '@common/components/SubscriptionPoint';
+import { useNavigation, useRoute } from '@react-navigation/native';
 import rudderClient, {
   RUDDER_LOG_LEVEL,
 } from '@rudderstack/rudder-sdk-react-native';
@@ -11,7 +12,6 @@ import React, { useState } from 'react';
 import { Image, Platform, Text, TouchableOpacity, View } from 'react-native';
 import Purchases from 'react-native-purchases';
 import { scale } from 'react-native-size-matters';
-import { useNavigation, useNavigationParam } from 'react-navigation-hooks';
 import { useSelector } from 'react-redux';
 import { firstCourseSelector } from 'store/selectors';
 import styled from 'styled-components';
@@ -20,6 +20,7 @@ import logo from '../../../common/assets/images/logoWhite.png';
 import subscribe2Bg from '../../../common/assets/images/subscribe2Bg.png';
 
 const Subscribe2 = () => {
+  const route = useRoute();
   const {
     id,
     loder,
@@ -31,8 +32,7 @@ const Subscribe2 = () => {
   const { goBack } = useNavigation();
   const firstCourse = useSelector(firstCourseSelector);
   const onClose = () => goBack();
-  const item = useNavigationParam('item');
-  const firstRun = useNavigationParam('firstRun');
+  const { item, firstRun } = route.params || {};
   const name = item ? item?.name : null;
   const { plans } = usePurchases();
   const availablePackages = get(plans, 'availablePackages', []);

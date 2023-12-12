@@ -1,8 +1,8 @@
+import { useNavigation } from '@react-navigation/native';
 import captureMessage from '@utils/captureMessage';
-import PropTypes from 'deprecated-react-native-prop-types';
+import PropTypes from 'prop-types';
 import React, { useCallback } from 'react';
 import { FlatList } from 'react-native';
-import { useNavigation } from 'react-navigation-hooks';
 import styled from 'styled-components';
 
 import CourseRowItem from './CourseRowItem';

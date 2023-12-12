@@ -1,11 +1,11 @@
 /* eslint-disable react-native/no-inline-styles */
 import image from '@common/assets/images';
 import { SubTitle } from '@common/components/Styled';
+import { useNavigation } from '@react-navigation/native';
 import { captureMessage } from '@sentry/react-native';
 import useInstructor from '@services/hooks/useInstructor';
 import React from 'react';
 import { FlatList, Image, TouchableOpacity, View } from 'react-native';
-import { useNavigation } from 'react-navigation-hooks';
 import { useSelector } from 'react-redux';
 import styled from 'styled-components';
 

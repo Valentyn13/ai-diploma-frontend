@@ -1,11 +1,11 @@
 import colors from '@common/theme/colors';
 import dimens from '@common/theme/dimens';
+import { useNavigation } from '@react-navigation/native';
 import { captureMessage } from '@sentry/react-native';
 import isLowResolution from '@utils/isLowResolution';
-import PropTypes from 'deprecated-react-native-prop-types';
+import PropTypes from 'prop-types';
 import React, { useEffect, useState } from 'react';
 import Carousel, { Pagination } from 'react-native-snap-carousel';
-import { useNavigation } from 'react-navigation-hooks';
 import { useSelector } from 'react-redux';
 import { coursesSelector } from 'store/selectors';
 import styled from 'styled-components';

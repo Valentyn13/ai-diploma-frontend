@@ -2,14 +2,14 @@
 import image from '@common/assets/images';
 import AppText from '@common/components/AppText';
 import { Icon } from '@common/components/Styled';
+import { useNavigation } from '@react-navigation/native';
 import useAppData from '@services/hooks/useAppData';
 import useLogin from '@services/hooks/useLogin';
 import isLowResolution from '@utils/isLowResolution';
-import PropTypes from 'deprecated-react-native-prop-types';
+import PropTypes from 'prop-types';
 import React, { useEffect, useState } from 'react';
 import { Image, Platform, TouchableOpacity, View } from 'react-native';
 import { scale } from 'react-native-size-matters';
-import { useNavigation } from 'react-navigation-hooks';
 import { useSelector } from 'react-redux';
 import { firstCourseSelector } from 'store/selectors';
 

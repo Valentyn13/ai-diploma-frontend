@@ -8,12 +8,13 @@ import {
   TopTitle,
   TouchableIcon,
 } from '@common/components/Styled';
+import { useNavigation, useRoute } from '@react-navigation/native';
 import { captureException } from '@sentry/react-native';
 import { useAmplitude } from '@services/hooks/useAmplitude';
 import useInstructor from '@services/hooks/useInstructor';
 import useUpdateMeditation from '@services/hooks/useUpdateMeditation';
 import logger from '@utils/logger';
-import PropTypes from 'deprecated-react-native-prop-types';
+import PropTypes from 'prop-types';
 import React, {
   useCallback,
   useEffect,
@@ -23,7 +24,6 @@ import React, {
 } from 'react';
 import { Alert, TouchableOpacity, View } from 'react-native';
 import Video from 'react-native-video';
-import { useNavigation, useNavigationParam } from 'react-navigation-hooks';
 import { useDispatch, useSelector } from 'react-redux';
 import { meditationStarted, minutesPracticed } from 'store/actions';
 import { meditationInstructor } from 'store/selectors';
@@ -143,6 +143,7 @@ const MeditationPlayer = ({
     colors: { whiteColor, itemBgColor },
   },
 }) => {
+  const route = useRoute();
   let audioPlayerRef = null;
 
   const { updateIstructorTractionData } = useInstructor();
@@ -155,9 +156,8 @@ const MeditationPlayer = ({
   const [startTime, setStartTime] = useState(0);
   const [duration, setDuration] = useState(0);
   const [sliderEditing, setSliderEditing] = useState(false);
-  const [isPlaying, setIsPlaying] = useState(
-    useNavigationParam('autoPlay') || true,
-  );
+  const { autoPlay } = route.params || {};
+  const [isPlaying, setIsPlaying] = useState(autoPlay || true);
   const [isFirstPlay, setIsFirstPlay] = useState(true);
   const [isLoading, setIsLoading] = useState(true);
   const [showModal, setShowModal] = useState(false);
@@ -170,7 +170,7 @@ const MeditationPlayer = ({
   const dispatch = useDispatch();
 
   const { name, title, categoryName, url, id, animation } =
-    useNavigationParam('item');
+    route.params?.item || {};
 
   const instructor = useSelector(state => meditationInstructor(state, id));
 

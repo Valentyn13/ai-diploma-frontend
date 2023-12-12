@@ -6,9 +6,9 @@ import {
   Title,
   TopTitle,
 } from '@common/components/Styled';
+import { useNavigation, useRoute } from '@react-navigation/native';
 import { instructorById } from '@utils/dbQueries';
 import React from 'react';
-import { useNavigation, useNavigationParam } from 'react-navigation-hooks';
 import styled from 'styled-components';
 
 const Content = styled.View`
@@ -53,8 +53,9 @@ const InstructorInfo = styled(Title)`
 `;
 
 const AbourCourse = () => {
+  const route = useRoute();
   const { goBack } = useNavigation();
-  const { name, info, instructor, title } = useNavigationParam('item');
+  const { name, info, instructor, title } = route.params?.item || {};
   const { info: instructorInfo } = instructorById(instructor);
   return (
     <ScrolledContainer>

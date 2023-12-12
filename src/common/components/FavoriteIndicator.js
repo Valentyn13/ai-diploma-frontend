@@ -1,4 +1,4 @@
-import PropTypes from 'deprecated-react-native-prop-types';
+import PropTypes from 'prop-types';
 import React, { useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { addFavoriteMeditation, removeFavoriteMeditation } from 'store/actions';

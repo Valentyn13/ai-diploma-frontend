@@ -2,6 +2,7 @@
 import subscribe2Bg from '@common/assets/images/subscribe2Bg.png';
 import { SubTitle, TouchableIcon } from '@common/components/Styled';
 import SubscriptionPoint from '@common/components/SubscriptionPoint';
+import { useNavigation, useRoute } from '@react-navigation/native';
 import rudderClient, {
   RUDDER_LOG_LEVEL,
 } from '@rudderstack/rudder-sdk-react-native';
@@ -9,7 +10,7 @@ import { useAmplitude } from '@services/hooks/useAmplitude';
 import usePurchases from '@services/hooks/usePurchases';
 import { logEvent } from '@utils/analytics';
 import get from '@utils/get';
-import PropTypes from 'deprecated-react-native-prop-types';
+import PropTypes from 'prop-types';
 import React, { useState } from 'react';
 import {
   Alert,
@@ -21,7 +22,6 @@ import {
 } from 'react-native';
 import Purchases from 'react-native-purchases';
 import { scale, verticalScale } from 'react-native-size-matters';
-import { useNavigation, useNavigationParam } from 'react-navigation-hooks';
 import { useSelector } from 'react-redux';
 import { coursesSelector } from 'store/selectors';
 import styled from 'styled-components';
@@ -80,11 +80,11 @@ const PlanItem = ({ onPress }) => {
 };
 
 const Subscribe = () => {
+  const route = useRoute();
   const { goBack } = useNavigation();
   const courses = useSelector(coursesSelector);
   const onClose = () => goBack();
-  const item = useNavigationParam('item');
-  const firstRun = useNavigationParam('firstRun');
+  const firstRun = route.params.firstRun;
   const { plans } = usePurchases();
   const [purchasing, setPurchasing] = useState(false);
   const {

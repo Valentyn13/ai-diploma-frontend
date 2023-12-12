@@ -1,10 +1,5 @@
-import { BackIcon } from '@common/components/Styled';
-import theme from '@common/theme';
-import colors from '@common/theme/colors';
-import i18n from '@services/localization/i18n';
 import React from 'react';
-import { createAppContainer } from 'react-navigation';
-import { createStackNavigator } from 'react-navigation-stack';
+import { createNativeStackNavigator } from 'react-native-screens/native-stack';
 
 import Intro from '../Intro';
 import MeditationInfo from './MeditationInfo';
@@ -14,80 +9,68 @@ import Subscribe2 from './Subscribe2';
 import Tabs from './Tabs';
 import WebView from './WebView';
 
-const navigtaionOption = {
-  headerShown: true,
-  cardStyle: {
-    backgroundColor: 'transparent',
-  },
+const Stack = createNativeStackNavigator();
+
+const navigationOption = {
   headerShown: false,
-  title: i18n.t('appName'),
+  title: 'appName', // You can use i18n.t('appName') if needed
   headerTitleAlign: 'center',
   headerStyle: {
-    backgroundColor: colors.bgColor,
+    backgroundColor: '#FFFFFF', // Specify your background color
     borderBottomColor: 'transparent',
     shadowOffset: { height: 0, width: 0 },
-    // shadowColor: theme.colors.bgColor,
     elevation: 0,
   },
   headerTitleStyle: {
-    fontFamily: theme.fonts.regular,
-    color: theme.colors.textColor,
+    fontFamily: 'regular', // Specify your font family
+    color: '#000000', // Specify your text color
     fontSize: 17,
     letterSpacing: 5.19,
   },
 };
-const StackNavigator = createStackNavigator(
-  {
-    Tabs: {
-      screen: Tabs,
-      navigationOptions: navigtaionOption,
-    },
-    MeditationPlayer: {
-      screen: MeditationPlayer,
-      navigationOptions: {
-        headerShown: false,
-      },
-    },
-    MeditationInfo: {
-      screen: MeditationInfo,
-      navigationOptions: {
-        headerShown: false,
-      },
-    },
-    Subscribe: {
-      screen: Subscribe,
-      navigationOptions: {
-        headerShown: false,
-      },
-    },
-    Subscribe2: {
-      screen: Subscribe2,
-      navigationOptions: {
-        headerShown: false,
-      },
-    },
-    intro2: {
-      screen: Intro,
-    },
-    WebView: {
-      screen: WebView,
-      navigationOptions: ({ navigation }) => ({
-        headerShown: true,
-        headerBackImage: () => <BackIcon name="back_arrow" />,
-        headerBackTitleVisible: false,
-        headerTitle: navigation.getParam('title'),
-        headerStyle: {
-          backgroundColor: '#FFF8EE',
-          borderBottomColor: 'transparent',
-          shadowOffset: { height: 0, width: 0 },
-          elevation: 0,
-        },
-      }),
-    },
-  },
-  {
-    mode: 'modal',
-  },
-);
 
-export default createAppContainer(StackNavigator);
+const StackNavigator = () => {
+  return (
+    <Stack.Navigator initialRouteName="Tabs" screenOptions={navigationOption}>
+      <Stack.Screen name="Tabs" component={Tabs} />
+      <Stack.Screen
+        name="MeditationPlayer"
+        component={MeditationPlayer}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="MeditationInfo"
+        component={MeditationInfo}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="Subscribe"
+        component={Subscribe}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="Subscribe2"
+        component={Subscribe2}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen name="intro2" component={Intro} />
+      <Stack.Screen
+        name="WebView"
+        component={WebView}
+        options={({ route }) => ({
+          headerShown: true,
+          headerBackTitleVisible: false,
+          title: route.params.title,
+          headerStyle: {
+            backgroundColor: '#FFF8EE',
+            borderBottomColor: 'transparent',
+            shadowOffset: { height: 0, width: 0 },
+            elevation: 0,
+          },
+        })}
+      />
+    </Stack.Navigator>
+  );
+};
+
+export default StackNavigator;

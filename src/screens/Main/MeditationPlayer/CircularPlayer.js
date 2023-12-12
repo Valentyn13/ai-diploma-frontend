@@ -1,6 +1,6 @@
 import CircularSlider from '@common/components/CircularSlider';
 import isLowResolution from '@utils/isLowResolution';
-import PropTypes from 'deprecated-react-native-prop-types';
+import PropTypes from 'prop-types';
 import React from 'react';
 import { ActivityIndicator } from 'react-native';
 import styled, { withTheme } from 'styled-components';

@@ -3,6 +3,7 @@ import image from '@common/assets/images';
 import Button from '@common/components/Button';
 import HorizontalList from '@common/components/HorizontalList';
 import { BoldTitle, SubTitle } from '@common/components/Styled';
+import { useRoute } from '@react-navigation/native';
 import useInstructor from '@services/hooks/useInstructor';
 import isLowResolution from '@utils/isLowResolution';
 import React from 'react';
@@ -16,7 +17,6 @@ import {
 } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import { ScaledSheet, scale } from 'react-native-size-matters';
-import { useNavigationParam } from 'react-navigation-hooks';
 import { useSelector } from 'react-redux';
 import { allMeditations } from 'store/selectors';
 import styled from 'styled-components';
@@ -32,7 +32,7 @@ const ButtonContainer = styled.View`
 `;
 
 const InstructorDetail = () => {
-  // const vref = useRef();
+  const route = useRoute();
   const { height, width } = Dimensions.get('window');
   const round = (width * 1.25 + width * 1.25) / 2;
   const isLowRound = (width * 1.15 + width * 1.15) / 2;
@@ -40,7 +40,7 @@ const InstructorDetail = () => {
   const instructors = useSelector(state => state.appData.instructors);
   // const categories = useSelector(categoriesSelector);
   const allMeditation = useSelector(allMeditations);
-  const instructorId = useNavigationParam('id');
+  const instructorId = route.params?.id;
   const instructor = instructors.find(x => x._id === instructorId);
   const dataArray = [];
   instructor.categories.map((item, index) => {

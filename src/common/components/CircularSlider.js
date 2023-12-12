@@ -1,5 +1,5 @@
 import useComponentSize from '@services/hooks/useComponentSize';
-import PropTypes from 'deprecated-react-native-prop-types';
+import PropTypes from 'prop-types';
 import React, { useCallback } from 'react';
 import { PanResponder } from 'react-native';
 import Svg, { Circle, G, Path } from 'react-native-svg';

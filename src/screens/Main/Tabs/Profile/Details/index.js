@@ -7,7 +7,7 @@ import Button from '@common/components/Button';
 import { Screen, Title } from '@common/components/Styled';
 import colors from '@common/theme/colors';
 import useUpdateProfile from '@services/hooks/useUpdateProfile';
-import PropTypes from 'deprecated-react-native-prop-types';
+import PropTypes from 'prop-types';
 import React from 'react';
 import {
   ActivityIndicator,

@@ -1,5 +1,5 @@
 import { Icon, SubTitle } from '@common/components/Styled';
-import PropTypes from 'deprecated-react-native-prop-types';
+import PropTypes from 'prop-types';
 import React from 'react';
 import { useSelector } from 'react-redux';
 import styled from 'styled-components';

@@ -1,9 +1,9 @@
 import AboutCourse from '@common/components/AboutCourse';
 import theme from '@common/theme';
 import colors from '@common/theme/colors';
+import { createStackNavigator } from '@react-navigation/stack';
 import i18n from '@services/localization/i18n';
-import { createAppContainer } from 'react-navigation';
-import { createStackNavigator } from 'react-navigation-stack';
+import React from 'react';
 
 import Courses from './Courses';
 
@@ -12,14 +12,12 @@ const navigtaionOption = {
   cardStyle: {
     backgroundColor: 'transparent',
   },
-  // headerShown: false,
   title: i18n.t('appName'),
   headerTitleAlign: 'center',
   headerStyle: {
     backgroundColor: colors.bgColor,
     borderBottomColor: 'transparent',
     shadowOffset: { height: 0, width: 0 },
-    // shadowColor: theme.colors.bgColor,
     elevation: 0,
   },
   headerTitleStyle: {
@@ -29,22 +27,26 @@ const navigtaionOption = {
     letterSpacing: 5.19,
   },
 };
-const StackNavigator = createStackNavigator(
-  {
-    Courses: {
-      screen: Courses,
-      navigationOptions: navigtaionOption,
-    },
 
-    AboutCourse: {
-      screen: AboutCourse,
-      navigationOptions: navigtaionOption,
-    },
-  },
-  {
-    headerMode: 'screen',
-    mode: 'modal',
-  },
+const Stack = createStackNavigator();
+
+const CoursesStack = () => (
+  <Stack.Navigator initialRouteName="Courses">
+    <Stack.Screen
+      name="Courses"
+      component={Courses}
+      options={navigtaionOption}
+    />
+    <Stack.Screen
+      name="AboutCourse"
+      component={AboutCourse}
+      options={navigtaionOption}
+    />
+  </Stack.Navigator>
 );
 
-export default createAppContainer(StackNavigator);
+const AppContainer = () => {
+  return <CoursesStack />;
+};
+
+export default AppContainer;

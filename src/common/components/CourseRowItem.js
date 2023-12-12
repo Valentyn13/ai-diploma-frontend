@@ -1,7 +1,7 @@
 import FavoriteIndicator from '@common/components/FavoriteIndicator';
 import { SubTitle, Title } from '@common/components/Styled';
 import meditationTime from '@utils/meditationTime';
-import PropTypes from 'deprecated-react-native-prop-types';
+import PropTypes from 'prop-types';
 import React, { memo } from 'react';
 import { View } from 'react-native';
 import styled from 'styled-components';

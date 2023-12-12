@@ -2,7 +2,7 @@
 import { categoryImage } from '@common/assets/images';
 import AppText from '@common/components/AppText';
 import usePurchases from '@services/hooks/usePurchases';
-import PropTypes from 'deprecated-react-native-prop-types';
+import PropTypes from 'prop-types';
 import React from 'react';
 import { View } from 'react-native';
 import styled from 'styled-components';

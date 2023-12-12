@@ -6,7 +6,7 @@ import {
   Title,
 } from '@common/components/Styled';
 import meditationTime from '@utils/meditationTime';
-import PropTypes from 'deprecated-react-native-prop-types';
+import PropTypes from 'prop-types';
 import React from 'react';
 import styled from 'styled-components';
 

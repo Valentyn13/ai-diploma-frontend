@@ -1,6 +1,6 @@
 import image from '@common/assets/images';
 import i18n from '@services/localization/i18n';
-import PropTypes from 'deprecated-react-native-prop-types';
+import PropTypes from 'prop-types';
 import React from 'react';
 import { Platform } from 'react-native';
 import Dash from 'react-native-dash';

@@ -9,7 +9,7 @@ import useAppData from '@services/hooks/useAppData';
 import useLogin from '@services/hooks/useLogin';
 import usePurchases from '@services/hooks/usePurchases';
 import { logEvent } from '@utils/analytics';
-import PropTypes from 'deprecated-react-native-prop-types';
+import PropTypes from 'prop-types';
 import React, { useEffect, useState } from 'react';
 import { ActivityIndicator, Image, TouchableOpacity, View } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';

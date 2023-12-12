@@ -2,10 +2,10 @@ import image from '@common/assets/images';
 import AppButton from '@common/components/AppButton';
 import AppText from '@common/components/AppText';
 import { Container, Title, TopTitle } from '@common/components/Styled';
+import { useNavigation } from '@react-navigation/native';
 import React from 'react';
 import { Dimensions, Image, Platform, View } from 'react-native';
 import { scale } from 'react-native-size-matters';
-import { useNavigation } from 'react-navigation-hooks';
 import styled from 'styled-components';
 
 export const BgImage = styled.ImageBackground.attrs(({ name, isFirst }) => ({

@@ -1,4 +1,4 @@
-import PropTypes from 'deprecated-react-native-prop-types';
+import PropTypes from 'prop-types';
 import React from 'react';
 import { Platform, TextInput } from 'react-native';
 

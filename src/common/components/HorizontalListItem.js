@@ -1,14 +1,14 @@
 /* eslint-disable react-native/no-inline-styles */
 import { categoryImage } from '@common/assets/images';
 import theme from '@common/theme';
+import { useNavigation } from '@react-navigation/native';
 import { useAmplitude } from '@services/hooks/useAmplitude';
 import usePurchases from '@services/hooks/usePurchases';
 import { logEvent } from '@utils/analytics';
 import meditationTime from '@utils/meditationTime';
-import PropTypes from 'deprecated-react-native-prop-types';
+import PropTypes from 'prop-types';
 import React, { useCallback } from 'react';
 import { Image, View } from 'react-native';
-import { useNavigation } from 'react-navigation-hooks';
 import { useSelector } from 'react-redux';
 import { meditationInstructor } from 'store/selectors';
 import styled from 'styled-components';
