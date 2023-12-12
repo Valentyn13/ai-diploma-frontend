@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">רגע</string>
+    <string name="appCenterCrashes_whenToSendCrashes" moduleConfig="true" translatable="false">DO_NOT_ASK_JAVASCRIPT</string>
+    <string name="appCenterAnalytics_whenToEnableAnalytics" moduleConfig="true" translatable="false">ALWAYS_SEND</string>
+    <string name="facebook_app_id">150431426932565</string>
+    <string name="facebook_client_token">69db98b45f56ac5b9e02886235243f05</string>
+    <string moduleConfig="true" name="CodePushDeploymentKey">bT3Qxz3hksaDfZKElkf8a4pZX4HQ8pP43U56H</string>
+</resources>

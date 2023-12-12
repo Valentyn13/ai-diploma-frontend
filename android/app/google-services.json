@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "778912505810",
+    "project_id": "rega-191cd",
+    "storage_bucket": "rega-191cd.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:778912505810:android:8bb533d6ef01f2048d320b",
+        "android_client_info": {
+          "package_name": "com.rega.regaapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "778912505810-unjum4j2igs5eo64r15m39s436e3fl71.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBjsTKRiexv5ex6KGMb9_Z6cjvN7nOWC9k"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "778912505810-unjum4j2igs5eo64r15m39s436e3fl71.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "778912505810-903outurhcvlme634l4grs3uurk53fkl.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.regapp"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

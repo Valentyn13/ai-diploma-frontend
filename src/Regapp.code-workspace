@@ -1,0 +1,32 @@
+{
+	"folders": [
+		{
+			"name": "Regapp",
+			"path": ".."
+		}
+	],
+	"settings": {
+		"java.configuration.updateBuildConfiguration": "interactive",
+		"workbench.colorCustomizations": {
+			"activityBar.activeBackground": "#fef8e6",
+			"activityBar.activeBorder": "#e2fcee",
+			"activityBar.background": "#fef8e6",
+			"activityBar.foreground": "#15202b",
+			"activityBar.inactiveForeground": "#15202b99",
+			"activityBarBadge.background": "#07b88c",
+			"activityBarBadge.foreground": "#e7e7e7",
+			"statusBar.background": "#fdeab4",
+			"statusBar.foreground": "#15202b",
+			"statusBarItem.hoverBackground": "#fcdc82",
+			"titleBar.activeBackground": "#fdeab4",
+			"titleBar.activeForeground": "#15202b",
+			"titleBar.inactiveBackground": "#fdeab499",
+			"titleBar.inactiveForeground": "#15202b99",
+			"sash.hoverBorder": "#fef8e6",
+			"statusBarItem.remoteBackground": "#fdeab4",
+			"statusBarItem.remoteForeground": "#15202b",
+			"commandCenter.border": "#15202b99"
+		},
+		"peacock.color": "#FDEAB4"
+	}
+}
