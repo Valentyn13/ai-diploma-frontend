@@ -23,7 +23,11 @@ const TabBarLabel = styled(SubTitle).attrs(({ k }) => ({ k }))`
 
 const StackNavigator = () => {
   return (
-    <Stack.Navigator mode="modal" headerShown="false">
+    <Stack.Navigator
+      screenOptions={{
+        presentation: 'modal',
+        headerShown: false,
+      }}>
       <Stack.Screen name="Settings" component={Settings} />
       <Stack.Screen name="PrivacyPolicy" component={PrivacyPolicy} />
     </Stack.Navigator>

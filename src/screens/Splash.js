@@ -27,7 +27,7 @@ const Splash = ({ navigation }) => {
       } else {
         navigation.navigate('IntroScreens');
       }
-    }, 2000);
+    }, 0);
     return () => clearTimeout(timer);
   }, [accessToken, getAppData, navigate, navigation]);
 

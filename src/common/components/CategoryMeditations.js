@@ -9,6 +9,7 @@ const CategoryMeditationsContainer = styled.View`
   align-items: flex-start;
   padding-top: 8px;
   padding-bottom: 17px;
+  background-color: ${({ theme: { colors } }) => colors.bgColor};
 `;
 
 const CategoryTitle = styled(TopTitle)`

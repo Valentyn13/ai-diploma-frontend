@@ -11,8 +11,8 @@ const Meditations = () => {
   categories.sort((a, b) => a.order - b.order);
   return (
     <StyledSafeAreaView>
-      <Header />
       <ScrollView showsVerticalScrollIndicator={false}>
+        <Header />
         {categories.map(category => (
           <CategoryMeditations
             key={category.id}

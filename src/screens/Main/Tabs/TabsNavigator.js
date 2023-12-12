@@ -6,7 +6,7 @@ import { Platform } from 'react-native';
 import styled from 'styled-components';
 
 import Courses from './Courses';
-import Home from './Home';
+import MainHome from './Home';
 import Meditations from './Meditations';
 import Profile from './Profile';
 
@@ -18,10 +18,9 @@ const TabBarLabel = styled(SubTitle)`
   padding-top: ${Platform.OS === 'android' ? '10px;' : '0px'};
 `;
 
-const TABS = { Home, Meditations, Courses, Profile };
+const TABS = { MainHome, Meditations, Courses, Profile };
 
 const tabScreen = (name, screen) => ({
-  headerShown: false,
   tabBarLabel: () => <TabBarLabel>{name}</TabBarLabel>,
   tabBarIcon: ({ focused, color, size }) => (
     <Icon name={`${name}${focused ? 'On' : 'Off'}`} size={size} color={color} />
@@ -31,9 +30,9 @@ const tabScreen = (name, screen) => ({
 const TabNavigator = () => {
   return (
     <Tab.Navigator
-      initialRouteName="Home"
+      initialRouteName="MainHome"
       screenOptions={{
-        style: {
+        tabBarStyle: {
           paddingTop: Platform.OS === 'android' ? 20 : 10,
           borderTopWidth: 0,
           paddingBottom: 4,
@@ -41,12 +40,24 @@ const TabNavigator = () => {
           backgroundColor: colors.bgColor,
         },
       }}>
+      {/* TODO: fix icons and texts here */}
       {Object.entries(TABS).map(([key, value]) => (
         <Tab.Screen
           key={key}
           name={key}
           component={value}
-          options={tabScreen(key, value)}
+          options={{
+            backgroundColor: colors.bgColor,
+            tabBarLabel: key,
+            headerShown: false,
+            tabBarLabelStyle: {
+              fontSize: 10,
+              letterSpacing: 0.58,
+              textAlign: 'center',
+              marginTop: '5px',
+              paddingTop: `${Platform.OS === 'android' ? '10px;' : '0px'}`,
+            },
+          }}
         />
       ))}
     </Tab.Navigator>
