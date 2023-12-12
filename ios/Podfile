@@ -25,8 +25,10 @@ if linkage != nil
   use_frameworks! :linkage => linkage.to_sym
 end
 
-target 'AwesomeProject' do
+target 'rega' do
   config = use_native_modules!
+  use_frameworks! :linkage => :static
+  $RNFirebaseAsStaticFramework = true
 
   # Flags change depending on the env values.
   flags = get_default_flags()
@@ -45,7 +47,21 @@ target 'AwesomeProject' do
     :app_path => "#{Pod::Config.instance.installation_root}/.."
   )
 
-  target 'AwesomeProjectTests' do
+  pod 'nanopb', :modular_headers => true
+  pod 'Firebase', :modular_headers => true
+  pod 'FirebaseCore', :modular_headers => true
+  pod 'GoogleUtilities', :modular_headers =>true
+  pod 'FirebaseCoreInternal', :modular_headers => true
+  pod 'FirebaseCoreExtension', :modular_headers => true
+  pod 'FirebaseSessions', :modular_headers => true
+  pod 'GoogleDataTransport', :modular_headers => true
+  pod 'FirebaseInstallations', :modular_headers => true
+  pod 'RSCrashReporter', :modular_headers => true
+
+  pod 'RNPurchases', :path => '../node_modules/react-native-purchases', :inhibit_warnings => true, :modular_headers => false
+  pod 'RNCMaskedView', :path => '../node_modules/@react-native-masked-view/masked-view'
+
+  target 'regaTests' do
     inherit! :complete
     # Pods for testing
   end
