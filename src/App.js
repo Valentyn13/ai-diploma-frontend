@@ -6,7 +6,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import * as Sentry from '@sentry/react-native';
 import useSyncUserData from '@services/hooks/useSyncUserData';
 import React, { useEffect } from 'react';
-import { StatusBar } from 'react-native';
+import { SafeAreaView, StatusBar } from 'react-native';
 import { Settings } from 'react-native-fbsdk-next';
 import 'react-native-gesture-handler';
 import { Provider } from 'react-redux';
@@ -27,27 +27,13 @@ Sentry.init({
 const { store, persistor } = configureStore();
 Settings.initializeSDK();
 console.log('initializing app');
-const RootView = styled.View.attrs({
+const RootView = styled(SafeAreaView).attrs({
   backgroundColor: colors.bgColor,
 })`
   flex: 1;
   align-self: stretch;
 `;
 
-// if (__DEV__) {
-//   import('./ReactotronConfig').then(() => console.log('Reactotron Configured'));
-// }
-
-// let codePushOptions = {
-//   checkFrequency: codePush.CheckFrequency.ON_APP_RESUME,
-//   installMode: codePush.InstallMode.IMMEDIATE,
-// };
-// let codePushOptions = { checkFrequency: codePush.CheckFrequency.MANUAL
-// };
-// const codePushOptions = {
-//   checkFrequency: codePush.CheckFrequency.ON_APP_RESUME,
-//   installMode: codePush.InstallMode.IMMEDIATE,
-// };
 const SyncedRootNavigator = () => {
   useSyncUserData();
   return <RootNavigator />;

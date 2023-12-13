@@ -1,24 +1,23 @@
-/* eslint-disable react-native/no-color-literals */
 /* eslint-disable react-native/no-inline-styles */
-import AppButton from "common/components/AppButton";
-import {Title} from "common/components/Styled";
-import PropTypes from "prop-types";
-import React, {useState} from "react";
-import {Dimensions, Modal, View} from "react-native";
-import styled from "styled-components";
+import AppButton from 'common/components/AppButton';
+import { Title } from 'common/components/Styled';
+import PropTypes from 'prop-types';
+import React, { useState } from 'react';
+import { Dimensions, Modal, View } from 'react-native';
+import styled from 'styled-components';
 
 const EXPERIENCE = [
   {
-    key: "Beginner",
-    intro: "expBeginner",
+    key: 'Beginner',
+    intro: 'expBeginner',
   },
   {
-    key: "Intermediate",
-    intro: "expIntermediate",
+    key: 'Intermediate',
+    intro: 'expIntermediate',
   },
   {
-    key: "Expert",
-    intro: "expExpert",
+    key: 'Expert',
+    intro: 'expExpert',
     shiftBase: true,
   },
 ];
@@ -26,25 +25,24 @@ const EXPERIENCE = [
 const NUM_OF_ITEMS_IN_ROW = 3;
 
 const CategorySelectorContainer = styled.TouchableOpacity`
-  background-color: ${({theme: {colors}, highlight}) =>
+  background-color: ${({ theme: { colors }, highlight }) =>
     highlight ? colors.selectedCategoryColor : colors.itemBgColor};
-  width: ${({theme: {dimens}}) =>
+  width: ${({ theme: { dimens } }) =>
     (dimens.winWidth - dimens.margin * 4) / NUM_OF_ITEMS_IN_ROW}px;
-  height: ${({theme: {dimens}}) =>
+  height: ${({ theme: { dimens } }) =>
     (dimens.winWidth - dimens.margin * 4) / NUM_OF_ITEMS_IN_ROW}px;
   padding: 8px;
-  ${({shiftBase}) => shiftBase && "justify-content: flex-end;"}
+  ${({ shiftBase }) => shiftBase && 'justify-content: flex-end;'}
 `;
 
-const CategorySelector = ({idx, setExperience, isSelected}) => {
-  const {key, intro, shiftBase} = EXPERIENCE[idx];
+const CategorySelector = ({ idx, setExperience, isSelected }) => {
+  const { key, intro, shiftBase } = EXPERIENCE[idx];
 
   return (
     <CategorySelectorContainer
       onPress={() => setExperience(key)}
       highlight={isSelected(key)}
-      shiftBase={!!shiftBase}
-    >
+      shiftBase={!!shiftBase}>
       <Title k={intro} />
     </CategorySelectorContainer>
   );
@@ -53,17 +51,16 @@ const CategorySelector = ({idx, setExperience, isSelected}) => {
 const AutoPlayer = () => {
   const [isVisible, setIsVisible] = useState(true);
 
-  const {width} = Dimensions.get("screen");
+  const { width } = Dimensions.get('screen');
   return (
     <Modal visible={isVisible}>
       <View
         style={{
           flex: 1,
-          backgroundColor: "#fdedd6",
-          justifyContent: "center",
-          alignItems: "center",
-        }}
-      >
+          backgroundColor: '#fdedd6',
+          justifyContent: 'center',
+          alignItems: 'center',
+        }}>
         <AppButton onPress={() => setIsVisible(false)}>המשך</AppButton>
       </View>
     </Modal>

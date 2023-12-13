@@ -1,5 +1,4 @@
 import CategoryMeditations from '@common/components/CategoryMeditations';
-import Header from '@common/components/Header';
 import { StyledSafeAreaView } from '@common/components/Styled';
 import React from 'react';
 import { ScrollView } from 'react-native-gesture-handler';
@@ -12,7 +11,6 @@ const Meditations = () => {
   return (
     <StyledSafeAreaView>
       <ScrollView showsVerticalScrollIndicator={false}>
-        <Header />
         {categories.map(category => (
           <CategoryMeditations
             key={category.id}

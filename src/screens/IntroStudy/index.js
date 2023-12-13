@@ -1,3 +1,4 @@
+/* eslint-disable react-native/no-inline-styles */
 import image from '@common/assets/images';
 import AppButton from '@common/components/AppButton';
 import AppText from '@common/components/AppText';

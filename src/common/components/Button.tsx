@@ -1,10 +1,21 @@
-import PropTypes from 'prop-types';
-import React from 'react';
-import styled from 'styled-components';
+import React, { FC } from 'react';
+import styled from 'styled-components/native';
 
 import { ButtonTitle } from './Styled';
 
-export const ButtonContainer = styled.TouchableOpacity`
+interface ButtonProps {
+  title?: string;
+  isText?: boolean;
+  onPress: () => void;
+  big?: boolean;
+  fb?: boolean;
+  logout?: boolean;
+  bgColor?: string;
+  titleColor?: string;
+  width?: number;
+}
+
+const ButtonContainer = styled.TouchableOpacity<ButtonProps>`
   background-color: ${({ theme: { colors }, fb, logout, bgColor }) =>
     fb
       ? colors.facebookBgColor
@@ -13,15 +24,18 @@ export const ButtonContainer = styled.TouchableOpacity`
       : bgColor && colors[bgColor]
       ? colors[bgColor]
       : colors.buttonColor};
-  padding-top: ${({ big }) => (big ? 14 : 5)};
-  padding-bottom: ${({ big }) => (big ? 14 : 5)};
+  padding: ${({ big }) => (big ? '16px' : '12px')} 32px;
   justify-content: center;
-  padding-right: 34px;
-  padding-left: 34px;
   align-self: ${({ big }) => (big ? 'stretch' : 'center')};
+  border-radius: 8px;
+  elevation: 3; /* Add elevation for a subtle shadow effect (Android) */
+  shadow-color: #000; /* Add shadow color (iOS) */
+  shadow-offset: 0px 2px;
+  shadow-opacity: 0.1;
+  shadow-radius: 2px;
 `;
 
-const Button = ({
+const Button: FC<ButtonProps> = ({
   title,
   isText,
   onPress,
@@ -40,24 +54,5 @@ const Button = ({
     />
   </ButtonContainer>
 );
-
-Button.propTypes = {
-  title: PropTypes.string.isRequired,
-  isText: PropTypes.bool,
-  onPress: PropTypes.func.isRequired,
-  big: PropTypes.bool,
-  fb: PropTypes.bool,
-  logout: PropTypes.bool,
-  bgColor: PropTypes.string,
-  titleColor: PropTypes.string,
-};
-
-Button.defaultProps = {
-  isText: false,
-  big: false,
-  fb: false,
-  logout: false,
-  bgColor: '',
-};
 
 export default Button;

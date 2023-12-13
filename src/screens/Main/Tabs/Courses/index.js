@@ -8,10 +8,11 @@ import React from 'react';
 import Courses from './Courses';
 
 const navigtaionOption = {
-  headerShown: true,
+  headerShown: false,
   cardStyle: {
     backgroundColor: 'transparent',
   },
+  headerBackTitleVisible: false,
   title: i18n.t('appName'),
   headerTitleAlign: 'center',
   headerStyle: {
@@ -40,13 +41,12 @@ const CoursesStack = () => (
     <Stack.Screen
       name="AboutCourse"
       component={AboutCourse}
-      options={navigtaionOption}
+      options={{
+        ...navigtaionOption,
+        headerTitle: i18n.t('aboutCourse'),
+      }}
     />
   </Stack.Navigator>
 );
 
-const AppContainer = () => {
-  return <CoursesStack />;
-};
-
-export default AppContainer;
+export default CoursesStack;

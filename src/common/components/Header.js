@@ -15,12 +15,12 @@ const Header = () => {
           backgroundColor: colors.bgColor,
           borderBottomColor: 'transparent',
         }}>
-        <StatusBar
+        {/* <StatusBar
           animated
           backgroundColor="#fdedd6"
           barStyle="dark-content"
           hidden={false}
-        />
+        /> */}
         <Text
           style={{
             fontFamily: theme.fonts.regular,

@@ -58,6 +58,26 @@ function Section({ children, title }: SectionProps): JSX.Element {
   );
 }
 
+function Wrappers(): JSX.Element {
+  const isDarkMode = useColorScheme() === 'dark';
+
+  const backgroundStyle = {
+    backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
+  };
+
+  return (
+    <NavigationContainer>
+      <SafeAreaView style={backgroundStyle}>
+        <StatusBar
+          barStyle={isDarkMode ? 'light-content' : 'dark-content'}
+          backgroundColor={backgroundStyle.backgroundColor}
+        />
+        <BaseApp />
+      </SafeAreaView>
+    </NavigationContainer>
+  );
+}
+
 function App(): JSX.Element {
   const isDarkMode = useColorScheme() === 'dark';
 

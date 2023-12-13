@@ -7,8 +7,7 @@ import Button from '@common/components/Button';
 import { Screen, Title } from '@common/components/Styled';
 import colors from '@common/theme/colors';
 import useUpdateProfile from '@services/hooks/useUpdateProfile';
-import PropTypes from 'prop-types';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   ActivityIndicator,
   Alert,
@@ -19,7 +18,7 @@ import {
 } from 'react-native';
 import { scale } from 'react-native-size-matters';
 import { useSelector } from 'react-redux';
-import styled from 'styled-components';
+import styled from 'styled-components/native';
 
 const UserDetails = styled.View`
   margin-top: 50px;
@@ -27,35 +26,46 @@ const UserDetails = styled.View`
 
 const RowContainer = styled.View`
   flex-direction: row;
-  margin-bottom: 10px;
+  margin-bottom: ${scale(10)}px;
+  align-items: center;
 `;
 
 const Label = styled(Title)`
-  width: 150;
+  font-size: ${scale(18)}px;
+  color: #333;
+  min-width: ${scale(64)}px;
 `;
 
-const Row = ({ label, value, keyValue }) => (
+interface RowProps {
+  label: string;
+  value: string;
+  keyValue?: boolean;
+}
+
+const Row: React.FC<RowProps> = ({ label, value, keyValue }) => (
   <RowContainer>
     <Label k={label} />
     {keyValue ? <Label k={value} /> : <Label t={value} />}
   </RowContainer>
 );
 
-const Details = () => {
-  const { name, email, sex, updateloader } = useSelector(
-    state => state.userDetails,
-  );
-  const [toggleModal, setToggleModal] = React.useState(false);
-  const [passwordModal, setPasswordModal] = React.useState(false);
+interface DetailsProps {}
 
-  const [newName, setNewName] = React.useState('');
-  const [newsex, setNewSex] = React.useState();
-  const [password, setPassword] = React.useState('');
-  const [verifyPassword, setVerifyPassword] = React.useState();
+const Details: React.FC<DetailsProps> = () => {
+  const { name, email, sex, updateloader } = useSelector(
+    (state: any) => state.userDetails,
+  );
+  const [toggleModal, setToggleModal] = useState<boolean>(false);
+  const [passwordModal, setPasswordModal] = useState<boolean>(false);
+
+  const [newName, setNewName] = useState<string>('');
+  const [newsex, setNewSex] = useState<string | undefined>();
+  const [password, setPassword] = useState<string>('');
+  const [verifyPassword, setVerifyPassword] = useState<string | undefined>();
 
   const { updateProfile, changePassword } = useUpdateProfile();
 
-  React.useEffect(() => {
+  useEffect(() => {
     setNewName(name);
     setNewSex(sex);
   }, [name, sex]);
@@ -70,6 +80,7 @@ const Details = () => {
       setToggleModal(false);
     }, 1000);
   };
+
   const submitChangePassword = () => {
     if (password === verifyPassword) {
       changePassword(password);
@@ -93,9 +104,7 @@ const Details = () => {
           title="ערוך פרופיל"
           big
           logout
-          onPress={() => {
-            setToggleModal(true);
-          }}
+          onPress={() => setToggleModal(true)}
         />
       </View>
       <View style={{ position: 'absolute', bottom: 10, left: 20, right: 20 }}>
@@ -103,9 +112,7 @@ const Details = () => {
           title="שנה סיסמא"
           big
           logout
-          onPress={() => {
-            setPasswordModal(true);
-          }}
+          onPress={() => setPasswordModal(true)}
         />
       </View>
       {/* //edit profile modal */}
@@ -220,8 +227,6 @@ const Details = () => {
         )}
       </Modal>
 
-      {/* //password modal */}
-
       <Modal visible={passwordModal}>
         <View
           style={{ flex: 1, borderWidth: 2, backgroundColor: colors.bgColor }}>
@@ -308,16 +313,6 @@ const Details = () => {
       </Modal>
     </Screen>
   );
-};
-
-Row.propTypes = {
-  label: PropTypes.string.isRequired,
-  value: PropTypes.string,
-  keyValue: PropTypes.bool,
-};
-
-Row.defaultProps = {
-  keyValue: false,
 };
 
 export default Details;
