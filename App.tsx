@@ -149,4 +149,4 @@ const MyStack = () => {
   );
 };
 
-export default App;
+export default BaseApp;

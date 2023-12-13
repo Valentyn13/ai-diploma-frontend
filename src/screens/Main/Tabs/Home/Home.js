@@ -1,3 +1,4 @@
+/* eslint-disable react-native/no-inline-styles */
 import HomeTopBg from '@common/assets/images/HomeTopBg.png';
 import CategoryMeditations from '@common/components/CategoryMeditations';
 import CoursesCarousel from '@common/components/CoursesCarousel';

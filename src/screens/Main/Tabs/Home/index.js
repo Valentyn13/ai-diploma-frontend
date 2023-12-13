@@ -74,8 +74,4 @@ const StackNavigator = () => {
   );
 };
 
-const AppContainer = () => {
-  return <StackNavigator />;
-};
-
-export default AppContainer;
+export default StackNavigator;

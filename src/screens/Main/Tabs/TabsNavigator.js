@@ -1,3 +1,4 @@
+import Mock from '@common/components/Mock';
 import { Icon, SubTitle } from '@common/components/Styled';
 import colors from '@common/theme/colors';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
@@ -5,9 +6,9 @@ import React from 'react';
 import { Platform } from 'react-native';
 import styled from 'styled-components';
 
-import Courses from './Courses';
-import MainHome from './Home';
-import Meditations from './Meditations';
+// import Courses from './Courses';
+import Home from './Home';
+// import Meditations from './Meditations';
 import Profile from './Profile';
 
 const Tab = createBottomTabNavigator();
@@ -18,7 +19,10 @@ const TabBarLabel = styled(SubTitle)`
   padding-top: ${Platform.OS === 'android' ? '10px;' : '0px'};
 `;
 
-const TABS = { MainHome, Meditations, Courses, Profile };
+const Courses = Mock;
+const Meditations = Mock;
+
+const TABS = { Home, Meditations, Courses, Profile };
 
 const tabScreen = (name, screen) => ({
   tabBarLabel: () => <TabBarLabel>{name}</TabBarLabel>,
@@ -47,6 +51,7 @@ const TabNavigator = () => {
           name={key}
           component={value}
           options={{
+            ...tabScreen(key.toLowerCase(), value),
             backgroundColor: colors.bgColor,
             tabBarLabel: key,
             headerShown: false,
