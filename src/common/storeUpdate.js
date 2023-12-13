@@ -29,7 +29,8 @@ function StoreUpdate({ children }) {
         });
       }
     }
-    checkForUpdates();
+    // TODO: remove the comment here
+    // checkForUpdates();
   }, []);
 
   const toggleUpdate = () => {

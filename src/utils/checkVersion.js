@@ -1,9 +1,10 @@
-import {Platform} from 'react-native';
+import { Platform } from 'react-native';
 import DeviceInfo from 'react-native-device-info';
 import compare from 'semver-compare';
 
 const getAndroidDetails = async () => {
-  const storeUrl = `https://play.google.com/store/apps/details?id=com.rega.regaapp&hl=en`;
+  const storeUrl =
+    'https://play.google.com/store/apps/details?id=com.rega.regaapp&hl=en';
   const res = await fetch(storeUrl)
     .then(res => res.text())
     .then(text => {
@@ -15,11 +16,12 @@ const getAndroidDetails = async () => {
           latestVersion: parseFloat(latestVersion),
           storeUrl,
           currentVersion: parseFloat(DeviceInfo.getVersion()),
-          isNeeded: compare(latestVersion, DeviceInfo.getVersion()) > 0 ? true : false,
+          isNeeded:
+            compare(latestVersion, DeviceInfo.getVersion()) > 0 ? true : false,
         };
       }
 
-      return {error: 'There was some error fetching play store'};
+      return { error: 'There was some error fetching play store' };
     });
   return res;
 };
@@ -28,7 +30,9 @@ const getiOSDetails = async country => {
   const countryCode = country ? `${country}/` : 'us/';
   const dateNow = new Date().getTime();
 
-  return fetch(`https://itunes.apple.com/${countryCode}lookup?bundleId=com.regapp&date=${dateNow}`)
+  return fetch(
+    `https://itunes.apple.com/${countryCode}lookup?bundleId=com.regapp&date=${dateNow}`,
+  )
     .then(res => res.json())
     .then(json => {
       if (json.resultCount) {
@@ -40,7 +44,8 @@ const getiOSDetails = async country => {
           appId,
           storeUrl,
           currentVersion: DeviceInfo.getVersion(),
-          isNeeded: compare(version, DeviceInfo.getVersion()) > 0 ? true : false,
+          isNeeded:
+            compare(version, DeviceInfo.getVersion()) > 0 ? true : false,
         };
       }
       return {
@@ -57,4 +62,4 @@ const checkVersion = async () => {
   }
 };
 
-export {checkVersion};
+export { checkVersion };
