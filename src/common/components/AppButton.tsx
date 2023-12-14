@@ -58,7 +58,7 @@ const AppButton: React.FC<AppButtonProps> = ({
         paddingVertical: 12,
         borderRadius: 6,
         alignItems: 'center',
-        width: width,
+        width: width - 60,
         ...style,
       }}>
       <Text

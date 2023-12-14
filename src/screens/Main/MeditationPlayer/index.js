@@ -8,6 +8,7 @@ import {
   TopTitle,
   TouchableIcon,
 } from '@common/components/Styled';
+import { BG_TRACKS } from '@common/constants';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { captureException } from '@sentry/react-native';
 import { useAmplitude } from '@services/hooks/useAmplitude';
@@ -33,24 +34,6 @@ import MeditationInfo from '../MeditationInfo';
 import BgMusicSelector from './BgMusicSelector';
 import CircularPlayer from './CircularPlayer';
 import TimesLabel from './TimesLabel';
-
-// TODO: use translation file
-const BG_TRACKS = [
-  {
-    id: 0,
-    name: 'אוקיינוס',
-    asset: require('@common/assets/sounds/ocean.mp3'),
-  },
-  {
-    id: 1,
-    name: 'תדרים',
-    asset: require('@common/assets/sounds/frequencies.mp3'),
-  },
-  { id: 2, name: 'ציפורים', asset: require('@common/assets/sounds/birds.mp3') },
-  { id: 3, name: 'גלים', asset: require('@common/assets/sounds/waves.mp3') },
-  { id: 4, name: 'קערות', asset: require('@common/assets/sounds/bowls.mp3') },
-  { id: 5, name: 'גשם', asset: require('@common/assets/sounds/rain.mp3') },
-];
 
 const Dummy = styled.View`
   background-color: transparent;
@@ -144,14 +127,10 @@ const MeditationPlayer = ({
   },
 }) => {
   const route = useRoute();
-  let audioPlayerRef = null;
-
+  const audioPlayerRef = useRef(null);
   const { updateIstructorTractionData } = useInstructor();
-
   const { goBack } = useNavigation();
-
   const { updateMeditationCount } = useUpdateMeditation();
-
   const [currentTime, setCurrentTime] = useState(0);
   const [startTime, setStartTime] = useState(0);
   const [duration, setDuration] = useState(0);
@@ -214,145 +193,13 @@ const MeditationPlayer = ({
   ]);
 
   const onClose = () => {
-    amplitudeInstance.logEvent('MEDITATION_STOP', { categoryName });
-    amplitudeInstance.uploadEvents();
+    // amplitudeInstance.logEvent('MEDITATION_STOP', { categoryName });
+    // amplitudeInstance.uploadEvents();
 
     togglePlay();
-    goBack();
+    setIsPlayingBgMusic(false);
+    setTimeout(() => goBack(), 0);
   };
-
-  // const onDownload = () => {
-  //   if (Platform.OS === 'ios') {
-  //     doDownload();
-  //   } else {
-  //     try {
-  //       PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE, {
-  //         title: 'Music',
-  //         message: 'App needs access to your Files... ',
-  //         buttonNeutral: 'Ask Me Later',
-  //         buttonNegative: 'Cancel',
-  //         buttonPositive: 'OK',
-  //       }).then(granted => {
-  //         if (granted === PermissionsAndroid.RESULTS.GRANTED) {
-  //           console.log('startDownload...');
-  //           doDownload();
-  //         }
-  //       });
-  //     } catch (err) {
-  //       console.log(err);
-  //     }
-  //   }
-  // };
-
-  // const doDownload = () => {
-  //   setIsDownloading(true);
-  //   let pathFile = '/storage/emulated/0/Rega';
-  //   if (Platform.OS === 'android') {
-  //     if (RNFetchBlob.fs.isDir(pathFile)) {
-  //       pathFile = pathFile;
-  //     } else {
-  //       pathFile = RNFetchBlob.fs.mkdir(pathFile);
-  //     }
-  //   } else {
-  //     pathFile = RNFetchBlob.fs.dirs.DownloadDir;
-  //   }
-  //   const date = new Date();
-  //   RNFetchBlob.config({
-  //     fileCache: true,
-  //     appendExt: 'mp3',
-  //     path: `${pathFile}/${name}.mp3`,
-  //     addAndroidDownloads: {
-  //       useDownloadManager: true,
-  //       notification: true,
-  //       title: name,
-  //       path: `${pathFile}/${name}.mp3`,
-  //     },
-  //   })
-  //     .fetch('GET', url)
-  //     // listen to download progress event
-  //     .progress((received, total) => {
-  //       console.log('progress', received / total);
-  //     })
-  //     .then(res => {
-  //       const shareOptions = {
-  //         // saveToFiles:true,
-  //         filename: `${name}.mp3`,
-  //         subject: 'רגע',
-  //         title: `${name}.mp3`,
-  //         message: `${name}.mp3`,
-  //         url: Platform.OS === 'android' ? `file://${res.path()}` : res.path(),
-  //       };
-
-  //       Share.open(shareOptions)
-  //         .then(res => {
-  //           console.log(res);
-  //           setIsDownloading(false);
-  //         })
-  //         .catch(err => {
-  //           err && console.log(err);
-  //           setIsDownloading(false);
-  //         });
-  //     })
-  //     .catch(err => {
-  //       setIsDownloading(false);
-  //       console.log('err', err);
-  //     });
-  // };
-
-  // const doDownload = () => {
-  //   setIsDownloading(true);
-  //   let pathFile = '/storage/emulated/0/Rega';
-  //   if (Platform.OS === 'android') {
-  //     if (RNFetchBlob.fs.isDir(pathFile)) {
-  //       pathFile = pathFile;
-  //     } else {
-  //       pathFile = RNFetchBlob.fs.mkdir(pathFile);
-  //     }
-  //   } else {
-  //     pathFile = RNFetchBlob.fs.dirs.DownloadDir;
-  //   }
-  //   const date = new Date();
-  //   RNFetchBlob.config({
-  //     fileCache: true,
-  //     appendExt: 'mp3',
-  //     path: `${pathFile}/${name}.mp3`,
-  //     addAndroidDownloads: {
-  //       useDownloadManager: true,
-  //       notification: true,
-  //       title: name,
-  //       path: `${pathFile}/${name}.mp3`,
-  //     },
-  //   })
-  //     .fetch('GET', url)
-  //     // listen to download progress event
-  //     .progress((received, total) => {
-  //       console.log('progress', received / total);
-  //     })
-  //     .then(res => {
-  //       const shareOptions = {
-  //         // saveToFiles:true,
-  //         filename: `${name}.mp3`,
-  //         subject: 'רגע',
-  //         title: `${name}.mp3`,
-  //         message: `${name}.mp3`,
-  //         url: Platform.OS === 'android' ? `file://${res.path()}` : res.path(),
-  //       };
-
-  //       Share.open(shareOptions)
-  //         .then(res => {
-  //           console.log(res);
-  //           setIsDownloading(false);
-  //         })
-  //         .catch(err => {
-  //           err && console.log(err);
-  //           setIsDownloading(false);
-  //         });
-  //     })
-  //     .catch(err => {
-  //       setIsDownloading(false);
-  //       console.log('err', err);
-  //     });
-  // };
 
   const onLoad = ({ duration: value }) => {
     setDuration(value);
@@ -377,19 +224,17 @@ const MeditationPlayer = ({
   }, [updateTimePlayed]);
 
   const onSliderEditEnd = useCallback(endTime => {
+    console.log('onSliderEditEnd', endTime);
     setSliderEditing(false);
     setStartTime(endTime);
   }, []);
 
-  const onSliderEditing = useCallback(
-    value => {
-      setCurrentTime(value);
-      if (audioPlayerRef) {
-        audioPlayerRef.seek(value);
-      }
-    },
-    [audioPlayerRef],
-  );
+  const onSliderEditing = useCallback(value => {
+    setCurrentTime(value);
+    if (audioPlayerRef.current) {
+      audioPlayerRef.current.seek(value);
+    }
+  }, []);
 
   const onEnd = () => {
     togglePlay();
@@ -429,6 +274,13 @@ const MeditationPlayer = ({
         source={video}
         paused={!isPlaying}
         onError={error => logger.log('error', error)}
+        progressUpdateInterval={1000}
+        bufferConfig={{
+          minBufferMs: 15000,
+          maxBufferMs: 50000,
+          bufferForPlaybackMs: 2500,
+          bufferForPlaybackAfterRebufferMs: 4000,
+        }}
       />
 
       <View
@@ -446,16 +298,13 @@ const MeditationPlayer = ({
         )}
       </View>
       <AudioPlayer
+        audioOnly
         useTextureView={false}
         disableFocus
         playInBackground
         playWhenInactive
         ignoreSilentSwitch="ignore"
-        ref={audioPlayer => {
-          if (audioPlayer !== null) {
-            audioPlayerRef = audioPlayer;
-          }
-        }}
+        ref={audioPlayerRef}
         allowsExternalPlayback
         canStepForward
         source={{ uri: url }}
@@ -475,8 +324,7 @@ const MeditationPlayer = ({
           bufferForPlaybackMs: 2500,
           bufferForPlaybackAfterRebufferMs: 4000,
         }}
-        // disableFocus={true}
-        controls
+        controls={false}
         resizeMode="cover"
       />
       <Header>

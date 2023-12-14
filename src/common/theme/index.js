@@ -9,3 +9,5 @@ module.exports = {
   dimens,
   styles,
 };
+
+export default module.exports;
