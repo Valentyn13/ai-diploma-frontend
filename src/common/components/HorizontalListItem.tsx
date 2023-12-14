@@ -115,37 +115,52 @@ const HorizontalListItem: React.FC<HorizontalListItemProps> = ({
   const src = categoryImage(categoryName, index, thumbnail);
 
   return (
-    <Item
-      onPress={navigateToMeditation}
-      big={big}
-      height={height}
-      key={id.toString() + index.toString()}>
-      <ImageContainer source={src}>
-        {!hasPremium && isCategoryLocked && (
-          <Image
-            source={require('@common/assets/images/padlock.png')}
-            style={{ width: 40, height: 40, opacity: 0.2, alignSelf: 'center' }}
+    <View
+      style={{
+        backgroundColor: 'transparent',
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.3,
+        shadowRadius: 2,
+        elevation: 2,
+      }}>
+      <Item
+        onPress={navigateToMeditation}
+        big={big}
+        height={height}
+        key={id.toString() + index.toString()}>
+        <ImageContainer source={src}>
+          {!hasPremium && isCategoryLocked && (
+            <Image
+              source={require('@common/assets/images/padlock.png')}
+              style={{
+                width: 40,
+                height: 40,
+                opacity: 0.2,
+                alignSelf: 'center',
+              }}
+            />
+          )}
+          <TimeLabel height={height}>
+            <IconWrapper>
+              <Icon name="clock" size={8} color="#fff" />
+            </IconWrapper>
+            <SubTitle
+              style={{ marginLeft: 4 }}
+              color="#fff"
+              t={`${meditationTime(duration, true)}`}
+            />
+          </TimeLabel>
+        </ImageContainer>
+        <IconsContainer>
+          <BoldSubTitle color="#fff" t={name} style={{ flex: 1 }} />
+          <MeditationIconsContent
+            categoryTitle={categoryTitle}
+            instructorName={instructor?.name ?? ''}
           />
-        )}
-        <TimeLabel height={height}>
-          <IconWrapper>
-            <Icon name="clock" size={8} color="#fff" />
-          </IconWrapper>
-          <SubTitle
-            style={{ marginLeft: 4 }}
-            color="#fff"
-            t={`${meditationTime(duration, true)}`}
-          />
-        </TimeLabel>
-      </ImageContainer>
-      <IconsContainer>
-        <BoldSubTitle color="#fff" t={name} style={{ flex: 1 }} />
-        <MeditationIconsContent
-          categoryTitle={categoryTitle}
-          instructorName={instructor?.name ?? ''}
-        />
-      </IconsContainer>
-    </Item>
+        </IconsContainer>
+      </Item>
+    </View>
   );
 };
 
@@ -160,7 +175,7 @@ const Item = styled(TouchableOpacity)<StyledItemProps>`
   height: ${({ height }) =>
     height === 'small' ? 120 : height === 'large' ? 280 : 160};
   margin: 5px;
-  border-radius: 8px;
+  border-radius: 12px;
   overflow: hidden;
 `;
 
