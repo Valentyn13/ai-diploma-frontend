@@ -301,11 +301,7 @@ const Home = () => {
             )}
           />
           {categories.map(category => (
-            <CategoryMeditations
-              key={category.id}
-              category={category}
-              meditations={category.meditations}
-            />
+            <CategoryMeditations key={category.id} category={category} />
           ))}
         </>
       </ScrollView>

@@ -3,11 +3,5 @@ import dimens from './dimens';
 import fonts from './fonts';
 import styles from './styles';
 
-module.exports = {
-  colors,
-  fonts,
-  dimens,
-  styles,
-};
-
-export default module.exports;
+export { colors, dimens, fonts, styles };
+export default { colors, dimens, fonts, styles };

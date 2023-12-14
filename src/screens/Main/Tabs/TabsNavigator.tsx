@@ -3,7 +3,6 @@ import colors from '@common/theme/colors';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import i18n from '@services/localization/i18n';
 import React from 'react';
-import { Platform } from 'react-native';
 
 import Courses from './Courses';
 import Home from './Home';
@@ -14,7 +13,6 @@ const Tab = createBottomTabNavigator();
 const TABS = { Home, Meditations, Courses, Profile };
 
 const tabScreen = (name: string) => ({
-  // tabBarLabel: () => <TabBarLabel>{name}</TabBarLabel>,
   tabBarIcon: ({
     focused,
     color,
@@ -38,9 +36,8 @@ const TabNavigator = () => {
           backgroundColor: colors.bgColor,
         },
         tabBarInactiveTintColor: colors.selectedTabBgColor,
-        tabBarActiveTintColor: colors.darkColor,
+        tabBarActiveTintColor: colors.mainColor,
       }}>
-      {/* TODO: fix icons and texts here */}
       {Object.entries(TABS).map(([key, value]) => (
         <Tab.Screen
           key={key}
@@ -55,7 +52,6 @@ const TabNavigator = () => {
               letterSpacing: 0.58,
               textAlign: 'center',
               marginBottom: 4,
-              paddingTop: Platform.OS === 'android' ? 10 : 0,
             },
           }}
         />

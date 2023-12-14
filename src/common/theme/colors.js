@@ -20,6 +20,7 @@ const colors = {
   rawAmethyst: '#504071',
   blackColor: '#000000',
   darkColor: '#160f29',
+  mainColor: '#3C2E06',
 };
 
 export default colors;

@@ -6,12 +6,12 @@ import { NavigationContainer } from '@react-navigation/native';
 import * as Sentry from '@sentry/react-native';
 import useSyncUserData from '@services/hooks/useSyncUserData';
 import React, { useEffect } from 'react';
-import { SafeAreaView, StatusBar } from 'react-native';
+import { SafeAreaView, StatusBar, StyleSheet } from 'react-native';
 import { Settings } from 'react-native-fbsdk-next';
 import 'react-native-gesture-handler';
 import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
-import styled, { ThemeProvider } from 'styled-components';
+import { ThemeProvider } from 'styled-components';
 
 import {
   notificationListner,
@@ -28,12 +28,13 @@ const { store, persistor } = configureStore();
 Settings.initializeSDK();
 console.log('initializing app');
 
-const RootView = styled(SafeAreaView).attrs({
-  backgroundColor: colors.bgColor,
-})`
-  flex: 1;
-  align-self: stretch;
-`;
+const styles = StyleSheet.create({
+  rootContainer: {
+    flex: 1,
+    alignSelf: 'stretch',
+    backgroundColor: colors.bgColor,
+  },
+});
 
 const SyncedRootNavigator: React.FC = () => {
   useSyncUserData();
@@ -53,9 +54,9 @@ const App: React.FC = () => {
           <StatusBar barStyle="dark-content" />
           <ThemeProvider theme={theme}>
             <StoreUpdate>
-              <RootView>
+              <SafeAreaView style={styles.rootContainer}>
                 <SyncedRootNavigator />
-              </RootView>
+              </SafeAreaView>
             </StoreUpdate>
           </ThemeProvider>
         </PersistGate>

@@ -1,3 +1,4 @@
+import { dimens } from '@common/theme';
 import { captureMessage } from '@sentry/react-native';
 import PropTypes from 'prop-types';
 import React from 'react';
@@ -10,6 +11,8 @@ const List = styled(FlatList).attrs({
   horizontal: true,
   showsHorizontalScrollIndicator: false,
 })``;
+
+export const ITEM_WIDTH = big => dimens.winWidth / (big ? 2.4 : 2.4);
 
 const HorizontalList = ({ data, big, height, renderUsing }) => {
   const Child = renderUsing || HorizontalListItem;
@@ -29,8 +32,8 @@ const HorizontalList = ({ data, big, height, renderUsing }) => {
       initialNumToRender={10}
       keyExtractor={item => item.id}
       getItemLayout={(_data, index) => ({
-        length: Child.ITEM_WIDTH(big),
-        offset: Child.ITEM_WIDTH(big) * index,
+        length: ITEM_WIDTH(big),
+        offset: ITEM_WIDTH(big) * index,
         index,
       })}
       onScrollToIndexFailed={info => {

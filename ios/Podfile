@@ -50,7 +50,7 @@ target 'rega' do
   pod 'FirebaseInstallations', :modular_headers => true
   pod 'RSCrashReporter', :modular_headers => true
 
-  pod 'RNPurchases', :path => '../node_modules/react-native-purchases', :inhibit_warnings => true, :modular_headers => false
+  pod 'RNPurchases', :path => '../node_modules/react-native-purchases', :inhibit_warnings => true
   pod 'RNCMaskedView', :path => '../node_modules/@react-native-masked-view/masked-view'
 
   target 'regaTests' do

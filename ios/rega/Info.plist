@@ -84,6 +84,7 @@
 	<string></string>
 	<key>UIAppFonts</key>
 	<array>
+		<string>Feather.ttf</string>
 		<string>almoni-dl-aaa-black.otf</string>
 		<string>almoni-dl-aaa-bold.otf</string>
 		<string>almoni-dl-aaa-light.otf</string>
