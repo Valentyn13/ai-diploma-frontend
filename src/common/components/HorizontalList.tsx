@@ -1,8 +1,7 @@
 import { dimens } from '@common/theme';
 import { captureMessage } from '@sentry/react-native';
-import React, { FC, ReactElement } from 'react';
+import React, { FC, useCallback } from 'react';
 import { FlatList, ListRenderItem } from 'react-native';
-import styled from 'styled-components/native';
 
 import HorizontalListItem from './HorizontalListItem';
 
@@ -22,11 +21,6 @@ interface HorizontalListProps {
   }>;
 }
 
-const List = styled(FlatList).attrs({
-  horizontal: true,
-  showsHorizontalScrollIndicator: false,
-})``;
-
 export const ITEM_WIDTH = (big?: boolean): number =>
   dimens.winWidth / (big ? 2.4 : 2.4);
 
@@ -38,13 +32,14 @@ const HorizontalList: FC<HorizontalListProps> = ({
 }) => {
   const Child = renderUsing || HorizontalListItem;
 
-  const renderItem: ListRenderItem<Item> = ({ item, index }): ReactElement => {
+  const renderItem: ListRenderItem<any> = ({ item, index }): ReactElement => {
     return <Child item={item} index={index} big={big} height={height} />;
   };
 
   return (
-    <List
-      // maxToRenderPerBatch={4}
+    <FlatList
+      horizontal={true}
+      showsHorizontalScrollIndicator={false}
       removeClippedSubviews={true}
       data={data}
       renderItem={renderItem}
