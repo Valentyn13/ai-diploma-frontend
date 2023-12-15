@@ -1,17 +1,19 @@
 /* eslint-disable react-native/no-inline-styles */
 import { categoryImage } from '@common/assets/images';
+import { colors } from '@common/theme';
 import { useNavigation } from '@react-navigation/native';
 import { useAmplitude } from '@services/hooks/useAmplitude';
 import { logEvent } from '@utils/analytics';
 import meditationTime from '@utils/meditationTime';
 import React, { memo, useCallback, useEffect } from 'react';
-import { Image, TouchableOpacity, View } from 'react-native';
+import { ImageBackground, TouchableOpacity, View } from 'react-native';
 import Icon from 'react-native-vector-icons/Feather';
 import { useSelector } from 'react-redux';
 import { meditationInstructor } from 'store/selectors';
 import styled from 'styled-components/native';
 
-import { BoldSubTitle, CenteredView, SubTitle } from './Styled';
+import { BoldSubTitle, SubTitle } from './Styled';
+import usePurchases from '@services/hooks/usePurchases';
 
 interface MeditationIconsContentProps {
   categoryTitle: string;
@@ -23,21 +25,22 @@ const MeditationIconsContent: React.FC<MeditationIconsContentProps> = ({
   instructorName,
 }) => {
   return (
-    <MeditationIconsContentWrapper>
-      <IconWrapperContainer>
-        <SubTitle style={{ marginLeft: 4 }} color="#fff" t={categoryTitle} />
-      </IconWrapperContainer>
-      <IconWrapperContainer>
-        <IconWrapper>
-          <Icon color="#fff" name="user" size={10} />
-        </IconWrapper>
-        <SubTitle
-          style={{ marginLeft: 4, marginTop: 2 }}
-          color="#fff"
-          t={instructorName ?? ''}
-        />
-      </IconWrapperContainer>
-    </MeditationIconsContentWrapper>
+    <View className="flex-row">
+      <SubTitle className="mr-2" color="#fff" t={categoryTitle} />
+      <Icon
+        style={{
+          marginTop: 2,
+        }}
+        color="#fff"
+        name="user"
+        size={10}
+      />
+      <SubTitle
+        className="ml-1 mt-[3px]"
+        color="#fff"
+        t={instructorName ?? ''}
+      />
+    </View>
   );
 };
 
@@ -87,13 +90,15 @@ const HorizontalListItem: React.FC<HorizontalListItemProps> = memo(
 
     const navigateToMeditation = useCallback(() => {
       if (!hasPremium && isCategoryLocked) {
+        // @ts-ignore TODO: fix this
         navigate('Subscribe2', { item: { name } });
       } else {
-        amplitudeInstance.logEvent('MEDITATION_CLICKED', { categoryName });
-        amplitudeInstance.logEvent('MEDITATION_PLAY', { categoryName });
+        amplitudeInstance.logEvent('MEDITATION_CLICKED');
+        amplitudeInstance.logEvent('MEDITATION_PLAY');
         logEvent('MEDITATION_CLICKED', { categoryName });
         logEvent('MEDITATION_PLAY', { categoryName });
         amplitudeInstance.uploadEvents();
+        // @ts-ignore TODO: fix this
         navigate('MeditationPlayer', {
           item: { id, name, categoryName, url, animation },
           index,
@@ -115,52 +120,50 @@ const HorizontalListItem: React.FC<HorizontalListItemProps> = memo(
     const src = categoryImage(categoryName, index, thumbnail);
 
     return (
-      <View
+      <Item
         style={{
-          backgroundColor: 'transparent',
-          shadowColor: '#000',
-          shadowOffset: { width: 0, height: 2 },
-          shadowOpacity: 0.3,
-          shadowRadius: 2,
+          // backgroundColor: 'transparent',
+          // shadowColor: '#000',
+          // shadowOffset: { width: 0, height: 2 },
+          // shadowOpacity: 0.3,
+          // shadowRadius: 2,
           elevation: 2,
-        }}>
-        <Item
-          onPress={navigateToMeditation}
-          big={big}
-          height={height}
-          key={id.toString() + index.toString()}>
-          <ImageContainer source={src}>
-            {!hasPremium && isCategoryLocked && (
-              <Image
-                source={require('@common/assets/images/padlock.png')}
-                style={{
-                  width: 40,
-                  height: 40,
-                  opacity: 0.2,
-                  alignSelf: 'center',
-                }}
-              />
-            )}
-            <TimeLabel height={height}>
-              <IconWrapper>
-                <Icon name="clock" size={8} color="#fff" />
-              </IconWrapper>
-              <SubTitle
-                style={{ marginLeft: 4 }}
-                color="#fff"
-                t={`${meditationTime(duration, true)}`}
-              />
-            </TimeLabel>
-          </ImageContainer>
-          <IconsContainer>
-            <BoldSubTitle color="#fff" t={name} style={{ flex: 1 }} />
-            <MeditationIconsContent
-              categoryTitle={categoryTitle}
-              instructorName={instructor?.name ?? ''}
+        }}
+        onPress={navigateToMeditation}
+        big={big}
+        height={height}
+        key={id.toString() + index.toString()}>
+        <ImageBackground
+          className="flex-1 items-center justify-center"
+          resizeMode="cover"
+          source={src}>
+          {!hasPremium && isCategoryLocked && (
+            <Icon
+              style={{
+                opacity: 0.3,
+              }}
+              name="lock"
+              size={40}
+              color="#000"
             />
-          </IconsContainer>
-        </Item>
-      </View>
+          )}
+          <TimeLabel height={height}>
+            <Icon name="clock" size={8} color="#fff" />
+            <SubTitle
+              style={{ marginLeft: 4 }}
+              color="#fff"
+              t={`${meditationTime(duration, true)}`}
+            />
+          </TimeLabel>
+        </ImageBackground>
+        <View className="py-1 px-2 h-12 bg-[#160f29]">
+          <BoldSubTitle className="flex-1" color={colors.whiteColor} t={name} />
+          <MeditationIconsContent
+            categoryTitle={categoryTitle}
+            instructorName={instructor?.name ?? ''}
+          />
+        </View>
+      </Item>
     );
   },
 );
@@ -178,38 +181,6 @@ const Item = styled(TouchableOpacity)<StyledItemProps>`
   margin: 5px;
   border-radius: 12px;
   overflow: hidden;
-`;
-
-const ImageContainer = styled.ImageBackground.attrs(() => ({
-  resizeMode: 'cover',
-}))`
-  flex: 1;
-  background-color: green;
-  justify-content: center;
-`;
-
-const IconsContainer = styled.View`
-  height: 50px;
-  background-color: ${({ theme: { colors } }) => colors.darkColor};
-  flex-direction: column;
-  align-items: flex-start;
-  padding-left: 6px;
-  padding-top: 4px;
-  padding-bottom: 4px;
-`;
-
-const IconWrapper = styled(CenteredView)``;
-
-const IconWrapperContainer = styled(CenteredView)`
-  flex-direction: row;
-  margin-top: 5px;
-  margin-right: 8px;
-  align-items: center;
-`;
-
-const MeditationIconsContentWrapper = styled(View)`
-  flex-direction: row;
-  align-items: center;
 `;
 
 const TimeLabel = styled.View<{ height?: string }>`
