@@ -2,10 +2,9 @@
 import { categoryImage } from '@common/assets/images';
 import { useNavigation } from '@react-navigation/native';
 import { useAmplitude } from '@services/hooks/useAmplitude';
-import usePurchases from '@services/hooks/usePurchases';
 import { logEvent } from '@utils/analytics';
 import meditationTime from '@utils/meditationTime';
-import React, { useCallback, useEffect } from 'react';
+import React, { memo, useCallback, useEffect } from 'react';
 import { Image, TouchableOpacity, View } from 'react-native';
 import Icon from 'react-native-vector-icons/Feather';
 import { useSelector } from 'react-redux';
@@ -59,110 +58,112 @@ interface HorizontalListItemProps {
   height?: string;
 }
 
-const HorizontalListItem: React.FC<HorizontalListItemProps> = ({
-  item: {
-    id,
-    name,
-    url,
-    duration,
-    categoryName,
-    animation,
-    thumbnail,
-    isCategoryLocked,
-    categoryTitle,
-  },
-  index,
-  big,
-  height,
-}) => {
-  const { navigate } = useNavigation();
-  const amplitudeInstance = useAmplitude();
-  const instructor = useSelector(state => meditationInstructor(state, id));
-
-  const { hasPremium, setPurchaserIdentity } = usePurchases();
-
-  useEffect(() => {
-    setPurchaserIdentity();
-  }, [setPurchaserIdentity]);
-
-  const navigateToMeditation = useCallback(() => {
-    if (!hasPremium && isCategoryLocked) {
-      navigate('Subscribe2', { item: { name } });
-    } else {
-      amplitudeInstance.logEvent('MEDITATION_CLICKED', { categoryName });
-      amplitudeInstance.logEvent('MEDITATION_PLAY', { categoryName });
-      logEvent('MEDITATION_CLICKED', { categoryName });
-      logEvent('MEDITATION_PLAY', { categoryName });
-      amplitudeInstance.uploadEvents();
-      navigate('MeditationPlayer', {
-        item: { id, name, categoryName, url, animation },
-        index,
-      });
-    }
-  }, [
-    hasPremium,
-    isCategoryLocked,
-    navigate,
-    name,
-    amplitudeInstance,
-    categoryName,
-    id,
-    url,
-    animation,
+const HorizontalListItem: React.FC<HorizontalListItemProps> = memo(
+  ({
+    item: {
+      id,
+      name,
+      url,
+      duration,
+      categoryName,
+      animation,
+      thumbnail,
+      isCategoryLocked,
+      categoryTitle,
+    },
     index,
-  ]);
+    big,
+    height,
+  }) => {
+    const { navigate } = useNavigation();
+    const amplitudeInstance = useAmplitude();
+    const instructor = useSelector(state => meditationInstructor(state, id));
 
-  const src = categoryImage(categoryName, index, thumbnail);
+    const { hasPremium, setPurchaserIdentity } = usePurchases();
 
-  return (
-    <View
-      style={{
-        backgroundColor: 'transparent',
-        shadowColor: '#000',
-        shadowOffset: { width: 0, height: 2 },
-        shadowOpacity: 0.3,
-        shadowRadius: 2,
-        elevation: 2,
-      }}>
-      <Item
-        onPress={navigateToMeditation}
-        big={big}
-        height={height}
-        key={id.toString() + index.toString()}>
-        <ImageContainer source={src}>
-          {!hasPremium && isCategoryLocked && (
-            <Image
-              source={require('@common/assets/images/padlock.png')}
-              style={{
-                width: 40,
-                height: 40,
-                opacity: 0.2,
-                alignSelf: 'center',
-              }}
+    useEffect(() => {
+      setPurchaserIdentity();
+    }, [setPurchaserIdentity]);
+
+    const navigateToMeditation = useCallback(() => {
+      if (!hasPremium && isCategoryLocked) {
+        navigate('Subscribe2', { item: { name } });
+      } else {
+        amplitudeInstance.logEvent('MEDITATION_CLICKED', { categoryName });
+        amplitudeInstance.logEvent('MEDITATION_PLAY', { categoryName });
+        logEvent('MEDITATION_CLICKED', { categoryName });
+        logEvent('MEDITATION_PLAY', { categoryName });
+        amplitudeInstance.uploadEvents();
+        navigate('MeditationPlayer', {
+          item: { id, name, categoryName, url, animation },
+          index,
+        });
+      }
+    }, [
+      hasPremium,
+      isCategoryLocked,
+      navigate,
+      name,
+      amplitudeInstance,
+      categoryName,
+      id,
+      url,
+      animation,
+      index,
+    ]);
+
+    const src = categoryImage(categoryName, index, thumbnail);
+
+    return (
+      <View
+        style={{
+          backgroundColor: 'transparent',
+          shadowColor: '#000',
+          shadowOffset: { width: 0, height: 2 },
+          shadowOpacity: 0.3,
+          shadowRadius: 2,
+          elevation: 2,
+        }}>
+        <Item
+          onPress={navigateToMeditation}
+          big={big}
+          height={height}
+          key={id.toString() + index.toString()}>
+          <ImageContainer source={src}>
+            {!hasPremium && isCategoryLocked && (
+              <Image
+                source={require('@common/assets/images/padlock.png')}
+                style={{
+                  width: 40,
+                  height: 40,
+                  opacity: 0.2,
+                  alignSelf: 'center',
+                }}
+              />
+            )}
+            <TimeLabel height={height}>
+              <IconWrapper>
+                <Icon name="clock" size={8} color="#fff" />
+              </IconWrapper>
+              <SubTitle
+                style={{ marginLeft: 4 }}
+                color="#fff"
+                t={`${meditationTime(duration, true)}`}
+              />
+            </TimeLabel>
+          </ImageContainer>
+          <IconsContainer>
+            <BoldSubTitle color="#fff" t={name} style={{ flex: 1 }} />
+            <MeditationIconsContent
+              categoryTitle={categoryTitle}
+              instructorName={instructor?.name ?? ''}
             />
-          )}
-          <TimeLabel height={height}>
-            <IconWrapper>
-              <Icon name="clock" size={8} color="#fff" />
-            </IconWrapper>
-            <SubTitle
-              style={{ marginLeft: 4 }}
-              color="#fff"
-              t={`${meditationTime(duration, true)}`}
-            />
-          </TimeLabel>
-        </ImageContainer>
-        <IconsContainer>
-          <BoldSubTitle color="#fff" t={name} style={{ flex: 1 }} />
-          <MeditationIconsContent
-            categoryTitle={categoryTitle}
-            instructorName={instructor?.name ?? ''}
-          />
-        </IconsContainer>
-      </Item>
-    </View>
-  );
-};
+          </IconsContainer>
+        </Item>
+      </View>
+    );
+  },
+);
 
 interface StyledItemProps {
   big?: boolean;
