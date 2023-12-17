@@ -125,7 +125,7 @@ const PreLogin = ({ navigation }) => {
             <AppText
               bold
               style={{ color: '#000', fontSize: 16, textAlign: 'center' }}>
-              Continue with Apple
+              הרשמה עם Apple
             </AppText>
             <Image
               source={image('apple_logo')}

@@ -3,6 +3,7 @@ import colors from '@common/theme/colors';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import i18n from '@services/localization/i18n';
 import React from 'react';
+import Animated from 'react-native-reanimated';
 
 import Courses from './Courses';
 import Home from './Home';
@@ -22,7 +23,16 @@ const tabScreen = (name: string) => ({
     color: string;
     size: number;
   }) => (
-    <Icon name={`${name}${focused ? 'On' : 'Off'}`} size={size} color={color} />
+    <Animated.View
+      style={{
+        transform: [{ scale: focused ? 1.2 : 1 }],
+      }}>
+      <Icon
+        name={`${name}${focused ? 'On' : 'Off'}`}
+        size={size}
+        color={color}
+      />
+    </Animated.View>
   ),
 });
 

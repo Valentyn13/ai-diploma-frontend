@@ -1,11 +1,9 @@
 import CircularSlider from '@common/components/CircularSlider';
+import { colors } from '@common/theme';
 import isLowResolution from '@utils/isLowResolution';
 import React, { FC } from 'react';
-import {
-  ActivityIndicator,
-  ImageSourcePropType,
-  TouchableOpacity,
-} from 'react-native';
+import { ActivityIndicator, TouchableOpacity } from 'react-native';
+import Icon from 'react-native-vector-icons/Feather';
 import styled, { DefaultTheme, withTheme } from 'styled-components/native';
 
 interface CircularPlayButtonProps {
@@ -24,20 +22,9 @@ interface CircularPlayButtonProps {
 const SIZE = isLowResolution ? 100 : 120;
 const WIDTH = isLowResolution ? 15 : 20;
 
-const PAUSE_IMG: ImageSourcePropType = require('@common/assets/images/pause.png');
-const PLAY_IMG: ImageSourcePropType = require('@common/assets/images/play.png');
-
 const ButtonContainer = styled.View`
   width: ${SIZE}px;
   height: ${SIZE}px;
-`;
-
-const Img = styled.Image.attrs(({ icon }: { icon: ImageSourcePropType }) => ({
-  source: icon,
-  resizeMode: 'contain',
-}))`
-  width: ${SIZE / 2}px;
-  height: ${SIZE / 2}px;
 `;
 
 const PlayButtonWrapper = styled(TouchableOpacity)`
@@ -59,7 +46,6 @@ const CircularPlayButton: FC<CircularPlayButtonProps> = ({
   onSliderEditing,
   duration,
   theme,
-  // setCurrentTime,
   isLoading,
 }) => (
   <ButtonContainer>
@@ -71,7 +57,6 @@ const CircularPlayButton: FC<CircularPlayButtonProps> = ({
       innerStripColor={theme.colors.whiteColor}
       outerStripColor={theme.colors.playerSliderStripColor}
       value={currentTime!}
-      // onValueChange={setCurrentTime}
       maxValue={duration!}
       onSliderEditStart={onSliderEditStart!}
       onSliderEditEnd={onSliderEditEnd!}
@@ -80,13 +65,14 @@ const CircularPlayButton: FC<CircularPlayButtonProps> = ({
 
     <PlayButtonWrapper onPress={togglePlay}>
       {isLoading ? (
-        <ActivityIndicator
-          size="large"
-          color="white"
-          style={{ position: 'absolute' }}
-        />
+        <ActivityIndicator size="large" color="white" />
       ) : (
-        <Img icon={isPlaying ? PAUSE_IMG : PLAY_IMG} />
+        <Icon
+          style={{ marginRight: 2 }}
+          name={isPlaying ? 'pause' : 'play'}
+          size={SIZE / 2}
+          color={colors.whiteColor}
+        />
       )}
     </PlayButtonWrapper>
   </ButtonContainer>
