@@ -115,7 +115,6 @@ const Details: React.FC<DetailsProps> = () => {
           onPress={() => setPasswordModal(true)}
         />
       </View>
-      {/* //edit profile modal */}
       <Modal
         animationType="fade"
         visible={toggleModal}
@@ -125,7 +124,7 @@ const Details: React.FC<DetailsProps> = () => {
         <View
           style={{ flex: 1, borderWidth: 2, backgroundColor: colors.bgColor }}>
           <Title
-            k="Edit profile"
+            t="עריכת פרופיל"
             style={{
               textAlign: 'center',
               paddingTop: 60,

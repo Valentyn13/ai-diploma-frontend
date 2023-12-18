@@ -1,4 +1,3 @@
-/* eslint-disable react-native/no-inline-styles */
 import categoryVideo from '@common/assets/videos';
 import FavoriteIndicator from '@common/components/FavoriteIndicator';
 import {
@@ -110,10 +109,8 @@ const BgMusicPlayer = ({ source, paused }) => (
     onError={error => {
       logger.log('error', JSON.stringify(error));
     }}
-    useTextureView={false}
     disableFocus
     audioOnly
-    controls
     playInBackground
     repeat
     playWhenInactive
@@ -126,6 +123,7 @@ const MeditationPlayer = ({
     colors: { whiteColor, itemBgColor },
   },
 }) => {
+  const [destroyed, setDestroyed] = useState(false);
   const route = useRoute();
   const audioPlayerRef = useRef(null);
   const { updateIstructorTractionData } = useInstructor();
@@ -164,7 +162,6 @@ const MeditationPlayer = ({
 
   const updateTimePlayed = useCallback(() => {
     const minutesPlayed = (currentTime - startTime) / 60;
-    // console.log('minutesPlayed', minutesPlayed);
 
     dispatch(minutesPracticed({ minutesPlayed }));
   }, [currentTime, dispatch, startTime]);
@@ -202,8 +199,15 @@ const MeditationPlayer = ({
   };
 
   const onLoad = ({ duration: value }) => {
+    if (destroyed) {
+      setIsPlaying(false);
+      return;
+    }
+
     setDuration(value);
+    setIsLoading(false);
   };
+
   const onProgress = useCallback(
     ({ currentTime: value }) => {
       if (!sliderEditing) {
@@ -224,7 +228,6 @@ const MeditationPlayer = ({
   }, [updateTimePlayed]);
 
   const onSliderEditEnd = useCallback(endTime => {
-    console.log('onSliderEditEnd', endTime);
     setSliderEditing(false);
     setStartTime(endTime);
   }, []);
@@ -261,18 +264,23 @@ const MeditationPlayer = ({
     currentTime: PropTypes.number.isRequired,
   };
 
-  const onBuffer = ({ isBuffering }) => {
-    setIsLoading(isBuffering);
-  };
-  const onLoadStart = () => {
-    logger.log('load start');
-  };
+  useEffect(() => {
+    return () => {
+      setDestroyed(true);
+      setIsPlayingBgMusic(false);
+      setIsPlaying(false);
+      audioPlayerRef.current = null;
+    };
+  }, []);
 
   return (
     <MeditationContainer>
       <VideoPlayer
         source={video}
         paused={!isPlaying}
+        // TODO: add poster of mediation
+        // poster="https://picsum.photos/200"
+        // posterResizeMode="cover"
         onError={error => logger.log('error', error)}
         progressUpdateInterval={1000}
         bufferConfig={{
@@ -299,7 +307,6 @@ const MeditationPlayer = ({
       </View>
       <AudioPlayer
         audioOnly
-        useTextureView={false}
         disableFocus
         playInBackground
         playWhenInactive
@@ -309,14 +316,10 @@ const MeditationPlayer = ({
         canStepForward
         source={{ uri: url }}
         paused={!isPlaying}
-        {...{
-          onLoad,
-          onProgress,
-          onEnd,
-          onError,
-          onBuffer,
-          onLoadStart,
-        }}
+        onLoad={onLoad}
+        onProgress={onProgress}
+        onEnd={onEnd}
+        onError={onError}
         progressUpdateInterval={1000}
         bufferConfig={{
           minBufferMs: 15000,
@@ -324,8 +327,6 @@ const MeditationPlayer = ({
           bufferForPlaybackMs: 2500,
           bufferForPlaybackAfterRebufferMs: 4000,
         }}
-        controls={false}
-        resizeMode="cover"
       />
       <Header>
         {hasAnimation === false ? (
@@ -356,17 +357,15 @@ const MeditationPlayer = ({
       <ButtonsContainer flex={1.1}>
         <ButtonsInnerContainer>
           <CircularPlayer
-            {...{
-              togglePlay,
-              isPlaying,
-              currentTime,
-              onSliderEditStart,
-              onSliderEditEnd,
-              onSliderEditing,
-              duration,
-              setCurrentTime,
-              isLoading,
-            }}
+            togglePlay={togglePlay}
+            isPlaying={isPlaying}
+            currentTime={currentTime}
+            onSliderEditStart={onSliderEditStart}
+            onSliderEditEnd={onSliderEditEnd}
+            onSliderEditing={onSliderEditing}
+            duration={duration}
+            setCurrentTime={setCurrentTime}
+            isLoading={isLoading}
           />
           <TimesLabel {...{ currentTime, duration }} color={whiteColor} />
           <StartHereTitle color={whiteColor} t={name || title} />

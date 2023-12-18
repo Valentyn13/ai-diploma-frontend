@@ -2,12 +2,12 @@
 import subscribe2Bg from '@common/assets/images/subscribe2Bg.png';
 import { SubTitle, TouchableIcon } from '@common/components/Styled';
 import SubscriptionPoint from '@common/components/SubscriptionPoint';
+import { usePurchases } from '@common/context/PurchaseContext';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import rudderClient, {
   RUDDER_LOG_LEVEL,
 } from '@rudderstack/rudder-sdk-react-native';
 import { useAmplitude } from '@services/hooks/useAmplitude';
-import usePurchases from '@services/hooks/usePurchases';
 import { logEvent } from '@utils/analytics';
 import get from '@utils/get';
 import PropTypes from 'prop-types';

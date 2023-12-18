@@ -2,7 +2,7 @@ import AboutCourse from '@common/components/AboutCourse';
 import { BackIcon } from '@common/components/Styled';
 import theme from '@common/theme';
 import colors from '@common/theme/colors';
-import { createStackNavigator } from '@react-navigation/stack';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import i18n from '@services/localization/i18n';
 import React from 'react';
 
@@ -10,9 +10,9 @@ import CategoryDetails from './CategoryDetails';
 import Home from './Home';
 import InstructorDetail from './InstructorDetail';
 
-const Stack = createStackNavigator();
+const Stack = createNativeStackNavigator();
 
-const navigtaionOption = {
+const options = {
   headerShown: true,
   cardStyle: {
     backgroundColor: 'transparent',
@@ -47,12 +47,12 @@ const StackNavigator = () => {
       <Stack.Screen
         name="CategoryDetails"
         component={CategoryDetails}
-        options={navigtaionOption}
+        options={options}
       />
       <Stack.Screen
         name="AboutCourseForHome"
         component={AboutCourse}
-        options={navigtaionOption}
+        options={options}
       />
       <Stack.Screen
         name="InstructorDetail"

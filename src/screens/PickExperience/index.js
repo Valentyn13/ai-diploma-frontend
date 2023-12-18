@@ -88,11 +88,19 @@ const PickExperience = () => {
         source={image('gender_bg')}
       />
       <View
-        style={{ position: 'absolute', top: scale(80), alignItems: 'center' }}>
-        <AppText black style={{ fontSize: 20, textAlign: 'center' }}>
+        style={{ position: 'absolute', top: scale(60), alignItems: 'center' }}>
+        <AppText
+          black
+          style={{ fontSize: 20, textAlign: 'center', color: '#000' }}>
           כמה נסיון יש לך בעולם המיינדפולנס?
         </AppText>
-        <AppText style={{ fontSize: 16, marginTop: 6, textAlign: 'center' }}>
+        <AppText
+          style={{
+            fontSize: 16,
+            marginTop: 6,
+            textAlign: 'center',
+            color: '#000',
+          }}>
           {
             'הבחירה כאן תאפשר לך לקבל תוכן מותאם לרמה שלך,\nבכל מקרה, אפשר לשנות את הבחירה גם בהמשך\nמתוך תפריט האפליקציה.'
           }

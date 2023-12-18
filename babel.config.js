@@ -22,7 +22,7 @@ module.exports = {
           '@common': './src/common',
           '@services': './src/services',
           '@utils': './src/utils',
-          screens: './src/screens',
+          '@screens': './src/screens',
           store: './src/store',
         },
       },

@@ -1,4 +1,3 @@
-/* eslint-disable react-native/no-inline-styles */
 import HomeTopBg from '@common/assets/images/HomeTopBg.png';
 import CategoryMeditations from '@common/components/CategoryMeditations';
 import CoursesCarousel from '@common/components/CoursesCarousel';
@@ -13,6 +12,7 @@ import {
   TopTitle,
 } from '@common/components/Styled';
 import { SHOULD_SHOW_REMINDER_POPUP_STATUS_TURNED_ON } from '@common/constants';
+import { usePurchases } from '@common/context/PurchaseContext';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {
   useFocusEffect,
@@ -22,7 +22,6 @@ import {
 import useAppData from '@services/hooks/useAppData';
 import useAppState from '@services/hooks/useAppState';
 import useArticleData from '@services/hooks/useArticleData';
-import usePurchases from '@services/hooks/usePurchases';
 import { logEvent } from '@utils/analytics';
 import isLowResolution from '@utils/isLowResolution';
 import React, { useCallback, useEffect, useState } from 'react';

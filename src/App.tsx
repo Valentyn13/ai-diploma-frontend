@@ -1,4 +1,4 @@
-// import codePush from 'react-native-code-push';
+import { PurchaseProvider } from '@common/context/PurchaseContext';
 import StoreUpdate from '@common/storeUpdate';
 import theme from '@common/theme';
 import colors from '@common/theme/colors';
@@ -8,7 +8,7 @@ import useSyncUserData from '@services/hooks/useSyncUserData';
 import React, { useEffect } from 'react';
 import { SafeAreaView, StatusBar, StyleSheet } from 'react-native';
 import { Settings } from 'react-native-fbsdk-next';
-import 'react-native-gesture-handler';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
 import { ThemeProvider } from 'styled-components';
@@ -49,18 +49,22 @@ const App: React.FC = () => {
 
   return (
     <NavigationContainer>
-      <Provider store={store}>
-        <PersistGate loading={null} persistor={persistor}>
-          <StatusBar barStyle="dark-content" />
-          <ThemeProvider theme={theme}>
-            <StoreUpdate>
-              <SafeAreaView style={styles.rootContainer}>
-                <SyncedRootNavigator />
-              </SafeAreaView>
-            </StoreUpdate>
-          </ThemeProvider>
-        </PersistGate>
-      </Provider>
+      <GestureHandlerRootView className="flex-1">
+        <Provider store={store}>
+          <PurchaseProvider>
+            <PersistGate loading={null} persistor={persistor}>
+              <StatusBar barStyle="default" />
+              <ThemeProvider theme={theme}>
+                <StoreUpdate>
+                  <SafeAreaView style={styles.rootContainer}>
+                    <SyncedRootNavigator />
+                  </SafeAreaView>
+                </StoreUpdate>
+              </ThemeProvider>
+            </PersistGate>
+          </PurchaseProvider>
+        </Provider>
+      </GestureHandlerRootView>
     </NavigationContainer>
   );
 };

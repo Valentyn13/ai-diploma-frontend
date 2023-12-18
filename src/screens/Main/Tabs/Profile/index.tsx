@@ -1,9 +1,9 @@
 import { colors } from '@common/theme';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
+import PrivacyPolicy from '@screens/PrivacyPolicy';
 import i18n from '@services/localization/i18n';
 import React from 'react';
-import PrivacyPolicy from 'screens/PrivacyPolicy';
 
 import Details from './Details';
 import MyWay from './MyWay';

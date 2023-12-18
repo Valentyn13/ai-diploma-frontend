@@ -1,9 +1,9 @@
 import { createStackNavigator } from '@react-navigation/stack';
+import IntroRelax from '@screens/IntroRelax';
+import PreLogin from '@screens/PreLogin';
+import PrivacyPolicy from '@screens/PrivacyPolicy';
+import Register from '@screens/Register';
 import React from 'react';
-import IntroRelax from 'screens/IntroRelax';
-import PreLogin from 'screens/PreLogin';
-import PrivacyPolicy from 'screens/PrivacyPolicy';
-import Register from 'screens/Register';
 
 import CategoriesSelector from './CategoriesSelector';
 import ChooseSex from './ChooseSex';
@@ -24,7 +24,6 @@ const IntroScreensNavigator = () => {
       screenOptions={{
         headerShown: false,
         gestureEnabled: false,
-        swipeEnabled: false,
       }}>
       <Stack.Screen name="Intro" component={Intro} />
       <Stack.Screen name="IntroSleep" component={IntroSleep} />

@@ -1,7 +1,7 @@
 /* eslint-disable react-native/no-inline-styles */
 import { categoryImage } from '@common/assets/images';
 import AppText from '@common/components/AppText';
-import usePurchases from '@services/hooks/usePurchases';
+import { usePurchases } from '@common/context/PurchaseContext';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { View } from 'react-native';

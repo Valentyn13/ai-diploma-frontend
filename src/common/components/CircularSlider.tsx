@@ -109,15 +109,15 @@ const CircularSlider: FC<CircularSliderProps> = ({
         cy={cy}
         r={r - strokeWidth / 2}
         stroke={innerStripColor}
-        strokeWidth={1}
+        strokeWidth={2}
         fill="none"
       />
       <Circle
         cx={cx}
         cy={cy}
         r={r + strokeWidth / 2}
-        stroke={outerStripColor}
-        strokeWidth={1}
+        stroke={innerStripColor}
+        strokeWidth={2}
         fill="none"
       />
       <Path

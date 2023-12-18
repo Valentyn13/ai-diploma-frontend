@@ -1,13 +1,13 @@
 import AboutCourse from '@common/components/AboutCourse';
 import theme from '@common/theme';
 import colors from '@common/theme/colors';
-import { createStackNavigator } from '@react-navigation/stack';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import i18n from '@services/localization/i18n';
 import React from 'react';
 
 import Courses from './Courses';
 
-const navigtaionOption = {
+const options = {
   headerShown: false,
   cardStyle: {
     backgroundColor: 'transparent',
@@ -29,20 +29,16 @@ const navigtaionOption = {
   },
 };
 
-const Stack = createStackNavigator();
+const Stack = createNativeStackNavigator();
 
 const CoursesStack = () => (
   <Stack.Navigator initialRouteName="Courses">
-    <Stack.Screen
-      name="Courses"
-      component={Courses}
-      options={navigtaionOption}
-    />
+    <Stack.Screen name="Courses" component={Courses} options={options} />
     <Stack.Screen
       name="AboutCourse"
       component={AboutCourse}
       options={{
-        ...navigtaionOption,
+        ...options,
         headerTitle: i18n.t('aboutCourse'),
       }}
     />
