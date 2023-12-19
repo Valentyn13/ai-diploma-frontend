@@ -4,7 +4,6 @@ import theme from '@common/theme';
 import colors from '@common/theme/colors';
 import { NavigationContainer } from '@react-navigation/native';
 import * as Sentry from '@sentry/react-native';
-import useSyncUserData from '@services/hooks/useSyncUserData';
 import React, { useEffect } from 'react';
 import { SafeAreaView, StatusBar, StyleSheet } from 'react-native';
 import { Settings } from 'react-native-fbsdk-next';
@@ -26,7 +25,6 @@ Sentry.init({
 
 const { store, persistor } = configureStore();
 Settings.initializeSDK();
-console.log('initializing app');
 
 const styles = StyleSheet.create({
   rootContainer: {
@@ -35,11 +33,6 @@ const styles = StyleSheet.create({
     backgroundColor: colors.bgColor,
   },
 });
-
-const SyncedRootNavigator: React.FC = () => {
-  useSyncUserData();
-  return <RootNavigator />;
-};
 
 const App: React.FC = () => {
   useEffect(() => {
@@ -57,7 +50,7 @@ const App: React.FC = () => {
               <ThemeProvider theme={theme}>
                 <StoreUpdate>
                   <SafeAreaView style={styles.rootContainer}>
-                    <SyncedRootNavigator />
+                    <RootNavigator />
                   </SafeAreaView>
                 </StoreUpdate>
               </ThemeProvider>

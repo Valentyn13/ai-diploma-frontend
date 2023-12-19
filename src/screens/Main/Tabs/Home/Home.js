@@ -156,7 +156,6 @@ const Home = () => {
 
   useFocusEffect(
     useCallback(() => {
-      setPurchaserIdentity();
       setData(meditations);
       setIsFocus(true);
       if (
@@ -165,12 +164,7 @@ const Home = () => {
         notificationModal();
       }
       return () => setIsFocus(false);
-    }, [
-      setPurchaserIdentity,
-      meditations,
-      shouldShowReminderPopup,
-      notificationModal,
-    ]),
+    }, [meditations, shouldShowReminderPopup, notificationModal]),
   );
 
   useEffect(() => {

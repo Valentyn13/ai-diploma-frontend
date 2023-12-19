@@ -86,6 +86,10 @@ export const PurchaseProvider: React.FC<PropsWithChildren> = ({ children }) => {
     }
   }, []);
 
+  useEffect(() => {
+    setPurchaserIdentity();
+  }, [setPurchaserIdentity]);
+
   const purchasePlan = useCallback(async (packageToPurchase: any) => {
     try {
       setPurchasing(true);

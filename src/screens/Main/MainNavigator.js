@@ -11,27 +11,13 @@ import WebView from './WebView';
 
 const Stack = createNativeStackNavigator();
 
-const navigationOption = {
-  headerShown: false,
-  title: 'appName', // You can use i18n.t('appName') if needed
-  headerTitleAlign: 'center',
-  headerStyle: {
-    backgroundColor: '#FFFFFF', // Specify your background color
-    borderBottomColor: 'transparent',
-    shadowOffset: { height: 0, width: 0 },
-    elevation: 0,
-  },
-  headerTitleStyle: {
-    fontFamily: 'regular', // Specify your font family
-    color: '#000000', // Specify your text color
-    fontSize: 17,
-    letterSpacing: 5.19,
-  },
-};
-
 const StackNavigator = () => {
   return (
-    <Stack.Navigator initialRouteName="Tabs" screenOptions={navigationOption}>
+    <Stack.Navigator
+      initialRouteName="Tabs"
+      screenOptions={{
+        headerShown: false,
+      }}>
       <Stack.Screen name="Tabs" component={Tabs} />
       <Stack.Screen
         name="MeditationPlayer"

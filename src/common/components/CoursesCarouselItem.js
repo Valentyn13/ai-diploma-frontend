@@ -82,11 +82,7 @@ const CoursesCarouselItem = ({
 }) => {
   const onItemPress = () => onItem(item);
   const onAboutPress = () => onAbout(item);
-  const { hasPremium, setPurchaserIdentity } = usePurchases();
-
-  React.useEffect(() => {
-    setPurchaserIdentity();
-  }, [setPurchaserIdentity]);
+  const { hasPremium } = usePurchases();
 
   return (
     <Container>

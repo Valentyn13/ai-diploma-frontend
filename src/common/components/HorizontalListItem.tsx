@@ -1,11 +1,11 @@
-/* eslint-disable react-native/no-inline-styles */
 import { categoryImage } from '@common/assets/images';
+import { usePurchases } from '@common/context/PurchaseContext';
 import { colors } from '@common/theme';
 import { useNavigation } from '@react-navigation/native';
 import { useAmplitude } from '@services/hooks/useAmplitude';
 import { logEvent } from '@utils/analytics';
 import meditationTime from '@utils/meditationTime';
-import React, { memo, useCallback, useEffect } from 'react';
+import React, { memo, useCallback } from 'react';
 import { ImageBackground, TouchableOpacity, View } from 'react-native';
 import Icon from 'react-native-vector-icons/Feather';
 import { useSelector } from 'react-redux';
@@ -13,7 +13,6 @@ import { meditationInstructor } from 'store/selectors';
 import styled from 'styled-components/native';
 
 import { BoldSubTitle, SubTitle } from './Styled';
-import usePurchases from '@services/hooks/usePurchases';
 
 interface MeditationIconsContentProps {
   categoryTitle: string;
@@ -82,11 +81,7 @@ const HorizontalListItem: React.FC<HorizontalListItemProps> = memo(
     const amplitudeInstance = useAmplitude();
     const instructor = useSelector(state => meditationInstructor(state, id));
 
-    const { hasPremium, setPurchaserIdentity } = usePurchases();
-
-    useEffect(() => {
-      setPurchaserIdentity();
-    }, [setPurchaserIdentity]);
+    const { hasPremium } = usePurchases();
 
     const navigateToMeditation = useCallback(() => {
       if (!hasPremium && isCategoryLocked) {

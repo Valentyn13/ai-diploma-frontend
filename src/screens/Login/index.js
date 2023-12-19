@@ -90,12 +90,10 @@ const Login = ({ navigation }) => {
         const courseMeditations = firseCourse.meditations;
         if (courseMeditations && courseMeditations.length > 0) {
           const item = courseMeditations[0];
-          navigation.navigate('MeditationPlayer', { item, autoPlay: true });
-          // if (!hasPremium) {
-          //     navigation.navigate('Subscribe', {firstRun: true});
-          // } else {
-          //     navigation.navigate('MeditationPlayer', {item, autoPlay: true});
-          // }
+          navigation.navigate('Main', {
+            screen: 'MeditationPlayer',
+            params: { item, autoPlay: true },
+          });
         } else {
           navigation.navigate('Home');
         }

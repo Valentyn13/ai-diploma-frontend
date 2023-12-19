@@ -3,6 +3,7 @@ import IntroRelax from '@screens/IntroRelax';
 import PreLogin from '@screens/PreLogin';
 import PrivacyPolicy from '@screens/PrivacyPolicy';
 import Register from '@screens/Register';
+import useSyncUserData from '@services/hooks/useSyncUserData';
 import React from 'react';
 
 import CategoriesSelector from './CategoriesSelector';
@@ -41,6 +42,8 @@ const IntroScreensNavigator = () => {
 };
 
 const Navigator = () => {
+  useSyncUserData();
+
   return (
     <Stack.Navigator
       initialRouteName="Splash"

@@ -1,4 +1,3 @@
-/* eslint-disable react-native/no-inline-styles */
 import image from '@common/assets/images';
 import AppButton from '@common/components/AppButton';
 import AppText from '@common/components/AppText';
@@ -110,12 +109,10 @@ const Register = ({ navigation }) => {
         const courseMeditations = firstCourse.meditations;
         if (courseMeditations && courseMeditations.length > 0) {
           const item = courseMeditations[0];
-          navigation.navigate('MeditationPlayer', { item, autoPlay: true });
-          // if (!hasPremium) {
-          //     navigation.navigate('Subscribe', {firstRun: true});
-          // } else {
-          //     navigation.navigate('MeditationPlayer', {item, autoPlay: true});
-          // }
+          navigation.navigate('Main', {
+            screen: 'MeditationPlayer',
+            params: { item, autoPlay: true },
+          });
         } else {
           navigation.navigate('Home');
         }

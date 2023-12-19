@@ -1,4 +1,3 @@
-/* eslint-disable react-native/no-inline-styles */
 import image from '@common/assets/images';
 import AppButton from '@common/components/AppButton';
 import AppText from '@common/components/AppText';
@@ -20,20 +19,11 @@ import { scale } from 'react-native-size-matters';
 import { useSelector } from 'react-redux';
 import styled from 'styled-components/native';
 
-const UserDetails = styled.View`
-  margin-top: 50px;
-`;
-
-const RowContainer = styled.View`
-  flex-direction: row;
-  margin-bottom: ${scale(10)}px;
-  align-items: center;
-`;
-
 const Label = styled(Title)`
   font-size: ${scale(18)}px;
   color: #333;
   min-width: ${scale(64)}px;
+  line-height: ${scale(18)}px;
 `;
 
 interface RowProps {
@@ -43,10 +33,10 @@ interface RowProps {
 }
 
 const Row: React.FC<RowProps> = ({ label, value, keyValue }) => (
-  <RowContainer>
+  <View className="flex flex-row items-center justify-start h-10">
     <Label k={label} />
     {keyValue ? <Label k={value} /> : <Label t={value} />}
-  </RowContainer>
+  </View>
 );
 
 interface DetailsProps {}
@@ -94,11 +84,11 @@ const Details: React.FC<DetailsProps> = () => {
 
   return (
     <Screen color={colors.bgColor}>
-      <UserDetails>
+      <View className="mt-10">
         <Row label="name" value={name} />
         <Row label="sex" value={sex === 'M' ? 'male' : 'female'} keyValue />
         <Row label="email" value={email} />
-      </UserDetails>
+      </View>
       <View style={{ position: 'absolute', bottom: 80, left: 20, right: 20 }}>
         <Button
           title="ערוך פרופיל"

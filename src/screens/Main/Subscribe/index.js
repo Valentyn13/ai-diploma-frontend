@@ -1,4 +1,3 @@
-/* eslint-disable react-native/no-inline-styles */
 import subscribe2Bg from '@common/assets/images/subscribe2Bg.png';
 import { SubTitle, TouchableIcon } from '@common/components/Styled';
 import SubscriptionPoint from '@common/components/SubscriptionPoint';
@@ -84,7 +83,7 @@ const Subscribe = () => {
   const { goBack } = useNavigation();
   const courses = useSelector(coursesSelector);
   const onClose = () => goBack();
-  const firstRun = route.params.firstRun;
+  const firstRun = route.params?.firstRun;
   const { plans } = usePurchases();
   const [purchasing, setPurchasing] = useState(false);
   const {
