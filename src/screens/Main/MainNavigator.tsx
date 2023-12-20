@@ -2,7 +2,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import React from 'react';
 
 import Intro from '../Intro';
-import MeditationInfo from './MeditationInfo';
+// import MeditationInfo from './MeditationInfo';
 import MeditationPlayer from './MeditationPlayer';
 import Subscribe from './Subscribe';
 import Subscribe2 from './Subscribe2';
@@ -11,7 +11,7 @@ import WebView from './WebView';
 
 const Stack = createNativeStackNavigator();
 
-const StackNavigator = () => {
+const StackNavigator: React.FC = () => {
   return (
     <Stack.Navigator
       initialRouteName="Tabs"
@@ -24,11 +24,11 @@ const StackNavigator = () => {
         component={MeditationPlayer}
         options={{ headerShown: false }}
       />
-      <Stack.Screen
+      {/* <Stack.Screen
         name="MeditationInfo"
         component={MeditationInfo}
         options={{ headerShown: false }}
-      />
+      /> */}
       <Stack.Screen
         name="Subscribe"
         component={Subscribe}
@@ -46,7 +46,7 @@ const StackNavigator = () => {
         options={({ route }) => ({
           headerShown: true,
           headerBackTitleVisible: false,
-          title: route.params.title,
+          title: route.params?.title,
           headerStyle: {
             backgroundColor: '#FFF8EE',
             borderBottomColor: 'transparent',

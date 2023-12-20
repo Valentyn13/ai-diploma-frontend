@@ -39,6 +39,7 @@ const PracticeHistory = () => {
         ))}
       <PracticeHistoryIconedItem icon="meditationsHistory" />
 
+      {/* TODO: convert to FlatList */}
       {history &&
         history.length > 0 &&
         history.map(item => (
