@@ -13,8 +13,8 @@ const videos = {
   breathbox: require('./breathe-box.mp4'),
   circlebreating: require('./circle-breathing.mp4'),
   empower: require('./empower.mp4'),
-  circleAd1: require('./circle-breath-ad1.mp4'),
-  circleAd2: require('./circle-breath-ad2.mp4'),
+  // circleAd1: require('./circle-breath-ad1.mp4'),
+  // circleAd2: require('./circle-breath-ad2.mp4'),
   noseBreath: require('./nose-breath.mp4'),
 };
 
