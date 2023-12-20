@@ -250,7 +250,6 @@ const Home = () => {
           <CoursesCarousel
             height={280}
             title="courses"
-            isTest
             renderStaticBottomContent={() => (
               <Container
                 style={{ marginTop: 20, width: '100%', alignSelf: 'center' }}

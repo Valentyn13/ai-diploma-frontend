@@ -1,4 +1,3 @@
-/* eslint-disable react-native/no-inline-styles */
 import { categoryImage } from '@common/assets/images';
 import AppText from '@common/components/AppText';
 import { usePurchases } from '@common/context/PurchaseContext';
@@ -77,19 +76,15 @@ const CoursesCarouselItem = ({
   item,
   index,
   onItemPress: onItem,
-  onAboutPress: onAbout,
   fullScreen,
 }) => {
   const onItemPress = () => onItem(item);
-  const onAboutPress = () => onAbout(item);
   const { hasPremium } = usePurchases();
 
   return (
     <Container>
       <Container flex={fullScreen ? 1 : 1}>
-        <CourseItem
-          {...{ item, index, onItemPress, onAboutPress, fullScreen }}
-        />
+        <CourseItem {...{ item, index, onItemPress, fullScreen }} />
       </Container>
       {fullScreen && (
         <Container flex={HEIGHT_RATIO.BOTTOM}>
@@ -111,7 +106,6 @@ CoursesCarouselItem.propTypes = {
   }).isRequired,
   index: PropTypes.number.isRequired,
   onItemPress: PropTypes.func.isRequired,
-  onAboutPress: PropTypes.func.isRequired,
   fullScreen: PropTypes.bool,
 };
 
