@@ -30,7 +30,7 @@ const Item = styled.ImageBackground.attrs(({ index }) => ({
 }))`
   flex: 1;
   margin-bottom: 20px;
-  align-self: stretch;
+  width: 100%;
 `;
 
 const CourseTitle = styled(ListItemCaption)`
@@ -39,28 +39,13 @@ const CourseTitle = styled(ListItemCaption)`
 
 const CourseItem = ({ item, index, onItemPress, fullScreen }) =>
   fullScreen ? (
-    <Item {...{ index }}>
+    <Item index={index}>
       <CourseTitle t={item.title} />
     </Item>
   ) : (
     <TouchableItem onPress={onItemPress}>
-      <Item {...{ index }}>
-        {/* <CourseTitle t={item.title} /> */}
-        {/* to navigate to course detail change view to TouchableOpacity and onPress={onAboutPress} */}
-        <View
-          style={{
-            position: 'absolute',
-            alignItems: 'flex-start',
-            borderBottomLeftRadius: 8,
-            borderBottomRightRadius: 8,
-            paddingHorizontal: 20,
-            paddingVertical: 10,
-            justifyContent: 'center',
-            backgroundColor: '#160f29',
-            bottom: 0,
-            left: 0,
-            right: 0,
-          }}>
+      <Item index={index}>
+        <View className="absolute bottom-0 w-full bg-[#160f29] px-4 py-2 justify-center items-start rounded-b-lg">
           <AppText bold style={{ color: 'white', fontSize: 26 }}>
             {item.title}
           </AppText>
@@ -83,9 +68,7 @@ const CoursesCarouselItem = ({
 
   return (
     <Container>
-      <Container flex={fullScreen ? 1 : 1}>
-        <CourseItem {...{ item, index, onItemPress, fullScreen }} />
-      </Container>
+      <CourseItem {...{ item, index, onItemPress, fullScreen }} />
       {fullScreen && (
         <Container flex={HEIGHT_RATIO.BOTTOM}>
           <CourseMeditations
@@ -121,7 +104,6 @@ CourseItem.propTypes = {
   }).isRequired,
   index: PropTypes.number.isRequired,
   onItemPress: PropTypes.func.isRequired,
-  onAboutPress: PropTypes.func.isRequired,
 };
 
 CourseItem.defaultProps = {

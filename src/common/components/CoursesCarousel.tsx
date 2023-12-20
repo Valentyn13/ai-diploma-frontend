@@ -1,14 +1,14 @@
 import { useNavigation } from '@react-navigation/native';
-import Animation from '@screens/Main/Tabs/Home/Animation';
 import isLowResolution from '@utils/isLowResolution';
 import React, { FC, useEffect, useState } from 'react';
+import { View } from 'react-native';
 import { useSelector } from 'react-redux';
 import { coursesSelector } from 'store/selectors';
 import styled from 'styled-components/native';
 import { Course } from 'types/Course';
 
 import Carousel2 from './Carosuel';
-import { ScrollViewContainer, SubTitle } from './Styled';
+import { SubTitle } from './Styled';
 
 interface CoursesCarouselProps {
   title: string;
@@ -61,17 +61,16 @@ const CoursesCarousel: FC<CoursesCarouselProps> = ({
   }, [courses, fullScreen, selectedCourse, setSelectedCourse]);
 
   return (
-    <ScrollViewContainer>
-      <Animation />
+    <View className="pt-4">
       <CarouselTitle k={title} />
       <CarouselContainer>
         <Carousel2
           renderStaticBottomContent={renderStaticBottomContent}
-          data={courses.reverse()}
+          data={courses.sort((a, b) => b.name.localeCompare(a.name))}
         />
         {renderStaticBottomContent && renderStaticBottomContent()}
       </CarouselContainer>
-    </ScrollViewContainer>
+    </View>
   );
 };
 

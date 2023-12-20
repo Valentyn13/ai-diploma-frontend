@@ -165,8 +165,8 @@ const images = {
   // notice this will NOT work when adding more courses !
   starthereBGs: Platform.select({
     android: [
-      require('./bgs/start_2.png'),
       require('./bgs/starter.gif'),
+      require('./bgs/start_2.png'),
       require('./bgs/start_3.png'),
       require('./bgs/start_4.png'),
       require('./bgs/start_5.png'),

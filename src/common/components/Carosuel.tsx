@@ -158,6 +158,7 @@ export const SBItem: React.FC<Props> = props => {
 };
 
 const PAGE_WIDTH = Dimensions.get('window').width;
+const PAGE_HEIGHT = Dimensions.get('window').height;
 
 interface CoursesCarouselProps {
   renderStaticBottomContent: (() => React.ReactNode) | null;
@@ -172,7 +173,6 @@ interface CoursesCarouselProps {
 const Carousel2: FC<CoursesCarouselProps> = ({
   data,
   renderStaticBottomContent = null,
-  height,
   setSelectedCourse,
 }) => {
   const progressValue = useSharedValue<number>(0);
@@ -196,11 +196,6 @@ const Carousel2: FC<CoursesCarouselProps> = ({
     },
     [fullScreen, onItemPress],
   );
-
-  const baseOptions = {
-    vertical: false,
-    width: PAGE_WIDTH,
-  } as const;
 
   return (
     <View
@@ -230,7 +225,7 @@ const Carousel2: FC<CoursesCarouselProps> = ({
       )}
       <Carousel
         width={PAGE_WIDTH}
-        height={300}
+        height={renderStaticBottomContent ? 288 : 600}
         loop
         pagingEnabled={true}
         onProgressChange={(_, absoluteProgress) =>
