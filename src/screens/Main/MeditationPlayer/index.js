@@ -105,7 +105,7 @@ const AudioPlayer = styled(Video).attrs(() => ({}))`
 
 const BgMusicPlayer = ({ source, paused }) => (
   <Video
-    source={source}
+    source={{ uri: source }}
     onError={error => {
       logger.log('error', JSON.stringify(error));
     }}
@@ -276,7 +276,9 @@ const MeditationPlayer = ({
   return (
     <MeditationContainer>
       <VideoPlayer
-        source={video}
+        source={{
+          uri: `https://regameditation.s3.us-east-2.amazonaws.com/videos/${video}`,
+        }}
         paused={!isPlaying}
         // TODO: add poster of mediation
         // poster="https://picsum.photos/200"
@@ -300,7 +302,9 @@ const MeditationPlayer = ({
         }}>
         {hasAnimation === false && (
           <BgMusicPlayer
-            source={BG_TRACKS[bgTrack.current].asset}
+            source={`https://regameditation.s3.us-east-2.amazonaws.com/sounds/${
+              BG_TRACKS[bgTrack.current].asset
+            }`}
             paused={!isPlayingBgMusic}
           />
         )}
