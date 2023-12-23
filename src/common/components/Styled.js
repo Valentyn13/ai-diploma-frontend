@@ -62,10 +62,18 @@ export const StyledSafeAreaView = styled.SafeAreaView`
 
 // Text Elements
 
-const BaseText = styled.Text.attrs(({ k, t }) => ({
+export const BaseText = styled.Text.attrs(({ k, t }) => ({
   children: t || i18n.t(k),
 }))`
   font-family: ${({ theme: { fonts } }) => fonts.regular};
+  color: ${({ theme: { colors }, color }) => color || colors.textColor};
+  text-align: left;
+`;
+
+export const LightText = styled.Text.attrs(({ k, t }) => ({
+  children: t || i18n.t(k),
+}))`
+  font-family: ${({ theme: { fonts } }) => fonts.light};
   color: ${({ theme: { colors }, color }) => color || colors.textColor};
   text-align: left;
 `;

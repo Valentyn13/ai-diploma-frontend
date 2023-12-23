@@ -1,0 +1,21 @@
+{
+  "migIndex": 1,
+  "data": [
+    {
+      "path": "src/common/assets/fonts/almoni-dl-aaa-black.otf",
+      "sha1": "1f8e737ff8c18c54fc8ca06cd0bded20ce9f68bf"
+    },
+    {
+      "path": "src/common/assets/fonts/almoni-dl-aaa-bold.otf",
+      "sha1": "3578716a84af92fc270e1a9c4e7615b30c2c7345"
+    },
+    {
+      "path": "src/common/assets/fonts/almoni-dl-aaa-light.otf",
+      "sha1": "2cacefbc2b597416bc70343f789b461e021d9198"
+    },
+    {
+      "path": "src/common/assets/fonts/almoni-dl-aaa-regular.otf",
+      "sha1": "23f45c454d4c9ea52b188c30d2bae0943f422c94"
+    }
+  ]
+}

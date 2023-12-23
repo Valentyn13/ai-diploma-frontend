@@ -34,6 +34,10 @@
 		65D319AC2B28CE71000F82C9 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 65D319AB2B28CE71000F82C9 /* GoogleService-Info.plist */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
 		C5FB30D575AC48444FBD4E31 /* libPods-rega.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FA1C0767C5BC38239607D0B0 /* libPods-rega.a */; };
+		D071540E844E4792BAEB0797 /* almoni-dl-aaa-black.otf in Resources */ = {isa = PBXBuildFile; fileRef = F5474120A08D4086A8D05E0E /* almoni-dl-aaa-black.otf */; };
+		513ECA92E2814C9E85F2CB96 /* almoni-dl-aaa-bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = A26B92DEA5B14BA6A39B5019 /* almoni-dl-aaa-bold.otf */; };
+		C3671C3E16B94AB2B8E47833 /* almoni-dl-aaa-light.otf in Resources */ = {isa = PBXBuildFile; fileRef = 6376C01F45AB4A22B8B34B3E /* almoni-dl-aaa-light.otf */; };
+		80041796D2E24C03865001E0 /* almoni-dl-aaa-regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 1B0E5900ED7C40BC82077B99 /* almoni-dl-aaa-regular.otf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -84,6 +88,10 @@
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 		F9EAFB39D4CF1C00982D1DDB /* libPods-rega-regaTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-rega-regaTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		FA1C0767C5BC38239607D0B0 /* libPods-rega.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-rega.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		F5474120A08D4086A8D05E0E /* almoni-dl-aaa-black.otf */ = {isa = PBXFileReference; name = "almoni-dl-aaa-black.otf"; path = "../src/common/assets/fonts/almoni-dl-aaa-black.otf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		A26B92DEA5B14BA6A39B5019 /* almoni-dl-aaa-bold.otf */ = {isa = PBXFileReference; name = "almoni-dl-aaa-bold.otf"; path = "../src/common/assets/fonts/almoni-dl-aaa-bold.otf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		6376C01F45AB4A22B8B34B3E /* almoni-dl-aaa-light.otf */ = {isa = PBXFileReference; name = "almoni-dl-aaa-light.otf"; path = "../src/common/assets/fonts/almoni-dl-aaa-light.otf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		1B0E5900ED7C40BC82077B99 /* almoni-dl-aaa-regular.otf */ = {isa = PBXFileReference; name = "almoni-dl-aaa-regular.otf"; path = "../src/common/assets/fonts/almoni-dl-aaa-regular.otf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -190,6 +198,7 @@
 				83CBBA001A601CBA00E9B192 /* Products */,
 				2D16E6871FA4F8E400B85C8A /* Frameworks */,
 				BBD78D7AC51CEA395F1C20DB /* Pods */,
+				8546A3DD2ABB4C228DB9C4A5 /* Resources */,
 			);
 			indentWidth = 2;
 			sourceTree = "<group>";
@@ -215,6 +224,18 @@
 			);
 			path = Pods;
 			sourceTree = "<group>";
+		};
+		8546A3DD2ABB4C228DB9C4A5 /* Resources */ = {
+			isa = "PBXGroup";
+			children = (
+				F5474120A08D4086A8D05E0E /* almoni-dl-aaa-black.otf */,
+				A26B92DEA5B14BA6A39B5019 /* almoni-dl-aaa-bold.otf */,
+				6376C01F45AB4A22B8B34B3E /* almoni-dl-aaa-light.otf */,
+				1B0E5900ED7C40BC82077B99 /* almoni-dl-aaa-regular.otf */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+			path = "";
 		};
 /* End PBXGroup section */
 
@@ -334,6 +355,10 @@
 				65189DA82B2B804F00295AF0 /* FontAwesome5_Solid.ttf in Resources */,
 				65D319AC2B28CE71000F82C9 /* GoogleService-Info.plist in Resources */,
 				65189DA92B2B804F00295AF0 /* FontAwesome.ttf in Resources */,
+				D071540E844E4792BAEB0797 /* almoni-dl-aaa-black.otf in Resources */,
+				513ECA92E2814C9E85F2CB96 /* almoni-dl-aaa-bold.otf in Resources */,
+				C3671C3E16B94AB2B8E47833 /* almoni-dl-aaa-light.otf in Resources */,
+				80041796D2E24C03865001E0 /* almoni-dl-aaa-regular.otf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
