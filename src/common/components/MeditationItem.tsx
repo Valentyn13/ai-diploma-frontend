@@ -109,11 +109,11 @@ const MeditationItem: React.FC<HorizontalListItemProps> = memo(
     return (
       <Item
         style={{
-          backgroundColor: 'transparent',
-          shadowColor: '#000',
-          shadowOffset: { width: 0, height: 2 },
-          shadowOpacity: 0.3,
-          shadowRadius: 2,
+          // backgroundColor: 'transparent',
+          // shadowColor: '#000',
+          // shadowOffset: { width: 0, height: 2 },
+          // shadowOpacity: 0.3,
+          // shadowRadius: 2,
           elevation: 2,
         }}
         onPress={navigateToMeditation}

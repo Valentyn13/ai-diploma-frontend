@@ -28,9 +28,15 @@ const Meditations = () => {
   const categories = useSelector(categoriesSelector) as Category[];
 
   const onShowAll = (id: string) => {
+    const category = categories.find(c => c.id === id);
+
+    if (!category) {
+      return;
+    }
+
     navigation.navigate('Main', {
       screen: 'GroupedMeditations',
-      params: { id },
+      params: { ...category },
     });
   };
 

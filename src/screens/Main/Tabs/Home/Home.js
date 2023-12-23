@@ -22,10 +22,11 @@ import {
 import useAppData from '@services/hooks/useAppData';
 import useAppState from '@services/hooks/useAppState';
 import useArticleData from '@services/hooks/useArticleData';
+import i18n from '@services/localization/i18n';
 import { logEvent } from '@utils/analytics';
 import isLowResolution from '@utils/isLowResolution';
 import React, { useCallback, useEffect, useState } from 'react';
-import { Image, ScrollView, View } from 'react-native';
+import { Image, ScrollView, Text, TouchableOpacity, View } from 'react-native';
 import { scale } from 'react-native-size-matters';
 import { useDispatch, useSelector } from 'react-redux';
 import { turnOffShowReminderPopup } from 'store/actions';
@@ -75,9 +76,6 @@ const IconWrapper = styled.View`
 `;
 
 const ListTitle = styled(SubTitle)`
-  margin-bottom: 10px;
-  margin-left: 15px;
-  margin-right: 15px;
   font-size: 18px;
   font-weight: bold;
   align-self: flex-start;
@@ -103,6 +101,8 @@ const Info = () => {
     </InfoContainer>
   );
 };
+
+const ItemsList = ({ title, data }) => {};
 
 const Home = () => {
   const route = useRoute();
@@ -197,6 +197,13 @@ const Home = () => {
     getArticleData();
   }, [getArticleData]);
 
+  const onShowAll = (title, groupedMeditations) => {
+    navigation.navigate('Main', {
+      screen: 'GroupedMeditations',
+      params: { title, meditations: groupedMeditations },
+    });
+  };
+
   return (
     <>
       <ScrollView
@@ -255,28 +262,60 @@ const Home = () => {
                 style={{ marginTop: 20, width: '100%', alignSelf: 'center' }}
                 flex={HEIGHT_RATIO.BOTTOM}>
                 <Container flex={isLowResolution ? 1.8 : 1.5}>
-                  <ListTitle k="Greeting_general" />
-                  <HorizontalList data={data && data} big />
+                  <View className="flex flex-row items-end justify-between w-full px-2 mb-1">
+                    <ListTitle k="Greeting_general" />
+                    <TouchableOpacity
+                      onPress={() =>
+                        onShowAll(i18n.t('Greeting_general'), data)
+                      }>
+                      <Text className="text-xs text-neutral-800">
+                        {i18n.t('showAll')}
+                      </Text>
+                    </TouchableOpacity>
+                  </View>
+                  <HorizontalList data={data.slice(0, 4)} big />
                 </Container>
-                {/* instructor list  */}
 
                 <Container style={{ marginTop: 20 }} flex={HEIGHT_RATIO.BOTTOM}>
                   <Container flex={isLowResolution ? 1.8 : 1.5}>
-                    <ListTitle k="צוות המורים" />
+                    <View className="flex flex-row items-end justify-between w-full px-2 mb-1">
+                      <ListTitle k="צוות המורים" />
+                    </View>
                     <InstructorList />
                   </Container>
                 </Container>
 
                 <Container style={{ marginTop: 20 }} flex={HEIGHT_RATIO.BOTTOM}>
                   <Container flex={isLowResolution ? 1.8 : 1.5}>
-                    <ListTitle k="latest_release" />
-                    <HorizontalList data={latest} big />
+                    <View className="flex flex-row items-end justify-between w-full px-2 mb-1">
+                      <ListTitle k="latest_release" />
+                      <TouchableOpacity
+                        onPress={() =>
+                          onShowAll(i18n.t('latest_release'), latest)
+                        }>
+                        <Text className="text-xs text-neutral-800">
+                          {i18n.t('showAll')}
+                        </Text>
+                      </TouchableOpacity>
+                    </View>
+                    <HorizontalList data={latest.slice(0, 4)} big />
                   </Container>
                 </Container>
                 <Container style={{ marginTop: 20 }} flex={HEIGHT_RATIO.BOTTOM}>
                   <Container flex={isLowResolution ? 1.8 : 1.5}>
-                    <ListTitle k="most_played" />
-                    <HorizontalList data={topRated} big />
+                    <View className="flex flex-row items-end justify-between w-full px-2 mb-1">
+                      <ListTitle k="most_played" />
+                      <TouchableOpacity
+                        onPress={() =>
+                          onShowAll(i18n.t('most_played'), topRated)
+                        }>
+                        <Text className="text-xs text-neutral-800">
+                          {i18n.t('showAll')}
+                        </Text>
+                      </TouchableOpacity>
+                    </View>
+
+                    <HorizontalList data={topRated.slice(0, 4)} big />
                   </Container>
                 </Container>
                 {articles.length > 0 && (

@@ -1,6 +1,6 @@
 import theme, { colors } from '@common/theme';
 import { useNavigation, useRoute } from '@react-navigation/native';
-import React, { useMemo } from 'react';
+import React, { useCallback } from 'react';
 import {
   FlatList,
   StyleSheet,
@@ -9,8 +9,6 @@ import {
   View,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Feather';
-import { useSelector } from 'react-redux';
-import { categoriesSelector } from 'store/selectors';
 
 import MeditationItem from './MeditationItem';
 
@@ -55,25 +53,24 @@ interface Category {
 
 const GroupedMeditations = () => {
   const route = useRoute();
-  const categories = useSelector(categoriesSelector) as Category[];
 
-  const selectedCategory = useMemo(
-    () => categories.find(category => category.id === route.params?.id),
-    [categories, route.params],
-  );
+  const { title, meditations } = route.params || { title: '', meditations: [] };
 
-  const renderMeditationItem = ({ item, index }) => (
-    <MeditationItem key={item.id} item={item} index={index} />
+  const renderMeditationItem = useCallback(
+    ({ item, index }) => (
+      <MeditationItem key={item.id} item={item} index={index} />
+    ),
+    [],
   );
 
   return (
     <FlatList
       contentContainerStyle={{ paddingBottom: 20, paddingHorizontal: 10 }}
-      data={selectedCategory?.meditations}
+      data={meditations}
       keyExtractor={item => item.id}
       renderItem={renderMeditationItem}
       numColumns={2} // Set the number of columns to 2
-      ListHeaderComponent={() => <Header title={selectedCategory?.title} />}
+      ListHeaderComponent={() => <Header title={title} />}
       style={styles.container}
       showsVerticalScrollIndicator={false}
     />
