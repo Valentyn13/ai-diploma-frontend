@@ -39,7 +39,7 @@ const tabScreen = (name: string) => ({
 const TabNavigator = () => {
   return (
     <Tab.Navigator
-      initialRouteName="MainHome"
+      initialRouteName="Home"
       screenOptions={{
         tabBarStyle: {
           height: 60,

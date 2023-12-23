@@ -68,10 +68,6 @@ const BaseText = styled.Text.attrs(({ k, t }) => ({
   font-family: ${({ theme: { fonts } }) => fonts.regular};
   color: ${({ theme: { colors }, color }) => color || colors.textColor};
   text-align: left;
-  /* text-align: ${Platform.select({
-    android: 'left',
-    ios: 'left',
-  })}; */
 `;
 
 export const BigTitle = styled(BaseText)`
@@ -232,9 +228,9 @@ export const Separator = styled.View`
 
 export const DashedSeparator = styled(Dash).attrs(({ theme: { colors } }) => ({
   dashLength: 6,
-  dashGap: 4,
+  dashGap: 2,
   dashThickness: 1,
-  dashColor: colors.textColor,
+  dashColor: '#4b4b4b',
 }))`
   height: 1px;
   align-self: stretch;
