@@ -281,8 +281,8 @@ const MeditationPlayer = ({
         }}
         paused={!isPlaying}
         // TODO: add poster of mediation
-        // poster="https://picsum.photos/200"
-        // posterResizeMode="cover"
+        poster="https://picsum.photos/200"
+        posterResizeMode="cover"
         onError={error => logger.log('error', error)}
         progressUpdateInterval={1000}
         bufferConfig={{

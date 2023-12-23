@@ -1,3 +1,4 @@
+import GroupedMeditations from '@common/components/GroupedMeditations';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import React from 'react';
 
@@ -22,6 +23,11 @@ const StackNavigator: React.FC = () => {
       <Stack.Screen
         name="MeditationPlayer"
         component={MeditationPlayer}
+        options={{ headerShown: false, statusBarHidden: true }}
+      />
+      <Stack.Screen
+        name="GroupedMeditations"
+        component={GroupedMeditations}
         options={{ headerShown: false }}
       />
       {/* <Stack.Screen

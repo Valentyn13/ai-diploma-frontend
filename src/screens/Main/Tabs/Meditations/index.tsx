@@ -1,6 +1,7 @@
 import CategoryMeditations from '@common/components/CategoryMeditations';
 import Header from '@common/components/Header';
 import { colors } from '@common/theme';
+import { useNavigation } from '@react-navigation/native';
 import React from 'react';
 import { StyleSheet } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
@@ -23,7 +24,15 @@ interface Category {
 }
 
 const Meditations = () => {
+  const navigation = useNavigation();
   const categories = useSelector(categoriesSelector) as Category[];
+
+  const onShowAll = (id: string) => {
+    navigation.navigate('Main', {
+      screen: 'GroupedMeditations',
+      params: { id },
+    });
+  };
 
   return (
     <ScrollView
@@ -34,7 +43,11 @@ const Meditations = () => {
       {categories
         .sort((a, b) => a.order - b.order)
         .map(category => (
-          <CategoryMeditations key={category.id} category={category} />
+          <CategoryMeditations
+            key={category.id}
+            category={category}
+            onShowAll={() => onShowAll(category.id)}
+          />
         ))}
     </ScrollView>
   );
