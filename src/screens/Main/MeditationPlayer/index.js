@@ -18,11 +18,12 @@ import PropTypes from 'prop-types';
 import React, {
   useCallback,
   useEffect,
+  useMemo,
   useReducer,
   useRef,
   useState,
 } from 'react';
-import { Alert, TouchableOpacity, View } from 'react-native';
+import { Alert, StatusBar, TouchableOpacity, View } from 'react-native';
 import Video from 'react-native-video';
 import { useDispatch, useSelector } from 'react-redux';
 import { meditationStarted, minutesPracticed } from 'store/actions';
@@ -273,15 +274,18 @@ const MeditationPlayer = ({
     };
   }, []);
 
+  // const poster = useMemo(() => categoryImage(categoryName), [categoryName]);
+  const poster = useMemo(() => 'https://picsum.photos/200', []);
+
   return (
     <MeditationContainer>
+      <StatusBar animated hidden={true} />
       <VideoPlayer
         source={{
           uri: `https://regameditation.s3.us-east-2.amazonaws.com/videos/${video}`,
         }}
         paused={!isPlaying}
-        // TODO: add poster of mediation
-        poster="https://picsum.photos/200"
+        poster={poster}
         posterResizeMode="cover"
         onError={error => logger.log('error', error)}
         progressUpdateInterval={1000}

@@ -1,7 +1,7 @@
 import { colors } from '@common/theme';
 import logger from '@utils/logger';
 import LottieView from 'lottie-react-native';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { StyleSheet, View } from 'react-native';
 import Video from 'react-native-video';
 

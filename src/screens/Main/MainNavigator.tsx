@@ -23,7 +23,7 @@ const StackNavigator: React.FC = () => {
       <Stack.Screen
         name="MeditationPlayer"
         component={MeditationPlayer}
-        options={{ headerShown: false, statusBarHidden: true }}
+        options={{ headerShown: false }}
       />
       <Stack.Screen
         name="GroupedMeditations"
