@@ -334,13 +334,7 @@ const Home = () => {
           {categories.map(category => (
             <CategoryMeditations
               onShowAll={() => {
-                navigation.navigate('Main', {
-                  screen: 'GroupedMeditations',
-                  params: {
-                    title: i18n.t(category.name),
-                    meditations: category.meditations,
-                  },
-                });
+                onShowAll(i18n.t(category.title), category.meditations);
               }}
               key={category.id}
               category={category}
