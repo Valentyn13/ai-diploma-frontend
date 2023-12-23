@@ -45,7 +45,7 @@ const CategoryMeditations: FC<Props> = ({
     <View className="flex flex-row items-end justify-between w-full px-2">
       <TopTitle className="" style={styles.categoryTitle} t={title} />
       <TouchableOpacity onPress={onShowAll}>
-        <Text className="text-xs">{i18n.t('seeAll')}</Text>
+        <Text className="text-xs text-neutral-800">{i18n.t('showAll')}</Text>
       </TouchableOpacity>
     </View>
     {!!info && <Title style={styles.info} t={info} />}

@@ -38,7 +38,7 @@ export default {
   recommended: 'מומלץ עבורך',
   ourCourses: 'הקורסים שלנו',
   myWay: 'הדרך שלי',
-  seeAll: 'הצג הכל',
+  showAll: 'הצג הכל',
   details: 'פרטים',
   settings: 'הגדרות',
   aboutCourse: 'על הקורס',
