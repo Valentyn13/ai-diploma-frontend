@@ -332,7 +332,19 @@ const Home = () => {
             )}
           />
           {categories.map(category => (
-            <CategoryMeditations key={category.id} category={category} />
+            <CategoryMeditations
+              onShowAll={() => {
+                navigation.navigate('Main', {
+                  screen: 'GroupedMeditations',
+                  params: {
+                    title: i18n.t(category.name),
+                    meditations: category.meditations,
+                  },
+                });
+              }}
+              key={category.id}
+              category={category}
+            />
           ))}
         </>
       </ScrollView>
