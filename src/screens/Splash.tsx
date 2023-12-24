@@ -88,7 +88,7 @@ const Splash: React.FC<SplashProps> = () => {
       } else {
         navigate('IntroScreens');
       }
-    }, 0);
+    }, 2000);
 
     fadeInLogo();
     fadeInText();
