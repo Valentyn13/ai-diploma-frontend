@@ -128,19 +128,11 @@ const HorizontalListItem: React.FC<HorizontalListItemProps> = memo(
         big={big}
         height={height}
         key={id.toString() + index.toString()}>
-        <ImageBackground
-          className="flex-1 items-center justify-center"
-          resizeMode="cover"
-          source={src}>
+        <ImageBackground className="flex-1" resizeMode="cover" source={src}>
           {!hasPremium && isCategoryLocked && (
-            <Icon
-              style={{
-                opacity: 0.3,
-              }}
-              name="lock"
-              size={40}
-              color="#000"
-            />
+            <View className="bg-black/75 rounded-full p-1 w-8 h-8 flex justify-center items-center absolute top-2 right-2">
+              <Icon name="lock" size={16} color="#fff" />
+            </View>
           )}
           <TimeLabel height={height}>
             <Icon name="clock" size={8} color="#fff" />

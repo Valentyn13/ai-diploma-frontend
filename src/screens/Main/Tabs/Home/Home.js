@@ -2,6 +2,7 @@ import HomeTopBg from '@common/assets/images/HomeTopBg.png';
 import CategoryMeditations from '@common/components/CategoryMeditations';
 import CoursesCarousel from '@common/components/CoursesCarousel';
 import { HEIGHT_RATIO } from '@common/components/CoursesCarouselItem';
+import Feeling from '@common/components/Feeling';
 import HorizontalList from '@common/components/HorizontalList';
 import {
   Container,
@@ -38,6 +39,7 @@ import {
 } from 'store/selectors';
 import styled from 'styled-components';
 
+import { useSheetStore } from '../../../../store/useSheetStore';
 import Article from './Article';
 import InstructorList from './InstructorList';
 import ReminderPopup from './ReminderPopup';
@@ -204,6 +206,8 @@ const Home = () => {
     });
   };
 
+  const setIsOpen = useSheetStore(state => state.setIsOpen);
+
   return (
     <>
       <ScrollView
@@ -275,6 +279,13 @@ const Home = () => {
                   </View>
                   <HorizontalList data={data.slice(0, 4)} big />
                 </Container>
+
+                <View className="flex flex-row items-end justify-between w-full px-2 mt-4">
+                  <ListTitle k="personalized" />
+                </View>
+                <View className="my-4 w-11/12 flex items-center">
+                  <Feeling onClick={() => setIsOpen(true)} />
+                </View>
 
                 <Container style={{ marginTop: 20 }} flex={HEIGHT_RATIO.BOTTOM}>
                   <Container flex={isLowResolution ? 1.8 : 1.5}>
