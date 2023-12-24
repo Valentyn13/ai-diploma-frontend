@@ -133,7 +133,7 @@ dependencies {
 apply from: file("../../node_modules/@react-native-community/cli-platform-android/native_modules.gradle"); applyNativeModulesAppBuildGradle(project)
 
 project.ext.vectoricons = [
-    iconFontNames: [ 'Feather.ttf']
+    iconFontNames: [ 'Feather.ttf', 'FontAwesome6_Solid.ttf']
 ]
 
 apply from: file("../../node_modules/react-native-vector-icons/fonts.gradle")

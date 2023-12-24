@@ -43,7 +43,7 @@ export default {
   settings: 'הגדרות',
   aboutCourse: 'על הקורס',
   close: 'סגור',
-  minutes: 'דקות',
+  minutes: "דק'",
   seconds: 'שניות',
   myMoments: 'הרגעים שלי',
   greeting: 'היי, אופיר',
