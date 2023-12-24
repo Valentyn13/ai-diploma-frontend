@@ -16,10 +16,12 @@ const Header: FC<{ title: string }> = ({ title }) => {
   const { goBack } = useNavigation();
   return (
     <View style={styles.header}>
-      <Text style={styles.headerText}>{title}</Text>
-      <TouchableOpacity onPress={goBack}>
-        <Icon name="chevron-left" size={30} color={theme.colors.textColor} />
+      <TouchableOpacity onPress={goBack} className="absolute left-2 z-10">
+        <Icon name="chevron-right" size={30} color={theme.colors.textColor} />
       </TouchableOpacity>
+      <Text className="self-center" style={styles.headerText}>
+        {title}
+      </Text>
     </View>
   );
 };
@@ -29,9 +31,10 @@ const styles = StyleSheet.create({
     backgroundColor: colors.bgColor,
   },
   header: {
+    position: 'relative',
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'space-between',
+    justifyContent: 'center',
     height: 60,
     paddingHorizontal: 10,
     backgroundColor: colors.bgColor, // Set the background color for the header
@@ -45,15 +48,6 @@ const styles = StyleSheet.create({
     letterSpacing: 5.19,
   },
 });
-
-interface Category {
-  id: string;
-  title: string;
-  info?: string | null;
-  height?: string;
-  meditations: any[];
-  order: number;
-}
 
 const GroupedMeditations = () => {
   const route = useRoute();
@@ -73,9 +67,9 @@ const GroupedMeditations = () => {
       data={meditations}
       keyExtractor={item => item.id}
       renderItem={renderMeditationItem}
-      numColumns={2} // Set the number of columns to 2
+      numColumns={2}
       ListHeaderComponent={() => <Header title={title} />}
-      stickyHeaderIndices={[0]} // Make the header sticky
+      stickyHeaderIndices={[0]}
       showsVerticalScrollIndicator={false}
     />
   );
