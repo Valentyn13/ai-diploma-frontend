@@ -278,15 +278,13 @@ const MeditationPlayer = ({
   const poster = useMemo(() => 'https://picsum.photos/200', []);
 
   return (
-    <MeditationContainer>
+    <View className="flex flex-col items-center justify-center w-full h-full bg-black">
       <StatusBar animated hidden={true} />
       <VideoPlayer
         source={{
           uri: `https://regameditation.s3.us-east-2.amazonaws.com/videos/${video}`,
         }}
         paused={!isPlaying}
-        poster={poster}
-        posterResizeMode="cover"
         onError={error => logger.log('error', error)}
         progressUpdateInterval={1000}
         bufferConfig={{
@@ -302,7 +300,6 @@ const MeditationPlayer = ({
           borderWidth: 0,
           height: 0,
           width: 100,
-          backgroundColor: 'red',
         }}>
         {hasAnimation === false && (
           <BgMusicPlayer
@@ -406,7 +403,7 @@ const MeditationPlayer = ({
           <FavoriteIndicator id={id} />
         </FavoriteIndicatorWrapper>
       </ButtonsContainer>
-    </MeditationContainer>
+    </View>
   );
 };
 
