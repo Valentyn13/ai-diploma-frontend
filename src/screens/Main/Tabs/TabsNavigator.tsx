@@ -1,10 +1,13 @@
+import MeditationPicker from '@common/components/MeditationPicker';
 import { Icon } from '@common/components/Styled';
 import colors from '@common/theme/colors';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import i18n from '@services/localization/i18n';
 import React from 'react';
+import { View } from 'react-native';
 import Animated from 'react-native-reanimated';
 
+import { useSheetStore } from '../../../store/useSheetStore';
 import Courses from './Courses';
 import Home from './Home';
 import Meditations from './Meditations';
@@ -37,36 +40,46 @@ const tabScreen = (name: string) => ({
 });
 
 const TabNavigator = () => {
+  const isOpen = useSheetStore(state => state.isOpen);
+
   return (
-    <Tab.Navigator
-      initialRouteName="Home"
-      screenOptions={{
-        tabBarStyle: {
-          height: 60,
-          backgroundColor: colors.bgColor,
-        },
-        tabBarInactiveTintColor: colors.selectedTabBgColor,
-        tabBarActiveTintColor: colors.mainColor,
-      }}>
-      {Object.entries(TABS).map(([key, value]) => (
-        <Tab.Screen
-          key={key}
-          name={key}
-          component={value}
-          options={{
-            ...tabScreen(key.toLowerCase()),
-            tabBarLabel: i18n.t(`${key.toLowerCase()}`),
-            headerShown: false,
-            tabBarLabelStyle: {
-              fontSize: 10,
-              letterSpacing: 0.58,
-              textAlign: 'center',
-              marginBottom: 4,
-            },
-          }}
-        />
-      ))}
-    </Tab.Navigator>
+    <>
+      <Tab.Navigator
+        initialRouteName="Home"
+        screenOptions={{
+          tabBarStyle: {
+            height: 60,
+            backgroundColor: colors.bgColor,
+          },
+          tabBarInactiveTintColor: colors.selectedTabBgColor,
+          tabBarActiveTintColor: colors.mainColor,
+        }}>
+        {Object.entries(TABS).map(([key, value]) => (
+          <Tab.Screen
+            key={key}
+            name={key}
+            component={value}
+            options={{
+              ...tabScreen(key.toLowerCase()),
+              tabBarLabel: i18n.t(`${key.toLowerCase()}`),
+              headerShown: false,
+              tabBarLabelStyle: {
+                fontSize: 10,
+                letterSpacing: 0.58,
+                textAlign: 'center',
+                marginBottom: 4,
+              },
+            }}
+          />
+        ))}
+      </Tab.Navigator>
+      {isOpen && (
+        <>
+          <View className="w-full h-full bg-black/40 absolute top-0 left-0" />
+          <MeditationPicker />
+        </>
+      )}
+    </>
   );
 };
 

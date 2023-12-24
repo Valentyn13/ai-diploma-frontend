@@ -48,6 +48,7 @@ export default {
   myMoments: 'הרגעים שלי',
   greeting: 'היי, אופיר',
   Greeting_general: 'במיוחד עבורך',
+  personalized: 'מותאם אישית',
   latest_release: 'עלו לאחרונה',
   most_played: 'המושמעים ביותר',
   articles: 'רגע של קריאה',
