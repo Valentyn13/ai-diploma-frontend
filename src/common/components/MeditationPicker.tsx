@@ -7,11 +7,11 @@ import React, {
   useRef,
   useState,
 } from 'react';
-import { Button, FlatList, Text, View } from 'react-native';
-import { TouchableOpacity } from 'react-native-gesture-handler';
+import { FlatList, Text, TouchableOpacity, View } from 'react-native';
 import Icon from 'react-native-vector-icons/Feather';
 
 import { useSheetStore } from '../../store/useSheetStore';
+import Button from './HighlightButton';
 
 const FEELINGS = {
   calm: { label: 'רגוע', emoji: '😌' },
@@ -89,13 +89,15 @@ const HowUFeel = ({ onNext }: { onNext: () => void }) => {
         numColumns={3}
         scrollEnabled={false}
       />
-      <View className="mb-2">
-        <Button title="המשך" disabled={!selectedFeeling} onPress={onNext} />
-      </View>
+      <Button
+        className="mb-2"
+        onPress={onNext}
+        disabled={!selectedFeeling}
+        text="המשך"
+      />
     </View>
   );
 };
-
 const PLACES = {
   home: { label: 'בבית', icon: '🏠' },
   work: { label: 'בעבודה', icon: '💼' },
@@ -172,9 +174,12 @@ const WhereYouAt = ({ onNext }: { onNext: () => void }) => {
         numColumns={3}
         scrollEnabled={false}
       />
-      <View className="mb-2">
-        <Button title="המשך" disabled={!selectedPlace} onPress={onNext} />
-      </View>
+      <Button
+        className="mb-2"
+        text="המשך"
+        disabled={!selectedPlace}
+        onPress={onNext}
+      />
     </View>
   );
 };
