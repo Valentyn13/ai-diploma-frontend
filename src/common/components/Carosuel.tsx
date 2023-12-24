@@ -1,3 +1,4 @@
+import { colors } from '@common/theme';
 import { useNavigation } from '@react-navigation/native';
 import { FC, default as React, useCallback } from 'react';
 import type {
@@ -287,7 +288,7 @@ const PaginationItem: React.FC<{
         style={[
           {
             borderRadius: 50,
-            backgroundColor: '#160F29',
+            backgroundColor: colors.selected,
             flex: 1,
           },
           animStyle,

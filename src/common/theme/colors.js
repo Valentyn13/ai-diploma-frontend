@@ -21,6 +21,9 @@ const colors = {
   blackColor: '#000000',
   darkColor: '#160f29',
   mainColor: '#3C2E06',
+
+  // new colors
+  selected: '#D66366',
 };
 
 export default colors;

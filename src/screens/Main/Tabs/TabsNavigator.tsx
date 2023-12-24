@@ -50,6 +50,8 @@ const TabNavigator = () => {
           tabBarStyle: {
             height: 60,
             backgroundColor: colors.bgColor,
+            borderTopWidth: 1,
+            borderTopColor: colors.selectedTabBgColor,
           },
           tabBarInactiveTintColor: colors.selectedTabBgColor,
           tabBarActiveTintColor: colors.mainColor,
