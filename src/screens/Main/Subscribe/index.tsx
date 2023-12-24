@@ -18,8 +18,6 @@ import { useSelector } from 'react-redux';
 import { coursesSelector } from 'store/selectors';
 import styled from 'styled-components/native';
 
-import Pricing from './Pricing';
-
 const Overlay = styled.View`
   position: absolute;
   top: 0;
@@ -251,8 +249,8 @@ const Subscribe: React.FC = () => {
   };
 
   const colorList = [
-    { offset: '0%', color: '#513F73', opacity: '1' },
-    { offset: '100%', color: '#2B1A3A', opacity: '1' },
+    { offset: '0%', color: '#4A90E2', opacity: '1' }, // Lighter Blue
+    { offset: '100%', color: '#003399', opacity: '1' }, // Darker Blue
   ];
 
   const [selectedPlan, setSelectedPlan] = useState(PLANS.annual.identifier);
@@ -295,14 +293,21 @@ const Subscribe: React.FC = () => {
               באפליקציה
             </Text>
           </View> */}
-          <Pricing
+          {/* <Pricing
             style={{
               marginTop: scale(20),
               width: scale(300),
               height: scale(300),
             }}
             className="self-center"
-          />
+          /> */}
+          <View className="mt-6 self-center">
+            <Text className="text-white">
+              ״אני פשוט מכורה לאפליקציה, ואני ישנה טוב בקטע לא נורמלי״
+            </Text>
+
+            <Text className="text-left mt-2 text-white">-עינב ⭐⭐⭐⭐⭐</Text>
+          </View>
           <View className="relative flex-1">
             <View className="w-full bg-[#0A1129] absolute bottom-0 self-center h-68 rounded-t-xl flex flex-col items-center p-4">
               <PackageItem
