@@ -1,4 +1,4 @@
-import BottomSheet, {BottomSheetFlatList} from '@gorhom/bottom-sheet';
+import BottomSheet, { BottomSheetFlatList } from '@gorhom/bottom-sheet';
 import { useNavigation } from '@react-navigation/native';
 import React, {
   useCallback,
@@ -22,17 +22,17 @@ const FEELINGS = {
   angry: { label: 'כועס', emoji: '😡' },
 };
 
-const Feeling = ({
-  name,
+const Option = ({
+  label,
+  icon,
   onPress,
   selected,
 }: {
-  name: keyof typeof FEELINGS;
+  label: string;
+  icon: string;
   onPress: () => void;
   selected: boolean;
 }) => {
-  const { label, emoji } = FEELINGS[name];
-
   return (
     <TouchableOpacity
       style={{
@@ -47,8 +47,8 @@ const Feeling = ({
         backgroundColor: selected ? '#FFEFD7' : 'transparent',
       }}
       onPress={onPress}>
-      <Text style={{ fontSize: 18 }}>{emoji}</Text>
-      <Text style={{ fontSize: 16 }}>{label}</Text>
+      <Text className="text-lg">{icon}</Text>
+      <Text className="text-black text-[16px]">{label}</Text>
     </TouchableOpacity>
   );
 };
@@ -59,9 +59,10 @@ const HowUFeel = ({ onNext }: { onNext: () => void }) => {
   >(null);
 
   const renderItem = useCallback(
-    ({ item }) => (
-      <Feeling
-        name={item as keyof typeof FEELINGS}
+    ({ item }: { item: keyof typeof FEELINGS }) => (
+      <Option
+        label={FEELINGS[item].label}
+        icon={FEELINGS[item].emoji}
         onPress={() => setSelectedFeeling(item)}
         selected={selectedFeeling === item}
       />
@@ -107,46 +108,16 @@ const PLACES = {
   bed: { label: 'במיטה', icon: '🛌' },
 };
 
-const Place = ({
-  name,
-  onPress,
-  selected,
-}: {
-  name: keyof typeof PLACES;
-  onPress: () => void;
-  selected: boolean;
-}) => {
-  const { label, icon } = PLACES[name];
-
-  return (
-    <TouchableOpacity
-      style={{
-        padding: 10,
-        margin: 4,
-        borderRadius: 8,
-        justifyContent: 'center',
-        alignItems: 'center',
-        borderWidth: 1,
-        borderColor: selected ? '#FFC4B2' : '#ddd',
-        width: 100,
-        backgroundColor: selected ? '#FFEFD7' : 'transparent',
-      }}
-      onPress={onPress}>
-      <Text style={{ fontSize: 18 }}>{icon}</Text>
-      <Text style={{ fontSize: 16 }}>{label}</Text>
-    </TouchableOpacity>
-  );
-};
-
 const WhereYouAt = ({ onNext }: { onNext: () => void }) => {
   const [selectedPlace, setSelectedPlace] = useState<
     keyof typeof PLACES | null
   >(null);
 
   const renderItem = useCallback(
-    ({ item }) => (
-      <Place
-        name={item as keyof typeof PLACES}
+    ({ item }: { item: keyof typeof PLACES }) => (
+      <Option
+        label={PLACES[item].label}
+        icon={PLACES[item].icon}
         onPress={() => setSelectedPlace(item)}
         selected={selectedPlace === item}
       />
@@ -190,7 +161,7 @@ const MeditationPicker = () => {
   const bottomSheetRef = useRef<BottomSheet>(null);
   const [showWhereYouAt, setShowWhereYouAt] = useState(false);
 
-  const snapPoints = useMemo(() => ['20%', 300], []);
+  const snapPoints = useMemo(() => ['20%', 320], []);
 
   useEffect(() => {
     if (bottomSheetRef.current) {
