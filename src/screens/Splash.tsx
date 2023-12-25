@@ -62,7 +62,7 @@ const Splash: React.FC<SplashProps> = () => {
       translateY.value = withDelay(
         1200,
         withTiming(-100, {
-          duration: 600,
+          duration: 800,
           easing: Easing.inOut(Easing.ease),
         }),
       );
@@ -78,7 +78,7 @@ const Splash: React.FC<SplashProps> = () => {
 
     const fadeInText2Animation = () => {
       fadeInText2.value = withSequence(
-        withDelay(1800, withTiming(1, { duration: 600 })),
+        withDelay(1200, withTiming(1, { duration: 600 })),
       );
     };
 
@@ -149,7 +149,7 @@ const Splash: React.FC<SplashProps> = () => {
         <AppNameTitle k="appName" />
       </Animated.View>
       <Animated.View style={[fadeInText2Style]}>
-        <TopTitle>Take a deep breath</TopTitle>
+        <TopTitle>קחו נשימה</TopTitle>
       </Animated.View>
     </Container>
   );

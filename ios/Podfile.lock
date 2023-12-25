@@ -689,6 +689,8 @@ PODS:
     - React-logger (= 0.72.7)
     - React-perflogger (= 0.72.7)
   - RevenueCat (4.31.1)
+  - rn-fetch-blob (0.12.0):
+    - React-Core
   - RNAppleAuthentication (2.3.0):
     - React-Core
   - RNCAsyncStorage (1.21.0):
@@ -851,6 +853,7 @@ DEPENDENCIES:
   - React-runtimescheduler (from `../node_modules/react-native/ReactCommon/react/renderer/runtimescheduler`)
   - React-utils (from `../node_modules/react-native/ReactCommon/react/utils`)
   - ReactCommon/turbomodule/core (from `../node_modules/react-native/ReactCommon`)
+  - rn-fetch-blob (from `../node_modules/rn-fetch-blob`)
   - "RNAppleAuthentication (from `../node_modules/@invertase/react-native-apple-authentication`)"
   - "RNCAsyncStorage (from `../node_modules/@react-native-async-storage/async-storage`)"
   - "RNCCheckbox (from `../node_modules/@react-native-community/checkbox`)"
@@ -1019,6 +1022,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/ReactCommon/react/utils"
   ReactCommon:
     :path: "../node_modules/react-native/ReactCommon"
+  rn-fetch-blob:
+    :path: "../node_modules/rn-fetch-blob"
   RNAppleAuthentication:
     :path: "../node_modules/@invertase/react-native-apple-authentication"
   RNCAsyncStorage:
@@ -1148,6 +1153,7 @@ SPEC CHECKSUMS:
   React-utils: 56838edeaaf651220d1e53cd0b8934fb8ce68415
   ReactCommon: 5f704096ccf7733b390f59043b6fa9cc180ee4f6
   RevenueCat: 3d9d19d3564c101f7f25a0a4fc10da1a9b04ddbe
+  rn-fetch-blob: f065bb7ab7fb48dd002629f8bdcb0336602d3cba
   RNAppleAuthentication: e99eaf3c4c01ad8ecb6125dd6f0cfd98871685b5
   RNCAsyncStorage: 618d03a5f52fbccb3d7010076bc54712844c18ef
   RNCCheckbox: 75255b03e604bbcc26411eb31c4cbe3e3865f538
@@ -1179,6 +1185,6 @@ SPEC CHECKSUMS:
   Yoga: 4c3aa327e4a6a23eeacd71f61c81df1bcdf677d5
   YogaKit: f782866e155069a2cca2517aafea43200b01fd5a
 
-PODFILE CHECKSUM: 0fee05c289cbf2580b863640af1e4fbbd2e37423
+PODFILE CHECKSUM: aade2413177157473cdbbb30bc434ef331c8d8bf
 
 COCOAPODS: 1.14.3
