@@ -18,7 +18,7 @@ const FEELINGS = {
   stressed: { label: 'מתוסכל', emoji: '😓' },
   anxious: { label: 'חרד', emoji: '😰' },
   sad: { label: 'עצוב', emoji: '😢' },
-  happy: { label: 'שמח', emoji: '😄' },
+  unsure: { label: 'לא בטוח', emoji: '😕' },
   angry: { label: 'כועס', emoji: '😡' },
 };
 
@@ -102,9 +102,9 @@ const HowUFeel = ({ onNext }: { onNext: () => void }) => {
 const PLACES = {
   home: { label: 'בבית', icon: '🏠' },
   work: { label: 'בעבודה', icon: '💼' },
-  park: { label: 'בפארק', icon: '🌳' },
-  way: { label: 'בדרך', icon: '🚗' },
-  gym: { label: 'חדר כושר', icon: '🏋️‍♂️' },
+  study: { label: 'בלימודים', icon: '🎓' },
+  way: { label: 'בדרך', icon: '🏃' },
+  army: { label: 'בצבא', icon: '🪖' },
   bed: { label: 'במיטה', icon: '🛌' },
 };
 
