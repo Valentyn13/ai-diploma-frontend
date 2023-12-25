@@ -1,4 +1,4 @@
-import BottomSheet from '@gorhom/bottom-sheet';
+import BottomSheet, {BottomSheetFlatList} from '@gorhom/bottom-sheet';
 import { useNavigation } from '@react-navigation/native';
 import React, {
   useCallback,
@@ -7,7 +7,7 @@ import React, {
   useRef,
   useState,
 } from 'react';
-import { FlatList, Text, TouchableOpacity, View } from 'react-native';
+import { Text, TouchableOpacity, View } from 'react-native';
 import Icon from 'react-native-vector-icons/Feather';
 
 import { useSheetStore } from '../../store/useSheetStore';
@@ -81,7 +81,7 @@ const HowUFeel = ({ onNext }: { onNext: () => void }) => {
         איך אתה מרגיש היום?
       </Text>
 
-      <FlatList
+      <BottomSheetFlatList
         style={{ marginBottom: 20 }}
         data={Object.keys(FEELINGS)}
         renderItem={renderItem}
@@ -166,7 +166,7 @@ const WhereYouAt = ({ onNext }: { onNext: () => void }) => {
         איפה אתה נמצא כרגע?
       </Text>
 
-      <FlatList
+      <BottomSheetFlatList
         style={{ marginBottom: 20 }}
         data={Object.keys(PLACES)}
         renderItem={renderItem}
