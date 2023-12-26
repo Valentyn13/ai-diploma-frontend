@@ -161,7 +161,7 @@ const MeditationPicker = () => {
   const bottomSheetRef = useRef<BottomSheet>(null);
   const [showWhereYouAt, setShowWhereYouAt] = useState(false);
 
-  const snapPoints = useMemo(() => ['20%', 320], []);
+  const snapPoints = useMemo(() => ['20%', 340], []);
 
   useEffect(() => {
     if (bottomSheetRef.current) {
@@ -215,7 +215,7 @@ const MeditationPicker = () => {
           onPress={() => bottomSheetRef.current!.close()}>
           <Icon name="x" size={24} color="#000" />
         </TouchableOpacity>
-        <View className="flex-1 mt-8 justify-center items-center">
+        <View className="flex-1 mt-8 justify-center items-center mb-4">
           {showWhereYouAt ? (
             <WhereYouAt onNext={onFinish} />
           ) : (

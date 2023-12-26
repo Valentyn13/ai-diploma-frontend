@@ -69,7 +69,7 @@ const CircularPlayButton: FC<CircularPlayButtonProps> = ({
         <ActivityIndicator size="large" color="white" />
       ) : (
         <>
-          {isPlaying ? (
+          {!isPlaying ? (
             <Play
               style={{ marginRight: 8 }}
               height={SIZE / 2}
