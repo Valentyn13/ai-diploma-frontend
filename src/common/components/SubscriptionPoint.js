@@ -1,7 +1,8 @@
-import { SubTitle } from '@common/components/Styled';
+import i18n from '@services/localization/i18n';
 import React from 'react';
-import { Image, View } from 'react-native';
+import { Text, View } from 'react-native';
 import { scale } from 'react-native-size-matters';
+import Icon from 'react-native-vector-icons/Feather';
 
 const SubscriptionPoint = ({ text, showIcon = false }) => {
   return (
@@ -13,32 +14,16 @@ const SubscriptionPoint = ({ text, showIcon = false }) => {
         width: showIcon ? '80%' : '90%',
         alignItems: 'center',
       }}>
-      {showIcon && (
-        <View>
-          <Image
-            source={require('../assets/images/Vmark.png')}
-            style={{ width: scale(22), height: scale(22) }}
-          />
-        </View>
-      )}
+      {showIcon && <Icon name="check-circle" size={scale(16)} color="white" />}
       <View
         style={{
-          borderColor: 'red',
           flex: 1,
           paddingVertical: 2,
           paddingLeft: 8,
         }}>
-        <SubTitle
-          style={{
-            color: 'white',
-            alignSelf: 'flex-start',
-            textAlign: 'left',
-            fontSize: scale(16),
-            lineHeight: scale(18),
-          }}
-          numberOfLines={2}
-          k={text}
-        />
+        <Text className="text-white text-left text-xl leading-6">
+          {i18n.t(text)}
+        </Text>
       </View>
     </View>
   );

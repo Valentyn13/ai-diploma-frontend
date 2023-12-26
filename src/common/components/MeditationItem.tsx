@@ -6,7 +6,7 @@ import { useAmplitude } from '@services/hooks/useAmplitude';
 import { logEvent } from '@utils/analytics';
 import meditationTime from '@utils/meditationTime';
 import React, { memo, useCallback } from 'react';
-import { ImageBackground, Text, TouchableOpacity, View } from 'react-native';
+import { ImageBackground, TouchableOpacity, View } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome6';
 import { useSelector } from 'react-redux';
 import { meditationInstructor } from 'store/selectors';
@@ -90,7 +90,7 @@ const MeditationItem: React.FC<HorizontalListItemProps> = memo(
     const navigateToMeditation = useCallback(() => {
       if (!hasPremium && isCategoryLocked) {
         // @ts-ignore TODO: fix this
-        navigate('Subscribe2', { item: { name } });
+        navigate('Subscribe');
       } else {
         amplitudeInstance.logEvent('MEDITATION_CLICKED');
         amplitudeInstance.logEvent('MEDITATION_PLAY');

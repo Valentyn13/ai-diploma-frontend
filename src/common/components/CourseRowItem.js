@@ -42,7 +42,7 @@ const CourseRowItem = ({
 
   const onItemPress = () => {
     if (!hasPremium && !isCategoryLocked) {
-      navigate('Subscribe2', { item: { name } });
+      navigate('Subscribe');
     } else {
       onPress(item);
     }
