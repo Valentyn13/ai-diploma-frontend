@@ -3,7 +3,6 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import React from 'react';
 
 import Intro from '../Intro';
-// import MeditationInfo from './MeditationInfo';
 import MeditationPlayer from './MeditationPlayer';
 import Subscribe from './Subscribe';
 import Tabs from './Tabs';
@@ -29,11 +28,6 @@ const StackNavigator: React.FC = () => {
         component={GroupedMeditations}
         options={{ headerShown: false }}
       />
-      {/* <Stack.Screen
-        name="MeditationInfo"
-        component={MeditationInfo}
-        options={{ headerShown: false }}
-      /> */}
       <Stack.Screen
         name="Subscribe"
         component={Subscribe}

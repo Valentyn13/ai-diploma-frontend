@@ -13,7 +13,7 @@ import { default as React, useEffect, useState } from 'react';
 import { Alert, StatusBar, Text, TouchableOpacity, View } from 'react-native';
 import { LinearGradient } from 'react-native-gradients';
 import Purchases from 'react-native-purchases';
-import { scale } from 'react-native-size-matters';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import Icon2 from 'react-native-vector-icons/Feather';
 import { useSelector } from 'react-redux';
 import { coursesSelector } from 'store/selectors';
@@ -256,35 +256,39 @@ const Subscribe: React.FC = () => {
   const [selectedPlan, setSelectedPlan] = useState('annual');
 
   return (
-    <View className="h-full">
-      <StatusBar hidden animated />
-      <View className="absolute w-full h-full">
-        <LinearGradient colorList={colorList} angle={90} />
-      </View>
+    <>
+      <StatusBar barStyle="light-content" />
+      <SafeAreaView edges={['top']} className="bg-[#003399]" />
+      <SafeAreaView
+        edges={['bottom', 'left', 'right']}
+        className="flex-1 bg-[#0A0E1E]">
+        <View className="absolute w-full h-full">
+          <LinearGradient colorList={colorList} angle={90} />
+        </View>
 
-      {numberOfPackage > 0 ? (
-        <>
-          <View className="relative">
-            <Icon2
-              style={{
-                position: 'absolute',
-                top: scale(14),
-                left: scale(14),
-                zIndex: 1,
-              }}
-              size={24}
-              name="x"
-              onPress={onClose}
-              color="white"
-            />
-            <Text className="text-white text-center font-black text-2xl mt-20 mb-6">
-              קחו רגע לעצמכם, מגיע לכם.
-            </Text>
-            <SubscriptionPoint text="Point1" showIcon />
-            <SubscriptionPoint text="point2" showIcon />
-            <SubscriptionPoint text="point3" showIcon />
-          </View>
-          {/* <View className="flex flex-col justify-center items-start mt-10 text-white">
+        {numberOfPackage > 0 ? (
+          <>
+            <View className="relative">
+              <Icon2
+                style={{
+                  position: 'absolute',
+                  top: 0,
+                  left: 12,
+                  zIndex: 1,
+                }}
+                size={24}
+                name="x"
+                onPress={onClose}
+                color="white"
+              />
+              <Text className="text-white text-center font-black text-2xl mt-20 mb-6">
+                קחו רגע לעצמכם, מגיע לכם.
+              </Text>
+              <SubscriptionPoint text="Point1" showIcon />
+              <SubscriptionPoint text="point2" showIcon />
+              <SubscriptionPoint text="point3" showIcon />
+            </View>
+            {/* <View className="flex flex-col justify-center items-start mt-10 text-white">
             <Text className="font-bold">
               נסו את האפליקציה במשך 7 ימים בחינם!
             </Text>
@@ -293,7 +297,7 @@ const Subscribe: React.FC = () => {
               באפליקציה
             </Text>
           </View> */}
-          {/* <Pricing
+            {/* <Pricing
             style={{
               marginTop: scale(20),
               width: scale(300),
@@ -301,114 +305,117 @@ const Subscribe: React.FC = () => {
             }}
             className="self-center"
           /> */}
-          <View className="mt-10 self-center px-12">
-            <Text className="text-white text-left">
-              ״אני פשוט מכורה לאפליקציה, ואני ישנה טוב בקטע לא נורמלי״
-            </Text>
+            <View className="mt-10 self-center px-12">
+              <Text className="text-white text-left">
+                ״אני פשוט מכורה לאפליקציה, ואני ישנה טוב בקטע לא נורמלי״
+              </Text>
 
-            <View className="flex flex-row justify-between items-center mt-3">
-              <Text className="text-left text-white">-עינב</Text>
-              <Text className="text-left text-white">⭐⭐⭐⭐⭐</Text>
+              <View className="flex flex-row justify-between items-center mt-3">
+                <Text className="text-left text-white">-עינב</Text>
+                <Text className="text-left text-white">⭐⭐⭐⭐⭐</Text>
+              </View>
             </View>
-          </View>
-          <View className="relative flex-1">
-            <View className="w-full bg-[#0A1129] absolute bottom-0 self-center h-68 rounded-t-xl flex flex-col items-center p-4">
-              <PackageItem
-                showBadge={true}
-                selected={selectedPlan === 'annual'}
-                onPress={() => setSelectedPlan('annual')}
-                title="מנוי שנתי"
-                monthPrice={plans.annual.product.price / 12}
-                subTitle={
-                  <Text className="text-white text-center text-sm leading-5">
-                    <Text className="text-[#FFC107]">
-                      ₪{plans.annual.product.price.toFixed(2)}{' '}
+            <View className="relative flex-1">
+              <View className="w-full bg-[#0A1129] absolute bottom-0 self-center h-68 rounded-t-xl flex flex-col items-center p-4">
+                <PackageItem
+                  showBadge={true}
+                  selected={selectedPlan === 'annual'}
+                  onPress={() => setSelectedPlan('annual')}
+                  title="מנוי שנתי"
+                  monthPrice={plans.annual.product.price / 12}
+                  subTitle={
+                    <Text className="text-white text-center text-sm leading-5">
+                      <Text className="text-[#FFC107]">
+                        ₪{plans.annual.product.price.toFixed(2)}{' '}
+                      </Text>
+                      <Text
+                        className={`line-through ${
+                          selectedPlan === PLANS.annual.identifier
+                            ? 'text-white'
+                            : 'text-[#2C344D]'
+                        } `}>
+                        ₪{(plans.monthly.product.price * 12).toFixed(2)}
+                      </Text>
                     </Text>
-                    <Text
-                      className={`line-through ${
-                        selectedPlan === PLANS.annual.identifier
-                          ? 'text-white'
-                          : 'text-[#2C344D]'
-                      } `}>
-                      ₪{(plans.monthly.product.price * 12).toFixed(2)}
-                    </Text>
-                  </Text>
-                }
-              />
-              <PackageItem
-                monthPrice={plans.monthly.product.price}
-                selected={selectedPlan === 'monthly'}
-                onPress={() => setSelectedPlan('monthly')}
-                title="מנוי חודשי"
-              />
-              <View className="mt-5" />
-              <PlanItem
-                {...{
-                  onPress: async () => {
-                    purchase(plans[selectedPlan])
-                      .then(async result => {
-                        const revenueLog = await amplitudeInstance.logRevenue({
-                          price: plan.product.price,
-                          productId: plan.product.identifier,
-                          revenueType: plan.packageType,
-                        });
-                        await rudderClient.track('Subscribe', {
-                          price: plan.product.price,
-                          productId: plan.product.identifier,
-                          revenueType: plan.packageType,
-                        });
-                        await logEvent('Subscribe', {
-                          userName,
-                          email,
-                          price: plan.product.price,
-                          productId: plan.product.identifier,
-                          revenueType: plan.packageType,
-                        });
-                        if (firstRun) {
-                          if (courses && courses.length > 0) {
-                            const courseMeditations = courses[0].meditations;
-                            if (
-                              courseMeditations &&
-                              courseMeditations.length > 0
-                            ) {
-                              const item = courseMeditations[0];
-                              navigate('Home', { navigateToItem: item });
+                  }
+                />
+                <PackageItem
+                  monthPrice={plans.monthly.product.price}
+                  selected={selectedPlan === 'monthly'}
+                  onPress={() => setSelectedPlan('monthly')}
+                  title="מנוי חודשי"
+                />
+                <View className="mt-5" />
+                <PlanItem
+                  {...{
+                    onPress: async () => {
+                      purchase(plans[selectedPlan])
+                        .then(async result => {
+                          const revenueLog = await amplitudeInstance.logRevenue(
+                            {
+                              price: plan.product.price,
+                              productId: plan.product.identifier,
+                              revenueType: plan.packageType,
+                            },
+                          );
+                          await rudderClient.track('Subscribe', {
+                            price: plan.product.price,
+                            productId: plan.product.identifier,
+                            revenueType: plan.packageType,
+                          });
+                          await logEvent('Subscribe', {
+                            userName,
+                            email,
+                            price: plan.product.price,
+                            productId: plan.product.identifier,
+                            revenueType: plan.packageType,
+                          });
+                          if (firstRun) {
+                            if (courses && courses.length > 0) {
+                              const courseMeditations = courses[0].meditations;
+                              if (
+                                courseMeditations &&
+                                courseMeditations.length > 0
+                              ) {
+                                const item = courseMeditations[0];
+                                navigate('Home', { navigateToItem: item });
+                              } else {
+                                navigate('Home');
+                              }
                             } else {
                               navigate('Home');
                             }
                           } else {
                             navigate('Home');
                           }
-                        } else {
+                        })
+                        .catch(error => {
+                          console.log('hello error', error);
                           navigate('Home');
-                        }
-                      })
-                      .catch(error => {
-                        console.log('hello error', error);
-                        navigate('Home');
-                      });
-                  },
-                }}
-              />
-              <TouchableOpacity onPress={onClose}>
-                <Text className="text-white text-center text-xs mt-5 underline">
-                  לא, תודה
-                </Text>
-              </TouchableOpacity>
+                        });
+                    },
+                  }}
+                />
+                <TouchableOpacity onPress={onClose}>
+                  <Text className="text-white text-center text-xs mt-5 underline">
+                    לא, תודה
+                  </Text>
+                </TouchableOpacity>
+              </View>
             </View>
-          </View>
-          {purchasing && (
-            <Overlay>
-              <Spinner />
-            </Overlay>
-          )}
-        </>
-      ) : (
-        <EmptyOverlay>
-          <Spinner />
-        </EmptyOverlay>
-      )}
-    </View>
+            {purchasing && (
+              <Overlay>
+                <Spinner />
+              </Overlay>
+            )}
+          </>
+        ) : (
+          <EmptyOverlay>
+            <Spinner />
+          </EmptyOverlay>
+        )}
+      </SafeAreaView>
+    </>
   );
 };
 
