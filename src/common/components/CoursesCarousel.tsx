@@ -19,6 +19,7 @@ interface CoursesCarouselProps {
   height?: number;
   setSelectedCourse?: (course: any) => void; // Adjust the type accordingly
   isTest?: boolean;
+  withParallax?: boolean;
 }
 
 const CarouselContainer = styled.View`
@@ -39,6 +40,7 @@ const CoursesCarousel: FC<CoursesCarouselProps> = ({
   renderStaticBottomContent = null,
   selectedCourse = null,
   setSelectedCourse,
+  withParallax = false,
 }) => {
   const [activeItem, setActiveItem] = useState(0);
   const { navigate } = useNavigation();
@@ -65,6 +67,7 @@ const CoursesCarousel: FC<CoursesCarouselProps> = ({
       <CarouselTitle k={title} />
       <CarouselContainer>
         <Carousel2
+          withParallax={withParallax}
           renderStaticBottomContent={renderStaticBottomContent}
           data={courses.sort((a, b) => b.name.localeCompare(a.name))}
         />

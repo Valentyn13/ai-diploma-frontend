@@ -159,7 +159,6 @@ export const SBItem: React.FC<Props> = props => {
 };
 
 const PAGE_WIDTH = Dimensions.get('window').width;
-const PAGE_HEIGHT = Dimensions.get('window').height;
 
 interface CoursesCarouselProps {
   renderStaticBottomContent: (() => React.ReactNode) | null;
@@ -169,12 +168,14 @@ interface CoursesCarouselProps {
   height?: number;
   setSelectedCourse?: (course: any) => void;
   data: any[];
+  withParallax?: boolean;
 }
 
 const Carousel2: FC<CoursesCarouselProps> = ({
   data,
   renderStaticBottomContent = null,
   setSelectedCourse,
+  withParallax = false,
 }) => {
   const progressValue = useSharedValue<number>(0);
 
@@ -235,7 +236,7 @@ const Carousel2: FC<CoursesCarouselProps> = ({
         mode="parallax"
         modeConfig={{
           parallaxScrollingScale: 0.9,
-          parallaxScrollingOffset: 50,
+          parallaxScrollingOffset: withParallax ? 50 : 0,
         }}
         data={data}
         renderItem={renderItem}
