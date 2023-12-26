@@ -31,6 +31,10 @@
 		65189DB22B2B804F00295AF0 /* FontAwesome6_Brands.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 65189D9F2B2B804E00295AF0 /* FontAwesome6_Brands.ttf */; };
 		65189DB32B2B804F00295AF0 /* MaterialIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 65189DA02B2B804F00295AF0 /* MaterialIcons.ttf */; };
 		6591CF1B2B3A18E300635172 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 6591CF1A2B3A18E300635172 /* GoogleService-Info.plist */; };
+		6591CF202B3AC7C100635172 /* almoni-dl-aaa-light.otf in Resources */ = {isa = PBXBuildFile; fileRef = 6591CF1C2B3AC7C100635172 /* almoni-dl-aaa-light.otf */; };
+		6591CF212B3AC7C100635172 /* almoni-dl-aaa-black.otf in Resources */ = {isa = PBXBuildFile; fileRef = 6591CF1D2B3AC7C100635172 /* almoni-dl-aaa-black.otf */; };
+		6591CF222B3AC7C100635172 /* almoni-dl-aaa-bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 6591CF1E2B3AC7C100635172 /* almoni-dl-aaa-bold.otf */; };
+		6591CF232B3AC7C100635172 /* almoni-dl-aaa-regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 6591CF1F2B3AC7C100635172 /* almoni-dl-aaa-regular.otf */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
 		FA01C0C38DA4A532906765E0 /* libPods-rega-regaTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BEE562937317CBC9E7C5A05B /* libPods-rega-regaTests.a */; };
 		FA0C1E3B98DD01D86B1C643A /* libPods-rega.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 86EB913BD4188C30B0697C18 /* libPods-rega.a */; };
@@ -78,6 +82,10 @@
 		65189D9F2B2B804E00295AF0 /* FontAwesome6_Brands.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = FontAwesome6_Brands.ttf; path = "../node_modules/react-native-vector-icons/Fonts/FontAwesome6_Brands.ttf"; sourceTree = "<group>"; };
 		65189DA02B2B804F00295AF0 /* MaterialIcons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = MaterialIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/MaterialIcons.ttf"; sourceTree = "<group>"; };
 		6591CF1A2B3A18E300635172 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		6591CF1C2B3AC7C100635172 /* almoni-dl-aaa-light.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "almoni-dl-aaa-light.otf"; path = "../src/common/assets/fonts/almoni-dl-aaa-light.otf"; sourceTree = "<group>"; };
+		6591CF1D2B3AC7C100635172 /* almoni-dl-aaa-black.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "almoni-dl-aaa-black.otf"; path = "../src/common/assets/fonts/almoni-dl-aaa-black.otf"; sourceTree = "<group>"; };
+		6591CF1E2B3AC7C100635172 /* almoni-dl-aaa-bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "almoni-dl-aaa-bold.otf"; path = "../src/common/assets/fonts/almoni-dl-aaa-bold.otf"; sourceTree = "<group>"; };
+		6591CF1F2B3AC7C100635172 /* almoni-dl-aaa-regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "almoni-dl-aaa-regular.otf"; path = "../src/common/assets/fonts/almoni-dl-aaa-regular.otf"; sourceTree = "<group>"; };
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = rega/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		86EB913BD4188C30B0697C18 /* libPods-rega.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-rega.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		BEE562937317CBC9E7C5A05B /* libPods-rega-regaTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-rega-regaTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -151,6 +159,10 @@
 		65189D8D2B2B7F8500295AF0 /* Fonts */ = {
 			isa = PBXGroup;
 			children = (
+				6591CF1D2B3AC7C100635172 /* almoni-dl-aaa-black.otf */,
+				6591CF1E2B3AC7C100635172 /* almoni-dl-aaa-bold.otf */,
+				6591CF1C2B3AC7C100635172 /* almoni-dl-aaa-light.otf */,
+				6591CF1F2B3AC7C100635172 /* almoni-dl-aaa-regular.otf */,
 				65189D9B2B2B804E00295AF0 /* AntDesign.ttf */,
 				65189D9D2B2B804E00295AF0 /* Entypo.ttf */,
 				65189D902B2B804E00295AF0 /* EvilIcons.ttf */,
@@ -206,6 +218,13 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		8546A3DD2ABB4C228DB9C4A5 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
 		BBD78D7AC51CEA395F1C20DB /* Pods */ = {
 			isa = PBXGroup;
 			children = (
@@ -216,18 +235,6 @@
 			);
 			path = Pods;
 			sourceTree = "<group>";
-		};
-		8546A3DD2ABB4C228DB9C4A5 /* Resources */ = {
-			isa = "PBXGroup";
-			children = (
-				F5474120A08D4086A8D05E0E /* almoni-dl-aaa-black.otf */,
-				A26B92DEA5B14BA6A39B5019 /* almoni-dl-aaa-bold.otf */,
-				6376C01F45AB4A22B8B34B3E /* almoni-dl-aaa-light.otf */,
-				1B0E5900ED7C40BC82077B99 /* almoni-dl-aaa-regular.otf */,
-			);
-			name = Resources;
-			sourceTree = "<group>";
-			path = "";
 		};
 /* End PBXGroup section */
 
@@ -335,22 +342,22 @@
 				65189DAF2B2B804F00295AF0 /* SimpleLineIcons.ttf in Resources */,
 				65189DB02B2B804F00295AF0 /* Entypo.ttf in Resources */,
 				65189DA52B2B804F00295AF0 /* FontAwesome6_Regular.ttf in Resources */,
+				6591CF232B3AC7C100635172 /* almoni-dl-aaa-regular.otf in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				65189DB22B2B804F00295AF0 /* FontAwesome6_Brands.ttf in Resources */,
 				65189DAE2B2B804F00295AF0 /* AntDesign.ttf in Resources */,
+				6591CF212B3AC7C100635172 /* almoni-dl-aaa-black.otf in Resources */,
 				65189DA12B2B804F00295AF0 /* FontAwesome5_Regular.ttf in Resources */,
 				65189DAD2B2B804F00295AF0 /* Zocial.ttf in Resources */,
+				6591CF202B3AC7C100635172 /* almoni-dl-aaa-light.otf in Resources */,
 				65189DAB2B2B804F00295AF0 /* MaterialCommunityIcons.ttf in Resources */,
+				6591CF222B3AC7C100635172 /* almoni-dl-aaa-bold.otf in Resources */,
 				65189DA42B2B804F00295AF0 /* FontAwesome5_Brands.ttf in Resources */,
 				65189DAC2B2B804F00295AF0 /* Octicons.ttf in Resources */,
 				65189DA62B2B804F00295AF0 /* FontAwesome6_Solid.ttf in Resources */,
 				6591CF1B2B3A18E300635172 /* GoogleService-Info.plist in Resources */,
 				65189DA82B2B804F00295AF0 /* FontAwesome5_Solid.ttf in Resources */,
 				65189DA92B2B804F00295AF0 /* FontAwesome.ttf in Resources */,
-				D071540E844E4792BAEB0797 /* almoni-dl-aaa-black.otf in Resources */,
-				513ECA92E2814C9E85F2CB96 /* almoni-dl-aaa-bold.otf in Resources */,
-				C3671C3E16B94AB2B8E47833 /* almoni-dl-aaa-light.otf in Resources */,
-				80041796D2E24C03865001E0 /* almoni-dl-aaa-regular.otf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
