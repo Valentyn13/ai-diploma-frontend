@@ -8,6 +8,7 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import Icon from 'react-native-vector-icons/Feather';
 
 import MeditationItem from './MeditationItem';
@@ -61,17 +62,19 @@ const GroupedMeditations = () => {
   );
 
   return (
-    <FlatList
-      style={styles.container}
-      contentContainerStyle={styles.container}
-      data={meditations}
-      keyExtractor={item => item.id}
-      renderItem={renderMeditationItem}
-      numColumns={2}
-      ListHeaderComponent={() => <Header title={title} />}
-      stickyHeaderIndices={[0]}
-      showsVerticalScrollIndicator={false}
-    />
+    <SafeAreaView edges={['top', 'right', 'left']} className="bg-[#fdedd6]">
+      <FlatList
+        style={styles.container}
+        contentContainerStyle={styles.container}
+        data={meditations}
+        keyExtractor={item => item.id}
+        renderItem={renderMeditationItem}
+        numColumns={2}
+        ListHeaderComponent={() => <Header title={title} />}
+        stickyHeaderIndices={[0]}
+        showsVerticalScrollIndicator={false}
+      />
+    </SafeAreaView>
   );
 };
 

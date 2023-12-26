@@ -25,6 +25,7 @@ import useAppState from '@services/hooks/useAppState';
 import useArticleData from '@services/hooks/useArticleData';
 import i18n from '@services/localization/i18n';
 import { logEvent } from '@utils/analytics';
+import { shuffleArray } from '@utils/array';
 import isLowResolution from '@utils/isLowResolution';
 import React, { useCallback, useEffect, useState } from 'react';
 import { Image, ScrollView, Text, TouchableOpacity, View } from 'react-native';
@@ -278,7 +279,7 @@ const Home = () => {
                       </Text>
                     </TouchableOpacity>
                   </View>
-                  <HorizontalList data={data.slice(0, 4)} big />
+                  <HorizontalList data={shuffleArray(data).slice(0, 5)} big />
                 </Container>
 
                 <View className="flex flex-row items-end justify-between w-full px-2 mt-4">
@@ -310,7 +311,10 @@ const Home = () => {
                         </Text>
                       </TouchableOpacity>
                     </View>
-                    <HorizontalList data={latest.slice(0, 4)} big />
+                    <HorizontalList
+                      data={shuffleArray(latest).slice(0, 5)}
+                      big
+                    />
                   </Container>
                 </Container>
                 <Container style={{ marginTop: 20 }} flex={HEIGHT_RATIO.BOTTOM}>
@@ -327,7 +331,10 @@ const Home = () => {
                       </TouchableOpacity>
                     </View>
 
-                    <HorizontalList data={topRated.slice(0, 4)} big />
+                    <HorizontalList
+                      data={shuffleArray(topRated).slice(0, 5)}
+                      big
+                    />
                   </Container>
                 </Container>
                 {articles.length > 0 && (

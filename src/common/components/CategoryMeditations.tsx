@@ -2,14 +2,16 @@ import HorizontalList from '@common/components/HorizontalList';
 import { DashedSeparator, Title, TopTitle } from '@common/components/Styled';
 import { colors, dimens } from '@common/theme';
 import i18n from '@services/localization/i18n';
+import { shuffleArray } from '@utils/array';
 import React, { FC } from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { Meditation } from 'types/Meditation';
 
 interface Category {
   title: string;
   info?: string | null;
   height?: string;
-  meditations: Record<string, unknown>[];
+  meditations: Meditation[];
 }
 
 interface Props {
@@ -19,6 +21,7 @@ interface Props {
 
 const styles = StyleSheet.create({
   categoryMeditationsContainer: {
+    flex: 1,
     flexDirection: 'column',
     alignItems: 'flex-start',
     paddingTop: 8,
@@ -49,7 +52,10 @@ const CategoryMeditations: FC<Props> = ({
       </TouchableOpacity>
     </View>
     {!!info && <Title style={styles.info} t={info} />}
-    <HorizontalList data={meditations.slice(0, 4)} height={height} />
+    <HorizontalList
+      data={shuffleArray<Meditation>(meditations).slice(0, 5)}
+      height={height}
+    />
     <DashedSeparator style={styles.separator} />
   </View>
 );
