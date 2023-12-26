@@ -86,7 +86,7 @@ const HorizontalListItem: React.FC<HorizontalListItemProps> = memo(
     const navigateToMeditation = useCallback(() => {
       if (!hasPremium && isCategoryLocked) {
         // @ts-ignore TODO: fix this
-        navigate('Subscribe2', { item: { name } });
+        navigate('Subscribe');
       } else {
         amplitudeInstance.logEvent('MEDITATION_CLICKED');
         amplitudeInstance.logEvent('MEDITATION_PLAY');

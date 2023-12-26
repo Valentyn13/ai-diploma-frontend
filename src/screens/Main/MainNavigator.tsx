@@ -6,7 +6,6 @@ import Intro from '../Intro';
 // import MeditationInfo from './MeditationInfo';
 import MeditationPlayer from './MeditationPlayer';
 import Subscribe from './Subscribe';
-import Subscribe2 from './Subscribe2';
 import Tabs from './Tabs';
 import WebView from './WebView';
 
@@ -38,11 +37,6 @@ const StackNavigator: React.FC = () => {
       <Stack.Screen
         name="Subscribe"
         component={Subscribe}
-        options={{ headerShown: false }}
-      />
-      <Stack.Screen
-        name="Subscribe2"
-        component={Subscribe2}
         options={{ headerShown: false }}
       />
       <Stack.Screen name="intro2" component={Intro} />

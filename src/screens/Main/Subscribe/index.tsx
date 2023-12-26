@@ -1,4 +1,5 @@
 import SubscriptionPoint from '@common/components/SubscriptionPoint';
+import { usePurchases } from '@common/context/PurchaseContext';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import rudderClient, {
   RUDDER_LOG_LEVEL,
@@ -188,8 +189,7 @@ const Subscribe: React.FC = () => {
   const courses = useSelector(coursesSelector);
   const onClose = () => goBack();
   const firstRun = route.params?.firstRun;
-  // const { plans } = usePurchases();
-  const plans = PLANS;
+  const { plans } = usePurchases();
   const [purchasing, setPurchasing] = useState<boolean>(false);
   const {
     id,
@@ -253,7 +253,7 @@ const Subscribe: React.FC = () => {
     { offset: '100%', color: '#003399', opacity: '1' }, // Darker Blue
   ];
 
-  const [selectedPlan, setSelectedPlan] = useState(PLANS.annual.identifier);
+  const [selectedPlan, setSelectedPlan] = useState('annual');
 
   return (
     <View className="h-full">
@@ -277,7 +277,7 @@ const Subscribe: React.FC = () => {
               onPress={onClose}
               color="white"
             />
-            <Text className="text-white text-center font-black text-2xl mt-20 mb-10">
+            <Text className="text-white text-center font-black text-2xl mt-20 mb-6">
               קחו רגע לעצמכם, מגיע לכם.
             </Text>
             <SubscriptionPoint text="Point1" showIcon />
@@ -301,19 +301,22 @@ const Subscribe: React.FC = () => {
             }}
             className="self-center"
           /> */}
-          <View className="mt-6 self-center">
-            <Text className="text-white">
+          <View className="mt-10 self-center px-12">
+            <Text className="text-white text-left">
               ״אני פשוט מכורה לאפליקציה, ואני ישנה טוב בקטע לא נורמלי״
             </Text>
 
-            <Text className="text-left mt-2 text-white">-עינב ⭐⭐⭐⭐⭐</Text>
+            <View className="flex flex-row justify-between items-center mt-3">
+              <Text className="text-left text-white">-עינב</Text>
+              <Text className="text-left text-white">⭐⭐⭐⭐⭐</Text>
+            </View>
           </View>
           <View className="relative flex-1">
             <View className="w-full bg-[#0A1129] absolute bottom-0 self-center h-68 rounded-t-xl flex flex-col items-center p-4">
               <PackageItem
                 showBadge={true}
-                selected={selectedPlan === PLANS.annual.identifier}
-                onPress={() => setSelectedPlan(PLANS.annual.identifier)}
+                selected={selectedPlan === 'annual'}
+                onPress={() => setSelectedPlan('annual')}
                 title="מנוי שנתי"
                 monthPrice={plans.annual.product.price / 12}
                 subTitle={
@@ -334,70 +337,59 @@ const Subscribe: React.FC = () => {
               />
               <PackageItem
                 monthPrice={plans.monthly.product.price}
-                selected={selectedPlan === PLANS.monthly.identifier}
-                onPress={() => setSelectedPlan(PLANS.monthly.identifier)}
+                selected={selectedPlan === 'monthly'}
+                onPress={() => setSelectedPlan('monthly')}
                 title="מנוי חודשי"
               />
               <View className="mt-5" />
-              {availablePackages.map(plan => {
-                if (plan.packageType === 'CUSTOM') {
-                  return (
-                    <PlanItem
-                      {...{
-                        key: get(plan, 'identifier'),
-                        title: get(plan, 'product.title'),
-                        price: get(plan, 'product.price_string'),
-                        onPress: async () => {
-                          purchase(plan)
-                            .then(async result => {
-                              const revenueLog =
-                                await amplitudeInstance.logRevenue({
-                                  price: plan.product.price,
-                                  productId: plan.product.identifier,
-                                  revenueType: plan.packageType,
-                                });
-                              await rudderClient.track('Subscribe', {
-                                price: plan.product.price,
-                                productId: plan.product.identifier,
-                                revenueType: plan.packageType,
-                              });
-                              await logEvent('Subscribe', {
-                                userName,
-                                email,
-                                price: plan.product.price,
-                                productId: plan.product.identifier,
-                                revenueType: plan.packageType,
-                              });
-                              if (firstRun) {
-                                if (courses && courses.length > 0) {
-                                  const courseMeditations =
-                                    courses[0].meditations;
-                                  if (
-                                    courseMeditations &&
-                                    courseMeditations.length > 0
-                                  ) {
-                                    const item = courseMeditations[0];
-                                    navigate('Home', { navigateToItem: item });
-                                  } else {
-                                    navigate('Home');
-                                  }
-                                } else {
-                                  navigate('Home');
-                                }
-                              } else {
-                                navigate('Home');
-                              }
-                            })
-                            .catch(error => {
-                              console.log('hello error', error);
+              <PlanItem
+                {...{
+                  onPress: async () => {
+                    purchase(plans[selectedPlan])
+                      .then(async result => {
+                        const revenueLog = await amplitudeInstance.logRevenue({
+                          price: plan.product.price,
+                          productId: plan.product.identifier,
+                          revenueType: plan.packageType,
+                        });
+                        await rudderClient.track('Subscribe', {
+                          price: plan.product.price,
+                          productId: plan.product.identifier,
+                          revenueType: plan.packageType,
+                        });
+                        await logEvent('Subscribe', {
+                          userName,
+                          email,
+                          price: plan.product.price,
+                          productId: plan.product.identifier,
+                          revenueType: plan.packageType,
+                        });
+                        if (firstRun) {
+                          if (courses && courses.length > 0) {
+                            const courseMeditations = courses[0].meditations;
+                            if (
+                              courseMeditations &&
+                              courseMeditations.length > 0
+                            ) {
+                              const item = courseMeditations[0];
+                              navigate('Home', { navigateToItem: item });
+                            } else {
                               navigate('Home');
-                            });
-                        },
-                      }}
-                    />
-                  );
-                }
-              })}
+                            }
+                          } else {
+                            navigate('Home');
+                          }
+                        } else {
+                          navigate('Home');
+                        }
+                      })
+                      .catch(error => {
+                        console.log('hello error', error);
+                        navigate('Home');
+                      });
+                  },
+                }}
+              />
               <TouchableOpacity onPress={onClose}>
                 <Text className="text-white text-center text-xs mt-5 underline">
                   לא, תודה
@@ -414,7 +406,6 @@ const Subscribe: React.FC = () => {
       ) : (
         <EmptyOverlay>
           <Spinner />
-          <Text>lala</Text>
         </EmptyOverlay>
       )}
     </View>
