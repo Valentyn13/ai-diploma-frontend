@@ -1,17 +1,15 @@
 import { Container, Icon, TopTitle } from '@common/components/Styled';
+import WithPulse from '@common/components/transitions/WIthPulse';
+import WithFadeIn from '@common/components/transitions/WithFadeIn';
+import WithRotate from '@common/components/transitions/WithRotate';
+import WithScale from '@common/components/transitions/WithScale';
+import WithTranslateY from '@common/components/transitions/WithTranslateY';
 import { useNavigation } from '@react-navigation/native';
 import useAppData from '@services/hooks/useAppData';
 import { RootState } from 'path-to-your-root-reducer';
-import React, { useEffect } from 'react';
-import Animated, {
-  Easing,
-  useAnimatedStyle,
-  useSharedValue,
-  withDelay,
-  withSequence,
-  withTiming,
-} from 'react-native-reanimated';
-import { useDispatch, useSelector } from 'react-redux';
+import React, { useEffect, useState } from 'react';
+import { Text } from 'react-native';
+import { useSelector } from 'react-redux';
 import styled from 'styled-components/native';
 
 type RootState = any;
@@ -21,136 +19,78 @@ const AppNameTitle = styled(TopTitle)`
 `;
 
 interface SplashProps {
-  navigation: any; // Adjust the type based on the actual navigation type
+  navigation: any;
 }
 
 const Splash: React.FC<SplashProps> = () => {
   const { navigate } = useNavigation();
   const { getAppData } = useAppData();
-  const dispatch = useDispatch();
+  const [animationFinished, setAnimationFinished] = useState(false);
 
-  const appDataloaded = useSelector((state: RootState) => state.appData.loaded);
+  const isLoaded = useSelector((state: RootState) => state.appData.loaded);
   const accessToken = useSelector(
     (state: RootState) => state.userDetails.accessToken,
   );
 
-  const fadeAnim = useSharedValue(0);
-  const fadeAnim2 = useSharedValue(0);
-  const translateY = useSharedValue(0);
-  const scale = useSharedValue(1);
-  const fadeInText2 = useSharedValue(0);
-
+  // Trigger getAppData or navigate to IntroScreens based on accessToken
   useEffect(() => {
-    const fadeInLogo = () => {
-      fadeAnim.value = withTiming(1, {
-        duration: 600,
-        easing: Easing.inOut(Easing.ease),
-      });
-    };
-
-    const fadeInText = () => {
-      fadeAnim2.value = withDelay(
-        600,
-        withTiming(1, {
-          duration: 600,
-          easing: Easing.inOut(Easing.ease),
-        }),
-      );
-    };
-
-    const slideUpAndShrink = () => {
-      translateY.value = withDelay(
-        1200,
-        withTiming(-100, {
-          duration: 800,
-          easing: Easing.inOut(Easing.ease),
-        }),
-      );
-
-      scale.value = withDelay(
-        1200,
-        withTiming(0.8, {
-          duration: 600,
-          easing: Easing.inOut(Easing.ease),
-        }),
-      );
-    };
-
-    const fadeInText2Animation = () => {
-      fadeInText2.value = withSequence(
-        withDelay(1200, withTiming(1, { duration: 600 })),
-      );
-    };
-
-    const timer = setTimeout(() => {
+    setTimeout(() => {
       if (accessToken) {
         getAppData();
       } else {
         navigate('IntroScreens');
       }
-    }, 2000);
+    }, 3000);
+  }, [accessToken, getAppData, navigate]);
 
-    fadeInLogo();
-    fadeInText();
-
-    // Delay slideUpAndShrink animation by 1200ms (600ms for each fadeIn animation)
-    setTimeout(() => {
-      slideUpAndShrink();
-      fadeInText2Animation();
-    }, 1200);
-
-    return () => {
-      clearTimeout(timer);
-    };
-  }, [
-    accessToken,
-    getAppData,
-    fadeAnim,
-    navigate,
-    fadeAnim2,
-    translateY,
-    scale,
-    fadeInText2,
-  ]);
-
+  // Navigate to 'Main' when both isLoaded and animationFinished are true
   useEffect(() => {
-    if (appDataloaded) {
+    if (isLoaded && animationFinished) {
       navigate('Main');
     }
-  }, [appDataloaded, dispatch, navigate]);
+  }, [isLoaded, animationFinished, navigate]);
 
-  const animatedStyle = useAnimatedStyle(() => {
-    return {
-      opacity: fadeAnim.value,
-      transform: [{ translateY: translateY.value }, { scale: scale.value }],
+  // Simulate animation completion after 3000ms
+  useEffect(() => {
+    const simulateAnimationEnd = async () => {
+      // Simulate some async task like fetching data or waiting for animation
+      await new Promise(resolve => setTimeout(resolve, 3000));
+      setAnimationFinished(true);
     };
-  });
 
-  const animatedStyle2 = useAnimatedStyle(() => {
-    return {
-      opacity: fadeAnim2.value,
-      transform: [{ translateY: translateY.value }, { scale: scale.value }],
-    };
-  });
-
-  const fadeInText2Style = useAnimatedStyle(() => {
-    return {
-      opacity: fadeInText2.value,
-      transform: [{ translateY: translateY.value }, { scale: scale.value }],
-    };
-  });
+    simulateAnimationEnd();
+  }, []);
 
   return (
     <Container>
-      <Animated.View style={[animatedStyle]}>
-        <Icon name="logo" size={100} />
-      </Animated.View>
-      <Animated.View style={[animatedStyle2]}>
-        <AppNameTitle k="appName" />
-      </Animated.View>
-      <Animated.View style={[fadeInText2Style]}>
-        <TopTitle>קחו נשימה</TopTitle>
-      </Animated.View>
+      <WithFadeIn delay={0} duration={500}>
+        <WithPulse scaleMin={0.9} scaleMax={1.1} duration={2000}>
+          <WithTranslateY value={-50} duration={700} delay={1000}>
+            <WithRotate degrees={10} duration={600}>
+              <WithScale scaleValue={0.9} duration={550}>
+                <Icon name="logo" size={100} />
+              </WithScale>
+            </WithRotate>
+          </WithTranslateY>
+        </WithPulse>
+      </WithFadeIn>
+
+      <WithFadeIn delay={500} duration={500}>
+        <WithTranslateY value={-50} duration={700} delay={1000}>
+          <WithScale scaleValue={0.9} duration={550}>
+            <AppNameTitle
+              className="text-xl font-semibold text-gray-800"
+              k="appName"
+            />
+          </WithScale>
+        </WithTranslateY>
+      </WithFadeIn>
+
+      <WithFadeIn delay={1000} duration={500}>
+        <WithScale delay={1000} scaleValue={0.9} duration={550}>
+          <Text className="text-xl font-medium text-gray-800">קחו נשימה</Text>
+        </WithScale>
+      </WithFadeIn>
     </Container>
   );
 };
