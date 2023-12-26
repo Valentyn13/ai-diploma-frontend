@@ -259,6 +259,7 @@ const Home = () => {
             </View>
           </View>
           <CoursesCarousel
+            withParallax
             height={280}
             title="courses"
             renderStaticBottomContent={() => (

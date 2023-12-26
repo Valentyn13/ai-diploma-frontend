@@ -4,8 +4,9 @@ import colors from '@common/theme/colors';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import i18n from '@services/localization/i18n';
 import React from 'react';
-import { View } from 'react-native';
+import { StatusBar, View } from 'react-native';
 import Animated from 'react-native-reanimated';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { useSheetStore } from '../../../store/useSheetStore';
 import Courses from './Courses';
@@ -43,13 +44,27 @@ const TabNavigator = () => {
   const isOpen = useSheetStore(state => state.isOpen);
 
   return (
-    <>
+    <SafeAreaView
+      className="flex-1"
+      style={{
+        backgroundColor: colors.bgColor,
+      }}>
+      <StatusBar
+        hidden={false}
+        barStyle="dark-content"
+        backgroundColor={colors.bgColor}
+      />
       <Tab.Navigator
         initialRouteName="Home"
         screenOptions={{
           tabBarStyle: {
             height: 60,
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
             backgroundColor: colors.bgColor,
+            borderTopWidth: 1,
+            borderTopColor: colors.selectedTabBgColor,
           },
           tabBarInactiveTintColor: colors.selectedTabBgColor,
           tabBarActiveTintColor: colors.mainColor,
@@ -60,6 +75,10 @@ const TabNavigator = () => {
             name={key}
             component={value}
             options={{
+              tabBarItemStyle: {
+                flex: 1,
+                height: 60,
+              },
               ...tabScreen(key.toLowerCase()),
               tabBarLabel: i18n.t(`${key.toLowerCase()}`),
               headerShown: false,
@@ -67,7 +86,7 @@ const TabNavigator = () => {
                 fontSize: 10,
                 letterSpacing: 0.58,
                 textAlign: 'center',
-                marginBottom: 4,
+                // marginBottom: 4,
               },
             }}
           />
@@ -79,7 +98,7 @@ const TabNavigator = () => {
           <MeditationPicker />
         </>
       )}
-    </>
+    </SafeAreaView>
   );
 };
 

@@ -5,7 +5,7 @@ import colors from '@common/theme/colors';
 import { NavigationContainer } from '@react-navigation/native';
 import * as Sentry from '@sentry/react-native';
 import React, { useEffect } from 'react';
-import { SafeAreaView, StatusBar, StyleSheet } from 'react-native';
+import { StatusBar, StyleSheet, View } from 'react-native';
 import { Settings } from 'react-native-fbsdk-next';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { Provider } from 'react-redux';
@@ -46,12 +46,12 @@ const App: React.FC = () => {
         <Provider store={store}>
           <PurchaseProvider>
             <PersistGate loading={null} persistor={persistor}>
-              <StatusBar barStyle="default" />
+              <StatusBar hidden />
               <ThemeProvider theme={theme}>
                 <StoreUpdate>
-                  <SafeAreaView style={styles.rootContainer}>
+                  <View style={styles.rootContainer}>
                     <RootNavigator />
-                  </SafeAreaView>
+                  </View>
                 </StoreUpdate>
               </ThemeProvider>
             </PersistGate>

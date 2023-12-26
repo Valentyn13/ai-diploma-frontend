@@ -6,13 +6,25 @@ import { useAmplitude } from '@services/hooks/useAmplitude';
 import { logEvent } from '@utils/analytics';
 import meditationTime from '@utils/meditationTime';
 import React, { memo, useCallback } from 'react';
-import { ImageBackground, TouchableOpacity, View } from 'react-native';
-import Icon from 'react-native-vector-icons/Feather';
+import { ImageBackground, Text, TouchableOpacity, View } from 'react-native';
+import Icon from 'react-native-vector-icons/FontAwesome6';
 import { useSelector } from 'react-redux';
 import { meditationInstructor } from 'store/selectors';
 import styled from 'styled-components/native';
 
 import { BoldSubTitle, SubTitle } from './Styled';
+
+const CategoryTag = ({ children }) => (
+  <View className="flex-row bg-[#000] items-center justify-center rounded-full px-2 py-1 absolute left-1 bottom-1">
+    {children}
+  </View>
+);
+
+const Label = ({ children }) => (
+  <View className="flex-row bg-[#000] items-center justify-center rounded-full px-2 py-1 absolute left-1 bottom-1">
+    {children}
+  </View>
+);
 
 interface MeditationIconsContentProps {
   categoryTitle: string;
@@ -123,24 +135,22 @@ const MeditationItem: React.FC<HorizontalListItemProps> = memo(
           className="flex-1 items-center justify-center"
           resizeMode="cover"
           source={src}>
+          {/* <CategoryTag>
+            <Text>{categoryTitle}</Text>
+          </CategoryTag> */}
           {!hasPremium && isCategoryLocked && (
-            <Icon
-              style={{
-                opacity: 0.3,
-              }}
-              name="lock"
-              size={40}
-              color="#000"
-            />
+            <View className="bg-black/75 rounded-full p-1 w-8 h-8 flex justify-center items-center absolute top-2 right-2 opacity-60">
+              <Icon name="lock" size={16} color="#fff" />
+            </View>
           )}
-          <TimeLabel>
-            <Icon name="clock" size={8} color="#fff" />
+          <Label>
+            <Icon name="play" size={8} color="#fff" />
             <SubTitle
               style={{ marginLeft: 4 }}
               color="#fff"
               t={`${meditationTime(duration, true)}`}
             />
-          </TimeLabel>
+          </Label>
         </ImageBackground>
         <View className="py-1 px-2 h-12 bg-[#160f29]">
           <BoldSubTitle className="flex-1" color={colors.whiteColor} t={name} />
@@ -167,20 +177,6 @@ const Item = styled(TouchableOpacity)<StyledItemProps>`
   margin: 4px;
   border-radius: 8px;
   overflow: hidden;
-`;
-
-const TimeLabel = styled.View<{ height?: string }>`
-  flex-direction: row;
-  position: absolute;
-  top: ${({ height }) => (height === 'small' ? 10 : 20)}px;
-  left: 0;
-  height: 15px;
-  padding: 0 6px 0 4px;
-  background-color: ${({ theme: { colors } }) => colors.darkColor};
-  border-bottom-right-radius: 20px;
-  border-top-right-radius: 20px;
-  justify-content: center;
-  align-items: center;
 `;
 
 export default MeditationItem;

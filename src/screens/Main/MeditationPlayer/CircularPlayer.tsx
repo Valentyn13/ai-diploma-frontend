@@ -1,9 +1,10 @@
 import CircularSlider from '@common/components/CircularSlider';
+import Pause from '@common/components/Pause';
+import Play from '@common/components/Play';
 import { colors } from '@common/theme';
 import isLowResolution from '@utils/isLowResolution';
 import React, { FC } from 'react';
 import { ActivityIndicator, TouchableOpacity } from 'react-native';
-import Icon from 'react-native-vector-icons/Feather';
 import styled, { DefaultTheme, withTheme } from 'styled-components/native';
 
 interface CircularPlayButtonProps {
@@ -67,12 +68,23 @@ const CircularPlayButton: FC<CircularPlayButtonProps> = ({
       {isLoading ? (
         <ActivityIndicator size="large" color="white" />
       ) : (
-        <Icon
-          style={{ marginRight: 2 }}
-          name={isPlaying ? 'pause' : 'play'}
-          size={SIZE / 2}
-          color={colors.whiteColor}
-        />
+        <>
+          {isPlaying ? (
+            <Play
+              style={{ marginRight: 8 }}
+              height={SIZE / 2}
+              width={SIZE / 2}
+              color={colors.whiteColor}
+            />
+          ) : (
+            <Pause
+              style={{ marginRight: 4 }}
+              height={SIZE / 2}
+              width={SIZE / 2}
+              color={colors.whiteColor}
+            />
+          )}
+        </>
       )}
     </PlayButtonWrapper>
   </ButtonContainer>

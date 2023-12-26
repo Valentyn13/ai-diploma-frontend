@@ -26,6 +26,7 @@ import React, {
 import { Alert, StatusBar, TouchableOpacity, View } from 'react-native';
 import Video from 'react-native-video';
 import { useDispatch, useSelector } from 'react-redux';
+import RNFetchBlob from 'rn-fetch-blob';
 import { meditationStarted, minutesPracticed } from 'store/actions';
 import { meditationInstructor } from 'store/selectors';
 import styled, { withTheme } from 'styled-components';
@@ -34,6 +35,9 @@ import MeditationInfo from '../MeditationInfo';
 import BgMusicSelector from './BgMusicSelector';
 import CircularPlayer from './CircularPlayer';
 import TimesLabel from './TimesLabel';
+
+const VIDEO_URL = 'https://regameditation.s3.us-east-2.amazonaws.com/videos/';
+const AUDIO_URL = 'https://regameditation.s3.us-east-2.amazonaws.com/sounds/';
 
 const Dummy = styled.View`
   background-color: transparent;
@@ -124,6 +128,7 @@ const MeditationPlayer = ({
     colors: { whiteColor, itemBgColor },
   },
 }) => {
+  const [cachedVideoUri, setCachedVideoUri] = useState(null);
   const [destroyed, setDestroyed] = useState(false);
   const route = useRoute();
   const audioPlayerRef = useRef(null);
@@ -277,16 +282,68 @@ const MeditationPlayer = ({
   // const poster = useMemo(() => categoryImage(categoryName), [categoryName]);
   const poster = useMemo(() => 'https://picsum.photos/200', []);
 
+  const audio = url;
+
+  useEffect(() => {
+    const downloadAndCacheFile = async (url, fileName) => {
+      const { dirs } = RNFetchBlob.fs;
+      const filePath = `${dirs.CacheDir}/${fileName}`;
+
+      try {
+        await RNFetchBlob.fs.stat(filePath);
+        // File already exists, no need to download again
+        return `file://${filePath}`;
+      } catch (error) {
+        // File does not exist, download it
+        try {
+          await RNFetchBlob.config({ fileCache: true, path: filePath }).fetch(
+            'GET',
+            url,
+          );
+          return `file://${filePath}`;
+        } catch (downloadError) {
+          console.error(`Error downloading ${fileName}:`, downloadError);
+          return null;
+        }
+      }
+    };
+
+    const downloadAndCacheVideo = async () => {
+      const videoUri = await downloadAndCacheFile(
+        `${VIDEO_URL}${video}`,
+        video,
+      );
+      console.log('videoUri', `${video}.mp4`);
+      if (videoUri) {
+        setIsLoading(false);
+        setCachedVideoUri(videoUri);
+      }
+    };
+
+    const downloadAndCacheAudio = async () => {
+      const audioUri = await downloadAndCacheFile(
+        `${AUDIO_URL}${audio}`,
+        audio,
+      );
+      if (audioUri) {
+        // Update the source of the AudioPlayer
+        audioPlayerRef.current.setNativeProps({ source: { uri: audioUri } });
+      }
+    };
+
+    downloadAndCacheVideo();
+    // downloadAndCacheAudio();
+  }, [video, audio]);
+
   return (
-    <MeditationContainer>
+    <View className="flex flex-col items-center justify-center w-full h-full bg-black">
       <StatusBar animated hidden={true} />
       <VideoPlayer
+        style={{ zIndex: -1, backgroundColor: 'black' }}
         source={{
-          uri: `https://regameditation.s3.us-east-2.amazonaws.com/videos/${video}`,
+          uri: cachedVideoUri,
         }}
         paused={!isPlaying}
-        poster={poster}
-        posterResizeMode="cover"
         onError={error => logger.log('error', error)}
         progressUpdateInterval={1000}
         bufferConfig={{
@@ -302,7 +359,6 @@ const MeditationPlayer = ({
           borderWidth: 0,
           height: 0,
           width: 100,
-          backgroundColor: 'red',
         }}>
         {hasAnimation === false && (
           <BgMusicPlayer
@@ -406,7 +462,7 @@ const MeditationPlayer = ({
           <FavoriteIndicator id={id} />
         </FavoriteIndicatorWrapper>
       </ButtonsContainer>
-    </MeditationContainer>
+    </View>
   );
 };
 
