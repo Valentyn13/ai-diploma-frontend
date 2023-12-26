@@ -207,31 +207,6 @@ const Login = ({ navigation }) => {
       )}
     </View>
   );
-
-  // return (
-  //     <LoginScreen>
-  //         <StyledKeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
-  //             <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-  //                 <Container>
-  //                     <Icon name="logo" size={isLowResolution ? 70 : 125}/>
-  //                     <TabBarButtonss>
-  //                         <TabBarButton k="login" selected={!isSignUp} onPress={() => setIsSignUp(false)}/>
-  //                         <TabBarButton k="signup" selected={isSignUp} onPress={() => setIsSignUp(true)}/>
-  //                     </TabBarButtonss>
-  //                     <SignUpTitle k={isSignUp ? 'signupTitle' : 'loginTitle'}/>
-  //                     {isSignUp && <InputField label="name" value={name} onChangeText={setName}/>}
-  //                     <InputField label="email" value={email} onChangeText={setEmail} keyboardType="email-address"/>
-  //                     <InputField label="password" value={password} onChangeText={setPassword}/>
-  //                     {isSignUp &&
-  //                     <InputField label="verifyPassword" value={verifyPassword} onChangeText={setVerifyPassword}/>}
-  //                     <Button title="login" onPress={onButtonPress} big/>
-  //                     <SignUpTitle k="facebookTitle"/>
-  //                     <Button title="facebook" onPress={loginWithFacebook} big fb/>
-  //                 </Container>
-  //             </TouchableWithoutFeedback>
-  //         </StyledKeyboardAvoidingView>
-  //     </LoginScreen>
-  // );
 };
 
 TabBarButton.propTypes = {

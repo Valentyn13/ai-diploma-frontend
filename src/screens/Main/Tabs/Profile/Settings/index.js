@@ -1,4 +1,3 @@
-/* eslint-disable react-native/no-inline-styles */
 import AppTextInput from '@common/components/AppTextInput';
 import Button from '@common/components/Button';
 import {
