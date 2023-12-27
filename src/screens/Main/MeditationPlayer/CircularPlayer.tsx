@@ -29,6 +29,7 @@ const ButtonContainer = styled.View`
 `;
 
 const PlayButtonWrapper = styled(TouchableOpacity)`
+  padding: 12px;
   position: absolute;
   top: ${SIZE / 4}px;
   left: ${SIZE / 4}px;
