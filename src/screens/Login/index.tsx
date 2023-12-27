@@ -35,7 +35,8 @@ const Login: FC = () => {
   const onContinue = async () => {
     const fcmToken = await getFcmToken();
     setLoader(true);
-    loginWithEmail(email, password, fcmToken);
+    await loginWithEmail(email, password, fcmToken);
+    setLoader(false);
   };
 
   const initCrashlytics = async () => {

@@ -42,7 +42,7 @@ export default () => {
 
   const loginWithEmail = (email, password, fcmToken) => {
     const { fetch } = emailLogin;
-    fetch({ email, password, fcmToken });
+    return fetch({ email, password, fcmToken });
   };
 
   const loginWithFacebook = async () => {

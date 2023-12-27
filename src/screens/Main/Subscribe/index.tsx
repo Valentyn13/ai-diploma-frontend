@@ -1,6 +1,6 @@
 import SubscriptionPoint from '@common/components/SubscriptionPoint';
 import { usePurchases } from '@common/context/PurchaseContext';
-import { useNavigation, useRoute } from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
 import rudderClient, {
   RUDDER_LOG_LEVEL,
 } from '@rudderstack/rudder-sdk-react-native';
@@ -8,7 +8,6 @@ import { AmplitudeInstance, useAmplitude } from '@services/hooks/useAmplitude';
 import i18n from '@services/localization/i18n';
 import { logEvent } from '@utils/analytics';
 import get from '@utils/get';
-import PropTypes from 'prop-types';
 import { default as React, useEffect, useState } from 'react';
 import { Alert, StatusBar, Text, TouchableOpacity, View } from 'react-native';
 import { LinearGradient } from 'react-native-gradients';
@@ -16,7 +15,6 @@ import Purchases from 'react-native-purchases';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import Icon2 from 'react-native-vector-icons/Feather';
 import { useSelector } from 'react-redux';
-import { coursesSelector } from 'store/selectors';
 import styled from 'styled-components/native';
 
 const Overlay = styled.View`
@@ -49,7 +47,7 @@ interface PlanItemProps {
   onPress: () => void;
 }
 
-const PlanItem: React.FC<PlanItemProps> = ({ onPress }) => {
+const SubscribeButton: React.FC<PlanItemProps> = ({ onPress }) => {
   return (
     <TouchableOpacity
       onPress={onPress}
@@ -184,19 +182,13 @@ const PLANS = {
 };
 
 const Subscribe: React.FC = () => {
-  const route = useRoute();
   const { goBack, navigate } = useNavigation();
-  const courses = useSelector(coursesSelector);
   const onClose = () => goBack();
-  const firstRun = route.params?.firstRun;
-  const { plans } = usePurchases();
+  const { plans, setPurchaserIdentity } = usePurchases();
   const [purchasing, setPurchasing] = useState<boolean>(false);
-  const {
-    id,
-    loder,
-    email,
-    name: userName,
-  } = useSelector((state: any) => state.userDetails);
+  const { email, name: userName } = useSelector(
+    (state: any) => state.userDetails,
+  );
   const availablePackages = get(plans, 'availablePackages', []);
 
   const amplitudeInstance: AmplitudeInstance = useAmplitude();
@@ -216,7 +208,6 @@ const Subscribe: React.FC = () => {
   }, []);
 
   const purchase = (packageToPurchase: any) => {
-    setPurchasing(true);
     return new Promise<void>((resolve, reject) => {
       try {
         Purchases.purchasePackage(packageToPurchase)
@@ -242,22 +233,55 @@ const Subscribe: React.FC = () => {
         if (!e.userCancelled) {
           Alert.alert('Failed to purchase plan!');
         }
-        setPurchasing(false);
+
         reject();
       }
     });
   };
 
   const colorList = [
-    { offset: '0%', color: '#4A90E2', opacity: '1' }, // Lighter Blue
-    { offset: '100%', color: '#003399', opacity: '1' }, // Darker Blue
+    { offset: '0%', color: '#4A90E2', opacity: '1' },
+    { offset: '100%', color: '#003399', opacity: '1' },
   ];
 
   const [selectedPlan, setSelectedPlan] = useState('annual');
 
+  const onSubscribe = async (plan: any) => {
+    setPurchasing(true);
+    purchase(plan)
+      .then(async result => {
+        await amplitudeInstance.logRevenue({
+          price: plan.product.price,
+          productId: plan.product.identifier,
+          revenueType: plan.packageType,
+        });
+        await rudderClient.track('Subscribe', {
+          price: plan.product.price,
+          productId: plan.product.identifier,
+          revenueType: plan.packageType,
+        });
+        await logEvent('Subscribe', {
+          userName,
+          email,
+          price: plan.product.price,
+          productId: plan.product.identifier,
+          revenueType: plan.packageType,
+        });
+        navigate('Main', { screen: 'Home' });
+      })
+      .catch(error => {
+        console.log('hello error', error);
+        navigate('Main', { screen: 'Home' });
+      })
+      .finally(() => {
+        setPurchasing(false);
+        setPurchaserIdentity();
+      });
+  };
+
   return (
     <>
-      <StatusBar barStyle="light-content" />
+      <StatusBar hidden />
       <SafeAreaView edges={['top']} className="bg-[#003399]" />
       <SafeAreaView
         edges={['bottom', 'left', 'right']}
@@ -272,7 +296,7 @@ const Subscribe: React.FC = () => {
               <Icon2
                 style={{
                   position: 'absolute',
-                  top: 0,
+                  top: 12,
                   left: 12,
                   zIndex: 1,
                 }}
@@ -281,30 +305,13 @@ const Subscribe: React.FC = () => {
                 onPress={onClose}
                 color="white"
               />
-              <Text className="text-white text-center font-black text-2xl mt-20 mb-6">
+              <Text className="text-white text-center font-black text-2xl mt-12 mb-6">
                 קחו רגע לעצמכם, מגיע לכם.
               </Text>
               <SubscriptionPoint text="Point1" showIcon />
               <SubscriptionPoint text="point2" showIcon />
               <SubscriptionPoint text="point3" showIcon />
             </View>
-            {/* <View className="flex flex-col justify-center items-start mt-10 text-white">
-            <Text className="font-bold">
-              נסו את האפליקציה במשך 7 ימים בחינם!
-            </Text>
-            <Text className=" text-xs text-left">
-              לאחר תקופה זה יתבצע חיוב אוטומטי בסך 159.90 עבור שנת שימוש
-              באפליקציה
-            </Text>
-          </View> */}
-            {/* <Pricing
-            style={{
-              marginTop: scale(20),
-              width: scale(300),
-              height: scale(300),
-            }}
-            className="self-center"
-          /> */}
             <View className="mt-10 self-center px-12">
               <Text className="text-white text-left">
                 ״אני פשוט מכורה לאפליקציה, ואני ישנה טוב בקטע לא נורמלי״
@@ -346,55 +353,8 @@ const Subscribe: React.FC = () => {
                   title="מנוי חודשי"
                 />
                 <View className="mt-5" />
-                <PlanItem
-                  {...{
-                    onPress: async () => {
-                      purchase(plans[selectedPlan])
-                        .then(async result => {
-                          const revenueLog = await amplitudeInstance.logRevenue(
-                            {
-                              price: plan.product.price,
-                              productId: plan.product.identifier,
-                              revenueType: plan.packageType,
-                            },
-                          );
-                          await rudderClient.track('Subscribe', {
-                            price: plan.product.price,
-                            productId: plan.product.identifier,
-                            revenueType: plan.packageType,
-                          });
-                          await logEvent('Subscribe', {
-                            userName,
-                            email,
-                            price: plan.product.price,
-                            productId: plan.product.identifier,
-                            revenueType: plan.packageType,
-                          });
-                          if (firstRun) {
-                            if (courses && courses.length > 0) {
-                              const courseMeditations = courses[0].meditations;
-                              if (
-                                courseMeditations &&
-                                courseMeditations.length > 0
-                              ) {
-                                const item = courseMeditations[0];
-                                navigate('Home', { navigateToItem: item });
-                              } else {
-                                navigate('Home');
-                              }
-                            } else {
-                              navigate('Home');
-                            }
-                          } else {
-                            navigate('Home');
-                          }
-                        })
-                        .catch(error => {
-                          console.log('hello error', error);
-                          navigate('Home');
-                        });
-                    },
-                  }}
+                <SubscribeButton
+                  onPress={() => onSubscribe(plans[selectedPlan])}
                 />
                 <TouchableOpacity onPress={onClose}>
                   <Text className="text-white text-center text-xs mt-5 underline">
@@ -417,11 +377,6 @@ const Subscribe: React.FC = () => {
       </SafeAreaView>
     </>
   );
-};
-
-PlanItem.propTypes = {
-  onPress: PropTypes.func.isRequired,
-  // title: PropTypes.string.isRequired,
 };
 
 export default Subscribe;
