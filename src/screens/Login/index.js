@@ -86,20 +86,7 @@ const Login = ({ navigation }) => {
 
   useEffect(() => {
     if (appDataloaded) {
-      if (firseCourse) {
-        const courseMeditations = firseCourse.meditations;
-        if (courseMeditations && courseMeditations.length > 0) {
-          const item = courseMeditations[0];
-          navigation.navigate('Main', {
-            screen: 'MeditationPlayer',
-            params: { item, autoPlay: true },
-          });
-        } else {
-          navigation.navigate('Home');
-        }
-      } else {
-        navigation.navigate('Home');
-      }
+      navigation.navigate('Home');
     }
   }, [appDataloaded, navigation]);
 

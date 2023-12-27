@@ -86,7 +86,7 @@ const TabNavigator = () => {
                 fontSize: 10,
                 letterSpacing: 0.58,
                 textAlign: 'center',
-                // marginBottom: 4,
+                marginBottom: 4,
               },
             }}
           />
