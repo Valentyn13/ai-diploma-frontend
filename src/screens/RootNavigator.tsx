@@ -21,7 +21,7 @@ const Stack = createStackNavigator();
 const IntroScreensNavigator = () => {
   return (
     <Stack.Navigator
-      initialRouteName="IntroStudy"
+      initialRouteName="PreLogin"
       screenOptions={{
         headerShown: false,
         gestureEnabled: false,

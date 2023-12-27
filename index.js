@@ -1,9 +1,7 @@
-/**
- * @format
- */
 import messaging from '@react-native-firebase/messaging';
 import '@services/localization/i18n';
 import { AppRegistry, Text } from 'react-native';
+import TrackPlayer from 'react-native-track-player';
 
 import App from './App';
 import { name as appName } from './app.json';
@@ -18,5 +16,7 @@ if (Text.defaultProps) {
 messaging().setBackgroundMessageHandler(async remoteMessage => {
   console.log('Message handled in the background!', remoteMessage);
 });
+
+// TrackPlayer.registerPlaybackService(() => require('./service'));
 
 AppRegistry.registerComponent(appName, () => App);
