@@ -3,7 +3,6 @@ import AppButton from '@common/components/AppButton';
 import AppText from '@common/components/AppText';
 import AppTextInput from '@common/components/AppTextInput';
 import { SubTitle } from '@common/components/Styled';
-import { usePurchases } from '@common/context/PurchaseContext';
 import crashlytics from '@react-native-firebase/crashlytics';
 import { useAmplitude } from '@services/hooks/useAmplitude';
 import useAppData from '@services/hooks/useAppData';
@@ -16,7 +15,6 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 import { scale } from 'react-native-size-matters';
 import { useDispatch, useSelector } from 'react-redux';
 import { setLoder } from 'store/actions';
-import { firstCourseSelector } from 'store/selectors';
 import styled from 'styled-components';
 
 import { getFcmToken } from '../../helper/pushNotifications';
@@ -49,9 +47,6 @@ const Login = ({ navigation }) => {
     name,
   } = useSelector(state => state.userDetails);
   const appDataloaded = useSelector(state => state.appData.loaded);
-  const firseCourse = useSelector(firstCourseSelector);
-  const { hasPremium } = usePurchases();
-  const [isKeyboardVisible, setKeyboardVisible] = useState(false);
   const { loginWithEmail } = useLogin();
   const { getAppData } = useAppData();
   const amplitudeInstance = useAmplitude();
@@ -168,7 +163,7 @@ const Login = ({ navigation }) => {
         style={{
           position: 'absolute',
           alignItems: 'center',
-          bottom: isKeyboardVisible ? scale(40) : scale(40),
+          bottom: scale(40),
         }}>
         <TouchableOpacity
           style={{ marginBottom: 10 }}

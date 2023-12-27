@@ -4,14 +4,7 @@ import CoursesCarousel from '@common/components/CoursesCarousel';
 import { HEIGHT_RATIO } from '@common/components/CoursesCarouselItem';
 import Feeling from '@common/components/Feeling';
 import HorizontalList from '@common/components/HorizontalList';
-import {
-  Container,
-  DashedSeparator,
-  Icon,
-  Separator,
-  SubTitle,
-  TopTitle,
-} from '@common/components/Styled';
+import { Container, SubTitle } from '@common/components/Styled';
 import { SHOULD_SHOW_REMINDER_POPUP_STATUS_TURNED_ON } from '@common/constants';
 import { usePurchases } from '@common/context/PurchaseContext';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -84,27 +77,6 @@ const ListTitle = styled(SubTitle)`
   align-self: flex-start;
 `;
 
-const Info = () => {
-  const { name } = useSelector(state => state.userDetails);
-  const greeting = `${name}היי `;
-  return (
-    <InfoContainer>
-      <SubTitle k="myMoments" />
-      <Separator />
-      <InfoWrapper>
-        <InfoContent>
-          <TopTitle k={greeting} />
-          <Status k="dailyStatus" />
-        </InfoContent>
-        <IconWrapper>
-          <Icon name="badge" size={isLowResolution ? 50 : 64} />
-        </IconWrapper>
-      </InfoWrapper>
-      <DashedSeparator />
-    </InfoContainer>
-  );
-};
-
 const ItemsList = ({ title, data }) => {};
 
 const Home = () => {
@@ -133,18 +105,14 @@ const Home = () => {
     const secondTime = await AsyncStorage.getItem('secondTime');
     if (!secondTime) {
       AsyncStorage.setItem('secondTime', 'true');
-    } else if (!hasPremium && secondTime) {
-      // console.log(' navigate from here', hasPremium);
-      navigation.navigate('Subscribe');
     } else if (navigateToItem) {
-      navigation.navigate('MeditationPlayer', {
-        item: navigateToItem,
-        autoPlay: true,
-      });
-      // } else {
-      //   navigation.navigate('Home');
+      console.log(navigateToItem);
+      // navigation.navigate('MeditationPlayer', {
+      //   item: navigateToItem,
+      //   autoPlay: true,
+      // });
     }
-  }, [hasPremium, navigateToItem, navigation]);
+  }, [navigateToItem, navigation]);
 
   const notificationModal = useCallback(async () => {
     logEvent('ReminderPopupOpened', { email });
@@ -160,28 +128,17 @@ const Home = () => {
   useFocusEffect(
     useCallback(() => {
       setData(meditations);
-      setIsFocus(true);
       if (
         shouldShowReminderPopup === SHOULD_SHOW_REMINDER_POPUP_STATUS_TURNED_ON
       ) {
         notificationModal();
       }
-      return () => setIsFocus(false);
     }, [meditations, shouldShowReminderPopup, notificationModal]),
   );
 
   useEffect(() => {
     navigateToRelatedScreen();
   }, [hasPremium, identify, navigateToRelatedScreen]);
-
-  useEffect(() => {
-    if (navigateToItem) {
-      navigation.navigate('MeditationPlayer', {
-        item: navigateToItem,
-        autoPlay: true,
-      });
-    }
-  }, [navigateToItem, hasPremium, navigation]);
 
   useEffect(() => {
     if (email) {

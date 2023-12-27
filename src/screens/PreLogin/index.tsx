@@ -39,21 +39,7 @@ const PreLogin: React.FC = () => {
 
   useEffect(() => {
     if (appDataloaded) {
-      setShowLoading(false);
-      if (firstCourse) {
-        const courseMeditations = firstCourse.meditations;
-        if (courseMeditations && courseMeditations.length > 0) {
-          const item = courseMeditations[0];
-          navigate('Main', {
-            screen: 'MeditationPlayer',
-            params: { item, autoPlay: true },
-          });
-        } else {
-          navigate('Home');
-        }
-      } else {
-        navigate('Home');
-      }
+      navigate('Home');
     }
   }, [appDataloaded, firstCourse, navigate]);
 

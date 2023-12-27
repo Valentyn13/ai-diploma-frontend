@@ -22,7 +22,6 @@ import { AppEventsLogger } from 'react-native-fbsdk-next';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { scale } from 'react-native-size-matters';
 import { useSelector } from 'react-redux';
-import { firstCourseSelector } from 'store/selectors';
 
 import { getFcmToken } from '../../helper/pushNotifications';
 
@@ -59,7 +58,6 @@ const Register = ({ navigation }) => {
     email: useremail,
   } = useSelector(state => state.userDetails);
   const appDataloaded = useSelector(state => state.appData.loaded);
-  const firstCourse = useSelector(firstCourseSelector);
   const amplitudeInstance = useAmplitude();
 
   const initRudderstack = async () => {
@@ -105,20 +103,7 @@ const Register = ({ navigation }) => {
 
   useEffect(() => {
     if (appDataloaded) {
-      if (firstCourse) {
-        const courseMeditations = firstCourse.meditations;
-        if (courseMeditations && courseMeditations.length > 0) {
-          const item = courseMeditations[0];
-          navigation.navigate('Main', {
-            screen: 'MeditationPlayer',
-            params: { item, autoPlay: true },
-          });
-        } else {
-          navigation.navigate('Home');
-        }
-      } else {
-        navigation.navigate('Home');
-      }
+      navigation.navigate('Home');
     }
   }, [appDataloaded, navigation]);
 

@@ -175,7 +175,6 @@ export const favoriteMeditationsSelector = createSelector(
         }
       });
     });
-    console.log('favourite', favourite);
     return favourite.length > 0 ? favourite : [];
   },
 );
