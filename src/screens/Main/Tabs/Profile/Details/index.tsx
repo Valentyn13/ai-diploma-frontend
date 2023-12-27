@@ -4,6 +4,7 @@ import AppText from '@common/components/AppText';
 import AppTextInput from '@common/components/AppTextInput';
 import Button from '@common/components/Button';
 import { Screen, Title } from '@common/components/Styled';
+import Meditate from '@common/components/animation/Meditate';
 import colors from '@common/theme/colors';
 import useUpdateProfile from '@services/hooks/useUpdateProfile';
 import React, { useEffect, useState } from 'react';
@@ -88,6 +89,9 @@ const Details: React.FC<DetailsProps> = () => {
         <Row label="name" value={name} />
         <Row label="sex" value={sex === 'M' ? 'male' : 'female'} keyValue />
         <Row label="email" value={email} />
+      </View>
+      <View className="flex flex-1 items-center justify-center">
+        <Meditate />
       </View>
       <View style={{ position: 'absolute', bottom: 80, left: 20, right: 20 }}>
         <Button
