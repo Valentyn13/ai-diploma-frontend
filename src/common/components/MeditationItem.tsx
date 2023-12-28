@@ -14,7 +14,7 @@ import { useSelector } from 'react-redux';
 import { meditationInstructor } from 'store/selectors';
 import styled from 'styled-components/native';
 
-interface HorizontalListItemProps {
+interface MeditationItemProps {
   horizontal?: boolean;
   item: {
     id: string;
@@ -30,7 +30,7 @@ interface HorizontalListItemProps {
   index: number;
 }
 
-const MeditationItem: React.FC<HorizontalListItemProps> = memo(
+const MeditationItem: React.FC<MeditationItemProps> = memo(
   ({
     horizontal = false,
     item: {
