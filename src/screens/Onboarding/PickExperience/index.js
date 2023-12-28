@@ -1,10 +1,8 @@
-/* eslint-disable react-native/no-inline-styles */
 import image from '@common/assets/images';
 import AppButton from '@common/components/AppButton';
 import AppText from '@common/components/AppText';
 import { Title } from '@common/components/Styled';
 import { ProgressView } from '@react-native-community/progress-view';
-import { useNavigation } from '@react-navigation/native';
 import PropTypes from 'prop-types';
 import React, { useCallback, useState } from 'react';
 import {
@@ -61,8 +59,7 @@ const CategorySelector = ({ idx, setExperience, isSelected }) => {
   );
 };
 
-const PickExperience = () => {
-  const { navigate } = useNavigation();
+const PickExperience = ({ navigation: { navigate } }) => {
   const [experience, setExperience] = useState(null);
   const dispatch = useDispatch();
 
@@ -71,7 +68,7 @@ const PickExperience = () => {
       return;
     }
     dispatch(chooseExperience({ experience }));
-    navigate('CategoriesSelector');
+    navigate('Onboarding', { screen: 'CategoriesSelector' });
   }, [dispatch, experience, navigate]);
 
   const { width } = Dimensions.get('screen');

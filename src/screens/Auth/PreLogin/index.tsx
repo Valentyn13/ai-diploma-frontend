@@ -4,26 +4,37 @@ import Meditate from '@common/components/animation/Meditate';
 import { AppleLoginButton } from '@common/components/buttons/AppleLoginButton';
 import { EmailLoginButton } from '@common/components/buttons/EmailLoginButton';
 import { FacebookLoginButton } from '@common/components/buttons/FacebookLoginButton';
-import { NavigationProp, useNavigation } from '@react-navigation/native';
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import { RootStackParamList } from '@screens/RootNavigator';
 import useAppData from '@services/hooks/useAppData';
 import { useLoginActions } from '@services/hooks/useLoginActions';
-import React, { useEffect } from 'react';
+import React, { FC, useEffect } from 'react';
 import { Platform, TouchableOpacity, View } from 'react-native';
 import { scale } from 'react-native-size-matters';
 import { useSelector } from 'react-redux';
 import { firstCourseSelector } from 'store/selectors';
 
-const PreLogin: React.FC = () => {
+type PreLoginProps = NativeStackScreenProps<
+  RootStackParamList,
+  'Auth',
+  'PreLogin'
+>;
+
+// type ProfileScreenProps = CompositeScreenProps<
+//   NativeStackScreenProps<RootStackParamList, 'Main'>,
+//   NativeStackScreenProps<RootStackParamList, 'Auth', 'PreLogin'>
+// >;
+
+const PreLogin: FC<PreLoginProps> = ({ navigation: { navigate } }) => {
   const { onAppleButtonPress, onFblogin: onFBButtonPress } = useLoginActions();
   const { getAppData } = useAppData();
   const accessToken = useSelector<any, string>(
     state => state.userDetails.accessToken,
-  ); // Adjust types accordingly
+  );
   const appDataLoaded = useSelector<any, boolean>(
     state => state.appData.loaded,
   );
   const firstCourse = useSelector<any, any>(firstCourseSelector);
-  const { navigate } = useNavigation<NavigationProp<any>>();
 
   useEffect(() => {
     if (accessToken) {
@@ -33,7 +44,13 @@ const PreLogin: React.FC = () => {
 
   useEffect(() => {
     if (appDataLoaded) {
-      navigate('Home');
+      // @ts-ignore TODO: fix this
+      navigate('Main', {
+        screen: 'Tabs',
+        params: {
+          screen: 'Home',
+        },
+      });
     }
   }, [appDataLoaded, firstCourse, navigate]);
 

@@ -131,7 +131,9 @@ const Intro = () => {
 
   const onContinue = () => {
     dispatch(chooseCategories({ categories: selectedItems }));
-    navigate('PreLogin');
+    navigate('Auth', {
+      screen: 'PreLogin',
+    });
   };
 
   const numSelected = selectedItems.length;

@@ -1,8 +1,6 @@
 import image from '@common/assets/images';
 import AppButton from '@common/components/AppButton';
 import AppText from '@common/components/AppText';
-import { Container, Title, TopTitle } from '@common/components/Styled';
-import { useNavigation } from '@react-navigation/native';
 import React from 'react';
 import { Dimensions, Image, SafeAreaView, View } from 'react-native';
 import { scale } from 'react-native-size-matters';
@@ -18,40 +16,7 @@ export const BgImage = styled.ImageBackground.attrs(({ name, isFirst }) => ({
   padding-right: ${({ theme: { dimens } }) => dimens.margin}px;
 `;
 
-const IntroTitle = styled(Title)`
-  margin-top: 30px;
-  margin-left: 48px;
-  margin-right: 48px;
-`;
-
-const AppTitle = styled(TopTitle)``;
-
-const TopContainer = styled(Container)`
-  justify-content: flex-end;
-`;
-
-// const IntroRelax = () => {
-//     const {navigate} = useNavigation();
-//
-//     return (
-//         <Container>
-//             <BgImage name="onboardRelax" isFirst>
-//                 <Container flex={0.5} />
-//                 <TopContainer flex={1.3}>
-//                     <AppTitle k="appName" />
-//                     <IntroTitle k="introRelax" />
-//                 </TopContainer>
-//                 <Container flex={0.5}>
-//                     <Button title="next" onPress={() => navigate('ChooseSex')} big bgColor="briquette" />
-//                 </Container>
-//             </BgImage>
-//         </Container>
-//     );
-// };
-
-const IntroRelax = () => {
-  const { navigate } = useNavigation();
-
+const IntroRelax = ({ navigation: { navigate } }) => {
   const { width } = Dimensions.get('screen');
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: '#fcf2e3' }}>
@@ -100,7 +65,10 @@ const IntroRelax = () => {
           }
         </AppText>
         <View style={{ position: 'absolute', bottom: scale(20) }}>
-          <AppButton onPress={() => navigate('ChooseSex')}>{'המשך'}</AppButton>
+          <AppButton
+            onPress={() => navigate('Onboarding', { screen: 'ChooseSex' })}>
+            {'המשך'}
+          </AppButton>
         </View>
       </View>
     </SafeAreaView>

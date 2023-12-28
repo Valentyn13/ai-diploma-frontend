@@ -18,7 +18,7 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 import { scale } from 'react-native-size-matters';
 import { useSelector } from 'react-redux';
 
-import { getFcmToken } from '../../helper/pushNotifications';
+import { getFcmToken } from '../../../helper/pushNotifications';
 
 const Login: FC = () => {
   const { loginWithEmail } = useLogin();

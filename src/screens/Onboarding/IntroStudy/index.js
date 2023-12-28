@@ -1,9 +1,7 @@
-/* eslint-disable react-native/no-inline-styles */
 import image from '@common/assets/images';
 import AppButton from '@common/components/AppButton';
 import AppText from '@common/components/AppText';
 import { Title } from '@common/components/Styled';
-import { useNavigation } from '@react-navigation/native';
 import React from 'react';
 import { Dimensions, Image, Platform, View } from 'react-native';
 import { scale } from 'react-native-size-matters';
@@ -32,29 +30,9 @@ const ButtonContainer = styled.View`
   align-self: stretch;
 `;
 
-// const IntroStudy = () => {
-//   const {navigate} = useNavigation();
-//
-//   return (
-//     <Container>
-//       <Container flex={2}>
-//         <BgImage name="onboardStudy" isFirst />
-//       </Container>
-//       <Container flex={1.5}>
-//         <TopTitle k="appName" />
-//         <IntroTitle k="introStudy" />
-//       </Container>
-//       <ButtonContainer>
-//         <Button title="next" onPress={() => navigate('IntroRelax')} big bgColor="briquette" />
-//       </ButtonContainer>
-//     </Container>
-//   );
-// };
-
-const IntroStudy = () => {
-  const { navigate } = useNavigation();
-
+const IntroStudy = ({ navigation: { navigate } }) => {
   const { width } = Dimensions.get('screen');
+
   return (
     <View
       style={{
@@ -100,7 +78,10 @@ const IntroStudy = () => {
         source={image('bg_2')}
       />
       <View style={{ position: 'absolute', bottom: scale(40) }}>
-        <AppButton onPress={() => navigate('IntroRelax')}>{'המשך'}</AppButton>
+        <AppButton
+          onPress={() => navigate('Onboarding', { screen: 'IntroRelax' })}>
+          {'המשך'}
+        </AppButton>
       </View>
     </View>
   );

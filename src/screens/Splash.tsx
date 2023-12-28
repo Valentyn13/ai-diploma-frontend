@@ -4,13 +4,14 @@ import WithFadeIn from '@common/components/transitions/WithFadeIn';
 import WithRotate from '@common/components/transitions/WithRotate';
 import WithScale from '@common/components/transitions/WithScale';
 import WithTranslateY from '@common/components/transitions/WithTranslateY';
-import { useNavigation } from '@react-navigation/native';
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import useAppData from '@services/hooks/useAppData';
-import { RootState } from 'path-to-your-root-reducer';
-import React, { useEffect, useState } from 'react';
+import React, { FC, useEffect, useState } from 'react';
 import { Text } from 'react-native';
 import { useSelector } from 'react-redux';
 import styled from 'styled-components/native';
+
+import { RootStackParamList } from './RootNavigator';
 
 type RootState = any;
 
@@ -18,12 +19,9 @@ const AppNameTitle = styled(TopTitle)`
   margin-top: 20px;
 `;
 
-interface SplashProps {
-  navigation: any;
-}
+type SplashProps = NativeStackScreenProps<RootStackParamList, 'Splash'>;
 
-const Splash: React.FC<SplashProps> = () => {
-  const { navigate } = useNavigation();
+const Splash: FC<SplashProps> = ({ navigation: { navigate } }) => {
   const { getAppData } = useAppData();
   const [animationFinished, setAnimationFinished] = useState(false);
 
@@ -32,28 +30,24 @@ const Splash: React.FC<SplashProps> = () => {
     (state: RootState) => state.userDetails.accessToken,
   );
 
-  // Trigger getAppData or navigate to IntroScreens based on accessToken
   useEffect(() => {
     setTimeout(() => {
       if (accessToken) {
         getAppData();
       } else {
-        navigate('IntroScreens');
+        navigate('Onboarding');
       }
     }, 3000);
   }, [accessToken, getAppData, navigate]);
 
-  // Navigate to 'Main' when both isLoaded and animationFinished are true
   useEffect(() => {
     if (isLoaded && animationFinished) {
       navigate('Main');
     }
   }, [isLoaded, animationFinished, navigate]);
 
-  // Simulate animation completion after 3000ms
   useEffect(() => {
     const simulateAnimationEnd = async () => {
-      // Simulate some async task like fetching data or waiting for animation
       await new Promise(resolve => setTimeout(resolve, 3000));
       setAnimationFinished(true);
     };

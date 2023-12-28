@@ -7,7 +7,6 @@ import {
   TopTitle,
   TouchableIcon,
 } from '@common/components/Styled';
-import { useNavigation } from '@react-navigation/native';
 import PropTypes from 'prop-types';
 import React from 'react';
 import styled from 'styled-components';
@@ -45,10 +44,7 @@ const SexChooser = ({ sex, onPress }) => (
     <SexTitle k={sex} />
   </SexChooserContainer>
 );
-const Intro = () => {
-  const { navigate } = useNavigation();
-  // console.log('LOgout intro');
-
+const Intro = ({ navigation: { navigate } }) => {
   return (
     <Container>
       <Container flex={1}>
@@ -57,7 +53,11 @@ const Intro = () => {
       </Container>
       <Container flex={1.2}>
         <BgImage name="intro1">
-          <Button title="next" onPress={() => navigate('IntroSleep')} big />
+          <Button
+            title="next"
+            onPress={() => navigate('Onboarding', { screen: 'IntroSleep' })}
+            big
+          />
         </BgImage>
       </Container>
     </Container>

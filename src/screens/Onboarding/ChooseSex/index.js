@@ -3,7 +3,6 @@ import AppButton from '@common/components/AppButton';
 import AppText from '@common/components/AppText';
 import { SubTitle, Title, TouchableIcon } from '@common/components/Styled';
 import { ProgressView } from '@react-native-community/progress-view';
-import { useNavigation } from '@react-navigation/native';
 import PropTypes from 'prop-types';
 import React, { useState } from 'react';
 import {
@@ -66,15 +65,14 @@ const SexChooser = ({ sex, onPress }) => (
   </SexChooserContainer>
 );
 
-const ChooseSex = () => {
-  const { navigate } = useNavigation();
+const ChooseSex = ({ navigation: { navigate } }) => {
   const dispatch = useDispatch();
   const [sex, setSex] = useState();
 
   const onContinue = () => {
     if (sex) {
       dispatch(chooseSex({ sex }));
-      navigate('PickExperience');
+      navigate('Onboarding', { screen: 'PickExperience' });
     } else {
       alert('אנא בחר מין');
     }
@@ -181,26 +179,6 @@ const ChooseSex = () => {
       </View>
     </View>
   );
-
-  // return (
-  //   <Container>
-  //     <Container flex={1.3}>
-  //       <TopTitle k="appName" />
-  //       <IntroTitle k="intro2" />
-  //     </Container>
-  //     <Container flex={1}>
-  //       <BgImage name="intro2" />
-  //     </Container>
-  //
-  //     <Container>
-  //       <SexChooserTitle k="chooseSex" />
-  //       <SexChooserRow>
-  //         <SexChooser sex="female" onPress={() => onChooseSex('F')} />
-  //         <SexChooser sex="male" onPress={() => onChooseSex('M')} />
-  //       </SexChooserRow>
-  //     </Container>
-  //   </Container>
-  // );
 };
 
 SexChooser.propTypes = {

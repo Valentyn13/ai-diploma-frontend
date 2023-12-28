@@ -2,39 +2,45 @@ import GroupedMeditations from '@common/components/GroupedMeditations';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import React from 'react';
 
-import Intro from '../Intro';
 import MeditationPlayer from './MeditationPlayer';
 import Subscribe from './Subscribe';
 import Tabs from './Tabs';
 import WebView from './WebView';
 
-const Stack = createNativeStackNavigator();
+export type MainStackParamList = {
+  Tabs: undefined;
+  MeditationPlayer: { item: any; autoPlay: boolean };
+  GroupedMeditations: undefined;
+  Subscribe: undefined;
+  WebView: { url: string; title: string };
+};
 
-const StackNavigator: React.FC = () => {
+const MainStack = createNativeStackNavigator<MainStackParamList>();
+
+export default () => {
   return (
-    <Stack.Navigator
+    <MainStack.Navigator
       initialRouteName="Tabs"
       screenOptions={{
         headerShown: false,
       }}>
-      <Stack.Screen name="Tabs" component={Tabs} />
-      <Stack.Screen
+      <MainStack.Screen name="Tabs" component={Tabs} />
+      <MainStack.Screen
         name="MeditationPlayer"
         component={MeditationPlayer}
         options={{ headerShown: false }}
       />
-      <Stack.Screen
+      <MainStack.Screen
         name="GroupedMeditations"
         component={GroupedMeditations}
         options={{ headerShown: false }}
       />
-      <Stack.Screen
+      <MainStack.Screen
         name="Subscribe"
         component={Subscribe}
         options={{ headerShown: false }}
       />
-      <Stack.Screen name="intro2" component={Intro} />
-      <Stack.Screen
+      <MainStack.Screen
         name="WebView"
         component={WebView}
         options={({ route }) => ({
@@ -49,8 +55,6 @@ const StackNavigator: React.FC = () => {
           },
         })}
       />
-    </Stack.Navigator>
+    </MainStack.Navigator>
   );
 };
-
-export default StackNavigator;

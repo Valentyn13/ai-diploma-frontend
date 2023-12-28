@@ -1,7 +1,7 @@
 import { colors } from '@common/theme';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
-import PrivacyPolicy from '@screens/PrivacyPolicy';
+import PrivacyPolicy from '@screens/Auth/PrivacyPolicy';
 import i18n from '@services/localization/i18n';
 import React from 'react';
 
