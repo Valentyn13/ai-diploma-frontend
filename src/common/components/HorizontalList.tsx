@@ -1,9 +1,7 @@
+import MeditationItem from '@common/components/MeditationItem';
 import { dimens } from '@common/theme';
-import { captureMessage } from '@sentry/react-native';
-import React, { FC, useCallback } from 'react';
+import React, { FC } from 'react';
 import { FlatList, ListRenderItem } from 'react-native';
-
-import HorizontalListItem from './HorizontalListItem';
 
 interface Item {
   id: string;
@@ -21,8 +19,7 @@ interface HorizontalListProps {
   }>;
 }
 
-export const ITEM_WIDTH = (big?: boolean): number =>
-  dimens.winWidth / (big ? 2.4 : 2.4);
+export const ITEM_WIDTH = (): number => dimens.winWidth / 2.4;
 
 const HorizontalList: FC<HorizontalListProps> = ({
   data,
@@ -30,31 +27,27 @@ const HorizontalList: FC<HorizontalListProps> = ({
   height = 'medium',
   renderUsing = null,
 }) => {
-  const Child = renderUsing || HorizontalListItem;
+  const Child = renderUsing || MeditationItem;
 
-  const renderItem: ListRenderItem<any> = ({ item, index }): ReactElement => {
-    return <Child item={item} index={index} big={big} height={height} />;
+  const renderItem: ListRenderItem<any> = ({ item, index }) => {
+    return (
+      <Child
+        horizontal={true}
+        item={item}
+        index={index}
+        big={big}
+        height={height}
+      />
+    );
   };
 
   return (
     <FlatList
       horizontal={true}
       showsHorizontalScrollIndicator={false}
-      removeClippedSubviews={true}
       data={data}
       renderItem={renderItem}
-      initialNumToRender={10}
       keyExtractor={(item: any) => item.id || item.name}
-      getItemLayout={(_, index) => ({
-        length: ITEM_WIDTH(big),
-        offset: ITEM_WIDTH(big) * index,
-        index,
-      })}
-      onScrollToIndexFailed={info => {
-        captureMessage(
-          `scrollToIndex failed in HorizontalList. index=${info.index}`,
-        );
-      }}
     />
   );
 };

@@ -15,6 +15,7 @@ import MeditationItem from './MeditationItem';
 
 const Header: FC<{ title: string }> = ({ title }) => {
   const { goBack } = useNavigation();
+
   return (
     <View style={styles.header}>
       <TouchableOpacity onPress={goBack} className="absolute left-2 z-10">
@@ -28,9 +29,6 @@ const Header: FC<{ title: string }> = ({ title }) => {
 };
 
 const styles = StyleSheet.create({
-  container: {
-    backgroundColor: colors.bgColor,
-  },
   header: {
     position: 'relative',
     flexDirection: 'row',
@@ -38,7 +36,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     height: 60,
     paddingHorizontal: 10,
-    backgroundColor: colors.bgColor, // Set the background color for the header
+    backgroundColor: colors.bgColor,
   },
   headerText: {
     flex: 1,
@@ -64,8 +62,11 @@ const GroupedMeditations = () => {
   return (
     <SafeAreaView edges={['top', 'right', 'left']} className="bg-[#fdedd6]">
       <FlatList
-        style={styles.container}
-        contentContainerStyle={styles.container}
+        contentContainerStyle={{
+          flexGrow: 1,
+          paddingVertical: 10,
+          paddingHorizontal: 10,
+        }}
         data={meditations}
         keyExtractor={item => item.id}
         renderItem={renderMeditationItem}

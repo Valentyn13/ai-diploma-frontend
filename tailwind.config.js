@@ -6,6 +6,9 @@ module.exports = {
     './src/common/components/**/*.{js,jsx,ts,tsx}',
   ],
   theme: {
+    fontFamily: {
+      sans: ['Almoni DL AAA'],
+    },
     extend: {
       text: {
         xxs: '.625rem',

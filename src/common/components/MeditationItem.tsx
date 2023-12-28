@@ -1,6 +1,7 @@
 import { categoryImage } from '@common/assets/images';
+import { CATEGORY_COLOR } from '@common/constants';
 import { usePurchases } from '@common/context/PurchaseContext';
-import { colors } from '@common/theme';
+import theme from '@common/theme';
 import { useNavigation } from '@react-navigation/native';
 import { useAmplitude } from '@services/hooks/useAmplitude';
 import { logEvent } from '@utils/analytics';
@@ -13,46 +14,8 @@ import { useSelector } from 'react-redux';
 import { meditationInstructor } from 'store/selectors';
 import styled from 'styled-components/native';
 
-import { BoldSubTitle, SubTitle } from './Styled';
-
-const CategoryTag = ({ children }) => (
-  <View className="flex-row bg-[#000] items-center justify-center rounded-full px-2 py-1 absolute left-1 bottom-1">
-    {children}
-  </View>
-);
-
-const Label = ({ children }) => (
-  <View className="flex-row bg-[#000] items-center justify-center rounded-full px-2 py-1 absolute left-1 bottom-1">
-    {children}
-  </View>
-);
-
-interface MeditationIconsContentProps {
-  categoryTitle: string;
-  instructorName: string;
-}
-
-const MeditationIconsContent: React.FC<MeditationIconsContentProps> = ({
-  categoryTitle,
-  instructorName,
-}) => {
-  return (
-    <View className="flex-row">
-      <SubTitle className="mr-2" color="#fff" t={categoryTitle} />
-      <Icon
-        style={{
-          marginTop: 2,
-        }}
-        color="#fff"
-        name="user"
-        size={10}
-      />
-      <SubTitle className="ml-1" color="#fff" t={instructorName ?? ''} />
-    </View>
-  );
-};
-
 interface HorizontalListItemProps {
+  horizontal?: boolean;
   item: {
     id: string;
     name: string;
@@ -69,6 +32,7 @@ interface HorizontalListItemProps {
 
 const MeditationItem: React.FC<HorizontalListItemProps> = memo(
   ({
+    horizontal = false,
     item: {
       id,
       name,
@@ -120,45 +84,52 @@ const MeditationItem: React.FC<HorizontalListItemProps> = memo(
     const src = categoryImage(categoryName, index, thumbnail);
 
     return (
-      <Item
+      <TouchableOpacity
         style={{
-          // backgroundColor: 'transparent',
-          // shadowColor: '#000',
-          // shadowOffset: { width: 0, height: 2 },
-          // shadowOpacity: 0.3,
-          // shadowRadius: 2,
-          elevation: 2,
+          width: horizontal
+            ? theme.dimens.winWidth / 2.4
+            : theme.dimens.winWidth / 2,
+          height: horizontal ? 180 : 280,
+          maxWidth: theme.dimens.winWidth / 2 - 16,
         }}
         onPress={navigateToMeditation}
-        big={false}
-        key={id.toString() + index.toString()}>
+        className="h-48 flex-1 rounded-lg overflow-hidden m-1">
         <ImageBackground
           className="flex-1 items-center justify-center"
           resizeMode="cover"
           source={src}>
-          {/* <CategoryTag>
-            <Text>{categoryTitle}</Text>
-          </CategoryTag> */}
+          <View
+            style={{
+              // @ts-ignore
+              backgroundColor: CATEGORY_COLOR[categoryName] || '#0B2761',
+            }}
+            className="absolute top-2 right-2 rounded-full px-2 py-1">
+            <Text className="text-white text-[12px]">{categoryTitle}</Text>
+          </View>
           {!hasPremium && isCategoryLocked && (
-            <View className="bg-black/75 rounded-full p-1 w-8 h-8 flex justify-center items-center absolute top-2 right-2">
-              <Icon name="lock" size={16} color="#fff" />
+            <View className="bg-gray-200 rounded-full p-1 w-8 h-8 flex justify-center items-center absolute top-2 right-2">
+              <Icon name="lock" size={16} color="#333" />
             </View>
           )}
-          <View className="flex-row bg-black/75 rounded-full px-2 py-1 absolute bottom-2 left-1 items-center">
-            <IconFontAwesome name="play" size={8} color="#fff" />
-            <Text className="ml-2 text-white text-[10px]">
+          <View className="flex-row bg-black/75 rounded-full px-2 py-1 absolute bottom-2 left-2 items-center">
+            <IconFontAwesome name="play" size={12} color="#fff" />
+            <Text className="ml-2 text-white text-[12px]">
               {meditationTime(duration, true)}
             </Text>
           </View>
         </ImageBackground>
-        <View className="py-1 px-2 h-12 bg-[#160f29]">
-          <BoldSubTitle className="flex-1" color={colors.whiteColor} t={name} />
-          <MeditationIconsContent
-            categoryTitle={categoryTitle}
-            instructorName={instructor?.name ?? ''}
-          />
+        <View className="flex flex-col items-start justify-center py-1 px-2 h-12 bg-[#160f29]">
+          <Text className="text-white text-lg font-bold text-left tracking-tighter leading-6 w-full">
+            {name}
+          </Text>
+          <View className="flex flex-row items-center">
+            <IconFontAwesome color="#fff" name="user-large" size={10} />
+            <Text className="text-white text-xs ml-1">
+              {instructor?.name ?? ''}
+            </Text>
+          </View>
         </View>
-      </Item>
+      </TouchableOpacity>
     );
   },
 );
