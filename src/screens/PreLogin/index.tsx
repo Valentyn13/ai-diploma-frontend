@@ -1,28 +1,25 @@
 import AppText from '@common/components/AppText';
 import { Icon } from '@common/components/Styled';
+import Meditate from '@common/components/animation/Meditate';
 import { AppleLoginButton } from '@common/components/buttons/AppleLoginButton';
 import { EmailLoginButton } from '@common/components/buttons/EmailLoginButton';
 import { FacebookLoginButton } from '@common/components/buttons/FacebookLoginButton';
 import { NavigationProp, useNavigation } from '@react-navigation/native';
 import useAppData from '@services/hooks/useAppData';
 import { useLoginActions } from '@services/hooks/useLoginActions';
-import isLowResolution from '@utils/isLowResolution';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { Platform, TouchableOpacity, View } from 'react-native';
 import { scale } from 'react-native-size-matters';
 import { useSelector } from 'react-redux';
 import { firstCourseSelector } from 'store/selectors';
 
-import WomanReadingSVG from './WomanReading';
-
 const PreLogin: React.FC = () => {
   const { onAppleButtonPress, onFblogin: onFBButtonPress } = useLoginActions();
   const { getAppData } = useAppData();
-  const [showLoading, setShowLoading] = useState<boolean>(false);
   const accessToken = useSelector<any, string>(
     state => state.userDetails.accessToken,
   ); // Adjust types accordingly
-  const appDataloaded = useSelector<any, boolean>(
+  const appDataLoaded = useSelector<any, boolean>(
     state => state.appData.loaded,
   );
   const firstCourse = useSelector<any, any>(firstCourseSelector);
@@ -32,16 +29,13 @@ const PreLogin: React.FC = () => {
     if (accessToken) {
       getAppData();
     }
-    return () => {
-      setShowLoading(false);
-    };
   }, [accessToken, getAppData]);
 
   useEffect(() => {
-    if (appDataloaded) {
+    if (appDataLoaded) {
       navigate('Home');
     }
-  }, [appDataloaded, firstCourse, navigate]);
+  }, [appDataLoaded, firstCourse, navigate]);
 
   return (
     <View
@@ -51,18 +45,22 @@ const PreLogin: React.FC = () => {
         padding: scale(24),
         alignItems: 'center',
       }}>
-      <Icon
-        style={{ marginTop: scale(40) }}
-        name="logo"
-        size={isLowResolution ? 40 : 40}
-      />
-      <AppText
-        style={{ fontSize: 50, marginTop: scale(30), color: 'black' }}
-        black>
-        רגע לעצמך
-      </AppText>
-      <AppText style={{ fontSize: 18, color: 'black' }}>זה כל מה שצריך</AppText>
-      <WomanReadingSVG style={{ marginTop: scale(30) }} />
+      <View className="h-1/2">
+        <View className="flex-col items-center">
+          <Icon style={{ marginTop: scale(40) }} name="logo" size={40} />
+          <AppText
+            style={{ fontSize: 50, marginTop: scale(30), color: 'black' }}
+            black>
+            רגע לעצמך
+          </AppText>
+          <AppText style={{ fontSize: 18, color: 'black' }}>
+            זה כל מה שצריך
+          </AppText>
+        </View>
+        <View className="mt-4 flex-1">
+          <Meditate />
+        </View>
+      </View>
       <View
         style={{
           position: 'absolute',
