@@ -8,7 +8,6 @@ import { logEvent } from '@utils/analytics';
 import meditationTime from '@utils/meditationTime';
 import React, { memo, useCallback } from 'react';
 import { ImageBackground, Text, TouchableOpacity, View } from 'react-native';
-import Icon from 'react-native-vector-icons/Feather';
 import IconFontAwesome from 'react-native-vector-icons/FontAwesome6';
 import { useSelector } from 'react-redux';
 import { meditationInstructor } from 'store/selectors';
@@ -107,8 +106,8 @@ const MeditationItem: React.FC<MeditationItemProps> = memo(
             <Text className="text-white text-[12px]">{categoryTitle}</Text>
           </View>
           {!hasPremium && isCategoryLocked && (
-            <View className="bg-gray-200 rounded-full p-1 w-8 h-8 flex justify-center items-center absolute top-2 right-2">
-              <Icon name="lock" size={16} color="#333" />
+            <View className="bg-black/75 rounded-full p-1 w-6 h-6 flex justify-center items-center absolute bottom-2 right-2">
+              <IconFontAwesome name="lock" size={12} color="#fff" />
             </View>
           )}
           <View className="flex-row bg-black/75 rounded-full px-2 py-1 absolute bottom-2 left-2 items-center">

@@ -74,6 +74,11 @@ const GroupedMeditations = () => {
         ListHeaderComponent={() => <Header title={title} />}
         stickyHeaderIndices={[0]}
         showsVerticalScrollIndicator={false}
+        getItemLayout={(_, index) => ({
+          length: theme.dimens.winWidth / 2 - 16,
+          offset: 280 * index,
+          index,
+        })}
       />
     </SafeAreaView>
   );

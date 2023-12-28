@@ -1,5 +1,5 @@
 import MeditationItem from '@common/components/MeditationItem';
-import { dimens } from '@common/theme';
+import theme from '@common/theme';
 import React, { FC } from 'react';
 import { FlatList, ListRenderItem } from 'react-native';
 
@@ -18,8 +18,6 @@ interface HorizontalListProps {
     height?: string;
   }>;
 }
-
-export const ITEM_WIDTH = (): number => dimens.winWidth / 2.4;
 
 const HorizontalList: FC<HorizontalListProps> = ({
   data,
@@ -48,6 +46,11 @@ const HorizontalList: FC<HorizontalListProps> = ({
       data={data}
       renderItem={renderItem}
       keyExtractor={(item: any) => item.id || item.name}
+      getItemLayout={(_, index) => ({
+        length: theme.dimens.winWidth / 2.4,
+        offset: 180 * index,
+        index,
+      })}
     />
   );
 };
