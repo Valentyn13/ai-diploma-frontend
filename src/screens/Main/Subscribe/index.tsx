@@ -267,15 +267,14 @@ const Subscribe: React.FC = () => {
           productId: plan.product.identifier,
           revenueType: plan.packageType,
         });
-        navigate('Main', { screen: 'Home' });
       })
       .catch(error => {
         console.log('hello error', error);
-        navigate('Main', { screen: 'Home' });
       })
       .finally(() => {
         setPurchasing(false);
         setPurchaserIdentity();
+        navigate('Main', { screen: 'Home' });
       });
   };
 
