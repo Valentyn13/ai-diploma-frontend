@@ -6,8 +6,9 @@ import { useAmplitude } from '@services/hooks/useAmplitude';
 import { logEvent } from '@utils/analytics';
 import meditationTime from '@utils/meditationTime';
 import React, { memo, useCallback } from 'react';
-import { ImageBackground, TouchableOpacity, View } from 'react-native';
-import Icon from 'react-native-vector-icons/FontAwesome6';
+import { ImageBackground, Text, TouchableOpacity, View } from 'react-native';
+import Icon from 'react-native-vector-icons/Feather';
+import IconFontAwesome from 'react-native-vector-icons/FontAwesome6';
 import { useSelector } from 'react-redux';
 import { meditationInstructor } from 'store/selectors';
 import styled from 'styled-components/native';
@@ -139,18 +140,16 @@ const MeditationItem: React.FC<HorizontalListItemProps> = memo(
             <Text>{categoryTitle}</Text>
           </CategoryTag> */}
           {!hasPremium && isCategoryLocked && (
-            <View className="bg-black/75 rounded-full p-1 w-8 h-8 flex justify-center items-center absolute top-2 right-2 opacity-60">
+            <View className="bg-black/75 rounded-full p-1 w-8 h-8 flex justify-center items-center absolute top-2 right-2">
               <Icon name="lock" size={16} color="#fff" />
             </View>
           )}
-          <Label>
-            <Icon name="play" size={8} color="#fff" />
-            <SubTitle
-              style={{ marginLeft: 4 }}
-              color="#fff"
-              t={`${meditationTime(duration, true)}`}
-            />
-          </Label>
+          <View className="flex-row bg-black/75 rounded-full px-2 py-1 absolute bottom-2 left-1 items-center">
+            <IconFontAwesome name="play" size={8} color="#fff" />
+            <Text className="ml-2 text-white text-[10px]">
+              {meditationTime(duration, true)}
+            </Text>
+          </View>
         </ImageBackground>
         <View className="py-1 px-2 h-12 bg-[#160f29]">
           <BoldSubTitle className="flex-1" color={colors.whiteColor} t={name} />
