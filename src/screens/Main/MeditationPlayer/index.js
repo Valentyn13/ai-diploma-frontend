@@ -369,6 +369,7 @@ const MeditationPlayer = ({
           />
         )}
       </View>
+      {/* <AudioPlayer id={id} url={url} title={name} artist={instructor?.name} /> */}
       <AudioPlayer
         audioOnly
         disableFocus
@@ -392,7 +393,10 @@ const MeditationPlayer = ({
           bufferForPlaybackAfterRebufferMs: 4000,
         }}
       />
-      <Header>
+      <View className="flex flex-row items-center w-full justify-between mt-16 px-6">
+        <View>
+          <TouchableIcon name="close" onPress={onClose} color={whiteColor} />
+        </View>
         {hasAnimation === false ? (
           <BgMusicSelector
             {...{
@@ -408,15 +412,7 @@ const MeditationPlayer = ({
         ) : (
           <Dummy />
         )}
-        <HeaderTitle
-          t={name || title}
-          color={itemBgColor}
-          style={{ flex: 1 }}
-        />
-        <CloseButtonWrapper>
-          <TouchableIcon name="close" onPress={onClose} color={whiteColor} />
-        </CloseButtonWrapper>
-      </Header>
+      </View>
       <MeditationContainer style={{ zIndex: -1 }} flex={1} />
       <ButtonsContainer flex={1.1}>
         <ButtonsInnerContainer>
