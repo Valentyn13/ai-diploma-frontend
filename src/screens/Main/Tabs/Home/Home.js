@@ -7,7 +7,6 @@ import HorizontalList from '@common/components/HorizontalList';
 import { Container, SubTitle } from '@common/components/Styled';
 import { SHOULD_SHOW_REMINDER_POPUP_STATUS_TURNED_ON } from '@common/constants';
 import { usePurchases } from '@common/context/PurchaseContext';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import {
   useFocusEffect,
   useNavigation,
@@ -16,6 +15,7 @@ import {
 import useAppData from '@services/hooks/useAppData';
 import useAppState from '@services/hooks/useAppState';
 import useArticleData from '@services/hooks/useArticleData';
+import { useOnboarding } from '@services/hooks/useOnboarding';
 import i18n from '@services/localization/i18n';
 import { logEvent } from '@utils/analytics';
 import { shuffleArray } from '@utils/array';
@@ -101,18 +101,7 @@ const Home = () => {
   const categories = useSelector(homeCategoriesSelector);
   categories.sort((a, b) => a.order - b.order);
 
-  const navigateToRelatedScreen = useCallback(async () => {
-    const secondTime = await AsyncStorage.getItem('secondTime');
-    if (!secondTime) {
-      AsyncStorage.setItem('secondTime', 'true');
-    } else if (navigateToItem) {
-      console.log(navigateToItem);
-      // navigation.navigate('MeditationPlayer', {
-      //   item: navigateToItem,
-      //   autoPlay: true,
-      // });
-    }
-  }, [navigateToItem, navigation]);
+  useOnboarding();
 
   const notificationModal = useCallback(async () => {
     logEvent('ReminderPopupOpened', { email });
@@ -135,10 +124,6 @@ const Home = () => {
       }
     }, [meditations, shouldShowReminderPopup, notificationModal]),
   );
-
-  useEffect(() => {
-    navigateToRelatedScreen();
-  }, [hasPremium, identify, navigateToRelatedScreen]);
 
   useEffect(() => {
     if (email) {
