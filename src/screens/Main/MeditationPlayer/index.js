@@ -41,8 +41,8 @@ const AUDIO_URL = 'https://regameditation.s3.us-east-2.amazonaws.com/sounds/';
 
 const Dummy = styled.View`
   background-color: transparent;
-  width: 30;
-  height: 30;
+  width: 30px;
+  height: 30px;
   margin: ${({ theme: { dimens } }) => dimens.margin}px;
 `;
 

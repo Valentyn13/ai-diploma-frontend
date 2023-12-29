@@ -7,11 +7,9 @@ import HorizontalList from '@common/components/HorizontalList';
 import { Container, SubTitle } from '@common/components/Styled';
 import { SHOULD_SHOW_REMINDER_POPUP_STATUS_TURNED_ON } from '@common/constants';
 import { usePurchases } from '@common/context/PurchaseContext';
-import {
-  useFocusEffect,
-  useNavigation,
-  useRoute,
-} from '@react-navigation/native';
+import { useFocusEffect } from '@react-navigation/native';
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import { RootStackParamList } from '@screens/RootNavigator';
 import useAppData from '@services/hooks/useAppData';
 import useAppState from '@services/hooks/useAppState';
 import useArticleData from '@services/hooks/useArticleData';
@@ -20,7 +18,7 @@ import i18n from '@services/localization/i18n';
 import { logEvent } from '@utils/analytics';
 import { shuffleArray } from '@utils/array';
 import isLowResolution from '@utils/isLowResolution';
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { FC, useCallback, useEffect, useState } from 'react';
 import { Image, ScrollView, Text, TouchableOpacity, View } from 'react-native';
 import { scale } from 'react-native-size-matters';
 import { useDispatch, useSelector } from 'react-redux';
@@ -31,45 +29,12 @@ import {
   latestMeditationSelector,
   toptMeditationSelector,
 } from 'store/selectors';
-import styled from 'styled-components';
+import styled from 'styled-components/native';
 
 import { useSheetStore } from '../../../../store/useSheetStore';
 import Article from './Article';
 import InstructorList from './InstructorList';
 import ReminderPopup from './ReminderPopup';
-
-const InfoContainer = styled.View`
-  align-self: stretch;
-  align-items: flex-start;
-  flex: 1;
-`;
-
-const InfoWrapper = styled.View`
-  align-self: stretch;
-  flex-direction: row;
-  align-items: center;
-  justify-content: flex-end;
-  flex: 1;
-  padding: 5px;
-`;
-
-const InfoContent = styled.View`
-  align-self: stretch;
-  flex: 1;
-  align-items: flex-start;
-`;
-
-const Status = styled(SubTitle)`
-  margin-top: 8px;
-  margin-right: 8px;
-  margin-left: 8px;
-  text-align: left;
-`;
-
-const IconWrapper = styled.View`
-  padding-top: 10px;
-  padding-bottom: 10px;
-`;
 
 const ListTitle = styled(SubTitle)`
   font-size: 18px;
@@ -77,18 +42,14 @@ const ListTitle = styled(SubTitle)`
   align-self: flex-start;
 `;
 
-const ItemsList = ({ title, data }) => {};
+type HomeProps = NativeStackScreenProps<RootStackParamList, 'Main', 'Tabs'>;
 
-const Home = () => {
-  const route = useRoute();
+const Home: FC<HomeProps> = ({ navigation }) => {
   const { getAppData } = useAppData();
   const { getArticleData } = useArticleData();
-  const navigation = useNavigation();
-  const { email } = useSelector(state => state.userDetails);
-  const { articles } = useSelector(state => state.articleData);
-  const { hasPremium, setPurchaserIdentity, identify } = usePurchases();
-  const navigateToItem = route.params?.navigateToItem;
-  const [isfocus, setIsFocus] = useState(false);
+  const { email } = useSelector((state: any) => state.userDetails);
+  const { articles } = useSelector((state: any) => state.articleData);
+  const { setPurchaserIdentity } = usePurchases();
   const [showNotificationModal, setshowNotificationModal] = useState(false);
 
   const dispatch = useDispatch();
@@ -97,9 +58,11 @@ const Home = () => {
   const meditations = useSelector(homeMeditationsSelector);
   const latest = useSelector(latestMeditationSelector);
   const topRated = useSelector(toptMeditationSelector);
-  const { shouldShowReminderPopup } = useSelector(state => state.userProgress);
+  const { shouldShowReminderPopup } = useSelector(
+    (state: any) => state.userProgress,
+  );
   const categories = useSelector(homeCategoriesSelector);
-  categories.sort((a, b) => a.order - b.order);
+  categories.sort((a: any, b: any) => a.order - b.order);
 
   useOnboarding();
 
@@ -126,10 +89,9 @@ const Home = () => {
   );
 
   useEffect(() => {
-    if (email) {
-      setPurchaserIdentity();
-    }
-  }, [email]);
+    setPurchaserIdentity();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   useAppState(
     {
@@ -142,14 +104,15 @@ const Home = () => {
     getArticleData();
   }, [getArticleData]);
 
-  const onShowAll = (title, groupedMeditations) => {
+  const onShowAll = (title: string, groupedMeditations: any) => {
     navigation.navigate('Main', {
       screen: 'GroupedMeditations',
       params: { title, meditations: groupedMeditations },
     });
   };
 
-  const setIsOpen = useSheetStore(state => state.setIsOpen);
+  // Define setIsOpen using the appropriate store
+  const setIsOpen = useSheetStore((state: any) => state.setIsOpen);
 
   return (
     <>
@@ -292,7 +255,7 @@ const Home = () => {
               </Container>
             )}
           />
-          {categories.map(category => (
+          {categories.map((category: any) => (
             <CategoryMeditations
               onShowAll={() => {
                 onShowAll(i18n.t(category.title), category.meditations);

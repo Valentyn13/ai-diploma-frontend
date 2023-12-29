@@ -43,7 +43,7 @@ const App: React.FC = () => {
 
   useEffect(() => {
     const init = async () => {
-      trackPlayerInit();
+      // trackPlayerInit();
     };
 
     init();

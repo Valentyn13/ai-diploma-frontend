@@ -10,7 +10,7 @@ import WebView from './WebView';
 export type MainStackParamList = {
   Tabs: undefined;
   MeditationPlayer: { item: any; autoPlay: boolean };
-  GroupedMeditations: undefined;
+  GroupedMeditations: { title: any, meditations: any[] };
   Subscribe: undefined;
   WebView: { url: string; title: string };
 };
