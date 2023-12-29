@@ -18,7 +18,7 @@ const AuthStack = createStackNavigator<AuthStackParamList>();
 export default () => {
   return (
     <AuthStack.Navigator
-      initialRouteName="Login"
+      initialRouteName="PreLogin"
       screenOptions={{
         headerShown: false,
         gestureEnabled: false,

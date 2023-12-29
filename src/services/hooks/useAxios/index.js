@@ -12,8 +12,6 @@ import { logout, setAccessToken, setLoaderFalse } from 'store/actions';
 import usePrevious from '../usePrevious';
 import { actions, initialResponse, responseReducer } from './reducers';
 
-// const {CancelToken} = axios;
-
 const defaultParams = {};
 
 const httpClient = axios.create({
@@ -54,11 +52,7 @@ const extractError = error => {
 
 const httpRequest = async ({ method, url }, apiParams, userId) => {
   const apiUrl = url.replace(':userId', userId);
-  // console.log('apiUrl', apiUrl);
-  // console.log('=====>', {apiUrl,apiParams});
-  // const configParams = cancelToken ? {cancelToken} : {};
   const { data, status } = await httpClient[method](apiUrl, apiParams);
-  // console.log('<=====', {apiUrl, status});
   return { data, status };
 };
 
@@ -121,14 +115,13 @@ export default ({
       }
 
       const apiParams = fetchParams || params;
-      // const source = CancelToken.source();
 
       try {
         const { data, status } = await httpRequest(
           requestApi,
           apiParams,
           userDetails.id,
-        ); // , source.token
+        );
 
         const { token } = data;
 

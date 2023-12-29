@@ -87,7 +87,7 @@ const Settings = ({ navigation }) => {
     dispatch(logout());
     fbLogout();
     await AsyncStorage.removeItem('secondTime');
-    navigation.navigate('Intro');
+    navigation.navigate('Auth', { screen: 'PreLogin' });
   };
 
   // async function onSignIn() {
