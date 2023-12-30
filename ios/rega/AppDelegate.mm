@@ -1,3 +1,4 @@
+#import <React/RCTLinkingManager.h>
 #import "AppDelegate.h"
 #import <Firebase.h>
 #import <React/RCTI18nUtil.h>
@@ -5,6 +6,13 @@
 #import <React/RCTBundleURLProvider.h>
 
 @implementation AppDelegate
+
+- (BOOL)application:(UIApplication *)application
+   openURL:(NSURL *)url
+   options:(NSDictionary<UIApplicationOpenURLOptionsKey,id> *)options
+{
+  return [RCTLinkingManager application:application openURL:url options:options];
+}
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {

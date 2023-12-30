@@ -18,7 +18,6 @@ import {
 } from './helper/pushNotifications';
 import RootNavigator from './screens/RootNavigator';
 import configureStore from './store';
-import trackPlayerInit from './trackPlayerInit';
 
 Sentry.init({
   dsn: 'https://7cbd351b42844e4f925dd289d1781977@o4504887076978688.ingest.sentry.io/4504887078223872',
@@ -49,8 +48,17 @@ const App: React.FC = () => {
     init();
   }, []);
 
+  const linking = {
+    prefixes: ['rega://'],
+    config: {
+      screens: {
+        Home: 'home',
+      },
+    },
+  };
+
   return (
-    <NavigationContainer>
+    <NavigationContainer linking={linking}>
       <GestureHandlerRootView className="flex-1">
         <Provider store={store}>
           <PurchaseProvider>
