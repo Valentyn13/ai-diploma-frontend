@@ -3,8 +3,13 @@ const USER_API = 'users';
 const MEDITATIONS_API = 'meditations';
 const ARTICLES_API = 'articles';
 
-export default {
-  // AUTH API
+export interface IApi {
+  url: string;
+  method: 'get' | 'post' | 'put' | 'delete';
+  setAuthToken?: boolean;
+}
+
+const API: { [key: string]: IApi } = {
   register: {
     url: `${AUTH_API}/register`,
     method: 'post',
@@ -90,3 +95,5 @@ export default {
     setAuthToken: true,
   },
 };
+
+export default API;

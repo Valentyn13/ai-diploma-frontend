@@ -35,6 +35,10 @@
 			<string>Editor</string>
 			<key>CFBundleURLName</key>
 			<string>rega</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>rega</string>
+			</array>
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>

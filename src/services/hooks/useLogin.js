@@ -47,22 +47,22 @@ export default () => {
 
   const loginWithFacebook = async () => {
     const fcmToken = await getFcmToken();
-    fbLogin()
-      .then(res => {
-        const { fetch } = facebookLogin;
-        const { sex } = userDetails;
-        const { selectedCategories } = preferences;
 
-        fetch({
-          access_token: res.accessToken.accessToken,
-          sex,
-          categories: selectedCategories,
-          fcmToken,
-        });
-      })
-      .catch(err => {
-        logger.error(err);
+    try {
+      const res = await fbLogin();
+      const { fetch } = facebookLogin;
+      const { sex } = userDetails;
+      const { selectedCategories } = preferences;
+
+      fetch({
+        access_token: res.accessToken,
+        sex,
+        categories: selectedCategories,
+        fcmToken,
       });
+    } catch (error) {
+      logger.error(error);
+    }
   };
 
   const loginWithApple = async () => {
@@ -153,8 +153,6 @@ export default () => {
       Alert.alert(emailError);
     }
   }, [emailLoginData, emailLoginCompleted, dispatchLogin, emailError]);
-
-  // facebook login
 
   const { completed: fbLoginCompleted, data: fbLoginData } = facebookLogin;
 

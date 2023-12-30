@@ -7,7 +7,7 @@ import { FacebookLoginButton } from '@common/components/buttons/FacebookLoginBut
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { RootStackParamList } from '@screens/RootNavigator';
 import useAppData from '@services/hooks/useAppData';
-import { useLoginActions } from '@services/hooks/useLoginActions';
+import useLogin from '@services/hooks/useLogin';
 import React, { FC, useEffect } from 'react';
 import { Platform, TouchableOpacity, View } from 'react-native';
 import { scale } from 'react-native-size-matters';
@@ -26,7 +26,7 @@ type PreLoginProps = NativeStackScreenProps<
 // >;
 
 const PreLogin: FC<PreLoginProps> = ({ navigation: { navigate } }) => {
-  const { onAppleButtonPress, onFblogin: onFBButtonPress } = useLoginActions();
+  const { loginWithApple, loginWithFacebook } = useLogin();
   const { getAppData } = useAppData();
   const accessToken = useSelector<any, string>(
     state => state.userDetails.accessToken,
@@ -85,15 +85,14 @@ const PreLogin: FC<PreLoginProps> = ({ navigation: { navigate } }) => {
           alignItems: 'center',
           bottom: scale(40),
         }}>
-        {Platform.OS === 'ios' && (
-          <AppleLoginButton onPress={onAppleButtonPress} />
-        )}
-        <FacebookLoginButton onPress={onFBButtonPress} />
+        {Platform.OS === 'ios' && <AppleLoginButton onPress={loginWithApple} />}
+        <FacebookLoginButton onPress={loginWithFacebook} />
         <EmailLoginButton navigate={navigate} />
         <AppText style={{ fontSize: 16, marginTop: 20, color: 'black' }}>
           נרשמת בעבר?
         </AppText>
-        <TouchableOpacity onPress={() => navigate('Login')}>
+        {/* @ts-ignore */}
+        <TouchableOpacity onPress={() => navigate('Auth', { screen: 'Login' })}>
           <AppText
             black
             style={{

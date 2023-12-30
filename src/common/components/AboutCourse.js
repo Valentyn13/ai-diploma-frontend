@@ -36,7 +36,7 @@ const ButtonWrapper = styled.View`
   top: -20;
   right: 0;
   left: 0;
-  height: 40;
+  height: 40px;
   width: ${({ theme: { dimens } }) => dimens.winWidth};
   align-items: center;
   justify-content: center;

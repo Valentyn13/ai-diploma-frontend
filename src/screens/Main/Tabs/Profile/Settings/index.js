@@ -8,7 +8,6 @@ import {
   SubTitle,
 } from '@common/components/Styled';
 import colors from '@common/theme/colors';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import rudderClient, {
   RUDDER_LOG_LEVEL,
@@ -78,29 +77,22 @@ const Settings = ({ navigation }) => {
       email,
       name,
     });
-    await amplitudeInstance.logEvent('LOGOUT');
-    await logEvent('logout', {
+    amplitudeInstance.logEvent('LOGOUT');
+    logEvent('logout', {
       email,
       name,
     });
     amplitudeInstance.uploadEvents();
     dispatch(logout());
     fbLogout();
-    await AsyncStorage.removeItem('secondTime');
-    navigation.navigate('Auth', { screen: 'PreLogin' });
-  };
 
-  // async function onSignIn() {
-  //   crashlytics().log('User signed in.');
-  //   const result = await Promise.all([
-  //     crashlytics().setUserId(id),
-  //     crashlytics().setAttributes({
-  //       email,
-  //       username: name,
-  //     }),
-  //   ]);
-  //   console.log('result', result);
-  // }
+    // TODO: commented because of user redirection
+    // await AsyncStorage.removeItem('secondTime');
+    navigation.reset({
+      index: 0,
+      routes: [{ name: 'Auth' }],
+    });
+  };
 
   const onChange = (event, selectedDate) => {
     if (Platform.OS === 'android') {

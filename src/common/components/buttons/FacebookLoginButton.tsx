@@ -17,13 +17,9 @@ const xml = `
   </svg>
 `;
 
-type FacebookLoginButtonProps = {
+export const FacebookLoginButton: React.FC<{
   onPress: () => void;
-};
-
-export const FacebookLoginButton: React.FC<FacebookLoginButtonProps> = ({
-  onPress,
-}) => (
+}> = ({ onPress }) => (
   <TouchableOpacity
     className="justify-center items-center w-11/12 py-5 px-7 bg-blue-700 rounded-lg mt-2.5 flex-row"
     onPress={onPress}>

@@ -12,12 +12,10 @@ export const useOnboarding = () => {
     const isOldUser = await AsyncStorage.getItem('secondTime');
 
     if (!isOldUser) {
-      AsyncStorage.setItem('secondTime', 'true');
-      console.log('!isOldUser', true);
       if (firstCourse && firstCourse.meditations?.length) {
-        console.log('firstCourse', true);
         const courseMeditations = firstCourse.meditations;
 
+        // @ts-ignore
         navigate('Main', {
           screen: 'MeditationPlayer',
           params: {
@@ -26,6 +24,8 @@ export const useOnboarding = () => {
           },
         });
       }
+
+      await AsyncStorage.setItem('secondTime', 'true');
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
