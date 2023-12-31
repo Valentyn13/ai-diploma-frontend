@@ -11,7 +11,6 @@ import { ImageBackground, Text, TouchableOpacity, View } from 'react-native';
 import IconFontAwesome from 'react-native-vector-icons/FontAwesome6';
 import { useSelector } from 'react-redux';
 import { meditationInstructor } from 'store/selectors';
-import styled from 'styled-components/native';
 
 interface MeditationItemProps {
   horizontal?: boolean;
@@ -132,20 +131,5 @@ const MeditationItem: React.FC<MeditationItemProps> = memo(
     );
   },
 );
-
-interface StyledItemProps {
-  big?: boolean;
-  height?: string;
-}
-
-const Item = styled(TouchableOpacity)<StyledItemProps>`
-  flex-direction: column;
-  flex: 0.5;
-  height: ${({ height }) =>
-    height === 'small' ? 120 : height === 'large' ? 280 : 160};
-  margin: 4px;
-  border-radius: 8px;
-  overflow: hidden;
-`;
 
 export default MeditationItem;

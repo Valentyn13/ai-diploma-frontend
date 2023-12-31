@@ -42,7 +42,7 @@ const ListTitle = styled(SubTitle)`
   align-self: flex-start;
 `;
 
-type HomeProps = NativeStackScreenProps<RootStackParamList, 'Main', 'Tabs'>;
+type HomeProps = NativeStackScreenProps<RootStackParamList, 'Main'>;
 
 const Home: FC<HomeProps> = ({ navigation }) => {
   const { getAppData } = useAppData();

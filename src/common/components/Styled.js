@@ -167,8 +167,8 @@ export const Icon = styled.Image.attrs(({ name }) => ({
   resizeMode: 'contain',
   source: image(name),
 }))`
-  width: ${({ size }) => size || 30};
-  height: ${({ size }) => size || 30};
+  width: ${({ size }) => size || 30}px;
+  height: ${({ size }) => size || 30}px;
   ${({ color }) =>
     color &&
     `
