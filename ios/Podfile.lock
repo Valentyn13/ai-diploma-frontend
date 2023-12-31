@@ -235,8 +235,8 @@ PODS:
   - lottie-react-native (6.4.1):
     - lottie-ios (~> 4.3.3)
     - React-Core
-  - MetricsReporter (1.1.1):
-    - RSCrashReporter (= 1.0.0)
+  - MetricsReporter (1.2.0):
+    - RSCrashReporter (= 1.0.1)
     - RudderKit (= 1.4.0)
   - nanopb (2.30909.1):
     - nanopb/decode (= 2.30909.1)
@@ -758,9 +758,9 @@ PODS:
     - React-Core
   - RNSVG (14.1.0):
     - React-Core
-  - RSCrashReporter (1.0.0)
-  - Rudder (1.23.1):
-    - MetricsReporter (= 1.1.1)
+  - RSCrashReporter (1.0.1)
+  - Rudder (1.24.1):
+    - MetricsReporter (= 1.2.0)
   - RudderKit (1.4.0)
   - SDWebImage (5.11.1):
     - SDWebImage/Core (= 5.11.1)
@@ -1116,7 +1116,7 @@ SPEC CHECKSUMS:
   libwebp: 1786c9f4ff8a279e4dac1e8f385004d5fc253009
   lottie-ios: 3d98679b41fa6fd6aff2352b3953dbd3df8a397e
   lottie-react-native: a2ae9c27c273b060b2affff2957bc0ff7fdca353
-  MetricsReporter: 759631361ffd2b8f0d375b1225c8a631311f6da2
+  MetricsReporter: 1b381205a8bcc7ea5413c663cbb438e62078ee11
   nanopb: d4d75c12cd1316f4a64e3c6963f879ecd4b5e0d5
   OpenSSL-Universal: ebc357f1e6bc71fa463ccb2fe676756aff50e88c
   PromisesObjC: c50d2056b5253dadbd6c2bea79b0674bd5a52fa4
@@ -1183,8 +1183,8 @@ SPEC CHECKSUMS:
   RNSentry: a6202c19ca31b69969dface2ea0db093e36c97a3
   RNSound: 6c156f925295bdc83e8e422e7d8b38d33bc71852
   RNSVG: ba3e7232f45e34b7b47e74472386cf4e1a676d0a
-  RSCrashReporter: e9ccaebd996263f8325a6cbef44ff74aa5f58e30
-  Rudder: 18897c785af9cfe84c2be2a1d15a645edbeda6d0
+  RSCrashReporter: 6b8376ac729b0289ebe0908553e5f56d8171f313
+  Rudder: f80f8f7ef42a86e7472fd29eae3988a7c2739bfc
   RudderKit: f272f9872183946452ac94cd7bb2244a71e6ca8f
   SDWebImage: a7f831e1a65eb5e285e3fb046a23fcfbf08e696d
   SDWebImageWebPCoder: 908b83b6adda48effe7667cd2b7f78c897e5111d
