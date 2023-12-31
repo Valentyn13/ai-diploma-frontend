@@ -1,6 +1,8 @@
+import { MEDITATIONS_FEELING_LOCATION } from '@common/constants';
 import BottomSheet, { BottomSheetFlatList } from '@gorhom/bottom-sheet';
 import { useNavigation } from '@react-navigation/native';
 import React, {
+  FC,
   useCallback,
   useEffect,
   useMemo,
@@ -9,6 +11,8 @@ import React, {
 } from 'react';
 import { Text, TouchableOpacity, View } from 'react-native';
 import Icon from 'react-native-vector-icons/Feather';
+import { useSelector } from 'react-redux';
+import { allMeditations } from 'store/selectors';
 
 import { useSheetStore } from '../../store/useSheetStore';
 import Button from './HighlightButton';
@@ -21,6 +25,8 @@ const FEELINGS = {
   unsure: { label: 'לא בטוח', emoji: '😕' },
   angry: { label: 'כועס', emoji: '😡' },
 };
+
+type Feeling = keyof typeof FEELINGS;
 
 const Option = ({
   label,
@@ -53,10 +59,8 @@ const Option = ({
   );
 };
 
-const HowUFeel = ({ onNext }: { onNext: () => void }) => {
-  const [selectedFeeling, setSelectedFeeling] = useState<
-    keyof typeof FEELINGS | null
-  >(null);
+const HowUFeel: FC<{ onNext: (f: Feeling) => void }> = ({ onNext }) => {
+  const [selectedFeeling, setSelectedFeeling] = useState<Feeling | null>(null);
 
   const renderItem = useCallback(
     ({ item }: { item: keyof typeof FEELINGS }) => (
@@ -92,7 +96,7 @@ const HowUFeel = ({ onNext }: { onNext: () => void }) => {
       />
       <Button
         className="mb-2"
-        onPress={onNext}
+        onPress={() => onNext(selectedFeeling)}
         disabled={!selectedFeeling}
         text="המשך"
       />
@@ -108,7 +112,9 @@ const PLACES = {
   bed: { label: 'במיטה', icon: '🛌' },
 };
 
-const WhereYouAt = ({ onNext }: { onNext: () => void }) => {
+type Place = keyof typeof PLACES;
+
+const WhereYouAt: FC<{ onNext: (l: Place) => void }> = ({ onNext }) => {
   const [selectedPlace, setSelectedPlace] = useState<
     keyof typeof PLACES | null
   >(null);
@@ -149,17 +155,19 @@ const WhereYouAt = ({ onNext }: { onNext: () => void }) => {
         className="mb-2"
         text="המשך"
         disabled={!selectedPlace}
-        onPress={onNext}
+        onPress={() => onNext(selectedPlace!)}
       />
     </View>
   );
 };
 
 const MeditationPicker = () => {
+  const meditations = useSelector(allMeditations);
   const navigation = useNavigation();
   const setIsOpen = useSheetStore(state => state.setIsOpen);
   const bottomSheetRef = useRef<BottomSheet>(null);
   const [showWhereYouAt, setShowWhereYouAt] = useState(false);
+  const [selectedFeeling, setSelectedFeeling] = useState<Feeling | null>(null);
 
   const snapPoints = useMemo(() => ['20%', 340], []);
 
@@ -178,27 +186,41 @@ const MeditationPicker = () => {
     [setIsOpen],
   );
 
-  const handleNext = useCallback(() => {
+  const handleNext = useCallback((f: Feeling) => {
+    setSelectedFeeling(f);
     setShowWhereYouAt(true);
   }, []);
 
-  const onFinish = useCallback(() => {
-    bottomSheetRef.current!.close();
+  const onFinish = useCallback(
+    (selectedPlace: Place) => {
+      bottomSheetRef.current!.close();
 
-    const item = {
-      animation: undefined,
-      categoryName: 'PocketMeditation',
-      id: '64daea785d57908b4359d27a',
-      name: 'שחרור היום',
-      url: 'https://regameditation.s3.us-east-2.amazonaws.com/ReleaseTheDay_MayaKramer.mp3',
-    };
+      console.log({ selectedFeeling, selectedPlace });
 
-    // @ts-ignore
-    navigation.navigate('Main', {
-      screen: 'MeditationPlayer',
-      params: { item, autoPlay: true },
-    });
-  }, [navigation]);
+      const filteredIds = MEDITATIONS_FEELING_LOCATION.filter(
+        ({ feeling, location }) =>
+          // @ts-ignore
+          feeling.includes(selectedFeeling!) &&
+          // @ts-ignore
+          location.includes(selectedPlace!),
+      ).map(({ id }) => id);
+
+      const id = filteredIds[Math.floor(Math.random() * filteredIds.length)];
+
+      let item = meditations.find(m => m.id === id);
+
+      if (!item) {
+        item = meditations.find(m => m.name === 'שחרור היום');
+      }
+
+      // @ts-ignore
+      navigation.navigate('Main', {
+        screen: 'MeditationPlayer',
+        params: { item, autoPlay: true },
+      });
+    },
+    [meditations, navigation, selectedFeeling],
+  );
 
   return (
     <BottomSheet

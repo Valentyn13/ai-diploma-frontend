@@ -1,4 +1,3 @@
-/* eslint-disable react-native/no-inline-styles */
 import image from '@common/assets/images';
 import Button from '@common/components/Button';
 import HorizontalList from '@common/components/HorizontalList';

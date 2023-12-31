@@ -313,7 +313,6 @@ const MeditationPlayer = ({
         `${VIDEO_URL}${video}`,
         video,
       );
-      console.log('videoUri', `${video}.mp4`);
       if (videoUri) {
         setIsLoading(false);
         setCachedVideoUri(videoUri);
