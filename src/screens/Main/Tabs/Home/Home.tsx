@@ -105,13 +105,13 @@ const Home: FC<HomeProps> = ({ navigation }) => {
   }, [getArticleData]);
 
   const onShowAll = (title: string, groupedMeditations: any) => {
+    // @ts-ignore
     navigation.navigate('Main', {
       screen: 'GroupedMeditations',
       params: { title, meditations: groupedMeditations },
     });
   };
 
-  // Define setIsOpen using the appropriate store
   const setIsOpen = useSheetStore((state: any) => state.setIsOpen);
 
   return (

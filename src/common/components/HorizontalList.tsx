@@ -45,7 +45,7 @@ const HorizontalList: FC<HorizontalListProps> = ({
       showsHorizontalScrollIndicator={false}
       data={data}
       renderItem={renderItem}
-      keyExtractor={(item: any) => item.id || item.name}
+      keyExtractor={(item: any) => item.id || item.name || item.title}
       getItemLayout={(_, index) => ({
         length: theme.dimens.winWidth / 2.4,
         offset: 180 * index,

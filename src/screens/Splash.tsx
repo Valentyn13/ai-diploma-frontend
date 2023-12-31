@@ -4,6 +4,7 @@ import WithFadeIn from '@common/components/transitions/WithFadeIn';
 import WithRotate from '@common/components/transitions/WithRotate';
 import WithScale from '@common/components/transitions/WithScale';
 import WithTranslateY from '@common/components/transitions/WithTranslateY';
+import config from '@common/config';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import useAppData from '@services/hooks/useAppData';
 import React, { FC, useEffect, useState } from 'react';
@@ -31,13 +32,16 @@ const Splash: FC<SplashProps> = ({ navigation: { navigate } }) => {
   );
 
   useEffect(() => {
-    setTimeout(() => {
-      if (accessToken) {
-        getAppData();
-      } else {
-        navigate('Onboarding');
-      }
-    }, 3000);
+    setTimeout(
+      () => {
+        if (accessToken) {
+          getAppData();
+        } else {
+          navigate(config.isDev ? 'Auth' : 'Onboarding');
+        }
+      },
+      config.isDev ? 1000 : 3000,
+    );
   }, [accessToken, getAppData, navigate]);
 
   useEffect(() => {

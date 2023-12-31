@@ -1,5 +1,4 @@
 import CategoryMeditations from '@common/components/CategoryMeditations';
-import Header from '@common/components/Header';
 import { colors } from '@common/theme';
 import { useNavigation } from '@react-navigation/native';
 import React from 'react';
@@ -41,11 +40,7 @@ const Meditations = () => {
   };
 
   return (
-    <ScrollView
-      stickyHeaderIndices={[0]}
-      style={styles.container}
-      showsVerticalScrollIndicator={false}>
-      <Header />
+    <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
       {categories
         .sort((a, b) => a.order - b.order)
         .map(category => (

@@ -1,5 +1,5 @@
 import AboutCourse from '@common/components/AboutCourse';
-import { BackIcon } from '@common/components/Styled';
+import Header from '@common/components/Header';
 import theme from '@common/theme';
 import colors from '@common/theme/colors';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
@@ -58,16 +58,7 @@ const StackNavigator = () => {
         name="InstructorDetail"
         component={InstructorDetail}
         options={{
-          headerShown: true,
-          headerBackImage: () => <BackIcon name="back_arrow" />,
-          headerBackTitleVisible: false,
-          headerTitle: '',
-          headerStyle: {
-            backgroundColor: '#FFF8EE',
-            borderBottomColor: 'transparent',
-            shadowOffset: { height: 0, width: 0 },
-            elevation: 0,
-          },
+          header: () => <Header title="" className="bg-[#FFF7EA]" />,
         }}
       />
     </Stack.Navigator>
