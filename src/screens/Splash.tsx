@@ -4,7 +4,6 @@ import WithFadeIn from '@common/components/transitions/WithFadeIn';
 import WithRotate from '@common/components/transitions/WithRotate';
 import WithScale from '@common/components/transitions/WithScale';
 import WithTranslateY from '@common/components/transitions/WithTranslateY';
-import config from '@common/config';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import useAppData from '@services/hooks/useAppData';
 import React, { FC, useEffect, useState } from 'react';
@@ -22,7 +21,7 @@ const AppNameTitle = styled(TopTitle)`
 
 type SplashProps = NativeStackScreenProps<RootStackParamList, 'Splash'>;
 
-const Splash: FC<SplashProps> = ({ navigation: { replace } }) => {
+const Splash: FC<SplashProps> = ({ navigation: { navigate } }) => {
   const { getAppData } = useAppData();
   const [animationFinished, setAnimationFinished] = useState(false);
 
@@ -32,35 +31,28 @@ const Splash: FC<SplashProps> = ({ navigation: { replace } }) => {
   );
 
   useEffect(() => {
-    const timer = setTimeout(
-      () => {
-        if (accessToken) {
-          getAppData();
-        } else {
-          replace(config.isDev ? 'Auth' : 'Onboarding');
-        }
-      },
-      config.isDev ? 1000 : 3000,
-    );
-
-    return () => clearTimeout(timer);
-  }, [accessToken, getAppData, replace]);
+    setTimeout(() => {
+      if (accessToken) {
+        getAppData();
+      } else {
+        navigate('Onboarding');
+      }
+    }, 3000);
+  }, [accessToken, getAppData, navigate]);
 
   useEffect(() => {
     if (isLoaded && animationFinished) {
-      replace('Main');
+      navigate('Main');
     }
-  }, [isLoaded, animationFinished, replace]);
+  }, [isLoaded, animationFinished, navigate]);
 
   useEffect(() => {
-    const timer = setTimeout(
-      () => {
-        setAnimationFinished(true);
-      },
-      config.isDev ? 0 : 3000,
-    );
+    const simulateAnimationEnd = async () => {
+      await new Promise(resolve => setTimeout(resolve, 3000));
+      setAnimationFinished(true);
+    };
 
-    return () => clearTimeout(timer);
+    simulateAnimationEnd();
   }, []);
 
   return (
@@ -88,8 +80,10 @@ const Splash: FC<SplashProps> = ({ navigation: { replace } }) => {
         </WithTranslateY>
       </WithFadeIn>
 
-      <WithFadeIn delay={2000} duration={500}>
-        <Text className="text-xl text-gray-800">קחו נשימה</Text>
+      <WithFadeIn delay={1000} duration={500}>
+        <WithScale delay={1000} scaleValue={0.9} duration={550}>
+          <Text className="text-xl font-medium text-gray-800">קחו נשימה</Text>
+        </WithScale>
       </WithFadeIn>
     </Container>
   );

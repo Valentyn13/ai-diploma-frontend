@@ -49,13 +49,13 @@ export default () => {
     const fcmToken = await getFcmToken();
 
     try {
-      const res = await fbLogin();
+      const accessToken = await fbLogin();
       const { fetch } = facebookLogin;
       const { sex } = userDetails;
       const { selectedCategories } = preferences;
 
       fetch({
-        access_token: res.accessToken,
+        access_token: accessToken,
         sex,
         categories: selectedCategories,
         fcmToken,
