@@ -5,6 +5,7 @@ import PushNotification, { Importance } from 'react-native-push-notification';
 
 const getFcmToken = async () => {
   try {
+    await messaging().registerDeviceForRemoteMessages();
     const fcmToken = await messaging().getToken();
     logger.log('got fcm token', fcmToken);
     return fcmToken;
