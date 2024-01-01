@@ -84,6 +84,7 @@
 		65189DA02B2B804F00295AF0 /* MaterialIcons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = MaterialIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/MaterialIcons.ttf"; sourceTree = "<group>"; };
 		655CE8A42B3BF5FF00A161C8 /* rega-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "rega-Bridging-Header.h"; sourceTree = "<group>"; };
 		655CE8A52B3BF60000A161C8 /* Dummy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Dummy.swift; sourceTree = "<group>"; };
+		65682AC32B432A03003555E1 /* rega.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = rega.entitlements; path = rega/rega.entitlements; sourceTree = "<group>"; };
 		6591CF1A2B3A18E300635172 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		6591CF1C2B3AC7C100635172 /* almoni-dl-aaa-light.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "almoni-dl-aaa-light.otf"; path = "../src/common/assets/fonts/almoni-dl-aaa-light.otf"; sourceTree = "<group>"; };
 		6591CF1D2B3AC7C100635172 /* almoni-dl-aaa-black.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "almoni-dl-aaa-black.otf"; path = "../src/common/assets/fonts/almoni-dl-aaa-black.otf"; sourceTree = "<group>"; };
@@ -137,6 +138,7 @@
 		13B07FAE1A68108700A75B9A /* rega */ = {
 			isa = PBXGroup;
 			children = (
+				65682AC32B432A03003555E1 /* rega.entitlements */,
 				6591CF1A2B3A18E300635172 /* GoogleService-Info.plist */,
 				65189D8D2B2B7F8500295AF0 /* Fonts */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
@@ -635,6 +637,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = rega/rega.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 41;
@@ -674,6 +677,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = rega/rega.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 41;

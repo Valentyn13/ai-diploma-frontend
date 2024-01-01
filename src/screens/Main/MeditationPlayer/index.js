@@ -338,21 +338,23 @@ const MeditationPlayer = ({
   return (
     <View className="flex flex-col items-center justify-center w-full h-full bg-black">
       <StatusBar animated hidden={true} />
-      <VideoPlayer
-        style={{ zIndex: -1, backgroundColor: 'black' }}
-        source={{
-          uri: cachedVideoUri,
-        }}
-        paused={!isPlaying}
-        onError={error => logger.log('error', error)}
-        progressUpdateInterval={1000}
-        bufferConfig={{
-          minBufferMs: 15000,
-          maxBufferMs: 50000,
-          bufferForPlaybackMs: 2500,
-          bufferForPlaybackAfterRebufferMs: 4000,
-        }}
-      />
+      {cachedVideoUri && (
+        <VideoPlayer
+          style={{ zIndex: -1, backgroundColor: 'black' }}
+          source={{
+            uri: cachedVideoUri,
+          }}
+          paused={!isPlaying}
+          onError={error => logger.log('error', error)}
+          progressUpdateInterval={1000}
+          bufferConfig={{
+            minBufferMs: 15000,
+            maxBufferMs: 50000,
+            bufferForPlaybackMs: 2500,
+            bufferForPlaybackAfterRebufferMs: 4000,
+          }}
+        />
+      )}
 
       <View
         style={{
