@@ -2,6 +2,7 @@ import { captureMessage } from '@sentry/react-native';
 import api from '@services/api';
 import { applelogin } from '@utils/apple';
 import { fbLogin } from '@utils/facebook';
+import { googleSignIn } from '@utils/google';
 import logger from '@utils/logger';
 import { useCallback, useEffect } from 'react';
 import { Alert } from 'react-native';
@@ -22,8 +23,14 @@ export default () => {
     shouldDispatch: () => false,
   });
 
-  const facebookLogin = useAxios({
+  const facebookLoginApi = useAxios({
     api: api.facebook,
+    setToken: true,
+    shouldDispatch: () => false,
+  });
+
+  const googleLoginApi = useAxios({
+    api: api.google,
     setToken: true,
     shouldDispatch: () => false,
   });
@@ -45,12 +52,35 @@ export default () => {
     return fetch({ email, password, fcmToken });
   };
 
+  const loginWithGoogle = async () => {
+    try {
+      const fcmToken = await getFcmToken();
+      const res = await googleSignIn();
+
+      const { fetch } = googleLoginApi;
+      const { sex } = userDetails;
+      const { selectedCategories } = preferences;
+
+      await fetch({
+        access_token: res.idToken,
+        name: res.user.givenName,
+        email: res.user.email,
+        sub: res.user.id,
+        sex,
+        categories: selectedCategories,
+        fcmToken,
+      });
+    } catch (error) {
+      logger.error(error);
+    }
+  };
+
   const loginWithFacebook = async () => {
     const fcmToken = await getFcmToken();
 
     try {
       const accessToken = await fbLogin();
-      const { fetch } = facebookLogin;
+      const { fetch } = facebookLoginApi;
       const { sex } = userDetails;
       const { selectedCategories } = preferences;
 
@@ -154,7 +184,7 @@ export default () => {
     }
   }, [emailLoginData, emailLoginCompleted, dispatchLogin, emailError]);
 
-  const { completed: fbLoginCompleted, data: fbLoginData } = facebookLogin;
+  const { completed: fbLoginCompleted, data: fbLoginData } = facebookLoginApi;
 
   useEffect(() => {
     if (fbLoginCompleted) {
@@ -165,6 +195,21 @@ export default () => {
       }
     }
   }, [fbLoginCompleted, fbLoginData, dispatchLogin]);
+
+  const { completed: googleLoginCompleted, data: googleLoginData } =
+    googleLoginApi;
+
+  useEffect(() => {
+    if (googleLoginCompleted) {
+      console.log('googleLoginData', googleLoginData);
+
+      if (googleLoginData) {
+        dispatchLogin(googleLoginData);
+      } else {
+        captureMessage('Missing Google Login Data');
+      }
+    }
+  }, [dispatchLogin, googleLoginCompleted, googleLoginData]);
 
   // appleLoin
   const { completed: appleLoginCompleted, data: appleLoginData } =
@@ -196,6 +241,7 @@ export default () => {
   return {
     loginWithEmail,
     loginWithFacebook,
+    loginWithGoogle,
     signUp,
     loginWithApple,
   };

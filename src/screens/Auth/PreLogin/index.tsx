@@ -4,6 +4,7 @@ import Meditate from '@common/components/animation/Meditate';
 import { AppleLoginButton } from '@common/components/buttons/AppleLoginButton';
 import { EmailLoginButton } from '@common/components/buttons/EmailLoginButton';
 import { FacebookLoginButton } from '@common/components/buttons/FacebookLoginButton';
+import { GoogleLoginButton } from '@common/components/buttons/GoogleLoginButton';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { RootStackParamList } from '@screens/RootNavigator';
 import useAppData from '@services/hooks/useAppData';
@@ -26,7 +27,7 @@ type PreLoginProps = NativeStackScreenProps<
 // >;
 
 const PreLogin: FC<PreLoginProps> = ({ navigation: { navigate } }) => {
-  const { loginWithApple, loginWithFacebook } = useLogin();
+  const { loginWithApple, loginWithFacebook, loginWithGoogle } = useLogin();
   const { getAppData } = useAppData();
   const accessToken = useSelector<any, string>(
     state => state.userDetails.accessToken,
@@ -87,6 +88,7 @@ const PreLogin: FC<PreLoginProps> = ({ navigation: { navigate } }) => {
         }}>
         {Platform.OS === 'ios' && <AppleLoginButton onPress={loginWithApple} />}
         <FacebookLoginButton onPress={loginWithFacebook} />
+        <GoogleLoginButton onPress={loginWithGoogle} />
         <EmailLoginButton navigate={navigate} />
         <AppText style={{ fontSize: 16, marginTop: 20, color: 'black' }}>
           נרשמת בעבר?

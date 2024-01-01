@@ -30,7 +30,7 @@ export const FacebookLoginButton: React.FC<{
       style={{ position: 'absolute', left: 10 }}
     />
     <Text className="text-white text-lg text-center font-bold">
-      המשיכו עם פייסבוק
+      המשיכו עם Facebook
     </Text>
   </TouchableOpacity>
 );

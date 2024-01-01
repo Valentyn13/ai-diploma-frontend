@@ -1,5 +1,4 @@
 import categoryVideo from '@common/assets/videos';
-import FavoriteIndicator from '@common/components/FavoriteIndicator';
 import {
   BoldTitle,
   MeditationContainer,
@@ -8,6 +7,7 @@ import {
   TouchableIcon,
 } from '@common/components/Styled';
 import { BG_TRACKS } from '@common/constants';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { captureException } from '@sentry/react-native';
 import { useAmplitude } from '@services/hooks/useAmplitude';
@@ -15,7 +15,7 @@ import useInstructor from '@services/hooks/useInstructor';
 import useUpdateMeditation from '@services/hooks/useUpdateMeditation';
 import logger from '@utils/logger';
 import PropTypes from 'prop-types';
-import React, {
+import {
   useCallback,
   useEffect,
   useMemo,
@@ -33,9 +33,6 @@ import { meditationInstructor } from 'store/selectors';
 import styled, { withTheme } from 'styled-components';
 
 import MeditationInfo from '../MeditationInfo';
-import BgMusicSelector from './BgMusicSelector';
-import CircularPlayer from './CircularPlayer';
-import TimesLabel from './TimesLabel';
 
 const VIDEO_URL = 'https://regameditation.s3.us-east-2.amazonaws.com/videos/';
 const AUDIO_URL = 'https://regameditation.s3.us-east-2.amazonaws.com/sounds/';
@@ -147,7 +144,7 @@ const MeditationPlayer = ({
   const [showModal, setShowModal] = useState(false);
   const [isPlayingBgMusic, setIsPlayingBgMusic] = useState(true);
 
-  const bgTrack = useRef(0);
+  const [bsTrack, setBgTrack] = useState(0);
   const [bgMenuOpen, toggleBgMenu] = useReducer(s => !s, false);
 
   const amplitudeInstance = useAmplitude();
@@ -250,15 +247,21 @@ const MeditationPlayer = ({
     togglePlay();
   };
 
-  const handleBgTrack = trackId => {
+  useEffect(() => {
+    const getCachedBg = async () => {
+      const a = await AsyncStorage.getItem('bgTrack');
+    };
+  }, []);
+
+  const handleBgTrack = (trackId: number) => {
     toggleBgMenu();
     if (trackId === -1) {
       setIsPlayingBgMusic(false);
       return;
     }
 
-    if (trackId !== bgTrack.current) {
-      bgTrack.current = trackId;
+    if (trackId !== bgTrack) {
+      setBgTrack(trackId);
     }
     setIsPlayingBgMusic(true);
   };
@@ -364,9 +367,7 @@ const MeditationPlayer = ({
         }}>
         {hasAnimation === false && (
           <BgMusicPlayer
-            source={`https://regameditation.s3.us-east-2.amazonaws.com/sounds/${
-              BG_TRACKS[bgTrack.current].asset
-            }`}
+            source={`https://regameditation.s3.us-east-2.amazonaws.com/sounds/${BG_TRACKS[bgTrack].asset}`}
             paused={!isPlayingBgMusic}
           />
         )}
@@ -408,7 +409,7 @@ const MeditationPlayer = ({
               handleBgTrack,
               isPlayingBgMusic,
             }}
-            currentBgTrack={bgTrack.current}
+            currentBgTrack={bgTrack}
             bgTracks={BG_TRACKS}
           />
         ) : (

@@ -37,7 +37,7 @@ const Splash: FC<SplashProps> = ({ navigation: { navigate, replace } }) => {
         if (accessToken) {
           getAppData();
         } else {
-          navigate(config.isDev ? 'Auth' : 'Onboarding');
+          navigate('Onboarding');
         }
       },
       config.isDev ? 1000 : 3000,

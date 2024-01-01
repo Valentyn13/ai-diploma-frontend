@@ -216,7 +216,7 @@ const MeditationPicker = () => {
       // @ts-ignore
       navigation.navigate('Main', {
         screen: 'MeditationPlayer',
-        params: { item, autoPlay: true },
+        params: { item },
       });
     },
     [meditations, navigation, selectedFeeling],

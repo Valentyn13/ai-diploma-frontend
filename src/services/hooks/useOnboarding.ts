@@ -20,7 +20,6 @@ export const useOnboarding = () => {
           screen: 'MeditationPlayer',
           params: {
             item: courseMeditations[0],
-            autoPlay: true,
           },
         });
       }

@@ -26,6 +26,10 @@ const API: { [key: string]: IApi } = {
     url: `${AUTH_API}/facebook`,
     method: 'post',
   },
+  google: {
+    url: `${AUTH_API}/google`,
+    method: 'post',
+  },
   apple: {
     url: `${AUTH_API}/apple`,
     method: 'post',

@@ -8,13 +8,13 @@ export const SHOULD_SHOW_REMINDER_POPUP_STATUS_TURNED_OFF =
 export const BG_TRACKS = [
   {
     id: 0,
-    name: 'אוקיינוס',
-    asset: 'ocean.mp3',
+    name: 'תדרים',
+    asset: 'frequencies.mp3',
   },
   {
     id: 1,
-    name: 'תדרים',
-    asset: 'frequencies.mp3',
+    name: 'אוקיינוס',
+    asset: 'ocean.mp3',
   },
   { id: 2, name: 'ציפורים', asset: 'birds.mp3' },
   { id: 3, name: 'גלים', asset: 'waves.mp3' },
