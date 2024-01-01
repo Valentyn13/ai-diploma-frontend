@@ -45,9 +45,9 @@ const CategoryMeditations: FC<Props> = ({
   onShowAll = () => {},
 }) => (
   <View style={styles.categoryMeditationsContainer}>
-    <View className="flex flex-row items-end justify-between w-full px-2">
+    <View className="flex flex-row items-end justify-between w-full pl-2">
       <TopTitle className="" style={styles.categoryTitle} t={title} />
-      <TouchableOpacity onPress={onShowAll}>
+      <TouchableOpacity onPress={onShowAll} className="p-2">
         <Text className="text-xs text-neutral-800">{i18n.t('showAll')}</Text>
       </TouchableOpacity>
     </View>

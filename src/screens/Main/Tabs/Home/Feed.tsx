@@ -173,13 +173,13 @@ const Home: FC<HomeProps> = ({ navigation }) => {
                 style={{ marginTop: 20, width: '100%', alignSelf: 'center' }}
                 flex={HEIGHT_RATIO.BOTTOM}>
                 <Container flex={isLowResolution ? 1.8 : 1.5}>
-                  <View className="flex flex-row items-end justify-between w-full px-2 mb-1">
+                  <View className="flex flex-row items-end justify-between w-full pl-2 mb-1">
                     <ListTitle k="Greeting_general" />
                     <TouchableOpacity
                       onPress={() =>
                         onShowAll(i18n.t('Greeting_general'), data)
                       }>
-                      <Text className="text-xs text-neutral-800">
+                      <Text className="text-xs text-neutral-800 p-2">
                         {i18n.t('showAll')}
                       </Text>
                     </TouchableOpacity>
@@ -205,13 +205,13 @@ const Home: FC<HomeProps> = ({ navigation }) => {
 
                 <Container style={{ marginTop: 20 }} flex={HEIGHT_RATIO.BOTTOM}>
                   <Container flex={isLowResolution ? 1.8 : 1.5}>
-                    <View className="flex flex-row items-end justify-between w-full px-2 mb-1">
+                    <View className="flex flex-row items-end justify-between w-full pl-2 mb-1">
                       <ListTitle k="latest_release" />
                       <TouchableOpacity
                         onPress={() =>
                           onShowAll(i18n.t('latest_release'), latest)
                         }>
-                        <Text className="text-xs text-neutral-800">
+                        <Text className="text-xs text-neutral-800 p-2">
                           {i18n.t('showAll')}
                         </Text>
                       </TouchableOpacity>
@@ -224,13 +224,13 @@ const Home: FC<HomeProps> = ({ navigation }) => {
                 </Container>
                 <Container style={{ marginTop: 20 }} flex={HEIGHT_RATIO.BOTTOM}>
                   <Container flex={isLowResolution ? 1.8 : 1.5}>
-                    <View className="flex flex-row items-end justify-between w-full px-2 mb-1">
+                    <View className="flex flex-row items-end justify-between w-full pl-2 mb-1">
                       <ListTitle k="most_played" />
                       <TouchableOpacity
                         onPress={() =>
                           onShowAll(i18n.t('most_played'), topRated)
                         }>
-                        <Text className="text-xs text-neutral-800">
+                        <Text className="text-xs text-neutral-800 p-2">
                           {i18n.t('showAll')}
                         </Text>
                       </TouchableOpacity>
@@ -246,10 +246,10 @@ const Home: FC<HomeProps> = ({ navigation }) => {
                   <Container
                     style={{ marginTop: 20 }}
                     flex={HEIGHT_RATIO.BOTTOM}>
-                    <Container flex={isLowResolution ? 1.8 : 1.5}>
+                    <View className="px-2">
                       <ListTitle k="articles" />
                       <HorizontalList data={articles} renderUsing={Article} />
-                    </Container>
+                    </View>
                   </Container>
                 )}
               </Container>
