@@ -22,7 +22,7 @@ const AppNameTitle = styled(TopTitle)`
 
 type SplashProps = NativeStackScreenProps<RootStackParamList, 'Splash'>;
 
-const Splash: FC<SplashProps> = ({ navigation: { navigate } }) => {
+const Splash: FC<SplashProps> = ({ navigation: { navigate, replace } }) => {
   const { getAppData } = useAppData();
   const [animationFinished, setAnimationFinished] = useState(false);
 
@@ -46,9 +46,9 @@ const Splash: FC<SplashProps> = ({ navigation: { navigate } }) => {
 
   useEffect(() => {
     if (isLoaded && animationFinished) {
-      navigate('Main');
+      replace('Main');
     }
-  }, [isLoaded, animationFinished, navigate]);
+  }, [isLoaded, animationFinished, replace]);
 
   useEffect(() => {
     const simulateAnimationEnd = async () => {
