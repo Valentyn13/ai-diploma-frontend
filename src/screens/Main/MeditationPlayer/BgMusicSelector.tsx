@@ -42,7 +42,12 @@ const BgMusicSelector: FC<BgMusicSelectorProps> = ({
 }) => (
   <View>
     <TouchableOpacity
-      className="flex-row items-center justify-center w-[72px] h-[27px] rounded-md border border-white bg-[#1E1E1E]"
+      className="flex-row items-center justify-center w-[72px] h-9 rounded-md border border-white bg-transparent border-opacity-50 px-2 py-1 relative"
+      style={{
+        borderBottomWidth: bgMenuOpen ? 0 : 1,
+        borderBottomRightRadius: bgMenuOpen ? 0 : 6,
+        borderBottomLeftRadius: bgMenuOpen ? 0 : 6,
+      }}
       onPress={toggleBgMenu}>
       <Icon
         name="music"
@@ -53,7 +58,7 @@ const BgMusicSelector: FC<BgMusicSelectorProps> = ({
       <Icon name="chevron-down" color={whiteColor} size={12} />
     </TouchableOpacity>
     <View
-      className="absolute top-[22px] border border-white w-full rounded-b-lg border-t-0 border-x-radius-[14px] bg-[#1E1E1E]"
+      className="absolute top-[36px] border border-white w-full rounded-b-lg border-t-0 border-x-radius-[14px] bg-transparent border-opacity-50"
       style={{
         display: bgMenuOpen ? 'flex' : 'none',
       }}>

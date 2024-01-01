@@ -102,7 +102,7 @@ const MeditationItem: React.FC<MeditationItemProps> = memo(
               backgroundColor: CATEGORY_COLOR[categoryName] || '#0B2761',
             }}
             className="absolute top-2 right-2 rounded-full px-2 py-1">
-            <Text className="text-white text-[12px]">{categoryTitle}</Text>
+            <Text className="text-white text-sm">{categoryTitle}</Text>
           </View>
           {!hasPremium && isCategoryLocked && (
             <View className="bg-black/75 rounded-full p-1 w-6 h-6 flex justify-center items-center absolute bottom-2 right-2">
@@ -117,7 +117,7 @@ const MeditationItem: React.FC<MeditationItemProps> = memo(
           </View>
         </ImageBackground>
         <View className="flex flex-col items-start justify-center py-1 px-2 h-12 bg-[#160f29]">
-          <Text className="text-white text-lg font-bold text-left tracking-tighter leading-6 w-full">
+          <Text className="text-white text-[16px] font-bold text-left tracking-tighter leading-6 w-full">
             {name}
           </Text>
           <View className="flex flex-row items-center">

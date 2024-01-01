@@ -24,6 +24,7 @@ import React, {
   useState,
 } from 'react';
 import { Alert, StatusBar, TouchableOpacity, View } from 'react-native';
+import Icon from 'react-native-vector-icons/FontAwesome6';
 import Video from 'react-native-video';
 import { useDispatch, useSelector } from 'react-redux';
 import RNFetchBlob from 'rn-fetch-blob';
@@ -392,10 +393,10 @@ const MeditationPlayer = ({
           bufferForPlaybackAfterRebufferMs: 4000,
         }}
       />
-      <View className="flex flex-row items-center w-full justify-between mt-16 px-6">
-        <View>
-          <TouchableIcon name="close" onPress={onClose} color={whiteColor} />
-        </View>
+      <View className="flex flex-row items-center w-full justify-between mt-16 pr-6 pl-4">
+        <TouchableOpacity className="p-2">
+          <Icon size={20} name="x" onPress={onClose} color={whiteColor} />
+        </TouchableOpacity>
         {hasAnimation === false ? (
           <BgMusicSelector
             {...{
