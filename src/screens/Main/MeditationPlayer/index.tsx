@@ -1,4 +1,5 @@
 import categoryVideo from '@common/assets/videos';
+import FavoriteIndicator from '@common/components/FavoriteIndicator';
 import {
   BoldTitle,
   MeditationContainer,
@@ -33,6 +34,9 @@ import { meditationInstructor } from 'store/selectors';
 import styled, { withTheme } from 'styled-components';
 
 import MeditationInfo from '../MeditationInfo';
+import BgMusicSelector from './BgMusicSelector';
+import CircularPlayer from './CircularPlayer';
+import TimesLabel from './TimesLabel';
 
 const VIDEO_URL = 'https://regameditation.s3.us-east-2.amazonaws.com/videos/';
 const AUDIO_URL = 'https://regameditation.s3.us-east-2.amazonaws.com/sounds/';
@@ -137,14 +141,13 @@ const MeditationPlayer = ({
   const [startTime, setStartTime] = useState(0);
   const [duration, setDuration] = useState(0);
   const [sliderEditing, setSliderEditing] = useState(false);
-  const { autoPlay } = route.params || {};
-  const [isPlaying, setIsPlaying] = useState(autoPlay || true);
+  const [isPlaying, setIsPlaying] = useState(true);
   const [isFirstPlay, setIsFirstPlay] = useState(true);
   const [isLoading, setIsLoading] = useState(true);
   const [showModal, setShowModal] = useState(false);
   const [isPlayingBgMusic, setIsPlayingBgMusic] = useState(true);
 
-  const [bsTrack, setBgTrack] = useState(0);
+  const [bgTrack, setBgTrack] = useState(0);
   const [bgMenuOpen, toggleBgMenu] = useReducer(s => !s, false);
 
   const amplitudeInstance = useAmplitude();
