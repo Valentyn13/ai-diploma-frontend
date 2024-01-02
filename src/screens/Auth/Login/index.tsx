@@ -105,13 +105,14 @@ const Login: FC = () => {
             className="w-5/6 mx-5 text-2xl text-right text-black"
           />
         </View>
-        <TouchableOpacity
+        {/* TODO: comment back */}
+        {/* <TouchableOpacity
           className="flex items-end"
           onPress={() => {
             navigation.navigate('Auth', { screen: 'ForgotPassword' });
           }}>
           <Text className="text-black underline text-sm mt-5">שכחתי סיסמא</Text>
-        </TouchableOpacity>
+        </TouchableOpacity> */}
       </KeyboardAwareScrollView>
       <View className="absolute bottom-10 flex items-center">
         <TouchableOpacity className="mb-2" onPress={() => navigation.goBack()}>
