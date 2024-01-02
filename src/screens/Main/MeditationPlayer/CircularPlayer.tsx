@@ -1,11 +1,10 @@
 import CircularSlider from '@common/components/CircularSlider';
-import Pause from '@common/components/Pause';
-import Play from '@common/components/Play';
-import { colors } from '@common/theme';
 import isLowResolution from '@utils/isLowResolution';
 import React, { FC } from 'react';
 import { ActivityIndicator, TouchableOpacity } from 'react-native';
 import styled, { DefaultTheme, withTheme } from 'styled-components/native';
+
+import PlayPauseButton from './PlayPasueButton';
 
 interface CircularPlayButtonProps {
   togglePlay?: () => void;
@@ -69,23 +68,7 @@ const CircularPlayButton: FC<CircularPlayButtonProps> = ({
       {isLoading ? (
         <ActivityIndicator size="large" color="white" />
       ) : (
-        <>
-          {!isPlaying ? (
-            <Play
-              style={{ marginRight: 8 }}
-              height={SIZE / 2}
-              width={SIZE / 2}
-              color={colors.whiteColor}
-            />
-          ) : (
-            <Pause
-              style={{ marginRight: 4 }}
-              height={SIZE / 2}
-              width={SIZE / 2}
-              color={colors.whiteColor}
-            />
-          )}
-        </>
+        <PlayPauseButton isPlaying={isPlaying!} onBtnPress={togglePlay!} />
       )}
     </PlayButtonWrapper>
   </ButtonContainer>

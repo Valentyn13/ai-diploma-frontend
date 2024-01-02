@@ -36,7 +36,7 @@ const CircularSlider: FC<CircularSliderProps> = ({
 }) => {
   const cx = width / 2;
   const cy = height / 2;
-  const r = (Math.min(width, height) / 2) * 0.85;
+  const r = (Math.min(width, height) / 2) * 0.85 - strokeWidth / 6;
 
   const [onLayout] = useComponentSize();
 

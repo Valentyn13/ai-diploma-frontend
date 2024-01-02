@@ -16,7 +16,7 @@ import useInstructor from '@services/hooks/useInstructor';
 import useUpdateMeditation from '@services/hooks/useUpdateMeditation';
 import logger from '@utils/logger';
 import PropTypes from 'prop-types';
-import {
+import React, {
   useCallback,
   useEffect,
   useMemo,
@@ -479,7 +479,7 @@ MeditationPlayer.propTypes = {
 
 BgMusicPlayer.propTypes = {
   paused: PropTypes.bool.isRequired,
-  source: PropTypes.number.isRequired,
+  source: PropTypes.string.isRequired,
 };
 
 export default withTheme(MeditationPlayer);
