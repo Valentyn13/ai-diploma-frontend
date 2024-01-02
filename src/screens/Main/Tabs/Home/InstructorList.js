@@ -1,4 +1,3 @@
-/* eslint-disable react-native/no-inline-styles */
 import image from '@common/assets/images';
 import { SubTitle } from '@common/components/Styled';
 import { useNavigation } from '@react-navigation/native';
@@ -22,13 +21,12 @@ const InstructorContainer = styled.View`
 // `;
 
 const InstructorList = () => {
-  // eslint-disable-next-line camelcase
   const { updateIstructorTractionData } = useInstructor();
   const navigation = useNavigation();
   const instructors = useSelector(state => state.appData.instructors);
   const onPressProfile = item => {
     updateIstructorTractionData(item);
-    navigation.navigate('InstructorDetail', { id: item._id });
+    navigation.navigate('Instructor', { id: item._id });
   };
   instructors.sort(function (a, b) {
     return (
@@ -94,7 +92,6 @@ const InstructorList = () => {
         data={instructors}
         renderItem={renderItem}
         initialNumToRender={20}
-        // eslint-disable-next-line no-underscore-dangle
         keyExtractor={item => item._id}
         // getItemLayout={(_data, index) => ({
         //   length: ITEM_WIDTH(big),

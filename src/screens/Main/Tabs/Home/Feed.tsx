@@ -42,9 +42,9 @@ const ListTitle = styled(SubTitle)`
   align-self: flex-start;
 `;
 
-type HomeProps = NativeStackScreenProps<RootStackParamList, 'Main'>;
+type FeedProps = NativeStackScreenProps<RootStackParamList, 'Main'>;
 
-const Home: FC<HomeProps> = ({ navigation }) => {
+const Feed: FC<FeedProps> = ({ navigation }) => {
   const { getAppData } = useAppData();
   const { getArticleData } = useArticleData();
   const { email } = useSelector((state: any) => state.userDetails);
@@ -277,4 +277,4 @@ const Home: FC<HomeProps> = ({ navigation }) => {
   );
 };
 
-export default Home;
+export default Feed;

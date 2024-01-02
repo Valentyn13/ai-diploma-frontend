@@ -3,7 +3,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import React from 'react';
 
 import Feed from './Feed';
-import InstructorDetail from './InstructorDetail';
+import Instructor from './Instructor';
 
 const Stack = createNativeStackNavigator();
 
@@ -18,10 +18,10 @@ const StackNavigator = () => {
         }}
       />
       <Stack.Screen
-        name="InstructorDetail"
-        component={InstructorDetail}
+        name="Instructor"
+        component={Instructor}
         options={{
-          header: () => <Header title="" className="bg-[#FFF7EA]" />,
+          header: () => <Header className="absolute bg-transparent" />,
         }}
       />
     </Stack.Navigator>
