@@ -1,6 +1,7 @@
 import { createStackNavigator } from '@react-navigation/stack';
 import React from 'react';
 
+import ForgotPassword from './ForgotPassword';
 import Login from './Login';
 import PreLogin from './PreLogin';
 import PrivacyPolicy from './PrivacyPolicy';
@@ -11,6 +12,7 @@ export type AuthStackParamList = {
   Register: undefined;
   PrivacyPolicy: undefined;
   PreLogin: undefined;
+  ForgotPassword: undefined;
 };
 
 const AuthStack = createStackNavigator<AuthStackParamList>();
@@ -27,6 +29,7 @@ export default () => {
       <AuthStack.Screen name="Register" component={Register} />
       <AuthStack.Screen name="PrivacyPolicy" component={PrivacyPolicy} />
       <AuthStack.Screen name="PreLogin" component={PreLogin} />
+      <AuthStack.Screen name="ForgotPassword" component={ForgotPassword} />
     </AuthStack.Navigator>
   );
 };

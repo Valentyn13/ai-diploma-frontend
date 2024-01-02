@@ -90,7 +90,7 @@ const Settings = ({ navigation }) => {
     // await AsyncStorage.removeItem('secondTime');
     navigation.reset({
       index: 0,
-      routes: [{ name: 'Auth' }],
+      routes: [{ name: 'Onboarding' }],
     });
   };
 
