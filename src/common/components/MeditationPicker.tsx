@@ -195,8 +195,6 @@ const MeditationPicker = () => {
     (selectedPlace: Place) => {
       bottomSheetRef.current!.close();
 
-      console.log({ selectedFeeling, selectedPlace });
-
       const filteredIds = MEDITATIONS_FEELING_LOCATION.filter(
         ({ feeling, location }) =>
           // @ts-ignore
