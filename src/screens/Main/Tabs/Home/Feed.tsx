@@ -49,7 +49,7 @@ const Feed: FC<FeedProps> = ({ navigation }) => {
   const { getArticleData } = useArticleData();
   const { email } = useSelector((state: any) => state.userDetails);
   const { articles } = useSelector((state: any) => state.articleData);
-  const { setPurchaserIdentity } = usePurchases();
+  const { setPurchaserIdentity, hasPremium } = usePurchases();
   const [showNotificationModal, setshowNotificationModal] = useState(false);
 
   const dispatch = useDispatch();
@@ -186,13 +186,16 @@ const Feed: FC<FeedProps> = ({ navigation }) => {
                   </View>
                   <HorizontalList data={shuffleArray(data).slice(0, 5)} big />
                 </Container>
-
-                <View className="flex flex-row items-end justify-between w-full px-2 mt-4">
-                  <ListTitle k="personalized" />
-                </View>
-                <View className="my-4 w-11/12 flex items-center">
-                  <Feeling onClick={() => setIsOpen(true)} />
-                </View>
+                {hasPremium && (
+                  <>
+                    <View className="flex flex-row items-end justify-between w-full px-2 mt-4">
+                      <ListTitle k="personalized" />
+                    </View>
+                    <View className="my-4 w-11/12 flex items-center">
+                      <Feeling onClick={() => setIsOpen(true)} />
+                    </View>
+                  </>
+                )}
 
                 <Container style={{ marginTop: 20 }} flex={HEIGHT_RATIO.BOTTOM}>
                   <Container flex={isLowResolution ? 1.8 : 1.5}>
