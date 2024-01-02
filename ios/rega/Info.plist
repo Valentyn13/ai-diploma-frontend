@@ -105,6 +105,7 @@
 	<key>UIAppFonts</key>
 	<array>
 		<string>Feather.ttf</string>
+		<string>FontAwesome6_Brands.ttf</string>
 		<string>FontAwesome6_Solid.ttf</string>
 		<string>almoni-dl-aaa-black.otf</string>
 		<string>almoni-dl-aaa-bold.otf</string>

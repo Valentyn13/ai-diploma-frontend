@@ -2,24 +2,20 @@ import React from 'react';
 import { Text, TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/Feather';
 
-type EmailLoginButtonProps = {
-  navigate: (screen: string) => void;
-};
-
-export const EmailLoginButton: React.FC<EmailLoginButtonProps> = ({
-  navigate,
+export const EmailLoginButton: React.FC<{ onPress: () => void }> = ({
+  onPress,
 }) => (
   <TouchableOpacity
-    className="justify-center items-center w-11/12 py-5 px-7 bg-gray-800 rounded-lg mt-2.5"
-    onPress={() => navigate('Register')}>
+    className="justify-center items-center w-11/12 py-5 px-7 bg-white rounded-lg mt-2.5 flex-row"
+    onPress={onPress}>
     <Icon
       name="mail"
-      size={22}
-      color="#fff"
+      size={20}
+      color="#000"
       style={{ position: 'absolute', left: 10 }}
     />
-    <Text className="text-white text-lg text-center font-bold">
-      המשיכו עם אימייל
+    <Text className="text-black text-lg text-center font-bold">
+      התחברו עם אימייל
     </Text>
   </TouchableOpacity>
 );

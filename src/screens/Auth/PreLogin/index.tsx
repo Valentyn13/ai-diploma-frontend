@@ -1,17 +1,15 @@
 import AppText from '@common/components/AppText';
 import { Icon } from '@common/components/Styled';
 import Meditate from '@common/components/animation/Meditate';
-import { AppleLoginButton } from '@common/components/buttons/AppleLoginButton';
 import { EmailLoginButton } from '@common/components/buttons/EmailLoginButton';
-import { FacebookLoginButton } from '@common/components/buttons/FacebookLoginButton';
-import { GoogleLoginButton } from '@common/components/buttons/GoogleLoginButton';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { RootStackParamList } from '@screens/RootNavigator';
 import useAppData from '@services/hooks/useAppData';
 import useLogin from '@services/hooks/useLogin';
 import React, { FC, useEffect } from 'react';
-import { Platform, TouchableOpacity, View } from 'react-native';
+import { Text, TouchableOpacity, View } from 'react-native';
 import { scale } from 'react-native-size-matters';
+import IconFA from 'react-native-vector-icons/FontAwesome6';
 import { useSelector } from 'react-redux';
 import { firstCourseSelector } from 'store/selectors';
 
@@ -55,6 +53,20 @@ const PreLogin: FC<PreLoginProps> = ({ navigation: { navigate } }) => {
     }
   }, [appDataLoaded, firstCourse, navigate]);
 
+  const loginWith = (provider: string) => {
+    switch (provider) {
+      case 'facebook':
+        loginWithFacebook();
+        break;
+      case 'google':
+        loginWithGoogle();
+        break;
+      case 'apple':
+        loginWithApple();
+        break;
+    }
+  };
+
   return (
     <View
       style={{
@@ -86,15 +98,30 @@ const PreLogin: FC<PreLoginProps> = ({ navigation: { navigate } }) => {
           alignItems: 'center',
           bottom: scale(40),
         }}>
-        {Platform.OS === 'ios' && <AppleLoginButton onPress={loginWithApple} />}
-        <FacebookLoginButton onPress={loginWithFacebook} />
-        <GoogleLoginButton onPress={loginWithGoogle} />
-        <EmailLoginButton navigate={navigate} />
-        <AppText style={{ fontSize: 16, marginTop: 20, color: 'black' }}>
-          נרשמת בעבר?
-        </AppText>
+        <EmailLoginButton
+          onPress={() => navigate('Auth', { screen: 'Login' })}
+        />
+        <Text className="text-center text-black text-lg mt-2 mb-2">או</Text>
+        <View className="flex flex-row space-x-4">
+          {['facebook', 'google', 'apple'].map((provider, index) => (
+            <TouchableOpacity
+              key={provider}
+              onPress={() => loginWith(provider)}
+              style={{
+                backgroundColor: '#273051',
+                width: 48,
+                height: 48,
+                borderRadius: 48 / 2,
+                justifyContent: 'center',
+                alignItems: 'center',
+              }}>
+              <IconFA name={provider} size={48 / 2} color="#fff" />
+            </TouchableOpacity>
+          ))}
+        </View>
+        <Text className="text-center text-black text-md mt-20">חדשים פה?</Text>
         {/* @ts-ignore */}
-        <TouchableOpacity onPress={() => navigate('Auth', { screen: 'Login' })}>
+        <TouchableOpacity onPress={() => navigate('Register')}>
           <AppText
             black
             style={{
@@ -102,7 +129,7 @@ const PreLogin: FC<PreLoginProps> = ({ navigation: { navigate } }) => {
               textDecorationLine: 'underline',
               color: 'black',
             }}>
-            התחבר
+            הירשמו
           </AppText>
         </TouchableOpacity>
       </View>
