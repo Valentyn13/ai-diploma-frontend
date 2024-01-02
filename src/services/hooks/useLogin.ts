@@ -212,8 +212,6 @@ export default () => {
 
   useEffect(() => {
     if (googleLoginCompleted) {
-      console.log('googleLoginData', googleLoginData);
-
       if (googleLoginData) {
         dispatchLogin(googleLoginData);
       } else {

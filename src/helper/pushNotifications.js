@@ -5,7 +5,6 @@ import PushNotification, { Importance } from 'react-native-push-notification';
 
 const getFcmToken = async () => {
   try {
-    await messaging().registerDeviceForRemoteMessages();
     const fcmToken = await messaging().getToken();
     logger.log('got fcm token', fcmToken);
     return fcmToken;
@@ -17,11 +16,9 @@ const getFcmToken = async () => {
 
 async function requestUserPermission() {
   const authStatus = await messaging().requestPermission();
-  // console.log('authStatus', authStatus);
   const enabled =
     authStatus === messaging.AuthorizationStatus.AUTHORIZED ||
     authStatus === messaging.AuthorizationStatus.PROVISIONAL;
-  // console.log('enabled', enabled);
   if (enabled) {
     await getFcmToken();
   }

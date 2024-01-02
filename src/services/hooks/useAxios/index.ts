@@ -168,18 +168,17 @@ export default ({
               // fbLogout();
             }
           } else {
-            // console.log('api failed', {error});
             Sentry.captureException(error);
             if (showError) {
               if (
                 requestApi.url === 'auth/apple' ||
-                requestApi.url === 'auth/facebook'
+                requestApi.url === 'auth/facebook' ||
+                requestApi.url === 'auth/google'
               ) {
                 alert(
                   'היי אנחנו חווים תקלה בהתחברות דרך ערוץ זה, אנא נסו שנית או בחרו ערוץ התחברות אחר',
                 );
               } else {
-                // console.log(requestApi.url);
                 if (
                   requestApi.url === 'auth/register' ||
                   requestApi.url === 'auth/login'
