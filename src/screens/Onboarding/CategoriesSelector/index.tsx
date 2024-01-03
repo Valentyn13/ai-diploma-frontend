@@ -7,6 +7,9 @@ import {
   SubTitle,
   Title,
 } from '@common/components/Styled';
+import WithFadeIn from '@common/components/transitions/WithFadeIn';
+import WithSlideInX from '@common/components/transitions/WithSlideInX';
+import WithSlideInY from '@common/components/transitions/WithSlideInY';
 import { ProgressView } from '@react-native-community/progress-view';
 import { useNavigation } from '@react-navigation/native';
 import { captureMessage } from '@sentry/react-native';
@@ -154,20 +157,24 @@ const Intro = () => {
       />
       <View
         style={{ position: 'absolute', top: scale(65), alignItems: 'center' }}>
-        <AppText
-          black
-          style={{ fontSize: 20, textAlign: 'center', color: '#000000' }}>
-          במה רגע יכולה לעזור לך?
-        </AppText>
-        <AppText
-          style={{
-            fontSize: 16,
-            marginTop: 6,
-            textAlign: 'center',
-            color: '#000000',
-          }}>
-          אפשר לבחור עד 3 נושאים
-        </AppText>
+        <WithSlideInX delay={300}>
+          <WithFadeIn delay={300}>
+            <AppText
+              black
+              style={{ fontSize: 20, textAlign: 'center', color: '#000000' }}>
+              במה רגע יכולה לעזור לך?
+            </AppText>
+            <AppText
+              style={{
+                fontSize: 16,
+                marginTop: 6,
+                textAlign: 'center',
+                color: '#000000',
+              }}>
+              אפשר לבחור עד 3 נושאים
+            </AppText>
+          </WithFadeIn>
+        </WithSlideInX>
       </View>
       <View style={{ alignItems: 'center', width: '90%' }}>
         <FlatList
@@ -275,43 +282,48 @@ const Intro = () => {
             }
 
             return (
-              <TouchableOpacity
-                onPress={() => {
-                  const items = Object.assign([], selectedItems);
-                  if (containIndex !== -1) {
-                    items.splice(containIndex, 1);
-                  } else if (selectedItems.length < 3) {
-                    items.push(CATEGORIES[index].key);
-                  }
+              <WithSlideInY delay={300 + index * 150}>
+                <WithFadeIn delay={300 + index * 150}>
+                  <TouchableOpacity
+                    onPress={() => {
+                      const items = Object.assign([], selectedItems);
+                      if (containIndex !== -1) {
+                        items.splice(containIndex, 1);
+                      } else if (selectedItems.length < 3) {
+                        items.push(CATEGORIES[index].key);
+                      }
 
-                  setSelectedItems(items);
-                }}
-                style={{
-                  backgroundColor: containIndex !== -1 ? '#D66366' : 'white',
-                  borderRadius: 6,
-                  height: scale(130),
-                  width,
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                  margin: scale(6),
-                }}>
-                {containIndex === -1 && imageSelector}
-                {containIndex !== -1 && (
-                  <Image
-                    style={{ position: 'absolute', top: 6, left: 6 }}
-                    source={image('check')}
-                  />
-                )}
-                <Title
-                  k={CATEGORIES[index].intro}
-                  style={{
-                    textAlign: 'center',
-                    paddingHorizontal: 20,
-                    color: containIndex !== -1 ? 'white' : 'black',
-                    fontSize: 20,
-                  }}
-                />
-              </TouchableOpacity>
+                      setSelectedItems(items);
+                    }}
+                    style={{
+                      backgroundColor:
+                        containIndex !== -1 ? '#D66366' : 'white',
+                      borderRadius: 6,
+                      height: scale(130),
+                      width,
+                      justifyContent: 'center',
+                      alignItems: 'center',
+                      margin: scale(6),
+                    }}>
+                    {containIndex === -1 && imageSelector}
+                    {containIndex !== -1 && (
+                      <Image
+                        style={{ position: 'absolute', top: 6, left: 6 }}
+                        source={image('check')}
+                      />
+                    )}
+                    <Title
+                      k={CATEGORIES[index].intro}
+                      style={{
+                        textAlign: 'center',
+                        paddingHorizontal: 20,
+                        color: containIndex !== -1 ? 'white' : 'black',
+                        fontSize: 20,
+                      }}
+                    />
+                  </TouchableOpacity>
+                </WithFadeIn>
+              </WithSlideInY>
             );
           }}
           onScrollToIndexFailed={info => {

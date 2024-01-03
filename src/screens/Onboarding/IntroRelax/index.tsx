@@ -1,6 +1,9 @@
 import image from '@common/assets/images';
 import AppButton from '@common/components/AppButton';
 import AppText from '@common/components/AppText';
+import WithFadeIn from '@common/components/transitions/WithFadeIn';
+import WithSlideInX from '@common/components/transitions/WithSlideInX';
+import WithSlideInY from '@common/components/transitions/WithSlideInY';
 import React from 'react';
 import { Dimensions, Image, SafeAreaView, View } from 'react-native';
 import { scale } from 'react-native-size-matters';
@@ -41,29 +44,36 @@ const IntroRelax = ({ navigation: { navigate } }) => {
           resizeMethod="resize"
           resizeMode="contain"
         />
-        <AppText
-          black
-          style={{
-            color: '#160F29',
-            textAlign: 'center',
-            fontSize: scale(24),
-            marginTop: scale(360),
-          }}>
-          {'לנוח, להירגע ולהירדם מ-ה-ר!'}
-        </AppText>
-        <AppText
-          style={{
-            // color: '#160F29',
-            color: '#000000',
+        <WithSlideInX delay={300}>
+          <WithFadeIn delay={300}>
+            <AppText
+              black
+              style={{
+                color: '#160F29',
+                textAlign: 'center',
+                fontSize: scale(24),
+                marginTop: scale(360),
+              }}>
+              {'לנוח, להירגע ולהירדם מ-ה-ר!'}
+            </AppText>
+          </WithFadeIn>
+        </WithSlideInX>
+        <WithSlideInY delay={600}>
+          <WithFadeIn delay={600}>
+            <AppText
+              style={{
+                color: '#000000',
 
-            textAlign: 'center',
-            fontSize: scale(16),
-            marginTop: scale(10),
-          }}>
-          {
-            'בעזרת מיינדפולנס תוכלו להירדם\nמהר ועמוק יותר.\n\nאם אתם מתקשים להירדם,\nעברו לאיזור המתאים באפליקציה,\nנסו את התרגולים וראו בעצמכם.'
-          }
-        </AppText>
+                textAlign: 'center',
+                fontSize: scale(16),
+                marginTop: scale(10),
+              }}>
+              {
+                'בעזרת מיינדפולנס תוכלו להירדם\nמהר ועמוק יותר.\n\nאם אתם מתקשים להירדם,\nעברו לאיזור המתאים באפליקציה,\nנסו את התרגולים וראו בעצמכם.'
+              }
+            </AppText>
+          </WithFadeIn>
+        </WithSlideInY>
         <View style={{ position: 'absolute', bottom: scale(20) }}>
           <AppButton
             onPress={() => navigate('Onboarding', { screen: 'ChooseSex' })}>

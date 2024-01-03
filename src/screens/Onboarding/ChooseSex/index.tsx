@@ -1,7 +1,10 @@
 import image from '@common/assets/images';
 import AppButton from '@common/components/AppButton';
 import AppText from '@common/components/AppText';
-import { SubTitle, Title, TouchableIcon } from '@common/components/Styled';
+import { SubTitle, TouchableIcon } from '@common/components/Styled';
+import WithFadeIn from '@common/components/transitions/WithFadeIn';
+import WithSlideInX from '@common/components/transitions/WithSlideInX';
+import WithSlideInY from '@common/components/transitions/WithSlideInY';
 import { ProgressView } from '@react-native-community/progress-view';
 import PropTypes from 'prop-types';
 import React, { useState } from 'react';
@@ -29,26 +32,6 @@ export const BgImage = styled.ImageBackground.attrs(({ name, isFirst }) => ({
   padding-bottom: 30px;
 `;
 
-const IntroTitle = styled(Title)`
-  margin-top: 30px;
-  margin-left: 60px;
-  margin-right: 60px;
-`;
-
-const SexChooserTitle = styled(SubTitle)`
-  text-align: center;
-  line-height: 19px;
-`;
-
-const SexChooserRow = styled.View`
-  align-self: stretch;
-  flex-direction: row;
-  justify-content: space-between;
-  margin-left: 100px;
-  margin-right: 100px;
-  margin-top: 30px;
-`;
-
 const SexChooserContainer = styled.View`
   flex-direction: column;
   align-items: center;
@@ -69,6 +52,8 @@ const ChooseSex = ({ navigation: { navigate } }) => {
   const dispatch = useDispatch();
   const [sex, setSex] = useState();
 
+  const { width } = Dimensions.get('screen');
+
   const onContinue = () => {
     if (sex) {
       dispatch(chooseSex({ sex }));
@@ -78,7 +63,6 @@ const ChooseSex = ({ navigation: { navigate } }) => {
     }
   };
 
-  const { width } = Dimensions.get('screen');
   return (
     <View
       style={{
@@ -91,57 +75,81 @@ const ChooseSex = ({ navigation: { navigate } }) => {
         style={{ position: 'absolute', top: 0, width }}
         source={image('gender_bg')}
       />
+
       <View
-        style={{ position: 'absolute', top: scale(80), alignItems: 'center' }}>
-        <AppText
-          black
-          style={{ fontSize: 20, textAlign: 'center', color: '#000' }}>
-          {'עוד רגע מתחילים'}
-        </AppText>
-        <AppText
-          style={{
-            fontSize: 16,
-            marginTop: 6,
-            textAlign: 'center',
-            color: '#000',
-          }}>
-          {'לפני הכניסה לאפליקציה,\nנשמח לדעת איך לפנות אלייך?'}
-        </AppText>
+        style={{
+          position: 'absolute',
+          top: scale(80),
+          alignItems: 'center',
+        }}>
+        <WithSlideInX delay={300}>
+          <WithFadeIn delay={300}>
+            <AppText
+              black
+              style={{ fontSize: 20, textAlign: 'center', color: '#000' }}>
+              {'עוד רגע מתחילים'}
+            </AppText>
+            <AppText
+              style={{
+                fontSize: 16,
+                marginTop: 6,
+                textAlign: 'center',
+                color: '#000',
+              }}>
+              {'לפני הכניסה לאפליקציה,\nנשמח לדעת איך לפנות אלייך?'}
+            </AppText>
+          </WithFadeIn>
+        </WithSlideInX>
       </View>
+
       <View style={{ alignItems: 'center', width: '90%', marginBottom: 30 }}>
-        <TouchableOpacity
-          onPress={() => setSex('F')}
-          style={{
-            alignItems: 'center',
-            width: '100%',
-            paddingVertical: 36,
-            paddingHorizontal: 20,
-            backgroundColor: sex === 'F' ? '#D66366' : 'white',
-            borderRadius: 12,
-            height: 100,
-          }}>
-          <AppText
-            style={{ color: sex === 'F' ? 'white' : '#D66366', fontSize: 20 }}>
-            נקבה
-          </AppText>
-        </TouchableOpacity>
-        <TouchableOpacity
-          onPress={() => setSex('M')}
-          style={{
-            alignItems: 'center',
-            width: '100%',
-            marginTop: scale(15),
-            paddingVertical: 36,
-            paddingHorizontal: 20,
-            backgroundColor: sex === 'M' ? '#D66366' : 'white',
-            borderRadius: 12,
-            height: 100,
-          }}>
-          <AppText
-            style={{ color: sex === 'M' ? 'white' : '#D66366', fontSize: 20 }}>
-            זכר
-          </AppText>
-        </TouchableOpacity>
+        <WithSlideInY delay={600}>
+          <WithFadeIn delay={600}>
+            <TouchableOpacity
+              onPress={() => setSex('F')}
+              style={{
+                alignItems: 'center',
+                width: width - 40,
+                paddingVertical: 36,
+                paddingHorizontal: 20,
+                backgroundColor: sex === 'F' ? '#D66366' : 'white',
+                borderRadius: 12,
+                height: 100,
+              }}>
+              <AppText
+                style={{
+                  color: sex === 'F' ? 'white' : '#D66366',
+                  fontSize: 20,
+                }}>
+                נקבה
+              </AppText>
+            </TouchableOpacity>
+          </WithFadeIn>
+        </WithSlideInY>
+        <WithSlideInY delay={700}>
+          <WithFadeIn delay={700}>
+            <TouchableOpacity
+              onPress={() => setSex('M')}
+              style={{
+                alignItems: 'center',
+                width: width - 40,
+                marginTop: scale(15),
+                paddingVertical: 36,
+                paddingHorizontal: 20,
+                backgroundColor: sex === 'M' ? '#D66366' : 'white',
+                borderRadius: 12,
+                height: 100,
+              }}>
+              <AppText
+                style={{
+                  color: sex === 'M' ? 'white' : '#D66366',
+                  fontSize: 20,
+                }}>
+                זכר
+              </AppText>
+            </TouchableOpacity>
+          </WithFadeIn>
+        </WithSlideInY>
       </View>
       <View
         style={{

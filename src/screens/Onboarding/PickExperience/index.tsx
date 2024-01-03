@@ -2,6 +2,9 @@ import image from '@common/assets/images';
 import AppButton from '@common/components/AppButton';
 import AppText from '@common/components/AppText';
 import { Title } from '@common/components/Styled';
+import WithFadeIn from '@common/components/transitions/WithFadeIn';
+import WithSlideInX from '@common/components/transitions/WithSlideInX';
+import WithSlideInY from '@common/components/transitions/WithSlideInY';
 import { ProgressView } from '@react-native-community/progress-view';
 import PropTypes from 'prop-types';
 import React, { useCallback, useState } from 'react';
@@ -63,6 +66,8 @@ const PickExperience = ({ navigation: { navigate } }) => {
   const [experience, setExperience] = useState(null);
   const dispatch = useDispatch();
 
+  const { width } = Dimensions.get('screen');
+
   const onContinue = useCallback(() => {
     if (!experience) {
       return;
@@ -71,7 +76,6 @@ const PickExperience = ({ navigation: { navigate } }) => {
     navigate('Onboarding', { screen: 'CategoriesSelector' });
   }, [dispatch, experience, navigate]);
 
-  const { width } = Dimensions.get('screen');
   return (
     <View
       style={{
@@ -86,22 +90,26 @@ const PickExperience = ({ navigation: { navigate } }) => {
       />
       <View
         style={{ position: 'absolute', top: scale(60), alignItems: 'center' }}>
-        <AppText
-          black
-          style={{ fontSize: 20, textAlign: 'center', color: '#000' }}>
-          כמה נסיון יש לך בעולם המיינדפולנס?
-        </AppText>
-        <AppText
-          style={{
-            fontSize: 16,
-            marginTop: 6,
-            textAlign: 'center',
-            color: '#000',
-          }}>
-          {
-            'הבחירה כאן תאפשר לך לקבל תוכן מותאם לרמה שלך,\nבכל מקרה, אפשר לשנות את הבחירה גם בהמשך\nמתוך תפריט האפליקציה.'
-          }
-        </AppText>
+        <WithSlideInX delay={300}>
+          <WithFadeIn delay={300}>
+            <AppText
+              black
+              style={{ fontSize: 20, textAlign: 'center', color: '#000' }}>
+              כמה נסיון יש לך בעולם המיינדפולנס?
+            </AppText>
+            <AppText
+              style={{
+                fontSize: 16,
+                marginTop: 6,
+                textAlign: 'center',
+                color: '#000',
+              }}>
+              {
+                'הבחירה כאן תאפשר לך לקבל תוכן מותאם לרמה שלך,\nבכל מקרה, אפשר לשנות את הבחירה גם בהמשך\nמתוך תפריט האפליקציה.'
+              }
+            </AppText>
+          </WithFadeIn>
+        </WithSlideInX>
       </View>
       <View style={{ alignItems: 'center', width: '90%' }}>
         <Image
@@ -115,64 +123,77 @@ const PickExperience = ({ navigation: { navigate } }) => {
           }}
           source={image('plants_bg')}
         />
-        <TouchableOpacity
-          onPress={() => setExperience('Beginner')}
-          style={{
-            alignItems: 'center',
-            width: '100%',
-            marginTop: scale(80),
-            paddingVertical: 36,
-            paddingHorizontal: 20,
-            backgroundColor: experience === 'Beginner' ? '#D66366' : 'white',
-            borderRadius: 8,
-          }}>
-          <AppText
-            style={{
-              color: experience === 'Beginner' ? 'white' : '#D66366',
-              fontSize: 20,
-            }}>
-            אמממ... מה זה מדיטציה?
-          </AppText>
-        </TouchableOpacity>
-        <TouchableOpacity
-          onPress={() => setExperience('Intermediate')}
-          style={{
-            alignItems: 'center',
-            width: '100%',
-            marginTop: scale(12),
-            paddingVertical: 36,
-            paddingHorizontal: 20,
-            backgroundColor:
-              experience === 'Intermediate' ? '#D66366' : 'white',
-            borderRadius: 8,
-          }}>
-          <AppText
-            style={{
-              color: experience === 'Intermediate' ? 'white' : '#D66366',
-              fontSize: 20,
-            }}>
-            פה ושם, אבל לא באופן קבוע
-          </AppText>
-        </TouchableOpacity>
-        <TouchableOpacity
-          onPress={() => setExperience('Master')}
-          style={{
-            alignItems: 'center',
-            width: '100%',
-            marginTop: scale(12),
-            paddingVertical: 36,
-            paddingHorizontal: 20,
-            backgroundColor: experience === 'Master' ? '#D66366' : 'white',
-            borderRadius: 8,
-          }}>
-          <AppText
-            style={{
-              color: experience === 'Master' ? 'white' : '#D66366',
-              fontSize: 20,
-            }}>
-            הרבה, אני ממש זן מאסטר!
-          </AppText>
-        </TouchableOpacity>
+        <WithSlideInY delay={600}>
+          <WithFadeIn delay={600}>
+            <TouchableOpacity
+              onPress={() => setExperience('Beginner')}
+              style={{
+                alignItems: 'center',
+                width: width - scale(40),
+                marginTop: scale(80),
+                paddingVertical: 36,
+                paddingHorizontal: 20,
+                backgroundColor:
+                  experience === 'Beginner' ? '#D66366' : 'white',
+                borderRadius: 8,
+              }}>
+              <AppText
+                style={{
+                  color: experience === 'Beginner' ? 'white' : '#D66366',
+                  fontSize: 20,
+                }}>
+                אמממ... מה זה מדיטציה?
+              </AppText>
+            </TouchableOpacity>
+          </WithFadeIn>
+        </WithSlideInY>
+        <WithSlideInY delay={700}>
+          <WithFadeIn delay={700}>
+            <TouchableOpacity
+              onPress={() => setExperience('Intermediate')}
+              style={{
+                alignItems: 'center',
+                width: width - scale(40),
+                marginTop: scale(12),
+                paddingVertical: 36,
+                paddingHorizontal: 20,
+                backgroundColor:
+                  experience === 'Intermediate' ? '#D66366' : 'white',
+                borderRadius: 8,
+              }}>
+              <AppText
+                style={{
+                  color: experience === 'Intermediate' ? 'white' : '#D66366',
+                  fontSize: 20,
+                }}>
+                פה ושם, אבל לא באופן קבוע
+              </AppText>
+            </TouchableOpacity>
+          </WithFadeIn>
+        </WithSlideInY>
+        <WithSlideInY delay={800}>
+          <WithFadeIn delay={800}>
+            <TouchableOpacity
+              onPress={() => setExperience('Master')}
+              style={{
+                alignItems: 'center',
+                width: width - scale(40),
+                marginTop: scale(12),
+                paddingVertical: 36,
+                paddingHorizontal: 20,
+                backgroundColor: experience === 'Master' ? '#D66366' : 'white',
+                borderRadius: 8,
+              }}>
+              <AppText
+                style={{
+                  color: experience === 'Master' ? 'white' : '#D66366',
+                  fontSize: 20,
+                }}>
+                הרבה, אני ממש זן מאסטר!
+              </AppText>
+            </TouchableOpacity>
+          </WithFadeIn>
+        </WithSlideInY>
       </View>
       <View
         style={{

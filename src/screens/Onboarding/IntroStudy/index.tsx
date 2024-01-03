@@ -2,6 +2,9 @@ import image from '@common/assets/images';
 import AppButton from '@common/components/AppButton';
 import AppText from '@common/components/AppText';
 import { Title } from '@common/components/Styled';
+import WithFadeIn from '@common/components/transitions/WithFadeIn';
+import WithSlideInX from '@common/components/transitions/WithSlideInX';
+import WithSlideInY from '@common/components/transitions/WithSlideInY';
 import React from 'react';
 import { Dimensions, Image, Platform, View } from 'react-native';
 import { scale } from 'react-native-size-matters';
@@ -41,27 +44,35 @@ const IntroStudy = ({ navigation: { navigate } }) => {
         backgroundColor: '#fcf2e3',
         padding: scale(40),
       }}>
-      <AppText
-        black
-        style={{
-          color: '#160F29',
-          fontSize: scale(25),
-          marginTop: Platform.OS === 'ios' ? scale(70) : scale(60),
-        }}>
-        {'5 דקות ביום, זה כל הסיפור'}
-      </AppText>
-      <AppText
-        style={{
-          // color: '#160F29',
-          color: '#000000',
-          textAlign: 'center',
-          fontSize: scale(16),
-          marginTop: scale(20),
-        }}>
-        {
-          'כל כך פשוט וקל ליצור שינוי משמעותי\nבחיים, רק 5 דקות ביום ותוכלו להרגיש\nאת השפעת המיינדפולנס על הגוף והנפש.\n\nזמן קצר... אפקט גדול!'
-        }
-      </AppText>
+      <WithSlideInX delay={300}>
+        <WithFadeIn delay={300}>
+          <AppText
+            black
+            style={{
+              color: '#160F29',
+              fontSize: scale(25),
+              marginTop: Platform.OS === 'ios' ? scale(70) : scale(60),
+            }}>
+            {'5 דקות ביום, זה כל הסיפור'}
+          </AppText>
+        </WithFadeIn>
+      </WithSlideInX>
+      <WithSlideInY delay={600}>
+        <WithFadeIn delay={600}>
+          <AppText
+            style={{
+              // color: '#160F29',
+              color: '#000000',
+              textAlign: 'center',
+              fontSize: scale(16),
+              marginTop: scale(20),
+            }}>
+            {
+              'כל כך פשוט וקל ליצור שינוי משמעותי\nבחיים, רק 5 דקות ביום ותוכלו להרגיש\nאת השפעת המיינדפולנס על הגוף והנפש.\n\nזמן קצר... אפקט גדול!'
+            }
+          </AppText>
+        </WithFadeIn>
+      </WithSlideInY>
       <Image
         style={{ position: 'absolute', bottom: 0, width }}
         source={image('ellipse')}
