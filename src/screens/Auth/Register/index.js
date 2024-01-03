@@ -103,7 +103,7 @@ const Register = ({ navigation }) => {
 
   useEffect(() => {
     if (appDataloaded) {
-      navigation.navigate('Home');
+      navigation.navigate('Main');
     }
   }, [appDataloaded, navigation]);
 

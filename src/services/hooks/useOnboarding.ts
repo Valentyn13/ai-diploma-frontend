@@ -1,36 +1,37 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useNavigation } from '@react-navigation/native';
-import { useCallback, useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { firstCourseSelector } from 'store/selectors';
 
 export const useOnboarding = () => {
+  const [isOldUser, setIsOldUser] = useState(true);
   const { navigate } = useNavigation();
   const firstCourse = useSelector<any, any>(firstCourseSelector);
 
-  const fetchIsOldUser = useCallback(async () => {
-    const isOldUser = await AsyncStorage.getItem('secondTime');
-
-    if (!isOldUser) {
-      if (firstCourse && firstCourse.meditations?.length) {
-        const courseMeditations = firstCourse.meditations;
-
-        // @ts-ignore
-        navigate('Main', {
-          screen: 'MeditationPlayer',
-          params: {
-            item: courseMeditations[0],
-          },
-        });
+  useEffect(() => {
+    const fetchIsOldUser = async () => {
+      const isOldUserCache = await AsyncStorage.getItem('secondTime');
+      if (!isOldUserCache) {
+        setIsOldUser(false);
       }
+    };
 
-      await AsyncStorage.setItem('secondTime', 'true');
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    fetchIsOldUser();
   }, []);
 
   useEffect(() => {
-    fetchIsOldUser();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+    if (!isOldUser && firstCourse && firstCourse.meditations?.length) {
+      // @ts-ignore
+      navigate('Main', {
+        screen: 'MeditationPlayer',
+        params: {
+          item: firstCourse.meditations[0],
+        },
+      });
+
+      setIsOldUser(true);
+      AsyncStorage.setItem('secondTime', 'true');
+    }
+  }, [isOldUser, firstCourse, navigate]);
 };
