@@ -60,7 +60,9 @@ const GroupedMeditations = () => {
   );
 
   return (
-    <SafeAreaView edges={['top', 'right', 'left']} className="bg-[#fdedd6]">
+    <SafeAreaView
+      edges={['top', 'right', 'left']}
+      className="bg-[#fdedd6] flex-1">
       <FlatList
         contentContainerStyle={{
           flexGrow: 1,
