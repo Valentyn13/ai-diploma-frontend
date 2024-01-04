@@ -1,6 +1,6 @@
 import MeditationItem from '@common/components/MeditationItem';
 import theme from '@common/theme';
-import React, { FC } from 'react';
+import React, { FC, useMemo } from 'react';
 import { FlatList, ListRenderItem } from 'react-native';
 
 interface Item {
@@ -39,13 +39,20 @@ const HorizontalList: FC<HorizontalListProps> = ({
     );
   };
 
+  const uniqueRandomKey = useMemo(
+    () => Math.random().toString(36).substring(2, 15),
+    [],
+  );
+
   return (
     <FlatList
       horizontal={true}
       showsHorizontalScrollIndicator={false}
       data={data}
       renderItem={renderItem}
-      keyExtractor={(item: any) => item.id || item.name || item.title}
+      keyExtractor={(item: any) =>
+        `${item.id || item.name || item.title}-${uniqueRandomKey}`
+      }
       getItemLayout={(_, index) => ({
         length: theme.dimens.winWidth / 2.4,
         offset: 180 * index,

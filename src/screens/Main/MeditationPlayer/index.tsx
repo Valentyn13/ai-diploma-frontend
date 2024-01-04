@@ -38,8 +38,11 @@ import BgMusicSelector from './BgMusicSelector';
 import CircularPlayer from './CircularPlayer';
 import TimesLabel from './TimesLabel';
 
-const VIDEO_URL = 'https://regameditation.s3.us-east-2.amazonaws.com/videos/';
-const AUDIO_URL = 'https://regameditation.s3.us-east-2.amazonaws.com/sounds/';
+const ASSETS_URL = 'https://d137rfe7jg135q.cloudfront.net/';
+const OLD_ASSETS_URL = 'https://regameditation.s3.us-east-2.amazonaws.com/';
+
+const VIDEO_URL = `${ASSETS_URL}videos/`;
+const SOUNDS_URL = `${ASSETS_URL}sounds/`;
 
 const Dummy = styled.View`
   background-color: transparent;
@@ -328,7 +331,7 @@ const MeditationPlayer = ({
 
     const downloadAndCacheAudio = async () => {
       const audioUri = await downloadAndCacheFile(
-        `${AUDIO_URL}${audio}`,
+        `${SOUNDS_URL}${audio}`,
         audio,
       );
       if (audioUri) {
@@ -370,7 +373,7 @@ const MeditationPlayer = ({
         }}>
         {hasAnimation === false && (
           <BgMusicPlayer
-            source={`https://regameditation.s3.us-east-2.amazonaws.com/sounds/${BG_TRACKS[bgTrack].asset}`}
+            source={`${SOUNDS_URL}${BG_TRACKS[bgTrack].asset}`}
             paused={!isPlayingBgMusic}
           />
         )}
@@ -384,8 +387,7 @@ const MeditationPlayer = ({
         ignoreSilentSwitch="ignore"
         ref={audioPlayerRef}
         allowsExternalPlayback
-        canStepForward
-        source={{ uri: url }}
+        source={{ uri: url.replace(OLD_ASSETS_URL, ASSETS_URL) }}
         paused={!isPlaying}
         onLoad={onLoad}
         onProgress={onProgress}

@@ -1,5 +1,4 @@
 import { useNavigation } from '@react-navigation/native';
-import isLowResolution from '@utils/isLowResolution';
 import React, { FC, useEffect, useState } from 'react';
 import { View } from 'react-native';
 import { useSelector } from 'react-redux';
@@ -12,7 +11,7 @@ import { SubTitle } from './Styled';
 
 interface CoursesCarouselProps {
   title: string;
-  renderStaticBottomContent?: () => React.ReactNode;
+  fullScreen?: boolean;
   selectedCourse?: {
     id: string;
   } | null;
@@ -22,22 +21,15 @@ interface CoursesCarouselProps {
   withParallax?: boolean;
 }
 
-const CarouselContainer = styled.View`
-  flex: 1;
-  margin-top: ${isLowResolution ? 0 : 10}px;
-  margin-bottom: ${isLowResolution ? 0 : 20}px;
-`;
-
 const CarouselTitle = styled(SubTitle)`
-  margin-bottom: 10px;
-  margin-left: 25px;
-  font-size: 18px;
+  font-size: 22px;
   font-weight: bold;
+  align-self: flex-start;
 `;
 
 const CoursesCarousel: FC<CoursesCarouselProps> = ({
   title,
-  renderStaticBottomContent = null,
+  fullScreen = true,
   selectedCourse = null,
   setSelectedCourse,
   withParallax = false,
@@ -46,8 +38,6 @@ const CoursesCarousel: FC<CoursesCarouselProps> = ({
   const { navigate } = useNavigation();
 
   const courses = useSelector(coursesSelector) as Course[];
-
-  const fullScreen = renderStaticBottomContent === null;
 
   const onItemPress = (item: any) => {
     navigate('Courses', { item });
@@ -63,16 +53,13 @@ const CoursesCarousel: FC<CoursesCarouselProps> = ({
   }, [courses, fullScreen, selectedCourse, setSelectedCourse]);
 
   return (
-    <View className="pt-4">
+    <View className="pl-2">
       <CarouselTitle k={title} />
-      <CarouselContainer>
-        <Carousel2
-          withParallax={withParallax}
-          renderStaticBottomContent={renderStaticBottomContent}
-          data={courses.sort((a, b) => b.name.localeCompare(a.name))}
-        />
-        {renderStaticBottomContent && renderStaticBottomContent()}
-      </CarouselContainer>
+      <Carousel2
+        withParallax={withParallax}
+        fullScreen={fullScreen}
+        data={courses.sort((a, b) => b.name.localeCompare(a.name))}
+      />
     </View>
   );
 };

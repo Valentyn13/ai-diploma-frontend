@@ -7,13 +7,14 @@ import { useAmplitude } from '@services/hooks/useAmplitude';
 import { logEvent } from '@utils/analytics';
 import meditationTime from '@utils/meditationTime';
 import React, { memo, useCallback } from 'react';
-import { ImageBackground, Text, TouchableOpacity, View } from 'react-native';
+import { ImageBackground, Pressable, Text, View } from 'react-native';
 import IconFontAwesome from 'react-native-vector-icons/FontAwesome6';
 import { useSelector } from 'react-redux';
 import { meditationInstructor } from 'store/selectors';
 
 interface MeditationItemProps {
   horizontal?: boolean;
+  big?: boolean;
   item: {
     id: string;
     name: string;
@@ -31,6 +32,7 @@ interface MeditationItemProps {
 const MeditationItem: React.FC<MeditationItemProps> = memo(
   ({
     horizontal = false,
+    big = false,
     item: {
       id,
       name,
@@ -82,52 +84,59 @@ const MeditationItem: React.FC<MeditationItemProps> = memo(
     const src = categoryImage(categoryName, index, thumbnail);
 
     return (
-      <TouchableOpacity
+      <Pressable
         style={{
           width: horizontal
             ? theme.dimens.winWidth / 2.4
             : theme.dimens.winWidth / 2,
-          height: horizontal ? 180 : 280,
+          height: horizontal ? 220 : 280,
           maxWidth: theme.dimens.winWidth / 2 - 16,
         }}
         onPress={navigateToMeditation}
-        className="h-48 flex-1 rounded-lg overflow-hidden m-1">
-        <ImageBackground
-          className="flex-1 items-center justify-center"
-          resizeMode="cover"
-          source={src}>
-          <View
-            style={{
-              // @ts-ignore
-              backgroundColor: CATEGORY_COLOR[categoryName] || '#0B2761',
-            }}
-            className="absolute top-2 right-2 rounded-full px-2 py-1">
-            <Text className="text-white text-xs">{categoryTitle}</Text>
-          </View>
-          {!hasPremium && isCategoryLocked && (
-            <View className="bg-black/75 rounded-full p-1 w-6 h-6 flex justify-center items-center absolute bottom-2 right-2">
-              <IconFontAwesome name="lock" size={12} color="#fff" />
+        className="flex-1 overflow-hidden m-1">
+        <View
+          className="flex-1 overflow-hidden"
+          style={{
+            borderRadius: big ? 16 : 8,
+          }}>
+          <ImageBackground
+            className="flex-1 items-center justify-center"
+            resizeMode="cover"
+            source={src}>
+            <View
+              style={{
+                // @ts-ignore
+                backgroundColor: CATEGORY_COLOR[categoryName] || '#0B2761',
+              }}
+              className="absolute top-2 right-2 rounded-full px-2 py-1">
+              <Text className="text-white text-xs">{categoryTitle}</Text>
             </View>
-          )}
-          <View className="flex-row bg-black/75 rounded-full px-2 py-1 absolute bottom-2 left-2 items-center">
-            <IconFontAwesome name="play" size={12} color="#fff" />
-            <Text className="ml-2 text-white text-[12px]">
-              {meditationTime(duration, true)}
-            </Text>
-          </View>
-        </ImageBackground>
-        <View className="flex flex-col items-start justify-center py-1 px-2 h-12 bg-[#160f29]">
-          <Text className="text-white text-[16px] font-bold text-left tracking-tighter leading-6 w-full">
+            {!hasPremium && isCategoryLocked ? (
+              <View className="bg-black/50 rounded-full p-1 w-6 h-6 flex justify-center items-center absolute bottom-2 left-2">
+                <IconFontAwesome name="lock" size={12} color="#fff" />
+              </View>
+            ) : (
+              <View className="flex-row bg-black/50 rounded-full px-2 py-1 absolute bottom-2 left-2 items-center">
+                <IconFontAwesome name="play" size={12} color="#fff" />
+                <Text className="ml-2 text-white text-xs">
+                  {meditationTime(duration, true)}
+                </Text>
+              </View>
+            )}
+          </ImageBackground>
+        </View>
+        <View className="flex flex-col items-start justify-center py-1 px-2 h-12">
+          <Text className="text-black text-[15px] font-medium text-left tracking-tighter leading-6 w-full">
             {name}
           </Text>
           <View className="flex flex-row items-center">
-            <IconFontAwesome color="#fff" name="user-large" size={10} />
-            <Text className="text-white text-xs ml-1">
+            <IconFontAwesome color="#000" name="user-large" size={10} />
+            <Text className="text-black text-xs ml-1">
               {instructor?.name ?? ''}
             </Text>
           </View>
         </View>
-      </TouchableOpacity>
+      </Pressable>
     );
   },
 );

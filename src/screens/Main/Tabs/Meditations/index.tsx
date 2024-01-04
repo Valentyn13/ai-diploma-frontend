@@ -1,4 +1,4 @@
-import CategoryMeditations from '@common/components/CategoryMeditations';
+import Collection from '@common/components/Collection';
 import { colors } from '@common/theme';
 import { useNavigation } from '@react-navigation/native';
 import React from 'react';
@@ -23,19 +23,14 @@ interface Category {
 }
 
 const Meditations = () => {
-  const navigation = useNavigation();
+  const { navigate } = useNavigation();
   const categories = useSelector(categoriesSelector) as Category[];
 
-  const onShowAll = (id: string) => {
-    const category = categories.find(c => c.id === id);
-
-    if (!category) {
-      return;
-    }
-
-    navigation.navigate('Main', {
+  const onShowAll = (title: string, meditations: any[]) => {
+    // @ts-ignore
+    navigate('Main', {
       screen: 'GroupedMeditations',
-      params: { ...category },
+      params: { title, meditations },
     });
   };
 
@@ -44,10 +39,11 @@ const Meditations = () => {
       {categories
         .sort((a, b) => a.order - b.order)
         .map(category => (
-          <CategoryMeditations
+          <Collection
             key={category.id}
-            category={category}
-            onShowAll={() => onShowAll(category.id)}
+            items={category.meditations}
+            title={category.title}
+            onShowAll={() => onShowAll(category.title, category.meditations)}
           />
         ))}
     </ScrollView>
