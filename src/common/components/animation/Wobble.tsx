@@ -9,7 +9,7 @@ export default function Wobble() {
     <LottieView
       style={{
         width: DEVICE_WIDTH * 2,
-        height: 600,
+        height: 500,
       }}
       speed={0.4}
       source={require('./wobble.json')}

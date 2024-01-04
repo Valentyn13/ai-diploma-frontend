@@ -4,7 +4,7 @@ import colors from '@common/theme/colors';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import i18n from '@services/localization/i18n';
 import React from 'react';
-import { StatusBar, View } from 'react-native';
+import { StatusBar } from 'react-native';
 import Animated from 'react-native-reanimated';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
@@ -94,7 +94,8 @@ const TabNavigator = () => {
       </Tab.Navigator>
       {isOpen && (
         <>
-          <View className="w-full h-full bg-black/40 absolute top-0 left-0" />
+          {/* TODO: fix ui glitch when on picker hide  */}
+          {/* <View className="w-full h-full bg-black/40 absolute top-0 left-0" /> */}
           <MeditationPicker />
         </>
       )}
