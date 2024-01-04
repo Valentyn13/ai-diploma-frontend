@@ -1,4 +1,5 @@
 import { MEDITATIONS_FEELING_LOCATION } from '@common/constants';
+import { usePurchases } from '@common/context/PurchaseContext';
 import BottomSheet, { BottomSheetFlatList } from '@gorhom/bottom-sheet';
 import { useNavigation } from '@react-navigation/native';
 import React, {
@@ -162,6 +163,7 @@ const WhereYouAt: FC<{ onNext: (l: Place) => void }> = ({ onNext }) => {
 };
 
 const MeditationPicker = () => {
+  const { hasPremium } = usePurchases();
   const meditations = useSelector(allMeditations);
   const navigation = useNavigation();
   const setIsOpen = useSheetStore(state => state.setIsOpen);
@@ -195,6 +197,13 @@ const MeditationPicker = () => {
     (selectedPlace: Place) => {
       bottomSheetRef.current!.close();
 
+      if (!hasPremium) {
+        navigation.navigate('Main', {
+          screen: 'Subscribe',
+        });
+        return;
+      }
+
       const filteredIds = MEDITATIONS_FEELING_LOCATION.filter(
         ({ feeling, location }) =>
           // @ts-ignore
@@ -217,7 +226,7 @@ const MeditationPicker = () => {
         params: { item },
       });
     },
-    [meditations, navigation, selectedFeeling],
+    [hasPremium, meditations, navigation, selectedFeeling],
   );
 
   return (

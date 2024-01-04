@@ -1,6 +1,7 @@
 import Collection from '@common/components/Collection';
 import CoursesCarousel from '@common/components/CoursesCarousel';
 import Divider from '@common/components/Divider';
+import Feeling from '@common/components/Feeling';
 import { SubTitle } from '@common/components/Styled';
 import {
   COLLECTIONS,
@@ -15,7 +16,9 @@ import useAppData from '@services/hooks/useAppData';
 import useAppState from '@services/hooks/useAppState';
 import useArticleData from '@services/hooks/useArticleData';
 import { useOnboarding } from '@services/hooks/useOnboarding';
+import i18n from '@services/localization/i18n';
 import { logEvent } from '@utils/analytics';
+import { shuffleArray } from '@utils/array';
 import { getCollectionIdByTime, getGreeting } from '@utils/time';
 import React, { FC, useCallback, useEffect, useState } from 'react';
 import { ScrollView, Text, View } from 'react-native';
@@ -31,10 +34,11 @@ import {
 import styled from 'styled-components/native';
 
 import { useSheetStore } from '../../../../store/useSheetStore';
+import InstructorList from './InstructorList';
 import ReminderPopup from './ReminderPopup';
 
 const ListTitle = styled(SubTitle)`
-  font-size: 18px;
+  font-size: 22px;
   font-weight: bold;
   align-self: flex-start;
 `;
@@ -163,6 +167,47 @@ const Feed: FC<FeedProps> = ({ navigation }) => {
           </>
         ))}
 
+        <View className="flex w-full items-center px-2 mt-4">
+          <ListTitle k="personalized" />
+          <View className="my-4 w-11/12 flex items-center">
+            <Feeling onClick={() => setIsOpen(true)} />
+          </View>
+          <Divider className="my-6" />
+        </View>
+
+        <Collection
+          title={i18n.t('Greeting_general')}
+          items={data}
+          onShowAll={() => {
+            onShowAll(i18n.t('Greeting_general'), data);
+          }}
+        />
+        <Divider className="my-6" />
+
+        <Collection
+          title={i18n.t('latest_release')}
+          items={shuffleArray(latest)}
+          onShowAll={() => {
+            onShowAll(i18n.t('latest_release'), shuffleArray(latest));
+          }}
+        />
+        <Divider className="my-6" />
+
+        <View className="flex flex-row items-end justify-between w-full px-2 mb-1">
+          <ListTitle k="צוות המורים" />
+        </View>
+        <InstructorList />
+        <Divider className="my-6" />
+
+        <Collection
+          title={i18n.t('most_played')}
+          items={shuffleArray(topRated)}
+          onShowAll={() => {
+            onShowAll(i18n.t('most_played'), shuffleArray(topRated));
+          }}
+        />
+        <Divider className="my-6" />
+
         <CoursesCarousel
           withParallax
           height={280}
@@ -187,19 +232,6 @@ const Feed: FC<FeedProps> = ({ navigation }) => {
             <Divider className="my-6" />
           </>
         ))}
-        {/* {categories.map((category: any) => (
-          <>
-            <Collection
-              onShowAll={() => {
-                onShowAll(i18n.t(category.title), category.meditations);
-              }}
-              key={category.id}
-              items={category.meditations}
-              title={i18n.t(category.title)}
-            />
-            <Divider className="my-4" />
-          </>
-        ))} */}
       </ScrollView>
       {showNotificationModal && (
         <ReminderPopup
