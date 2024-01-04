@@ -7,6 +7,7 @@ import MeditationPlayer from './MeditationPlayer';
 import BgPlayer from './MeditationPlayer/BgPlayer';
 import Subscribe from './Subscribe';
 import Tabs from './Tabs';
+import Instructor from './Tabs/Home/Instructor';
 import WebView from './WebView';
 
 export type MainStackParamList = {
@@ -16,6 +17,7 @@ export type MainStackParamList = {
   Subscribe: undefined;
   WebView: { url: string; title: string };
   BGMusicPicker: undefined;
+  Instructor: { instructor: any };
 };
 
 const MainStack = createNativeStackNavigator<MainStackParamList>();
@@ -40,6 +42,13 @@ export default () => {
           name="BGMusicPicker"
           component={BGMusicPicker}
           options={{ headerShown: false, presentation: 'modal' }}
+        />
+        <MainStack.Screen
+          name="Instructor"
+          component={Instructor}
+          options={{
+            presentation: 'modal',
+          }}
         />
         <MainStack.Screen
           name="GroupedMeditations"

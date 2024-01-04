@@ -4,7 +4,7 @@ import React, { FC } from 'react';
 import { Text, TouchableOpacity, View, ViewProps } from 'react-native';
 import Icon from 'react-native-vector-icons/Feather';
 
-const Header: FC<{ title: string } & ViewProps> = ({
+const Header: FC<{ title?: string } & ViewProps> = ({
   title,
   className,
   ...props

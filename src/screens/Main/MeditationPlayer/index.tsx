@@ -4,7 +4,6 @@ import {
   BoldTitle,
   MeditationContainer,
   SubTitle,
-  TouchableIcon,
 } from '@common/components/Styled';
 import { CircleButton } from '@common/components/buttons/CircleButton';
 import { useNavigation, useRoute } from '@react-navigation/native';
@@ -21,7 +20,7 @@ import React, {
   useRef,
   useState,
 } from 'react';
-import { Alert, StatusBar, TouchableOpacity, View } from 'react-native';
+import { Alert, StatusBar, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import Video from 'react-native-video';
 import { useDispatch, useSelector } from 'react-redux';
@@ -31,7 +30,6 @@ import { meditationInstructor } from 'store/selectors';
 import styled, { withTheme } from 'styled-components';
 
 import { useBgTrackStore } from '../../../store/useBgTrackStore';
-import MeditationInfo from '../MeditationInfo';
 import CircularPlayer from './CircularPlayer';
 import TimesLabel from './TimesLabel';
 
@@ -307,69 +305,66 @@ const MeditationPlayer = ({
           bufferForPlaybackAfterRebufferMs: 4000,
         }}
       />
-      <SafeAreaView className="flex flex-row items-center w-full justify-between px-4">
-        <CircleButton
-          size={40}
-          icon="x"
-          onPress={onClose}
-          backgroundColor="#00000060"
-          color="white"
-        />
-        {hasAnimation === false && (
-          <CircleButton
-            size={40}
-            icon="music"
-            onPress={toggleBgMenu}
-            backgroundColor={selectedTrack === 'off' ? '#00000060' : 'white'}
-            color={selectedTrack === 'off' ? 'white' : 'black'}
-          />
-        )}
-      </SafeAreaView>
-      <MeditationContainer style={{ zIndex: -1 }} flex={1} />
-      <ButtonsContainer flex={1.1}>
-        <ButtonsInnerContainer>
-          <CircularPlayer
-            togglePlay={togglePlay}
-            isPlaying={isPlaying}
-            currentTime={currentTime}
-            onSliderEditStart={onSliderEditStart}
-            onSliderEditEnd={onSliderEditEnd}
-            onSliderEditing={onSliderEditing}
-            duration={duration}
-            setCurrentTime={setCurrentTime}
-            isLoading={isLoading}
-          />
-          <TimesLabel {...{ currentTime, duration }} color={whiteColor} />
-          <StartHereTitle color={whiteColor} t={name || title} />
-          <TouchableOpacity
-            onPress={() => {
-              // navigate('MeditationInfo', {item, instructor});
-            }}
-            style={{ alignSelf: 'center' }}>
-            <InstructorName
-              t={instructor?.name}
-              color={whiteColor}
-              style={{ textAlign: 'center' }}
+      <SafeAreaView className="flex-col h-full w-full">
+        <View className="relative flex flex-col items-center justify-center w-full h-full">
+          <View className="absolute top-0 flex flex-row items-center w-full justify-between px-4 z-10">
+            <CircleButton
+              size={40}
+              icon="x"
+              onPress={onClose}
+              backgroundColor="#00000060"
+              color="white"
             />
-            <TouchableIcon
-              name="info"
+            {hasAnimation === false && (
+              <CircleButton
+                size={40}
+                icon="music"
+                onPress={toggleBgMenu}
+                backgroundColor={
+                  selectedTrack === 'off' ? '#00000060' : 'white'
+                }
+                color={selectedTrack === 'off' ? 'white' : 'black'}
+              />
+            )}
+          </View>
+          <View className="absolute flex flex-col items-center justify-center h-full w-full">
+            <CircularPlayer
+              togglePlay={togglePlay}
+              isPlaying={isPlaying}
+              currentTime={currentTime}
+              onSliderEditStart={onSliderEditStart}
+              onSliderEditEnd={onSliderEditEnd}
+              onSliderEditing={onSliderEditing}
+              duration={duration}
+              setCurrentTime={setCurrentTime}
+              isLoading={isLoading}
+            />
+            <TimesLabel {...{ currentTime, duration }} color={whiteColor} />
+          </View>
+          <View className="absolute bottom-20 w-full flex-col items-center">
+            <Text className="text-2xl font-bold text-white">
+              {name || title}
+            </Text>
+            <Text className="text-base font-light text-white mb-2">
+              {instructor?.name}
+            </Text>
+
+            <CircleButton
+              backgroundColor="#00000060"
+              color="white"
+              size={40}
+              icon="info"
               onPress={() => {
                 updateIstructorTractionData(instructor);
-                setShowModal(true);
+                navigate('Instructor', { id: instructor._id });
               }}
-              color={whiteColor}
             />
-          </TouchableOpacity>
-        </ButtonsInnerContainer>
-        <MeditationInfo
-          isVisible={showModal}
-          instructor={instructor}
-          setShowModal={setShowModal}
-        />
-        <FavoriteIndicatorWrapper>
-          <FavoriteIndicator id={id} />
-        </FavoriteIndicatorWrapper>
-      </ButtonsContainer>
+          </View>
+          <View className="absolute bottom-4 left-4">
+            <FavoriteIndicator id={id} />
+          </View>
+        </View>
+      </SafeAreaView>
     </View>
   );
 };

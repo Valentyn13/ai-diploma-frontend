@@ -1,7 +1,8 @@
 import MeditationItem from '@common/components/MeditationItem';
 import ParallaxScrollView from '@common/components/ParallaxScrollView';
+import { CircleButton } from '@common/components/buttons/CircleButton';
 import theme from '@common/theme';
-import { useRoute } from '@react-navigation/native';
+import { useNavigation, useRoute } from '@react-navigation/native';
 import useInstructor from '@services/hooks/useInstructor';
 import React, { useCallback, useMemo } from 'react';
 import { FlatList, Linking, Text, View } from 'react-native';
@@ -11,6 +12,7 @@ import { useSelector } from 'react-redux';
 import { allMeditations as allMeditationsSelector } from 'store/selectors';
 
 const Instructor = () => {
+  const { goBack } = useNavigation();
   const route = useRoute();
 
   const instructorId = route.params?.id;
@@ -35,73 +37,84 @@ const Instructor = () => {
   );
 
   return (
-    <ParallaxScrollView image={instructor?.image}>
-      <View className="p-5">
-        <View className="flex flex-row justify-between items-center mt-2">
-          <Text className="text-2xl font-bold">{instructor?.name}</Text>
-          <View className="flex flex-row space-x-2">
-            {instructor.SocialIconLink && (
-              <TouchableOpacity
-                onPress={() => {
-                  const data = {
-                    ...instructor,
-                    social_link_press: true,
-                  };
-                  updateIstructorTractionData(data);
-                  const url = instructor.SocialIconLink;
-                  Linking.canOpenURL(url);
-                  Linking.openURL(url);
-                }}>
-                <Icon
-                  name="instagram"
-                  size={28}
-                  color={theme.colors.textColor}
-                />
-              </TouchableOpacity>
-            )}
-            {instructor.buttonLink && (
-              <TouchableOpacity
-                onPress={() => {
-                  const data = {
-                    ...instructor,
-                    button_press: true,
-                  };
-                  updateIstructorTractionData(data);
-                  const url = instructor.buttonLink;
-                  Linking.canOpenURL(url);
-                  Linking.openURL(url);
-                }}>
-                <Icon name="link" size={28} color={theme.colors.textColor} />
-              </TouchableOpacity>
-            )}
-          </View>
-        </View>
-        <Text className="text-left text-base leading-none font-normal mt-4">
-          {instructor?.description}
-        </Text>
+    <View className="relative w-full h-full">
+      <View className="absolute top-4 left-4 z-10">
+        <CircleButton
+          size={40}
+          icon="chevron-down"
+          onPress={goBack}
+          backgroundColor="#00000060"
+          color="white"
+        />
       </View>
-      <Text className="text-center text-base leading-none font-normal mt-2 text-gray-500">
-        {meditations.length} מדיטציות
-      </Text>
-      <FlatList
-        contentContainerStyle={{
-          flexGrow: 1,
-          paddingVertical: 10,
-          paddingHorizontal: 10,
-        }}
-        data={meditations}
-        scrollEnabled={false}
-        keyExtractor={item => item.id}
-        renderItem={renderMeditationItem}
-        numColumns={2}
-        showsVerticalScrollIndicator={false}
-        getItemLayout={(_, index) => ({
-          length: theme.dimens.winWidth / 2 - 16,
-          offset: 280 * index,
-          index,
-        })}
-      />
-    </ParallaxScrollView>
+      <ParallaxScrollView image={instructor?.image}>
+        <View className="p-5">
+          <View className="flex flex-row justify-between items-center mt-2">
+            <Text className="text-2xl font-bold">{instructor?.name}</Text>
+            <View className="flex flex-row space-x-2">
+              {instructor.SocialIconLink && (
+                <TouchableOpacity
+                  onPress={() => {
+                    const data = {
+                      ...instructor,
+                      social_link_press: true,
+                    };
+                    updateIstructorTractionData(data);
+                    const url = instructor.SocialIconLink;
+                    Linking.canOpenURL(url);
+                    Linking.openURL(url);
+                  }}>
+                  <Icon
+                    name="instagram"
+                    size={28}
+                    color={theme.colors.textColor}
+                  />
+                </TouchableOpacity>
+              )}
+              {instructor.buttonLink && (
+                <TouchableOpacity
+                  onPress={() => {
+                    const data = {
+                      ...instructor,
+                      button_press: true,
+                    };
+                    updateIstructorTractionData(data);
+                    const url = instructor.buttonLink;
+                    Linking.canOpenURL(url);
+                    Linking.openURL(url);
+                  }}>
+                  <Icon name="link" size={28} color={theme.colors.textColor} />
+                </TouchableOpacity>
+              )}
+            </View>
+          </View>
+          <Text className="text-left text-base leading-none font-normal mt-4">
+            {instructor?.description}
+          </Text>
+        </View>
+        <Text className="text-center text-base leading-none font-normal mt-2 text-gray-500">
+          {meditations.length} מדיטציות
+        </Text>
+        <FlatList
+          contentContainerStyle={{
+            flexGrow: 1,
+            paddingVertical: 10,
+            paddingHorizontal: 10,
+          }}
+          data={meditations}
+          scrollEnabled={false}
+          keyExtractor={item => item.id}
+          renderItem={renderMeditationItem}
+          numColumns={2}
+          showsVerticalScrollIndicator={false}
+          getItemLayout={(_, index) => ({
+            length: theme.dimens.winWidth / 2 - 16,
+            offset: 280 * index,
+            index,
+          })}
+        />
+      </ParallaxScrollView>
+    </View>
   );
 };
 

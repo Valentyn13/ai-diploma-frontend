@@ -4,10 +4,10 @@ import { useNavigation } from '@react-navigation/native';
 import React, { useCallback } from 'react';
 import { Text, TouchableOpacity, View } from 'react-native';
 import { FlatList } from 'react-native-gesture-handler';
-import Icon from 'react-native-vector-icons/FontAwesome6';
 
 import { useBgTrackStore } from '../../store/useBgTrackStore';
 import Volume from './Volume';
+import { CircleButton } from './buttons/CircleButton';
 
 const Option = ({ label, onPress, emoji, isSelected }) => (
   <TouchableOpacity
@@ -64,9 +64,15 @@ const MusicModal = () => {
         padding: 30,
         backgroundColor: '#FFEFD7',
       }}>
-      <TouchableOpacity className="p-4 absolute left-0 top-0" onPress={goBack}>
-        <Icon size={20} name="chevron-down" color="#273051" />
-      </TouchableOpacity>
+      <View className="absolute left-4 top-4">
+        <CircleButton
+          backgroundColor="#00000060"
+          color="#fff"
+          onPress={goBack}
+          size={40}
+          icon="chevron-down"
+        />
+      </View>
       <Text
         className="text-center text-3xl font-bold mb-6"
         style={{ fontFamily: theme.fonts.regular }}>
