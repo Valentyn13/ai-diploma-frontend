@@ -11,7 +11,6 @@ const BgPlayer: FC = () => {
   const { selectedTrack, volume } = useBgTrackStore(state => state);
 
   const uri = useMemo(() => {
-    console.log('selectedTrack', selectedTrack);
     if (selectedTrack === 'off') {
       return;
     }

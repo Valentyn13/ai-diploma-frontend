@@ -8,29 +8,20 @@ import { AmplitudeInstance, useAmplitude } from '@services/hooks/useAmplitude';
 import i18n from '@services/localization/i18n';
 import { logEvent } from '@utils/analytics';
 import get from '@utils/get';
-import { default as React, useEffect, useState } from 'react';
-import { Alert, StatusBar, Text, TouchableOpacity, View } from 'react-native';
+import { FC, default as React, useEffect, useState } from 'react';
+import {
+  ActivityIndicator,
+  Alert,
+  StatusBar,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import { LinearGradient } from 'react-native-gradients';
-import Purchases from 'react-native-purchases';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import Icon2 from 'react-native-vector-icons/Feather';
 import { useSelector } from 'react-redux';
 import styled from 'styled-components/native';
-
-const Overlay = styled.View`
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  background-color: rgba(40, 40, 40, 0.8);
-  justify-content: center;
-  opacity: 0.8;
-`;
-
-const Spinner = styled.ActivityIndicator.attrs({
-  size: 'large',
-})``;
 
 const EmptyOverlay = styled.View`
   position: absolute;
@@ -181,11 +172,9 @@ const PLANS = {
   weekly: null,
 };
 
-const Subscribe: React.FC = () => {
-  const { goBack, navigate } = useNavigation();
-  const onClose = () => goBack();
-  const { plans, setPurchaserIdentity } = usePurchases();
-  const [purchasing, setPurchasing] = useState<boolean>(false);
+const Subscribe: FC = () => {
+  const { goBack } = useNavigation();
+  const { plans, makePurchase, purchasing } = usePurchases();
   const { email, name: userName } = useSelector(
     (state: any) => state.userDetails,
   );
@@ -207,38 +196,6 @@ const Subscribe: React.FC = () => {
     initRudderstack();
   }, []);
 
-  const purchase = (packageToPurchase: any) => {
-    return new Promise<void>((resolve, reject) => {
-      try {
-        Purchases.purchasePackage(packageToPurchase)
-          .then((result: any) => {
-            if (result.purchaserInfo.entitlements.active) {
-              setPurchasing(false);
-              resolve();
-            } else {
-              setPurchasing(false);
-              reject();
-            }
-          })
-          .catch((e: any) => {
-            console.log('i am from promise catch');
-            setPurchasing(false);
-            reject();
-          });
-      } catch (e) {
-        console.error(
-          'usePurchases: failed to purchase package',
-          e.message || e,
-        );
-        if (!e.userCancelled) {
-          Alert.alert('Failed to purchase plan!');
-        }
-
-        reject();
-      }
-    });
-  };
-
   const colorList = [
     { offset: '0%', color: '#4A90E2', opacity: '1' },
     { offset: '100%', color: '#003399', opacity: '1' },
@@ -247,41 +204,36 @@ const Subscribe: React.FC = () => {
   const [selectedPlan, setSelectedPlan] = useState('annual');
 
   const onSubscribe = async (plan: any) => {
-    setPurchasing(true);
-    purchase(plan)
-      .then(async result => {
-        await amplitudeInstance.logRevenue({
-          price: plan.product.price,
-          productId: plan.product.identifier,
-          revenueType: plan.packageType,
-        });
-        await rudderClient.track('Subscribe', {
-          price: plan.product.price,
-          productId: plan.product.identifier,
-          revenueType: plan.packageType,
-        });
-        await logEvent('Subscribe', {
-          userName,
-          email,
-          price: plan.product.price,
-          productId: plan.product.identifier,
-          revenueType: plan.packageType,
-        });
-      })
-      .catch(error => {
-        console.log('hello error', error);
-      })
-      .finally(() => {
-        setPurchasing(false);
-        setPurchaserIdentity();
-        navigate('Main', { screen: 'Home' });
+    try {
+      await makePurchase(plan);
+      await amplitudeInstance.logRevenue({
+        price: plan.product.price,
+        productId: plan.product.identifier,
+        revenueType: plan.packageType,
       });
+      await rudderClient.track('Subscribe', {
+        price: plan.product.price,
+        productId: plan.product.identifier,
+        revenueType: plan.packageType,
+      });
+
+      logEvent('Subscribe', {
+        userName,
+        email,
+        price: plan.product.price,
+        productId: plan.product.identifier,
+        revenueType: plan.packageType,
+      });
+
+      goBack();
+    } catch (e) {
+      Alert.alert('מצטערים קרתה תקלה, אנא פנו לתמיכה שלנו');
+    }
   };
 
   return (
     <>
       <StatusBar hidden />
-      <SafeAreaView edges={['top']} className="bg-[#003399]" />
       <SafeAreaView
         edges={['bottom', 'left', 'right']}
         className="flex-1 bg-[#0A0E1E]">
@@ -301,7 +253,7 @@ const Subscribe: React.FC = () => {
                 }}
                 size={24}
                 name="x"
-                onPress={onClose}
+                onPress={goBack}
                 color="white"
               />
               <Text className="text-white text-center font-black text-2xl mt-12 mb-6">
@@ -355,7 +307,7 @@ const Subscribe: React.FC = () => {
                 <SubscribeButton
                   onPress={() => onSubscribe(plans[selectedPlan])}
                 />
-                <TouchableOpacity onPress={onClose}>
+                <TouchableOpacity onPress={goBack}>
                   <Text className="text-white text-center text-xs mt-5 underline">
                     לא, תודה
                   </Text>
@@ -363,15 +315,15 @@ const Subscribe: React.FC = () => {
               </View>
             </View>
             {purchasing && (
-              <Overlay>
-                <Spinner />
-              </Overlay>
+              <View className="absolute top-0 bottom-0 left-0 right-0 flex justify-center items-center bg-black/60">
+                <ActivityIndicator size="large" color="#FFF" />
+              </View>
             )}
           </>
         ) : (
-          <EmptyOverlay>
-            <Spinner />
-          </EmptyOverlay>
+          <View className="absolute top-0 bottom-0 left-0 right-0 flex justify-center items-center">
+            <ActivityIndicator size="large" color="#FFF" />
+          </View>
         )}
       </SafeAreaView>
     </>

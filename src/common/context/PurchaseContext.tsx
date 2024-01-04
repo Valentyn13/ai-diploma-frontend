@@ -1,3 +1,4 @@
+import { PurchasesPackage } from '@revenuecat/purchases-typescript-internal';
 import logger from '@utils/logger';
 import React, {
   PropsWithChildren,
@@ -7,8 +8,10 @@ import React, {
   useEffect,
   useState,
 } from 'react';
-import { Alert } from 'react-native';
-import Purchases, { LOG_LEVEL } from 'react-native-purchases';
+import Purchases, {
+  LOG_LEVEL,
+  MakePurchaseResult,
+} from 'react-native-purchases';
 import { useSelector } from 'react-redux';
 
 interface PurchaseContextProps {
@@ -17,7 +20,9 @@ interface PurchaseContextProps {
   purchasing: boolean;
   identify: boolean;
   setPurchaserIdentity: () => Promise<void>;
-  purchasePlan: (packageToPurchase: any) => Promise<boolean | undefined>;
+  makePurchase: (
+    packageToPurchase: PurchasesPackage,
+  ) => Promise<MakePurchaseResult>;
 }
 
 const PurchaseContext = createContext<PurchaseContextProps | undefined>(
@@ -34,9 +39,9 @@ export const usePurchases = (): PurchaseContextProps => {
 
 export const PurchaseProvider: React.FC<PropsWithChildren> = ({ children }) => {
   const [plans, setPlans] = useState<Record<string, any>>({});
-  const [hasPremium, setPremium] = useState<boolean>(true);
-  const [purchasing, setPurchasing] = useState<boolean>(false);
-  const [identify, setIdentify] = useState<boolean>(false);
+  const [hasPremium, setPremium] = useState(true);
+  const [purchasing, setPurchasing] = useState(false);
+  const [identify, setIdentify] = useState(false);
   const { id } = useSelector(
     (state: { userDetails: { id: string } }) => state.userDetails,
   );
@@ -45,20 +50,18 @@ export const PurchaseProvider: React.FC<PropsWithChildren> = ({ children }) => {
 
   const getOfferings = useCallback(async () => {
     try {
-      if (Object.keys(plans).length === 0) {
-        const offerings = await Purchases.getOfferings();
+      const offerings = await Purchases.getOfferings();
 
-        if (!offerings.current) {
-          throw new Error('No offerings found');
-        }
-
-        setPlans(offerings.current);
-        setIdentify(true);
+      if (!offerings.current) {
+        throw new Error('No offerings found');
       }
+
+      setPlans(offerings.current);
+      setIdentify(true);
     } catch (e: any) {
       logger.error('usePurchases: failed to get offerings', e.message || e);
     }
-  }, [plans]);
+  }, []);
 
   useEffect(() => {
     Purchases.setLogLevel(LOG_LEVEL.ERROR);
@@ -90,34 +93,37 @@ export const PurchaseProvider: React.FC<PropsWithChildren> = ({ children }) => {
     setPurchaserIdentity();
   }, [setPurchaserIdentity]);
 
-  const purchasePlan = useCallback(async (packageToPurchase: any) => {
-    try {
+  const makePurchase = useCallback(
+    async (packageToPurchase: PurchasesPackage) => {
       setPurchasing(true);
-      const response = await Purchases.purchasePackage(packageToPurchase);
+      let result: MakePurchaseResult;
 
-      if (response.customerInfo.entitlements.active) {
+      try {
+        result = await Purchases.purchasePackage(packageToPurchase);
+      } catch (e: any) {
         setPurchasing(false);
-        setPremium(true);
-        return true;
-      }
-    } catch (e: any) {
-      logger.error('usePurchases: failed to purchase package', e.message || e);
-      if (!e.userCancelled) {
-        Alert.alert('Failed to purchase plan!');
+        logger.error('usePurchases: failed to make purchase', e.message || e);
+        throw new Error('Purchase failed', e.message || e);
       }
 
-      return false;
-    } finally {
+      if (!result?.customerInfo.entitlements.active) {
+        setPurchasing(false);
+        throw new Error('Purchase failed');
+      }
+
       setPurchasing(false);
-    }
-  }, []);
+      setPremium(true);
+      return result;
+    },
+    [],
+  );
 
   const contextValue: PurchaseContextProps = {
     plans,
     hasPremium,
     purchasing,
     setPurchaserIdentity,
-    purchasePlan,
+    makePurchase,
     identify,
   };
 
