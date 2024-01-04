@@ -4,6 +4,7 @@ import Divider from '@common/components/Divider';
 import Feeling from '@common/components/Feeling';
 import Logo from '@common/components/Logo';
 import { SubTitle } from '@common/components/Styled';
+import BgSelector from '@common/components/buttons/BgSelector';
 import {
   COLLECTIONS,
   COLLECTIONS_TIME_OF_DAY,
@@ -50,7 +51,7 @@ type FeedProps = NativeStackScreenProps<RootStackParamList, 'Main'>;
 const Feed: FC<FeedProps> = ({ navigation }) => {
   const { getAppData } = useAppData();
   const { getArticleData } = useArticleData();
-  const { email, name } = useSelector((state: any) => state.userDetails);
+  const { email, name, sex } = useSelector((state: any) => state.userDetails);
   const { articles } = useSelector((state: any) => state.articleData);
   const { setPurchaserIdentity, hasPremium } = usePurchases();
   const [showNotificationModal, setshowNotificationModal] = useState(false);
@@ -142,6 +143,7 @@ const Feed: FC<FeedProps> = ({ navigation }) => {
       <View className="absolute top-1 self-center">
         <Logo width={40} />
       </View>
+
       <ScrollView
         style={{
           zIndex: 10,
@@ -149,6 +151,9 @@ const Feed: FC<FeedProps> = ({ navigation }) => {
           position: 'relative',
         }}
         showsVerticalScrollIndicator={false}>
+        <View className="absolute top-4 right-4 z-10">
+          <BgSelector />
+        </View>
         <View className="relative">
           <View className="absolute w-full h-full">
             <LinearGradient colorList={colorList} angle={90} />
@@ -178,7 +183,7 @@ const Feed: FC<FeedProps> = ({ navigation }) => {
           <View className="flex w-full items-center px-2 mt-4">
             <ListTitle k="personalized" />
             <View className="my-4 w-11/12 flex items-center">
-              <Feeling onClick={() => setIsOpen(true)} />
+              <Feeling onClick={() => setIsOpen(true)} isMale={sex === 'M'} />
             </View>
             <Divider className="my-6" />
           </View>

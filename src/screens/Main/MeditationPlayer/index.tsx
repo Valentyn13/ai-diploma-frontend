@@ -4,11 +4,9 @@ import {
   BoldTitle,
   MeditationContainer,
   SubTitle,
-  TopTitle,
   TouchableIcon,
 } from '@common/components/Styled';
-import { BG_TRACKS } from '@common/constants';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import { CircleButton } from '@common/components/buttons/CircleButton';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { captureException } from '@sentry/react-native';
 import { useAmplitude } from '@services/hooks/useAmplitude';
@@ -20,12 +18,11 @@ import React, {
   useCallback,
   useEffect,
   useMemo,
-  useReducer,
   useRef,
   useState,
 } from 'react';
 import { Alert, StatusBar, TouchableOpacity, View } from 'react-native';
-import Icon from 'react-native-vector-icons/FontAwesome6';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import Video from 'react-native-video';
 import { useDispatch, useSelector } from 'react-redux';
 import RNFetchBlob from 'rn-fetch-blob';
@@ -33,8 +30,8 @@ import { meditationStarted, minutesPracticed } from 'store/actions';
 import { meditationInstructor } from 'store/selectors';
 import styled, { withTheme } from 'styled-components';
 
+import { useBgTrackStore } from '../../../store/useBgTrackStore';
 import MeditationInfo from '../MeditationInfo';
-import BgMusicSelector from './BgMusicSelector';
 import CircularPlayer from './CircularPlayer';
 import TimesLabel from './TimesLabel';
 
@@ -44,38 +41,10 @@ const OLD_ASSETS_URL = 'https://regameditation.s3.us-east-2.amazonaws.com/';
 const VIDEO_URL = `${ASSETS_URL}videos/`;
 const SOUNDS_URL = `${ASSETS_URL}sounds/`;
 
-const Dummy = styled.View`
-  background-color: transparent;
-  width: 30px;
-  height: 30px;
-  margin: ${({ theme: { dimens } }) => dimens.margin}px;
-`;
-
-const Header = styled.View`
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: flex-start;
-  margin-top: 50px;
-  padding-left: 25px;
-  padding-right: 25px;
-`;
-
-// need to verify title is centered (width is the same as BgMusicSelector's width)
-const CloseButtonWrapper = styled.View`
-  width: 72px;
-  flex-direction: row;
-  justify-content: flex-end;
-`;
-
 const FavoriteIndicatorWrapper = styled.View`
   position: absolute;
   bottom: 50px;
   left: 25px;
-`;
-
-const HeaderTitle = styled(TopTitle)`
-  flex: 1;
-  text-align: center;
 `;
 
 const ButtonsContainer = styled(MeditationContainer)`
@@ -113,32 +82,16 @@ const AudioPlayer = styled(Video).attrs(() => ({}))`
   height: 0;
 `;
 
-const BgMusicPlayer = ({ source, paused }) => (
-  <Video
-    source={{ uri: source }}
-    onError={error => {
-      logger.log('error', JSON.stringify(error));
-    }}
-    disableFocus
-    audioOnly
-    playInBackground
-    repeat
-    playWhenInactive
-    paused={paused}
-  />
-);
-
 const MeditationPlayer = ({
   theme: {
-    colors: { whiteColor, itemBgColor },
+    colors: { whiteColor },
   },
 }) => {
   const [cachedVideoUri, setCachedVideoUri] = useState(null);
-  const [destroyed, setDestroyed] = useState(false);
   const route = useRoute();
   const audioPlayerRef = useRef(null);
   const { updateIstructorTractionData } = useInstructor();
-  const { goBack } = useNavigation();
+  const { goBack, navigate } = useNavigation();
   const { updateMeditationCount } = useUpdateMeditation();
   const [currentTime, setCurrentTime] = useState(0);
   const [startTime, setStartTime] = useState(0);
@@ -148,10 +101,13 @@ const MeditationPlayer = ({
   const [isFirstPlay, setIsFirstPlay] = useState(true);
   const [isLoading, setIsLoading] = useState(true);
   const [showModal, setShowModal] = useState(false);
-  const [isPlayingBgMusic, setIsPlayingBgMusic] = useState(true);
+  const { selectedTrack } = useBgTrackStore(state => state);
 
-  const [bgTrack, setBgTrack] = useState(0);
-  const [bgMenuOpen, toggleBgMenu] = useReducer(s => !s, false);
+  const toggleBgMenu = () => {
+    navigate('Main', {
+      screen: 'BGMusicPicker',
+    });
+  };
 
   const amplitudeInstance = useAmplitude();
   const dispatch = useDispatch();
@@ -203,17 +159,10 @@ const MeditationPlayer = ({
     // amplitudeInstance.logEvent('MEDITATION_STOP', { categoryName });
     // amplitudeInstance.uploadEvents();
 
-    togglePlay();
-    setIsPlayingBgMusic(false);
-    setTimeout(() => goBack(), 0);
+    goBack();
   };
 
   const onLoad = ({ duration: value }) => {
-    if (destroyed) {
-      setIsPlaying(false);
-      return;
-    }
-
     setDuration(value);
     setIsLoading(false);
   };
@@ -253,25 +202,6 @@ const MeditationPlayer = ({
     togglePlay();
   };
 
-  useEffect(() => {
-    const getCachedBg = async () => {
-      const a = await AsyncStorage.getItem('bgTrack');
-    };
-  }, []);
-
-  const handleBgTrack = (trackId: number) => {
-    toggleBgMenu();
-    if (trackId === -1) {
-      setIsPlayingBgMusic(false);
-      return;
-    }
-
-    if (trackId !== bgTrack) {
-      setBgTrack(trackId);
-    }
-    setIsPlayingBgMusic(true);
-  };
-
   onLoad.propTypes = {
     duration: PropTypes.number.isRequired,
   };
@@ -279,15 +209,6 @@ const MeditationPlayer = ({
   onProgress.propTypes = {
     currentTime: PropTypes.number.isRequired,
   };
-
-  useEffect(() => {
-    return () => {
-      setDestroyed(true);
-      setIsPlayingBgMusic(false);
-      setIsPlaying(false);
-      audioPlayerRef.current = null;
-    };
-  }, []);
 
   // const poster = useMemo(() => categoryImage(categoryName), [categoryName]);
   const poster = useMemo(() => 'https://picsum.photos/200', []);
@@ -365,28 +286,13 @@ const MeditationPlayer = ({
         />
       )}
 
-      <View
-        style={{
-          borderWidth: 0,
-          height: 0,
-          width: 100,
-        }}>
-        {hasAnimation === false && (
-          <BgMusicPlayer
-            source={`${SOUNDS_URL}${BG_TRACKS[bgTrack].asset}`}
-            paused={!isPlayingBgMusic}
-          />
-        )}
-      </View>
       {/* <AudioPlayer id={id} url={url} title={name} artist={instructor?.name} /> */}
       <AudioPlayer
         audioOnly
         disableFocus
-        playInBackground
         playWhenInactive
         ignoreSilentSwitch="ignore"
         ref={audioPlayerRef}
-        allowsExternalPlayback
         source={{ uri: url.replace(OLD_ASSETS_URL, ASSETS_URL) }}
         paused={!isPlaying}
         onLoad={onLoad}
@@ -401,26 +307,24 @@ const MeditationPlayer = ({
           bufferForPlaybackAfterRebufferMs: 4000,
         }}
       />
-      <View className="flex flex-row items-center w-full justify-between mt-16 pr-6 pl-4">
-        <TouchableOpacity className="p-2">
-          <Icon size={20} name="x" onPress={onClose} color={whiteColor} />
-        </TouchableOpacity>
-        {hasAnimation === false ? (
-          <BgMusicSelector
-            {...{
-              toggleBgMenu,
-              whiteColor,
-              bgMenuOpen,
-              handleBgTrack,
-              isPlayingBgMusic,
-            }}
-            currentBgTrack={bgTrack}
-            bgTracks={BG_TRACKS}
+      <SafeAreaView className="flex flex-row items-center w-full justify-between px-4">
+        <CircleButton
+          size={40}
+          icon="x"
+          onPress={onClose}
+          backgroundColor="#00000060"
+          color="white"
+        />
+        {hasAnimation === false && (
+          <CircleButton
+            size={40}
+            icon="music"
+            onPress={toggleBgMenu}
+            backgroundColor={selectedTrack === 'off' ? '#00000060' : 'white'}
+            color={selectedTrack === 'off' ? 'white' : 'black'}
           />
-        ) : (
-          <Dummy />
         )}
-      </View>
+      </SafeAreaView>
       <MeditationContainer style={{ zIndex: -1 }} flex={1} />
       <ButtonsContainer flex={1.1}>
         <ButtonsInnerContainer>
@@ -477,11 +381,6 @@ MeditationPlayer.propTypes = {
       itemBgColor: PropTypes.string.isRequired,
     }).isRequired,
   }).isRequired,
-};
-
-BgMusicPlayer.propTypes = {
-  paused: PropTypes.bool.isRequired,
-  source: PropTypes.string.isRequired,
 };
 
 export default withTheme(MeditationPlayer);

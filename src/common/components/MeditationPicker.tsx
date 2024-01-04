@@ -60,7 +60,10 @@ const Option = ({
   );
 };
 
-const HowUFeel: FC<{ onNext: (f: Feeling) => void }> = ({ onNext }) => {
+const HowUFeel: FC<{ onNext: (f: Feeling) => void; isMale: boolean }> = ({
+  onNext,
+  isMale,
+}) => {
   const [selectedFeeling, setSelectedFeeling] = useState<Feeling | null>(null);
 
   const renderItem = useCallback(
@@ -84,7 +87,7 @@ const HowUFeel: FC<{ onNext: (f: Feeling) => void }> = ({ onNext }) => {
           alignSelf: 'center',
           marginBottom: 10,
         }}>
-        איך אתה מרגיש היום?
+        {isMale ? ' איך אתה מרגיש היום?' : ' איך את מרגישה היום?'}
       </Text>
 
       <BottomSheetFlatList
@@ -163,6 +166,7 @@ const WhereYouAt: FC<{ onNext: (l: Place) => void }> = ({ onNext }) => {
 };
 
 const MeditationPicker = () => {
+  const userDetails = useSelector(state => state.userDetails);
   const { hasPremium } = usePurchases();
   const meditations = useSelector(allMeditations);
   const navigation = useNavigation();
@@ -248,7 +252,7 @@ const MeditationPicker = () => {
           {showWhereYouAt ? (
             <WhereYouAt onNext={onFinish} />
           ) : (
-            <HowUFeel onNext={handleNext} />
+            <HowUFeel onNext={handleNext} isMale={userDetails.sex === 'M'} />
           )}
         </View>
       </View>

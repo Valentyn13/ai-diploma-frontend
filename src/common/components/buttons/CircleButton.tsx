@@ -20,14 +20,15 @@ export const CircleButton: React.FC<{
   <TouchableOpacity
     onPress={onPress}
     disabled={disabled}
+    className="flex-row items-center justify-center"
     style={{
-      backgroundColor: '#fff',
+      backgroundColor,
       width: size,
       height: size,
       borderRadius: size / 2,
       justifyContent: 'center',
       alignItems: 'center',
     }}>
-    <Icon name={icon} size={size / 2} color="#000" />
+    <Icon name={icon} size={size / 2} color={color} />
   </TouchableOpacity>
 );

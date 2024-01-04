@@ -8,7 +8,6 @@ import config from '@common/config';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import useAppData from '@services/hooks/useAppData';
 import React, { FC, useEffect, useState } from 'react';
-import { Text } from 'react-native';
 import { useSelector } from 'react-redux';
 import styled from 'styled-components/native';
 
@@ -82,12 +81,6 @@ const Splash: FC<SplashProps> = ({ navigation: { navigate, replace } }) => {
             />
           </WithScale>
         </WithTranslateY>
-      </WithFadeIn>
-
-      <WithFadeIn delay={1000} duration={500}>
-        <WithScale delay={1000} scaleValue={0.9} duration={550}>
-          <Text className="text-xl font-medium text-gray-800">קחו נשימה</Text>
-        </WithScale>
       </WithFadeIn>
     </Container>
   );
