@@ -69,7 +69,6 @@ const MeditationPlayer = ({
   const [duration, setDuration] = useState(0);
   const [sliderEditing, setSliderEditing] = useState(false);
   const [isPlaying, setIsPlaying] = useState(true);
-  const [isFirstPlay, setIsFirstPlay] = useState(true);
   const [isLoading, setIsLoading] = useState(true);
   const [showModal, setShowModal] = useState(false);
   const { selectedTrack } = useBgTrackStore(state => state);
@@ -103,28 +102,14 @@ const MeditationPlayer = ({
     dispatch(minutesPracticed({ minutesPlayed }));
   }, [currentTime, dispatch, startTime]);
 
+  useEffect(() => {
+    dispatch(meditationStarted({ id }));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [id]);
+
   const togglePlay = useCallback(() => {
-    if (duration > 0) {
-      if (!isPlaying) {
-        if (isFirstPlay) {
-          dispatch(meditationStarted({ id }));
-          setIsFirstPlay(false);
-        }
-        setStartTime(currentTime);
-      } else {
-        updateTimePlayed();
-      }
-      setIsPlaying(!isPlaying);
-    }
-  }, [
-    currentTime,
-    dispatch,
-    duration,
-    id,
-    isFirstPlay,
-    isPlaying,
-    updateTimePlayed,
-  ]);
+    setIsPlaying(!isPlaying);
+  }, [isPlaying]);
 
   const onClose = () => {
     // amplitudeInstance.logEvent('MEDITATION_STOP', { categoryName });

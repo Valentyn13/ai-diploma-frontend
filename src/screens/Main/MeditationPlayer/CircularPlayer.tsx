@@ -1,20 +1,20 @@
 import CircularSlider from '@common/components/CircularSlider';
+import theme from '@common/theme';
 import isLowResolution from '@utils/isLowResolution';
 import React, { FC } from 'react';
 import { ActivityIndicator, TouchableOpacity } from 'react-native';
-import styled, { DefaultTheme, withTheme } from 'styled-components/native';
+import styled from 'styled-components/native';
 
 import PlayPauseButton from './PlayPasueButton';
 
 interface CircularPlayButtonProps {
-  togglePlay?: () => void;
+  togglePlay: () => void;
   isPlaying?: boolean;
   currentTime?: number;
   onSliderEditStart?: () => void;
-  onSliderEditEnd?: () => void;
-  onSliderEditing?: () => void;
+  onSliderEditEnd?: (endTime: any) => void;
+  onSliderEditing?: (value: any) => void;
   duration?: number;
-  theme: DefaultTheme;
   setCurrentTime?: (time: number) => void;
   isLoading?: boolean;
 }
@@ -46,7 +46,6 @@ const CircularPlayButton: FC<CircularPlayButtonProps> = ({
   onSliderEditEnd,
   onSliderEditing,
   duration,
-  theme,
   isLoading,
 }) => (
   <ButtonContainer>
@@ -74,4 +73,4 @@ const CircularPlayButton: FC<CircularPlayButtonProps> = ({
   </ButtonContainer>
 );
 
-export default withTheme(CircularPlayButton);
+export default CircularPlayButton;

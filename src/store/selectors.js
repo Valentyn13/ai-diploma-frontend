@@ -180,33 +180,15 @@ export const favoriteMeditationsSelector = createSelector(
 );
 
 export const practiceHistorySelector = createSelector(
-  [
-    allMeditations,
-    state => state.userProgress.meditationsPracticed,
-    state => state.userProgress.badgesAchieved,
-  ],
-  (allMeds, practicedMeds) => {
-    const history = practicedMeds.map(({ id, timestamp }) => {
-      const data = findMeditation(allMeds, id);
-      if (data) {
-        const { name, duration, categoryTitle, isCategoryLocked } = data;
-        return {
-          id,
-          timestamp,
-          name,
-          duration,
-          categoryTitle,
-          isCategoryLocked,
-        };
-      }
-    });
-
-    history.filter(x => x !== undefined);
-
-    return history.sort(
-      (a, b) => new Date(a.timestamp) - new Date(b.timestamp),
-    );
-  },
+  [allMeditations, state => state.userProgress.meditationsPracticed],
+  (allMeds, practicedMeds) =>
+    practicedMeds
+      .filter(({ id }) => !!findMeditation(allMeds, id))
+      .map(({ id, timestamp }) => ({
+        ...findMeditation(allMeds, id),
+        timestamp,
+      }))
+      .sort((a, b) => new Date(a.timestamp) - new Date(b.timestamp)),
 );
 
 export const latestMeditationSelector = createSelector(
