@@ -442,7 +442,6 @@ export const COLLECTIONS = [
       '63ce034c98817417bbcf9b69',
       '649543530e66f2955d2ecbe6',
       '644fc4038b29c767b4e6b670',
-      '63c22de34e4c5b11918e609a',
       '644fc3948b29c767b4e6b66f',
       '638edb9e132405bcd302f6c1',
     ],
