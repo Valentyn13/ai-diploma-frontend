@@ -3,6 +3,7 @@ export default {
   intro1: 'חוקרים מסטנפורד הוכיחו שתרגול יומי של מדיטציה מוריד את לחץ הדם',
   favorites: '❤️ תרגולים שאהבתי',
   history: '📜 היסטוריית תרגולים',
+  noSessions: 'לא נמצאו תרגולים',
   welcomeTitle: 'היי, ברוכים הבאים לרגע',
   welcomeSubtitle: 'אפליקצית המיינדפולנס\nהראשונה בעברית',
   welcomeDescription:

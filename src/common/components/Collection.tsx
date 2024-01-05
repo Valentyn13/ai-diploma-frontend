@@ -23,12 +23,17 @@ const Collection: FC<Props> = ({ items, onShowAll, title, limit = 5 }) => (
   <View>
     <View className="flex flex-row items-end justify-between w-full pl-2 mb-1">
       <ListTitle t={title} />
-      <TouchableOpacity onPress={() => onShowAll()}>
-        <Text className="text-xs text-neutral-800 p-2">
-          {i18n.t('showAll')}
-        </Text>
-      </TouchableOpacity>
+      {items.length > limit && (
+        <TouchableOpacity onPress={() => onShowAll()} className="p-2">
+          <Text className="text-xs text-neutral-800">{i18n.t('showAll')}</Text>
+        </TouchableOpacity>
+      )}
     </View>
+    {items.length === 0 && (
+      <View className="flex flex-row items-center justify-center w-full h-32">
+        <Text className="text-neutral-500">{i18n.t('noSessions')}</Text>
+      </View>
+    )}
     <HorizontalList data={shuffleArray(items).slice(0, limit)} />
   </View>
 );

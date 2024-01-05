@@ -185,8 +185,8 @@ export const practiceHistorySelector = createSelector(
     state => state.userProgress.meditationsPracticed,
     state => state.userProgress.badgesAchieved,
   ],
-  (allMeds, practicedMeds, badges) => {
-    const meds = practicedMeds.map(({ id, timestamp }) => {
+  (allMeds, practicedMeds) => {
+    const history = practicedMeds.map(({ id, timestamp }) => {
       const data = findMeditation(allMeds, id);
       if (data) {
         const { name, duration, categoryTitle, isCategoryLocked } = data;
@@ -201,17 +201,7 @@ export const practiceHistorySelector = createSelector(
       }
     });
 
-    meds.filter(x => x !== undefined);
-    const history = [
-      ...meds.map(med => ({
-        ...med,
-        type: 'meditation',
-      })),
-      ...badges.map(badge => ({
-        ...badge,
-        type: 'badge',
-      })),
-    ];
+    history.filter(x => x !== undefined);
 
     return history.sort(
       (a, b) => new Date(a.timestamp) - new Date(b.timestamp),
