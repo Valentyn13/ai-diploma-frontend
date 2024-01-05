@@ -4,6 +4,8 @@ export default {
   favorites: '❤️ תרגולים שאהבתי',
   history: '📜 היסטוריית תרגולים',
   noSessions: 'לא נמצאו תרגולים',
+  sessions: 'תרגולים',
+  minutesSessions: 'דקות מדיטציה',
   welcomeTitle: 'היי, ברוכים הבאים לרגע',
   welcomeSubtitle: 'אפליקצית המיינדפולנס\nהראשונה בעברית',
   welcomeDescription:

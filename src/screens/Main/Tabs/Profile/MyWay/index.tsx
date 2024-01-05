@@ -1,21 +1,24 @@
 import Divider from '@common/components/Divider';
-import { ScrolledContainer } from '@common/components/Styled';
 import React from 'react';
-import { View } from 'react-native';
+import { ScrollView } from 'react-native-gesture-handler';
 
 import Badges from './Badges';
 import MyCollections from './MyCollections';
-import SummaryInfo from './SummaryInfo';
+import UserMetrics from './UserMetrics';
 
 const MyWay = () => (
-  <View className="bg-[#fdedd6]">
-    <ScrolledContainer>
-      <SummaryInfo />
-      <Badges />
-      <Divider className="my-6" />
-      <MyCollections />
-    </ScrolledContainer>
-  </View>
+  <ScrollView
+    showsVerticalScrollIndicator={false}
+    className="bg-[#fdedd6]"
+    contentContainerStyle={{
+      marginTop: 20,
+    }}>
+    <UserMetrics />
+    <Divider className="my-6" />
+    <Badges />
+    <Divider className="my-6" />
+    <MyCollections />
+  </ScrollView>
 );
 
 export default MyWay;
