@@ -179,8 +179,8 @@ export const Icon = styled.Image.attrs(({ name }) => ({
 export const TouchableIcon = ({
   name,
   onPress,
+  color,
   size = undefined,
-  color = undefined,
   opacity = 1,
 }) => (
   <TouchableCenteredView {...{ onPress }}>

@@ -1,10 +1,5 @@
 import categoryVideo from '@common/assets/videos';
-import FavoriteIndicator from '@common/components/FavoriteIndicator';
-import {
-  BoldTitle,
-  MeditationContainer,
-  SubTitle,
-} from '@common/components/Styled';
+import FavoriteButton from '@common/components/FavoriteButton';
 import { CircleButton } from '@common/components/buttons/CircleButton';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { captureException } from '@sentry/react-native';
@@ -38,28 +33,6 @@ const OLD_ASSETS_URL = 'https://regameditation.s3.us-east-2.amazonaws.com/';
 
 const VIDEO_URL = `${ASSETS_URL}videos/`;
 const SOUNDS_URL = `${ASSETS_URL}sounds/`;
-
-const FavoriteIndicatorWrapper = styled.View`
-  position: absolute;
-  bottom: 50px;
-  left: 25px;
-`;
-
-const ButtonsContainer = styled(MeditationContainer)`
-  justify-content: space-between;
-`;
-
-const ButtonsInnerContainer = styled(MeditationContainer)`
-  justify-content: flex-start;
-`;
-
-const StartHereTitle = styled(BoldTitle)`
-  margin-top: 10px;
-`;
-
-const InstructorName = styled(SubTitle)`
-  margin-bottom: 10px;
-`;
 
 const VideoPlayer = styled(Video).attrs(() => ({
   resizeMode: 'cover',
@@ -361,7 +334,7 @@ const MeditationPlayer = ({
             />
           </View>
           <View className="absolute bottom-4 left-4">
-            <FavoriteIndicator id={id} />
+            <FavoriteButton id={id} />
           </View>
         </View>
       </SafeAreaView>

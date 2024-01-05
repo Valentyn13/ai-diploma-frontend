@@ -1,18 +1,16 @@
-import PropTypes from 'prop-types';
-import React, { useCallback } from 'react';
+import { colors } from '@common/theme';
+import React, { FC, useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { addFavoriteMeditation, removeFavoriteMeditation } from 'store/actions';
-import { withTheme } from 'styled-components';
 
 import { TouchableIcon } from './Styled';
 
-const FavoriteIndicator = ({
-  id,
-  theme: {
-    colors: { whiteColor, textColor },
-  },
-  dark,
-}) => {
+interface FavoriteButtonProps {
+  id: string;
+  isDark?: boolean;
+}
+
+const FavoriteButton: FC<FavoriteButtonProps> = ({ id, isDark = false }) => {
   const dispatch = useDispatch();
 
   const favoriteMeditations = useSelector(
@@ -30,25 +28,10 @@ const FavoriteIndicator = ({
   return (
     <TouchableIcon
       name={isFavorite ? 'heartSelected' : 'heart'}
-      color={dark ? textColor : whiteColor}
+      color={isDark ? colors.textColor : colors.whiteColor}
       onPress={toggleFavorite}
     />
   );
 };
 
-FavoriteIndicator.propTypes = {
-  id: PropTypes.string.isRequired,
-  theme: PropTypes.shape({
-    colors: PropTypes.shape({
-      whiteColor: PropTypes.string.isRequired,
-      textColor: PropTypes.string.isRequired,
-    }).isRequired,
-  }).isRequired,
-  dark: PropTypes.bool,
-};
-
-FavoriteIndicator.defaultProps = {
-  dark: false,
-};
-
-export default withTheme(FavoriteIndicator);
+export default FavoriteButton;

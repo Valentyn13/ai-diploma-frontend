@@ -6,21 +6,13 @@ import { StyleSheet } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import { useSelector } from 'react-redux';
 import { categoriesSelector } from 'store/selectors';
+import { Category } from 'types/Category';
 
 const styles = StyleSheet.create({
   container: {
     backgroundColor: colors.bgColor,
   },
 });
-
-interface Category {
-  id: string;
-  title: string;
-  info?: string | null;
-  height?: string;
-  meditations: Record<string, unknown>[];
-  order: number;
-}
 
 const Meditations = () => {
   const { navigate } = useNavigation();

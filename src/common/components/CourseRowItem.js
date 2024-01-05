@@ -1,4 +1,4 @@
-import FavoriteIndicator from '@common/components/FavoriteIndicator';
+import FavoriteButton from '@common/components/FavoriteButton';
 import { SubTitle, Title } from '@common/components/Styled';
 import meditationTime from '@utils/meditationTime';
 import PropTypes from 'prop-types';
@@ -137,7 +137,7 @@ const CourseRowItem = ({
       <IconsContainer>
         <View />
         {/* {isDownloading&&Platform.OS==="ios" ? <Text style={{fontSize:14,paddingTop:5,textAlign:'center',fontWeight:'500'}}>{downloadProgress}%</Text>: <TouchableIcon name="download" size={28} onPress={onDownload} />} */}
-        <FavoriteIndicator id={id} dark />
+        <FavoriteButton id={id} isDark={true} />
       </IconsContainer>
     </Container>
   );
