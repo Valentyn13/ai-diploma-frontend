@@ -140,8 +140,8 @@ const Feed: FC<FeedProps> = ({ navigation }) => {
           top: -200,
         }}
       />
-      <View className="absolute top-1 self-center">
-        <Logo width={40} />
+      <View className="absolute -top-4 self-center">
+        <Logo opacity={0.5} width={32} />
       </View>
 
       <ScrollView
