@@ -88,7 +88,9 @@ const IntroStudy = ({ navigation: { navigate } }) => {
         }}
         source={image('bg_2')}
       />
-      <View style={{ position: 'absolute', bottom: scale(40) }}>
+      <View
+        className="w-full"
+        style={{ position: 'absolute', bottom: scale(40) }}>
         <AppButton
           onPress={() => navigate('Onboarding', { screen: 'IntroRelax' })}>
           {'המשך'}

@@ -1,7 +1,6 @@
-/* eslint-disable react-native/no-inline-styles */
 import React from 'react';
 import {
-  Dimensions,
+  ActivityIndicator,
   Platform,
   Text,
   TouchableOpacity,
@@ -17,10 +16,10 @@ interface AppButtonProps extends TouchableOpacityProps {
   light?: boolean;
   ellipsizeMode?: 'head' | 'middle' | 'tail' | 'clip';
   numberOfLines?: number;
+  loading?: boolean;
 }
 
 const AppButton: React.FC<AppButtonProps> = ({
-  style,
   medium,
   thin,
   bold,
@@ -29,10 +28,10 @@ const AppButton: React.FC<AppButtonProps> = ({
   children,
   ellipsizeMode = 'tail',
   numberOfLines = 0,
+  className,
+  loading = false,
   ...props
 }) => {
-  const { width } = Dimensions.get('screen');
-
   let font = Platform.OS === 'ios' ? 'AlmoniDLAAA' : 'almoni-dl-aaa';
   if (bold) {
     font += '-bold';
@@ -50,28 +49,24 @@ const AppButton: React.FC<AppButtonProps> = ({
 
   return (
     <TouchableOpacity
-      {...props}
-      style={{
-        backgroundColor: '#273051',
-        marginHorizontal: 40,
-        paddingHorizontal: 10,
-        paddingVertical: 12,
-        borderRadius: 6,
-        alignItems: 'center',
-        width: width - 60,
-        ...style,
-      }}>
-      <Text
-        ellipsizeMode={ellipsizeMode}
-        numberOfLines={numberOfLines}
-        allowFontScaling={false}
-        style={{
-          fontFamily: font,
-          color: 'white',
-          fontSize: 20,
-        }}>
-        {children}
-      </Text>
+      disabled={loading}
+      className={`flex items-center bg-[#273051] px-10 py-4 rounded-md w-full ${className}`}
+      {...props}>
+      {loading ? (
+        <ActivityIndicator color="white" size="small" animating={true} />
+      ) : (
+        <Text
+          ellipsizeMode={ellipsizeMode}
+          numberOfLines={numberOfLines}
+          allowFontScaling={false}
+          style={{
+            fontFamily: font,
+            color: 'white',
+            fontSize: 20,
+          }}>
+          {children}
+        </Text>
+      )}
     </TouchableOpacity>
   );
 };

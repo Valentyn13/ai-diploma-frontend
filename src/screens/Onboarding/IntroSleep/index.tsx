@@ -80,7 +80,9 @@ const IntroSleep: FC = () => {
         resizeMethod="resize"
         resizeMode="cover"
       />
-      <View style={{ position: 'absolute', bottom: scale(40) }}>
+      <View
+        className="w-full"
+        style={{ position: 'absolute', bottom: scale(40) }}>
         <ElegantButton
           onPress={() => navigate('Onboarding', { screen: 'IntroStudy' })}>
           {'המשך'}

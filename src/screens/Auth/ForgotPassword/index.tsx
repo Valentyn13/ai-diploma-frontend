@@ -1,25 +1,37 @@
 import AppButton from '@common/components/AppButton';
 import AppText from '@common/components/AppText';
 import { Icon } from '@common/components/Styled';
+import { CircleButton } from '@common/components/buttons/CircleButton';
 import { useNavigation } from '@react-navigation/native';
 import useLogin from '@services/hooks/useLogin';
 import React, { FC, useState } from 'react';
-import { SafeAreaView, TextInput, TouchableOpacity, View } from 'react-native';
+import { SafeAreaView, TextInput, View } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { scale } from 'react-native-size-matters';
-import IconFeather from 'react-native-vector-icons/Feather';
 
 const ForgotPassword: FC = () => {
+  const [loading, setLoading] = useState(false);
   const { forgotPassword } = useLogin();
   const [email, setEmail] = useState<string>('');
   const navigation = useNavigation();
 
   const onResetPassword = async () => {
+    setLoading(true);
     await forgotPassword(email);
+    setLoading(false);
   };
 
   return (
     <SafeAreaView className="flex flex-1 bg-[#fdedd6] relative">
+      <View className="left-4 top-4 z-10">
+        <CircleButton
+          backgroundColor="#00000060"
+          color="#fff"
+          onPress={navigation.goBack}
+          size={40}
+          icon="chevron-right"
+        />
+      </View>
       <KeyboardAwareScrollView
         enableOnAndroid
         className="flex"
@@ -39,14 +51,11 @@ const ForgotPassword: FC = () => {
           />
         </View>
       </KeyboardAwareScrollView>
-      <View className="absolute bottom-10 flex items-center">
-        <AppButton onPress={() => onResetPassword()}>אפס סיסמה</AppButton>
+      <View className="w-10/12 mx-auto">
+        <AppButton loading={loading} onPress={onResetPassword}>
+          אפסו סיסמה
+        </AppButton>
       </View>
-      <TouchableOpacity
-        className="absolute top-10 left-10"
-        onPress={() => navigation.goBack()}>
-        <IconFeather name="chevron-right" size={24} color="#000" />
-      </TouchableOpacity>
     </SafeAreaView>
   );
 };

@@ -210,40 +210,13 @@ const PickExperience = ({ navigation: { navigate } }) => {
           progress={0.5}
         />
       </View>
-      <View style={{ position: 'absolute', bottom: scale(40) }}>
+      <View
+        className="w-full"
+        style={{ position: 'absolute', bottom: 0, padding: scale(40) }}>
         <AppButton onPress={() => onContinue()}>המשך</AppButton>
       </View>
     </View>
   );
-
-  // const isSelected = useCallback(key => key === experience, [experience]);
-  //
-  // return (
-  //   <Screen>
-  //     <Container>
-  //       <Icon name="logo" size={100} />
-  //     </Container>
-  //     <Container flex={1.2}>
-  //       <CategorySelectorTitle k="meditation_title" />
-  //       <CategoriesSelectorRow zIndex={1}>
-  //         {EXPERIENCE.map(({key, intro, shiftBase}) => (
-  //           <IconContainer key={intro} onPress={() => setExperience(key)}>
-  //             <ExpImage source={image(intro)} shiftBase={!!shiftBase} />
-  //           </IconContainer>
-  //         ))}
-  //       </CategoriesSelectorRow>
-  //       <CategoriesSelectorRow>
-  //         <CategorySelector idx={0} {...{setExperience, isSelected}} />
-  //         <CategorySelector idx={1} {...{setExperience, isSelected}} />
-  //         <CategorySelector idx={2} {...{setExperience, isSelected}} />
-  //       </CategoriesSelectorRow>
-  //       <CategorySelectionInfo k="categorySelectionInfo" />
-  //     </Container>
-  //     <ButtonsContainer>
-  //       <Button title="continue" big onPress={onContinue} />
-  //     </ButtonsContainer>
-  //   </Screen>
-  // );
 };
 
 CategorySelector.propTypes = {

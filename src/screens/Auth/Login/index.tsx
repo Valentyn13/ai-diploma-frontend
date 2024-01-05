@@ -1,6 +1,7 @@
 import AppButton from '@common/components/AppButton';
 import AppText from '@common/components/AppText';
 import { Icon } from '@common/components/Styled';
+import { CircleButton } from '@common/components/buttons/CircleButton';
 import crashlytics from '@react-native-firebase/crashlytics';
 import { useNavigation } from '@react-navigation/native';
 import { useAmplitude } from '@services/hooks/useAmplitude';
@@ -16,6 +17,7 @@ import {
   View,
 } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import { scale } from 'react-native-size-matters';
 import { useSelector } from 'react-redux';
 
@@ -75,7 +77,16 @@ const Login: FC = () => {
   }, [userDetails.loader]);
 
   return (
-    <View className="flex flex-1 bg-[#fdedd6]">
+    <SafeAreaView className="flex-1 bg-[#fdedd6]">
+      <View className="left-4 top-4 z-10">
+        <CircleButton
+          backgroundColor="#00000060"
+          color="#fff"
+          onPress={navigation.goBack}
+          size={40}
+          icon="chevron-right"
+        />
+      </View>
       <KeyboardAwareScrollView
         enableOnAndroid
         className="flex"
@@ -105,22 +116,16 @@ const Login: FC = () => {
             className="w-5/6 mx-5 text-2xl text-right text-black"
           />
         </View>
-        {/* TODO: comment back */}
-        {/* <TouchableOpacity
+        <TouchableOpacity
           className="flex items-end"
           onPress={() => {
             navigation.navigate('Auth', { screen: 'ForgotPassword' });
           }}>
           <Text className="text-black underline text-sm mt-5">שכחתי סיסמא</Text>
-        </TouchableOpacity> */}
-      </KeyboardAwareScrollView>
-      <View className="absolute bottom-10 flex items-center">
-        <TouchableOpacity className="mb-2" onPress={() => navigation.goBack()}>
-          <AppText className="text-xl underline text-black">
-            חזור למסך קודם
-          </AppText>
         </TouchableOpacity>
-        <AppButton onPress={() => onContinue()}>התחברות</AppButton>
+      </KeyboardAwareScrollView>
+      <View className="w-10/12 mx-auto">
+        <AppButton onPress={onContinue}>התחברות</AppButton>
       </View>
       {loader && (
         <ActivityIndicator
@@ -129,7 +134,7 @@ const Login: FC = () => {
           size="large"
         />
       )}
-    </View>
+    </SafeAreaView>
   );
 };
 

@@ -74,7 +74,9 @@ const IntroRelax = ({ navigation: { navigate } }) => {
             </AppText>
           </WithFadeIn>
         </WithSlideInY>
-        <View style={{ position: 'absolute', bottom: scale(20) }}>
+        <View
+          className="w-full"
+          style={{ position: 'absolute', bottom: scale(20) }}>
           <AppButton
             onPress={() => navigate('Onboarding', { screen: 'ChooseSex' })}>
             {'המשך'}

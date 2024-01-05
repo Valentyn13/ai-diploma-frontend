@@ -359,7 +359,9 @@ const Intro = () => {
           progress={0.75}
         />
       </View>
-      <View style={{ position: 'absolute', bottom: scale(35) }}>
+      <View
+        className="w-full"
+        style={{ position: 'absolute', bottom: 0, padding: scale(40) }}>
         <AppButton onPress={() => onContinue()}>המשך</AppButton>
       </View>
     </View>

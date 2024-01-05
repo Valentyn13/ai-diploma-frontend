@@ -191,7 +191,9 @@ const ChooseSex = ({ navigation: { navigate } }) => {
           progress={0.3}
         />
       </View>
-      <View style={{ position: 'absolute', bottom: scale(20) }}>
+      <View
+        className="w-full"
+        style={{ position: 'absolute', bottom: 0, padding: scale(40) }}>
         <AppButton onPress={() => onContinue()}>{'המשך'}</AppButton>
       </View>
     </View>
