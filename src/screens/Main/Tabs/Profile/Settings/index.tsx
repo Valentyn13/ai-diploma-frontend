@@ -210,8 +210,13 @@ const Settings = ({ navigation }) => {
           big
           onPress={() => setShowModal(true)}
         />
-        {/* <View style={{height: 10}} />
-        <Button title="בטל רישום" logout big onPress={() => setCancelSubscriptionModal(true)} /> */}
+        <View style={{ height: 10 }} />
+        <Button
+          title="בטל רישום"
+          logout
+          big
+          onPress={() => setCancelSubscriptionModal(true)}
+        />
         <View style={{ height: 10 }} />
         <Button title="logout" logout big onPress={onLogout} />
         <View style={{ height: 10 }} />
