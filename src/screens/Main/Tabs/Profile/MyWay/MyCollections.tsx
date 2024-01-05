@@ -13,7 +13,9 @@ import { Meditation } from 'types/Meditation';
 
 const MyCollections = () => {
   const { navigate } = useNavigation();
-  const favMeditations = useSelector(favoriteMeditationsSelector);
+  const favMeditations = useSelector(
+    favoriteMeditationsSelector,
+  ) as Meditation[];
   const history = useSelector(practiceHistorySelector) as Meditation[];
 
   const uniqueHistory = useMemo(() => {
@@ -34,9 +36,9 @@ const MyCollections = () => {
     <View>
       <Collection
         title={i18n.t('favorites')}
-        items={favMeditations}
+        items={favMeditations.reverse()}
         onShowAll={() => {
-          onShowAll(i18n.t('favorites'), favMeditations);
+          onShowAll(i18n.t('favorites'), favMeditations.reverse());
         }}
       />
       <Divider className="my-6" />
