@@ -7,6 +7,7 @@ import WithTranslateY from '@common/components/transitions/WithTranslateY';
 import config from '@common/config';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import useAppData from '@services/hooks/useAppData';
+import { useIntro } from '@services/hooks/useIntro';
 import React, { FC, useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import styled from 'styled-components/native';
@@ -22,6 +23,7 @@ const AppNameTitle = styled(TopTitle)`
 type SplashProps = NativeStackScreenProps<RootStackParamList, 'Splash'>;
 
 const Splash: FC<SplashProps> = ({ navigation: { navigate, replace } }) => {
+  const { isFirstTimeUser } = useIntro();
   const { getAppData } = useAppData();
   const [animationFinished, setAnimationFinished] = useState(false);
 
@@ -31,17 +33,21 @@ const Splash: FC<SplashProps> = ({ navigation: { navigate, replace } }) => {
   );
 
   useEffect(() => {
-    setTimeout(
+    const timer = setTimeout(
       () => {
         if (accessToken) {
           getAppData();
-        } else {
+        } else if (isFirstTimeUser) {
           navigate('Onboarding');
+        } else {
+          navigate('Auth');
         }
       },
       config.isDev ? 1000 : 3000,
     );
-  }, [accessToken, getAppData, navigate]);
+
+    return () => clearTimeout(timer);
+  }, [accessToken, getAppData, isFirstTimeUser, navigate]);
 
   useEffect(() => {
     if (isLoaded && animationFinished) {

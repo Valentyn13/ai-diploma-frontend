@@ -24,3 +24,13 @@ export const applelogin = async () => {
     return { identityToken, email, email_verified, sub, givenName };
   }
 };
+
+export const applelogout = async () => {
+  try {
+    await appleAuth.performRequest({
+      requestedOperation: appleAuth.Operation.LOGOUT,
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};

@@ -13,6 +13,8 @@ import WithSlideInY from '@common/components/transitions/WithSlideInY';
 import { ProgressView } from '@react-native-community/progress-view';
 import { useNavigation } from '@react-navigation/native';
 import { captureMessage } from '@sentry/react-native';
+import useCache from '@services/hooks/useCache';
+import { INTRO_METADATA_KEY, IntroMetadata } from '@services/hooks/useIntro';
 import PropTypes from 'prop-types';
 import React, { useState } from 'react';
 import {
@@ -128,12 +130,20 @@ const MAX_SELECTION = 3;
 
 const Intro = () => {
   const { navigate } = useNavigation();
-  // const {selectedItems, toggleItem, isSelected} = useToggledItems();
+  const [value, setValue] = useCache<IntroMetadata>(INTRO_METADATA_KEY, {
+    categories: [],
+  });
   const dispatch = useDispatch();
   const [selectedItems, setSelectedItems] = useState([]);
 
   const onContinue = () => {
     dispatch(chooseCategories({ categories: selectedItems }));
+    setValue({
+      ...value,
+      categories: selectedItems,
+    });
+
+    // @ts-ignore
     navigate('Auth', {
       screen: 'PreLogin',
     });
@@ -143,6 +153,7 @@ const Intro = () => {
   const canSelect = numSelected < MAX_SELECTION;
 
   const { width } = Dimensions.get('screen');
+
   return (
     <View
       style={{

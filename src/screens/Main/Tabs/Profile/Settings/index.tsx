@@ -18,6 +18,7 @@ import useDeleteData from '@services/hooks/useDeleteData';
 import useUpdateProfile from '@services/hooks/useUpdateProfile';
 import { logEvent } from '@utils/analytics';
 import { fbLogout } from '@utils/facebook';
+import { googleSignOut } from '@utils/google';
 import PropTypes from 'prop-types';
 import React, { useEffect } from 'react';
 import {
@@ -87,10 +88,12 @@ const Settings = ({ navigation }) => {
     amplitudeInstance.uploadEvents();
     dispatch(logout());
     fbLogout();
+    googleSignOut();
+    // applelogout();
 
     navigation.reset({
       index: 0,
-      routes: [{ name: 'Onboarding' }],
+      routes: [{ name: 'Auth' }],
     });
   };
 

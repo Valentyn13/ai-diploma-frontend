@@ -24,3 +24,12 @@ export const googleSignIn = async () => {
     }
   }
 };
+
+export const googleSignOut = async () => {
+  try {
+    await GoogleSignin.revokeAccess();
+    await GoogleSignin.signOut();
+  } catch (error) {
+    console.log(error);
+  }
+};

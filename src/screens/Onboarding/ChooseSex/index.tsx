@@ -6,6 +6,8 @@ import WithFadeIn from '@common/components/transitions/WithFadeIn';
 import WithSlideInX from '@common/components/transitions/WithSlideInX';
 import WithSlideInY from '@common/components/transitions/WithSlideInY';
 import { ProgressView } from '@react-native-community/progress-view';
+import useCache from '@services/hooks/useCache';
+import { INTRO_METADATA_KEY, IntroMetadata } from '@services/hooks/useIntro';
 import PropTypes from 'prop-types';
 import React, { useState } from 'react';
 import {
@@ -51,12 +53,19 @@ const SexChooser = ({ sex, onPress }) => (
 const ChooseSex = ({ navigation: { navigate } }) => {
   const dispatch = useDispatch();
   const [sex, setSex] = useState();
+  const [value, setValue] = useCache<IntroMetadata>(INTRO_METADATA_KEY, {
+    categories: [],
+  });
 
   const { width } = Dimensions.get('screen');
 
   const onContinue = () => {
     if (sex) {
       dispatch(chooseSex({ sex }));
+      setValue({
+        ...value,
+        sex,
+      });
       navigate('Onboarding', { screen: 'PickExperience' });
     } else {
       alert('אנא בחר מין');

@@ -128,7 +128,7 @@ const PreLogin: FC<PreLoginProps> = ({ navigation: { navigate } }) => {
           />
           <Text className="text-center text-black text-lg mt-2 mb-2">או</Text>
           <View className="flex flex-row space-x-4">
-            {['facebook', 'google', 'apple'].map((provider, index) => (
+            {['facebook', 'google', 'apple'].map(provider => (
               <TouchableOpacity
                 key={provider}
                 onPress={() => loginWith(provider)}
