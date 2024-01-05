@@ -45,9 +45,9 @@ const MyCollections = () => {
 
       <Collection
         title={i18n.t('history')}
-        items={uniqueHistory}
+        items={uniqueHistory.reverse()}
         onShowAll={() => {
-          onShowAll(i18n.t('history'), uniqueHistory);
+          onShowAll(i18n.t('history'), uniqueHistory.reverse());
         }}
       />
     </View>
