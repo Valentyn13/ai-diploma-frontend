@@ -1,54 +1,47 @@
-import { colors } from '@common/theme';
-import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
-import { createStackNavigator } from '@react-navigation/stack';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import PrivacyPolicy from '@screens/Auth/PrivacyPolicy';
-import i18n from '@services/localization/i18n';
 import React from 'react';
 
 import Details from './Details';
 import MyWay from './MyWay';
 import Settings from './Settings';
 
-const Tab = createMaterialTopTabNavigator();
-const Stack = createStackNavigator();
+const DetailsStack = createNativeStackNavigator();
+const ProfileStack = createNativeStackNavigator();
 
-const StackNavigator: React.FC = () => {
+const SettingsNavigator: React.FC = () => {
   return (
-    <Stack.Navigator
+    <DetailsStack.Navigator
       screenOptions={{
         presentation: 'modal',
         headerShown: false,
       }}>
-      <Stack.Screen name="Settings" component={Settings} />
-      <Stack.Screen name="PrivacyPolicy" component={PrivacyPolicy} />
-    </Stack.Navigator>
+      <DetailsStack.Screen name="Settings" component={Settings} />
+      <DetailsStack.Screen name="PrivacyPolicy" component={PrivacyPolicy} />
+      <ProfileStack.Screen
+        name="Details"
+        component={Details}
+        options={{
+          presentation: 'fullScreenModal',
+        }}
+      />
+    </DetailsStack.Navigator>
   );
 };
 
 const TabNavigator: React.FC = () => {
   return (
-    <Tab.Navigator
+    <ProfileStack.Navigator
+      initialRouteName="MyWay"
       screenOptions={{
-        tabBarStyle: {
-          backgroundColor: colors.bgColor,
-          height: 40,
-        },
-        tabBarIndicatorStyle: {
-          backgroundColor: colors.darkColor,
-          height: 3,
-        },
-        tabBarLabelStyle: {
-          textTransform: 'none',
-          fontSize: 12,
-          width: 80,
-          textAlign: 'center',
-          letterSpacing: 0.5,
-        },
+        headerShown: false,
       }}>
-      <Tab.Screen name={i18n.t('myWay')} component={MyWay} />
-      <Tab.Screen name={i18n.t('details')} component={Details} />
-      <Tab.Screen name={i18n.t('settings')} component={StackNavigator} />
-    </Tab.Navigator>
+      <ProfileStack.Screen name="MyWay" component={MyWay} />
+      <ProfileStack.Screen
+        name="SettingsNavigator"
+        component={SettingsNavigator}
+      />
+    </ProfileStack.Navigator>
   );
 };
 

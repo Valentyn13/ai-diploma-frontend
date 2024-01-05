@@ -34,21 +34,24 @@ export default () => {
         }}>
         <MainStack.Screen name="Tabs" component={Tabs} />
         <MainStack.Screen
-          name="MeditationPlayer"
-          component={MeditationPlayer}
-          options={{ headerShown: false }}
-        />
-        <MainStack.Screen
-          name="BGMusicPicker"
-          component={BGMusicPicker}
-          options={{ headerShown: false, presentation: 'modal' }}
-        />
-        <MainStack.Screen
           name="Instructor"
           component={Instructor}
           options={{
             presentation: 'modal',
           }}
+        />
+        <MainStack.Screen
+          name="MeditationPlayer"
+          component={MeditationPlayer}
+          options={{
+            headerShown: false,
+            presentation: 'fullScreenModal',
+          }}
+        />
+        <MainStack.Screen
+          name="BGMusicPicker"
+          component={BGMusicPicker}
+          options={{ headerShown: false, presentation: 'modal' }}
         />
         <MainStack.Screen
           name="GroupedMeditations"

@@ -7,6 +7,7 @@ import {
   SmallText,
   SubTitle,
 } from '@common/components/Styled';
+import { CircleButton } from '@common/components/buttons/CircleButton';
 import colors from '@common/theme/colors';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import rudderClient, {
@@ -25,6 +26,7 @@ import {
   Platform,
   ScrollView,
   Switch,
+  Text,
   TouchableOpacity,
   View,
 } from 'react-native';
@@ -86,8 +88,6 @@ const Settings = ({ navigation }) => {
     dispatch(logout());
     fbLogout();
 
-    // TODO: commented because of user redirection
-    // await AsyncStorage.removeItem('secondTime');
     navigation.reset({
       index: 0,
       routes: [{ name: 'Onboarding' }],
@@ -132,37 +132,70 @@ const Settings = ({ navigation }) => {
   }, [isNotification, notificationTime]);
 
   const openEmailClient = () => {
-    // Replace 'mailto:' with the email address you want to open
     const emailAddress = 'hello@rega.co.il';
     const emailSubject = 'היי, רציתי לשאול שאלה';
     const emailBody = '';
 
-    // Construct the email URL
     const emailUrl = `mailto:${emailAddress}?subject=${encodeURIComponent(
       emailSubject,
     )}&body=${encodeURIComponent(emailBody)}`;
 
-    // Open the email client
     Linking.openURL(emailUrl).catch(err =>
       console.error('An error occurred', err),
     );
   };
 
   return (
-    <>
+    <View className="relative flex-1">
       <SettingsScreen color={colors.bgColor}>
+        <View className="absolute left-4 top-4 z-10">
+          <CircleButton
+            backgroundColor="#00000060"
+            color="#fff"
+            onPress={navigation.goBack}
+            size={40}
+            icon="chevron-right"
+          />
+        </View>
+        <View className="flex-1 mt-5">
+          <Text className="text-center text-2xl font-bold text-black">
+            הגדרות
+          </Text>
+        </View>
+
+        <Button
+          title="הגדרות משתמש"
+          logout
+          big
+          onPress={() =>
+            navigation.navigate('Main', {
+              screen: 'Tabs',
+              params: {
+                screen: 'Profile',
+                params: {
+                  screen: 'SettingsNavigator',
+                  params: {
+                    screen: 'Details',
+                  },
+                },
+              },
+            })
+          }
+        />
+
+        <View style={{ height: 10 }} />
+
         <View
           style={{
             display: 'flex',
             paddingVertical: 14,
-            borderWidth: 1,
-            borderColor: 'red',
-            marginBottom: 20,
+            marginBottom: 60,
             flexDirection: 'row',
             justifyContent: 'space-between',
             paddingHorizontal: 10,
             alignContent: 'center',
             alignItems: 'center',
+            borderRadius: 10,
             backgroundColor: colors.logoutButtonColor,
           }}>
           <ButtonTitle t="התראות" />
@@ -352,7 +385,7 @@ const Settings = ({ navigation }) => {
           </View>
         )}
       </Modal>
-    </>
+    </View>
   );
 };
 

@@ -3,11 +3,12 @@ import AppButton from '@common/components/AppButton';
 import AppText from '@common/components/AppText';
 import AppTextInput from '@common/components/AppTextInput';
 import Button from '@common/components/Button';
-import { Screen, Title } from '@common/components/Styled';
+import { Title } from '@common/components/Styled';
 import Meditate from '@common/components/animation/Meditate';
+import { CircleButton } from '@common/components/buttons/CircleButton';
 import colors from '@common/theme/colors';
 import useUpdateProfile from '@services/hooks/useUpdateProfile';
-import React, { useEffect, useState } from 'react';
+import React, { FC, useEffect, useState } from 'react';
 import {
   ActivityIndicator,
   Alert,
@@ -16,6 +17,7 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import { scale } from 'react-native-size-matters';
 import { useSelector } from 'react-redux';
 import styled from 'styled-components/native';
@@ -42,7 +44,7 @@ const Row: React.FC<RowProps> = ({ label, value, keyValue }) => (
 
 interface DetailsProps {}
 
-const Details: React.FC<DetailsProps> = () => {
+const Details: FC<DetailsProps> = ({ navigation }) => {
   const { name, email, sex, updateloader } = useSelector(
     (state: any) => state.userDetails,
   );
@@ -84,8 +86,17 @@ const Details: React.FC<DetailsProps> = () => {
   };
 
   return (
-    <Screen color={colors.bgColor}>
-      <View className="mt-10">
+    <SafeAreaView className="flex-1 p-8 bg-[#fdedd6]">
+      <View className="-ml-4 mb-4 -mt-4 z-10">
+        <CircleButton
+          backgroundColor="#00000060"
+          color="#fff"
+          onPress={navigation.goBack}
+          size={40}
+          icon="chevron-right"
+        />
+      </View>
+      <View>
         <Row label="name" value={name} />
         <Row label="sex" value={sex === 'M' ? 'male' : 'female'} keyValue />
         <Row label="email" value={email} />
@@ -93,15 +104,14 @@ const Details: React.FC<DetailsProps> = () => {
       <View className="flex flex-1 items-center justify-center">
         <Meditate />
       </View>
-      <View style={{ position: 'absolute', bottom: 80, left: 20, right: 20 }}>
+      <View className="w-full justify-center items-center z-10 bottom-10">
         <Button
           title="ערוך פרופיל"
           big
           logout
           onPress={() => setToggleModal(true)}
         />
-      </View>
-      <View style={{ position: 'absolute', bottom: 10, left: 20, right: 20 }}>
+        <View className="mt-4" />
         <Button
           title="שנה סיסמא"
           big
@@ -304,7 +314,7 @@ const Details: React.FC<DetailsProps> = () => {
           </View>
         )}
       </Modal>
-    </Screen>
+    </SafeAreaView>
   );
 };
 
