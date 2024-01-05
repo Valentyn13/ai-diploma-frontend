@@ -10,6 +10,7 @@ const ListTitle = styled(SubTitle)`
   font-size: 22px;
   font-weight: bold;
   align-self: flex-start;
+  letter-spacing: 0.1px;
 `;
 
 interface Props {
