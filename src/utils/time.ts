@@ -31,3 +31,8 @@ export function getCollectionIdByTime() {
     return 'night';
   }
 }
+
+export function getCurrentHour() {
+  const now = new Date();
+  return now.getHours();
+}

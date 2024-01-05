@@ -20,7 +20,7 @@ import useArticleData from '@services/hooks/useArticleData';
 import { useOnboarding } from '@services/hooks/useOnboarding';
 import i18n from '@services/localization/i18n';
 import { logEvent } from '@utils/analytics';
-import { shuffleArray } from '@utils/array';
+import { getRandomElements } from '@utils/rand';
 import { getCollectionIdByTime } from '@utils/time';
 import React, { FC, useCallback, useEffect, useState } from 'react';
 import { ImageBackground, ScrollView, View } from 'react-native';
@@ -199,9 +199,9 @@ const Feed: FC<FeedProps> = ({ navigation }) => {
 
           <Collection
             title={i18n.t('latest_release')}
-            items={shuffleArray(latest)}
+            items={latest}
             onShowAll={() => {
-              onShowAll(i18n.t('latest_release'), shuffleArray(latest));
+              onShowAll(i18n.t('latest_release'), latest);
             }}
           />
           <Divider className="my-6" />
@@ -214,9 +214,9 @@ const Feed: FC<FeedProps> = ({ navigation }) => {
 
           <Collection
             title={i18n.t('most_played')}
-            items={shuffleArray(topRated)}
+            items={topRated}
             onShowAll={() => {
-              onShowAll(i18n.t('most_played'), shuffleArray(topRated));
+              onShowAll(i18n.t('most_played'), topRated);
             }}
           />
           <Divider className="my-6" />
@@ -229,7 +229,7 @@ const Feed: FC<FeedProps> = ({ navigation }) => {
           />
           <Divider className="my-6" />
 
-          {COLLECTIONS.map((collection: any) => (
+          {getRandomElements(COLLECTIONS, 3).map((collection: any) => (
             <>
               <Collection
                 key={collection.id}

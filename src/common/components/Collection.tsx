@@ -1,6 +1,7 @@
 import HorizontalList from '@common/components/HorizontalList';
 import { SubTitle } from '@common/components/Styled';
 import i18n from '@services/localization/i18n';
+import { shuffleArray } from '@utils/rand';
 import React, { FC } from 'react';
 import { Text, TouchableOpacity, View } from 'react-native';
 import styled from 'styled-components/native';
@@ -28,7 +29,7 @@ const Collection: FC<Props> = ({ items, onShowAll, title, limit = 5 }) => (
         </Text>
       </TouchableOpacity>
     </View>
-    <HorizontalList data={items.slice(0, limit)} />
+    <HorizontalList data={shuffleArray(items).slice(0, limit)} />
   </View>
 );
 

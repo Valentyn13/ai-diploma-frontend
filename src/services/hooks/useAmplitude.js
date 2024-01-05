@@ -1,10 +1,17 @@
-/* eslint-disable import/prefer-default-export */
+import {
+  Revenue,
+  flush,
+  init,
+  revenue,
+  setUserId,
+  track,
+} from '@amplitude/analytics-react-native';
 
-import {init, track, setUserId, Revenue, revenue, flush} from '@amplitude/analytics-react-native';
+const AMPLITUDE_API_KEY = '99c650de6e3028a4c95fab92b1b9ea7d';
+
+init(AMPLITUDE_API_KEY);
 
 export const useAmplitude = () => {
-  init('427fe3c12d3885dc7345d6a53e3877c8');
-
   return {
     logEvent: event => {
       track(event);
