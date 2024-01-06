@@ -10,12 +10,14 @@ interface WithRotateProps {
   children: React.ReactNode;
   degrees?: number; // The rotation in degrees
   duration?: number; // Duration of the animation
+  delay?: number; // Delay of the animation
 }
 
 const WithRotate: React.FC<WithRotateProps> = ({
   children,
   degrees = 0,
   duration = 500,
+  delay = 0,
 }) => {
   const rotation = useSharedValue(0);
 
@@ -24,7 +26,7 @@ const WithRotate: React.FC<WithRotateProps> = ({
       duration,
       easing: Easing.inOut(Easing.ease),
     });
-  }, [degrees, duration]);
+  }, [degrees, duration, delay]);
 
   const animatedStyle = useAnimatedStyle(() => {
     return {

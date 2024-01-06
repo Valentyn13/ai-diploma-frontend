@@ -26,7 +26,7 @@ export const TouchableCenteredView = styled.TouchableOpacity`
 export const Container = styled(CenteredView)`
   flex: ${({ flex }) => flex || 1};
   align-self: stretch;
-  background-color: #fdedd6;
+  background-color: #513f73;
 `;
 
 export const ScrollViewContainer = styled.ScrollView.attrs({
