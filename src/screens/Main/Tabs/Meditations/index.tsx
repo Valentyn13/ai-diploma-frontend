@@ -5,14 +5,13 @@ import { useNavigation } from '@react-navigation/native';
 import { useDebouncedState } from '@services/hooks/useDebouncedState';
 import { searchInCategories } from '@utils/category';
 import React, { useEffect, useMemo, useState } from 'react';
-import { ActivityIndicator, Text, TextInput, View } from 'react-native';
-import { ScrollView } from 'react-native-gesture-handler';
-import { scale } from 'react-native-size-matters';
-import Icon from 'react-native-vector-icons/FontAwesome6';
+import { ActivityIndicator, ScrollView, Text, View } from 'react-native';
 import { useSelector } from 'react-redux';
 import { categoriesSelector } from 'store/selectors';
 import { Category } from 'types/Category';
 import { Meditation } from 'types/Meditation';
+
+import SearchBar from './SearchBar';
 
 const Meditations = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -47,28 +46,16 @@ const Meditations = () => {
         display: 'flex',
         flex: 1,
       }}>
-      <View className="py-3 px-2 rounded-full mt-8 flex-row items-center w-11/12 mx-auto mb-4 border border-gray-300">
-        <Icon
-          style={{
-            transform: [{ rotateY: '180deg' }],
-            marginLeft: scale(10),
-          }}
-          size={scale(20)}
-          color="grey"
-          name="magnifying-glass"
-        />
-        <TextInput
-          onChangeText={v => {
+      <SearchBar
+        searchQuery={searchQuery}
+        setSearchQuery={v => {
+          if (!isLoading) {
             setIsLoading(true);
-            setSearchQuery(v);
-          }}
-          placeholderTextColor="grey"
-          keyboardType="default"
-          returnKeyType="done"
-          placeholder="חיפוש מדיטציה..."
-          className="w-5/6 mx-5 text-2xl text-right text-black leading-7"
-        />
-      </View>
+          }
+
+          setSearchQuery(v);
+        }}
+      />
 
       {isLoading && (
         <View className="px-4 py-2 w-full h-48 flex items-center justify-center">
