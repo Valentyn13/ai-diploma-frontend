@@ -3,6 +3,7 @@ import { SubTitle } from '@common/components/Styled';
 import { useNavigation } from '@react-navigation/native';
 import { captureMessage } from '@sentry/react-native';
 import useInstructor from '@services/hooks/useInstructor';
+import { shuffleArray } from '@utils/rand';
 import React from 'react';
 import { FlatList, Image, TouchableOpacity, View } from 'react-native';
 import { useSelector } from 'react-redux';
@@ -28,13 +29,6 @@ const InstructorList = () => {
     updateIstructorTractionData(item);
     navigation.navigate('Instructor', { id: item._id });
   };
-  instructors.sort(function (a, b) {
-    return (
-      (a.order === undefined) - (b.order === undefined) ||
-      +(a.order > b.order) ||
-      -(a.order < b.order)
-    );
-  });
 
   const renderItem = ({ item, index }) => {
     return (
@@ -89,15 +83,15 @@ const InstructorList = () => {
           display: 'flex',
           alignItems: 'center',
         }}
-        data={instructors}
+        data={shuffleArray(instructors, instructors.length)}
         renderItem={renderItem}
         initialNumToRender={20}
         keyExtractor={item => item._id}
-        // getItemLayout={(_data, index) => ({
-        //   length: ITEM_WIDTH(big),
-        //   offset: ITEM_WIDTH(big) * index,
-        //   index,
-        // })}
+        getItemLayout={(_data, index) => ({
+          length: 110,
+          offset: (110 + 10) * index,
+          index,
+        })}
         onScrollToIndexFailed={info => {
           captureMessage(
             `scrollToIndex failed in InstructorList. index=${info.index}`,

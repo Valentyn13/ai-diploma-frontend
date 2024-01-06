@@ -88,7 +88,10 @@ const MeditationPlayer: FC = () => {
     // TODO: fix dependencies, currently updateMeditationCount is NOT in dependencies array since it causes 'Maximum update depth exceeded' error
   }, [id]);
 
-  const video = getVideoName(categoryName, animation);
+  const video = useMemo(
+    () => getVideoName(categoryName, animation),
+    [animation, categoryName],
+  );
 
   const hasAnimation = animation !== null && animation !== undefined;
 
@@ -108,8 +111,8 @@ const MeditationPlayer: FC = () => {
   }, [isPlaying]);
 
   const onClose = () => {
-    // amplitudeInstance.logEvent('MEDITATION_STOP', { categoryName });
-    // amplitudeInstance.uploadEvents();
+    amplitudeInstance.logEvent('MEDITATION_STOP', { categoryName });
+    amplitudeInstance.uploadEvents();
 
     goBack();
   };

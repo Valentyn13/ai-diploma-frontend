@@ -327,21 +327,25 @@ export const COLLECTIONS_TIME_OF_DAY = [
   },
 ];
 
-export const VIDEOS: Record<string, string> = {
+export const ABSTRACT_VIDEOS: Record<string, string> = {
   sleep: 'sleep.mp4',
   stress: 'stress.mp4',
   army: 'army.mp4',
   ontheroad: 'way.mp4',
   pocketmeditation: 'pocketmeditation.mp4',
-  south: 'beterSelf.mp4',
   starthere: 'starter.mp4',
   emergency: 'emergency.mp4',
   work: 'work.mp4',
   advance: 'advance.mp4',
+  empower: 'empower.mp4',
+};
+
+export const VIDEOS: Record<string, string> = {
+  ...ABSTRACT_VIDEOS,
+  south: 'beterSelf.mp4',
   breath478: 'breathe-4-7-8.mp4',
   breathbox: 'breathe-box.mp4',
   circlebreating: 'circle-breathing.mp4',
-  empower: 'empower.mp4',
   noseBreath: 'nose-breath.mp4',
 };
 
