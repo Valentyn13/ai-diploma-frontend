@@ -9,30 +9,12 @@ import i18n from '@services/localization/i18n';
 import { logEvent } from '@utils/analytics';
 import get from '@utils/get';
 import { FC, default as React, useEffect, useState } from 'react';
-import {
-  ActivityIndicator,
-  Alert,
-  StatusBar,
-  Text,
-  TouchableOpacity,
-  View,
-} from 'react-native';
+import { ActivityIndicator, Alert, StatusBar, Text, View } from 'react-native';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 import { LinearGradient } from 'react-native-gradients';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import Icon2 from 'react-native-vector-icons/Feather';
 import { useSelector } from 'react-redux';
-import styled from 'styled-components/native';
-
-const EmptyOverlay = styled.View`
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  background-color: #ffefd7;
-  justify-content: center;
-  opacity: 0.8;
-`;
 
 interface PlanItemProps {
   onPress: () => void;

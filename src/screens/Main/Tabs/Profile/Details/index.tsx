@@ -9,14 +9,8 @@ import { CircleButton } from '@common/components/buttons/CircleButton';
 import colors from '@common/theme/colors';
 import useUpdateProfile from '@services/hooks/useUpdateProfile';
 import React, { FC, useEffect, useState } from 'react';
-import {
-  ActivityIndicator,
-  Alert,
-  Image,
-  Modal,
-  TouchableOpacity,
-  View,
-} from 'react-native';
+import { ActivityIndicator, Alert, Image, Modal, View } from 'react-native';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { scale } from 'react-native-size-matters';
 import { useSelector } from 'react-redux';

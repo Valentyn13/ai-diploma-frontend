@@ -301,7 +301,7 @@ const Settings = ({ navigation }) => {
           />
           <View
             style={{
-              Width: '100%',
+              width: '100%',
               justifyContent: 'space-around',
               flexDirection: 'row',
               marginTop: 50,

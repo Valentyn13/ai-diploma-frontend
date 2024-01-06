@@ -17,14 +17,8 @@ import useCache from '@services/hooks/useCache';
 import { INTRO_METADATA_KEY, IntroMetadata } from '@services/hooks/useIntro';
 import PropTypes from 'prop-types';
 import React, { useState } from 'react';
-import {
-  Dimensions,
-  FlatList,
-  Image,
-  Platform,
-  TouchableOpacity,
-  View,
-} from 'react-native';
+import { Dimensions, FlatList, Image, Platform, View } from 'react-native';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 import { scale } from 'react-native-size-matters';
 import { useDispatch } from 'react-redux';
 import { chooseCategories } from 'store/actions';
@@ -67,7 +61,7 @@ const CategorySelectionInfo = styled(SubTitle)`
   margin-top: 20px;
 `;
 
-const CategorySelectorContainer = styled.TouchableOpacity`
+const CategorySelectorContainer = styled(TouchableOpacity)`
   background-color: ${({ theme: { colors }, highlight }) =>
     highlight ? colors.selectedCategoryColor : colors.itemBgColor};
   width: ${({ theme: { dimens } }) =>

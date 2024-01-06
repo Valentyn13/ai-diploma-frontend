@@ -1,7 +1,8 @@
 import theme from '@common/theme';
 import { useNavigation } from '@react-navigation/native';
 import React, { FC } from 'react';
-import { Text, TouchableOpacity, View, ViewProps } from 'react-native';
+import { Text, View, ViewProps } from 'react-native';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 import Icon from 'react-native-vector-icons/Feather';
 
 const Header: FC<{ title?: string } & ViewProps> = ({

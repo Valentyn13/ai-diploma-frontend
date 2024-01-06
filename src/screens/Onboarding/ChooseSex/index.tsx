@@ -10,13 +10,8 @@ import useCache from '@services/hooks/useCache';
 import { INTRO_METADATA_KEY, IntroMetadata } from '@services/hooks/useIntro';
 import PropTypes from 'prop-types';
 import React, { useState } from 'react';
-import {
-  Dimensions,
-  Image,
-  Platform,
-  TouchableOpacity,
-  View,
-} from 'react-native';
+import { Dimensions, Image, Platform, View } from 'react-native';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 import { scale } from 'react-native-size-matters';
 import { useDispatch } from 'react-redux';
 import { chooseSex } from 'store/actions';

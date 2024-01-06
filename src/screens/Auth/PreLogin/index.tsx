@@ -9,7 +9,8 @@ import useLogin from '@services/hooks/useLogin';
 import alert from '@utils/alert';
 import logger from '@utils/logger';
 import React, { FC, useEffect, useState } from 'react';
-import { ActivityIndicator, Text, TouchableOpacity, View } from 'react-native';
+import { ActivityIndicator, Text, View } from 'react-native';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 import { scale } from 'react-native-size-matters';
 import IconFA from 'react-native-vector-icons/FontAwesome6';
 import { useSelector } from 'react-redux';
@@ -147,7 +148,7 @@ const PreLogin: FC<PreLoginProps> = ({ navigation: { navigate } }) => {
           <Text className="text-center text-black text-md mt-20">
             חדשים פה?
           </Text>
-          {/* @ts-ignore */}
+
           <TouchableOpacity onPress={() => navigate('Register')}>
             <AppText
               black

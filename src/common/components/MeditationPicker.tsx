@@ -1,6 +1,9 @@
 import { MEDITATIONS_FEELING_LOCATION } from '@common/constants';
 import { usePurchases } from '@common/context/PurchaseContext';
-import BottomSheet, { BottomSheetFlatList } from '@gorhom/bottom-sheet';
+import BottomSheet, {
+  BottomSheetFlatList,
+  TouchableOpacity,
+} from '@gorhom/bottom-sheet';
 import { useNavigation } from '@react-navigation/native';
 import React, {
   FC,
@@ -10,7 +13,7 @@ import React, {
   useRef,
   useState,
 } from 'react';
-import { Text, TouchableOpacity, View } from 'react-native';
+import { Text, View } from 'react-native';
 import Icon from 'react-native-vector-icons/Feather';
 import { useSelector } from 'react-redux';
 import { allMeditations } from 'store/selectors';

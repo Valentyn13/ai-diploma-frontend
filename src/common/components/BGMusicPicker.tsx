@@ -2,18 +2,18 @@ import { BG_TRACKS } from '@common/constants';
 import theme from '@common/theme';
 import { useNavigation } from '@react-navigation/native';
 import React, { useCallback } from 'react';
-import { Text, TouchableOpacity, View } from 'react-native';
-import { FlatList } from 'react-native-gesture-handler';
+import { FlatList, Text, View } from 'react-native';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
 import { useBgTrackStore } from '../../store/useBgTrackStore';
 import Volume from './Volume';
 import { CircleButton } from './buttons/CircleButton';
 
-const Option = ({ label, onPress, emoji, isSelected }) => (
+const Option = ({ label, onPress, emoji, isSelected, ...props }) => (
   <TouchableOpacity
     className="flex-col items-center justify-center rounded-lg border px-4 py-2 h-24"
     style={{
-      width: '46%',
+      width: 100,
       backgroundColor: isSelected ? '#D66366' : 'transparent',
       borderWidth: 2,
       borderColor: isSelected ? '#D66366' : '#273051',
@@ -73,34 +73,37 @@ const MusicModal = () => {
           icon="chevron-down"
         />
       </View>
-      <Text
-        className="text-center text-3xl font-bold mb-6"
-        style={{ fontFamily: theme.fonts.regular }}>
-        בחרו מוזיקת רקע
-      </Text>
-      <FlatList
-        contentContainerStyle={{
-          gap: 6,
-          width: '100%',
-          justifyContent: 'center',
-        }}
-        columnWrapperStyle={{ gap: 6, justifyContent: 'center' }}
-        scrollEnabled={false}
-        data={[
-          ...BG_TRACKS,
-          { id: 'off', name: 'ללא מוזיקה', value: '', emoji: '🔇' },
-        ]}
-        renderItem={renderItem}
-        keyExtractor={item => item.id.toString()}
-        numColumns={2}
-      />
+      <View className="w-full flex flex-col">
+        <Text
+          className="text-center text-3xl font-bold mb-6"
+          style={{ fontFamily: theme.fonts.regular }}>
+          עוצמת קול
+        </Text>
+        <Volume volume={volume} setVolume={setVolume} />
 
-      <Text
-        className="text-center text-3xl font-bold mb-6"
-        style={{ fontFamily: theme.fonts.regular }}>
-        עוצמת קול
-      </Text>
-      <Volume volume={volume} setVolume={setVolume} />
+        <Text
+          className="text-center text-3xl font-bold mt-12 mb-6"
+          style={{ fontFamily: theme.fonts.regular }}>
+          בחרו מוזיקת רקע
+        </Text>
+        <FlatList
+          className="w-full"
+          contentContainerStyle={{
+            gap: 10,
+            width: '100%',
+            justifyContent: 'center',
+          }}
+          columnWrapperStyle={{ gap: 10, justifyContent: 'center' }}
+          scrollEnabled={false}
+          data={[
+            ...BG_TRACKS,
+            { id: 'off', name: 'ללא מוזיקה', value: '', emoji: '🔇' },
+          ]}
+          renderItem={renderItem}
+          keyExtractor={item => item.id.toString()}
+          numColumns={3}
+        />
+      </View>
     </View>
   );
 };

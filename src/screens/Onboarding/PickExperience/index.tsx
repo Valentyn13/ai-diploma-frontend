@@ -8,13 +8,8 @@ import WithSlideInY from '@common/components/transitions/WithSlideInY';
 import { ProgressView } from '@react-native-community/progress-view';
 import PropTypes from 'prop-types';
 import React, { useCallback, useState } from 'react';
-import {
-  Dimensions,
-  Image,
-  Platform,
-  TouchableOpacity,
-  View,
-} from 'react-native';
+import { Dimensions, Image, Platform, View } from 'react-native';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 import { scale } from 'react-native-size-matters';
 import { useDispatch } from 'react-redux';
 import { chooseExperience } from 'store/actions';

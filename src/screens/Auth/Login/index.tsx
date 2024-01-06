@@ -9,13 +9,8 @@ import useAppData from '@services/hooks/useAppData';
 import useLogin from '@services/hooks/useLogin';
 import { logEvent } from '@utils/analytics';
 import React, { FC, useEffect, useState } from 'react';
-import {
-  ActivityIndicator,
-  Text,
-  TextInput,
-  TouchableOpacity,
-  View,
-} from 'react-native';
+import { ActivityIndicator, Text, TextInput, View } from 'react-native';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { scale } from 'react-native-size-matters';
