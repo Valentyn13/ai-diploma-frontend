@@ -1,4 +1,3 @@
-import categoryVideo from '@common/assets/videos';
 import FavoriteButton from '@common/components/FavoriteButton';
 import { CircleButton } from '@common/components/buttons/CircleButton';
 import { useNavigation, useRoute } from '@react-navigation/native';
@@ -7,8 +6,10 @@ import { useAmplitude } from '@services/hooks/useAmplitude';
 import useInstructor from '@services/hooks/useInstructor';
 import useUpdateMeditation from '@services/hooks/useUpdateMeditation';
 import logger from '@utils/logger';
+import { getVideoName } from '@utils/video';
 import PropTypes from 'prop-types';
 import React, {
+  FC,
   useCallback,
   useEffect,
   useMemo,
@@ -22,7 +23,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import RNFetchBlob from 'rn-fetch-blob';
 import { meditationStarted, minutesPracticed } from 'store/actions';
 import { meditationInstructor } from 'store/selectors';
-import styled, { withTheme } from 'styled-components';
+import styled from 'styled-components';
 
 import { useBgTrackStore } from '../../../store/useBgTrackStore';
 import CircularPlayer from './CircularPlayer';
@@ -53,11 +54,7 @@ const AudioPlayer = styled(Video).attrs(() => ({}))`
   height: 0;
 `;
 
-const MeditationPlayer = ({
-  theme: {
-    colors: { whiteColor },
-  },
-}) => {
+const MeditationPlayer: FC = () => {
   const [cachedVideoUri, setCachedVideoUri] = useState(null);
   const route = useRoute();
   const audioPlayerRef = useRef(null);
@@ -70,7 +67,6 @@ const MeditationPlayer = ({
   const [sliderEditing, setSliderEditing] = useState(false);
   const [isPlaying, setIsPlaying] = useState(true);
   const [isLoading, setIsLoading] = useState(true);
-  const [showModal, setShowModal] = useState(false);
   const { selectedTrack } = useBgTrackStore(state => state);
 
   const toggleBgMenu = () => {
@@ -92,7 +88,7 @@ const MeditationPlayer = ({
     // TODO: fix dependencies, currently updateMeditationCount is NOT in dependencies array since it causes 'Maximum update depth exceeded' error
   }, [id]);
 
-  const video = categoryVideo(categoryName, animation);
+  const video = getVideoName(categoryName, animation);
 
   const hasAnimation = animation !== null && animation !== undefined;
 
@@ -297,7 +293,7 @@ const MeditationPlayer = ({
               setCurrentTime={setCurrentTime}
               isLoading={isLoading}
             />
-            <TimesLabel {...{ currentTime, duration }} color={whiteColor} />
+            <TimesLabel {...{ currentTime, duration }} color="#fff" />
           </View>
           <View className="absolute bottom-20 w-full flex-col items-center">
             <Text className="text-2xl font-bold text-white">
@@ -327,13 +323,4 @@ const MeditationPlayer = ({
   );
 };
 
-MeditationPlayer.propTypes = {
-  theme: PropTypes.shape({
-    colors: PropTypes.shape({
-      whiteColor: PropTypes.string.isRequired,
-      itemBgColor: PropTypes.string.isRequired,
-    }).isRequired,
-  }).isRequired,
-};
-
-export default withTheme(MeditationPlayer);
+export default MeditationPlayer;
