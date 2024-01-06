@@ -22,7 +22,7 @@ import i18n from '@services/localization/i18n';
 import { logEvent } from '@utils/analytics';
 import { getRandomElements } from '@utils/rand';
 import { getCollectionIdByTime } from '@utils/time';
-import React, { FC, useCallback, useEffect, useState } from 'react';
+import React, { FC, useCallback, useEffect, useMemo, useState } from 'react';
 import { ImageBackground, ScrollView, View } from 'react-native';
 import { LinearGradient } from 'react-native-gradients';
 import { useDispatch, useSelector } from 'react-redux';
@@ -35,6 +35,7 @@ import {
   toptMeditationSelector,
 } from 'store/selectors';
 import styled from 'styled-components/native';
+import { Meditation } from 'types/Meditation';
 
 import { useSheetStore } from '../../../../store/useSheetStore';
 import InstructorList from './InstructorList';
@@ -126,7 +127,39 @@ const Feed: FC<FeedProps> = ({ navigation }) => {
     { offset: '100%', color: '#000', opacity: '0' },
   ];
 
-  const idToItem = (id: string) => allMeditations.find((m: any) => m.id === id);
+  const idToItem = useCallback(
+    (id: string) => allMeditations.find((m: any) => m.id === id),
+    [allMeditations],
+  );
+
+  interface Collection {
+    id: string;
+    title: string;
+    items: Meditation[];
+  }
+
+  const collections: Collection[] = useMemo(() => {
+    const fixedCollections: Collection[] = [
+      {
+        id: 'greeting-general',
+        title: i18n.t('Greeting_general'),
+        items: data,
+      },
+      { id: 'latest-release', title: i18n.t('latest_release'), items: latest },
+      { id: 'top-rated', title: i18n.t('most_played'), items: topRated },
+    ];
+
+    const dynamicCollections: Collection[] = getRandomElements(
+      COLLECTIONS,
+      3,
+    ).map(({ title, id, trackIds }) => ({
+      id,
+      title,
+      items: trackIds.map(idToItem).filter(Boolean),
+    }));
+
+    return getRandomElements([...dynamicCollections, ...fixedCollections], 6);
+  }, [data, idToItem, latest, topRated]);
 
   return (
     <View className="h-full w-full bg-[#FCE8CD]">
@@ -188,23 +221,19 @@ const Feed: FC<FeedProps> = ({ navigation }) => {
             <Divider className="my-6" />
           </View>
 
-          <Collection
-            title={i18n.t('Greeting_general')}
-            items={data}
-            onShowAll={() => {
-              onShowAll(i18n.t('Greeting_general'), data);
-            }}
-          />
-          <Divider className="my-6" />
-
-          <Collection
-            title={i18n.t('latest_release')}
-            items={latest}
-            onShowAll={() => {
-              onShowAll(i18n.t('latest_release'), latest);
-            }}
-          />
-          <Divider className="my-6" />
+          {collections.slice(0, 2).map(({ id, title, items }) => (
+            <>
+              <Collection
+                key={id}
+                title={title}
+                items={items}
+                onShowAll={() => {
+                  onShowAll(title, items);
+                }}
+              />
+              <Divider className="my-6" />
+            </>
+          ))}
 
           <View className="flex flex-row items-end justify-between w-full px-2 mb-1">
             <ListTitle k="צוות המורים" />
@@ -212,14 +241,19 @@ const Feed: FC<FeedProps> = ({ navigation }) => {
           <InstructorList />
           <Divider className="my-6" />
 
-          <Collection
-            title={i18n.t('most_played')}
-            items={topRated}
-            onShowAll={() => {
-              onShowAll(i18n.t('most_played'), topRated);
-            }}
-          />
-          <Divider className="my-6" />
+          {collections.slice(2, 3).map(({ id, title, items }) => (
+            <>
+              <Collection
+                key={id}
+                title={title}
+                items={items}
+                onShowAll={() => {
+                  onShowAll(title, items);
+                }}
+              />
+              <Divider className="my-6" />
+            </>
+          ))}
 
           <CoursesCarousel
             withParallax
@@ -229,17 +263,14 @@ const Feed: FC<FeedProps> = ({ navigation }) => {
           />
           <Divider className="my-6" />
 
-          {getRandomElements(COLLECTIONS, 3).map((collection: any) => (
+          {collections.slice(3, 5).map(({ id, title, items }) => (
             <>
               <Collection
-                key={collection.id}
-                title={collection.title}
-                items={collection.trackIds.map(idToItem).filter(Boolean)}
+                key={id}
+                title={title}
+                items={items}
                 onShowAll={() => {
-                  onShowAll(
-                    collection.title,
-                    collection.trackIds.map(idToItem).filter(Boolean),
-                  );
+                  onShowAll(title, items);
                 }}
               />
               <Divider className="my-6" />

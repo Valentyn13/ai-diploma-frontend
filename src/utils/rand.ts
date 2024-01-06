@@ -8,10 +8,12 @@ function seededRandom(seed: number) {
 export function getRandomElements(arr: any[], x: number) {
   let selectedElements = [];
   let seed = getCurrentHour();
+  let arrCopy = [...arr];
 
   for (let i = 0; i < x; i++) {
-    let index = Math.floor(seededRandom(seed + i) * arr.length);
-    selectedElements.push(arr[index]);
+    let index = Math.floor(seededRandom(seed + i) * arrCopy.length);
+    let selectedElement = arrCopy.splice(index, 1)[0];
+    selectedElements.push(selectedElement);
   }
 
   return selectedElements;
