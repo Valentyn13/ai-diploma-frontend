@@ -4,6 +4,7 @@ import { colors } from '@common/theme';
 import { useNavigation } from '@react-navigation/native';
 import { useDebouncedState } from '@services/hooks/useDebouncedState';
 import { searchInCategories } from '@utils/category';
+import { shuffleArray } from '@utils/rand';
 import React, { useEffect, useMemo, useState } from 'react';
 import { ActivityIndicator, ScrollView, Text, View } from 'react-native';
 import { useSelector } from 'react-redux';
@@ -100,9 +101,11 @@ const Meditations = () => {
 
       {searchQuery.length > 2 && filteredCategories.length > 0 && (
         <SessionsGrid
-          meditations={filteredCategories.reduce(
-            (acc, curr) => [...acc, ...curr.meditations],
-            [] as Meditation[],
+          meditations={shuffleArray(
+            filteredCategories.reduce(
+              (acc, curr) => [...acc, ...curr.meditations],
+              [] as Meditation[],
+            ),
           )}
         />
       )}
