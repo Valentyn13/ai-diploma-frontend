@@ -53,6 +53,12 @@ export default () => {
     shouldDispatch: () => false,
   });
 
+  const resetPasswordApi = useAxios({
+    api: api.resetPassword,
+    setToken: true,
+    shouldDispatch: () => false,
+  });
+
   const loginWithEmail = (email, password, fcmToken) => {
     const { fetch } = emailLogin;
     return fetch({ email, password, fcmToken });
@@ -139,6 +145,19 @@ export default () => {
   const forgotPassword = (email: string) => {
     const { fetch } = forgotPasswordApi;
     return fetch({ email });
+  };
+  const {
+    completed: resetPasswordCompleted,
+    error: resetPasswordError,
+    fetch: resetPasswordFetch,
+  } = resetPasswordApi;
+
+  const resetPassword = async (
+    email: string,
+    password: string,
+    resetToken: string,
+  ) => {
+    await resetPasswordFetch({ email, password, resetToken });
   };
 
   const dispatchLogin = useCallback(
@@ -252,6 +271,9 @@ export default () => {
     loginWithFacebook,
     loginWithGoogle,
     signUp,
+    resetPassword,
+    resetPasswordCompleted,
+    resetPasswordError,
     forgotPassword,
     loginWithApple,
   };

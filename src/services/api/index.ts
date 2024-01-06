@@ -22,6 +22,10 @@ const API: { [key: string]: IApi } = {
     url: `${AUTH_API}/send-password-reset`,
     method: 'post',
   },
+  resetPassword: {
+    url: `${AUTH_API}/reset-password`,
+    method: 'post',
+  },
   refreshToken: {
     url: `${AUTH_API}/refresh-token`,
     method: 'post',
