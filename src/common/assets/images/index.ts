@@ -1,9 +1,79 @@
-/* eslint-disable max-lines */
-/* eslint-disable global-require */
+const BGS: Record<string, string[]> = {
+  advanceBGs: [
+    'advance_1.png',
+    'advance_2.png',
+    'advance_3.png',
+    'advance_4.png',
+    'advance_5.png',
+  ],
+  sleepBGs: [
+    'sleep_thumb0.png',
+    'sleep_thumb1.png',
+    'sleep_thumb2.png',
+    'sleep_thumb3.png',
+    'sleep_thumb4.png',
+    'sleep_thumb5.png',
+  ],
+  workBGs: ['work1.jpg', 'work2.jpg', 'work3.jpg', 'work4.jpg', 'work5.jpg'],
+  stressBGs: [
+    'stress_1.png',
+    'stress_2.png',
+    'stress_3.png',
+    'stress_4.png',
+    'stress_5.png',
+  ],
+  armyBGs: [
+    'army_1.png',
+    'army_2.png',
+    'army_3.png',
+    'army_4.png',
+    'army_5.png',
+    'army_6.png',
+  ],
+  ontheroadBGs: ['way_1.png', 'way_2.png', 'way_3.png', 'way_4.png'],
+  pocketmeditationBGs: [
+    'daily1.png',
+    'daily2.png',
+    'daily3.png',
+    'daily4.png',
+    'daily5.png',
+    'daily6.png',
+  ],
+  southBGs: [
+    'start_1.png',
+    'start_2.png',
+    'start_3.png',
+    'start_4.png',
+    'start_5.png',
+    'start_6.png',
+  ],
+  emergencyBGs: [
+    'emergency_1.png',
+    'emergency_2.png',
+    'emergency_3.png',
+    'emergency_4.png',
+    'emergency_5.png',
+  ],
+  visualBGs: ['visual1.png', 'visual2.png', 'visual3.png', 'visual4.png'],
+  empowerBGs: [
+    'empower1.png',
+    'empower2.png',
+    'empower3.png',
+    'empower4.png',
+    'empower5.png',
+    'empower6.png',
+  ],
+  starthereBGs: [
+    'starter.gif',
+    'start_2.png',
+    'start_3.png',
+    'start_4.png',
+    'start_5.png',
+    'start_6.png',
+  ],
+};
 
-import {Platform} from 'react-native';
-
-const images = {
+const images: Record<string, any> = {
   homeOn: require('./homeOn.png'),
   homeOff: require('./homeOff.png'),
   meditationsOn: require('./meditationsOn.png'),
@@ -70,118 +140,6 @@ const images = {
 
   starterGif: require('./bgs/starter.gif'),
 
-  advanceBGs: [
-    require('./bgs/advance_1.png'),
-    require('./bgs/advance_2.png'),
-    require('./bgs/advance_3.png'),
-    require('./bgs/advance_4.png'),
-    require('./bgs/advance_5.png'),
-  ],
-  sleepBGs: [
-    require('./bgs/sleep_thumb0.png'),
-    require('./bgs/sleep_thumb1.png'),
-    require('./bgs/sleep_thumb2.png'),
-    require('./bgs/sleep_thumb3.png'),
-    require('./bgs/sleep_thumb4.png'),
-    require('./bgs/sleep_thumb5.png'),
-  ],
-
-  workBGs: [
-    require('./bgs/work1.jpg'),
-    require('./bgs/work2.jpg'),
-    require('./bgs/work3.jpg'),
-    require('./bgs/work4.jpg'),
-    require('./bgs/work5.jpg'),
-  ],
-
-  stressBGs: [
-    require('./bgs/stress_1.png'),
-    require('./bgs/stress_2.png'),
-    require('./bgs/stress_3.png'),
-    require('./bgs/stress_4.png'),
-    require('./bgs/stress_5.png'),
-  ],
-
-  armyBGs: [
-    require('./bgs/army_1.png'),
-    require('./bgs/army_2.png'),
-    require('./bgs/army_3.png'),
-    require('./bgs/army_4.png'),
-    require('./bgs/army_5.png'),
-    require('./bgs/army_6.png'),
-  ],
-
-  ontheroadBGs: [
-    require('./bgs/way_1.png'),
-    require('./bgs/way_2.png'),
-    require('./bgs/way_3.png'),
-    require('./bgs/way_4.png'),
-  ],
-
-  pocketmeditationBGs: [
-    require('./bgs/daily1.png'),
-    require('./bgs/daily2.png'),
-    require('./bgs/daily3.png'),
-    require('./bgs/daily4.png'),
-    require('./bgs/daily5.png'),
-    require('./bgs/daily6.png'),
-  ],
-
-  southBGs: [
-    require('./bgs/start_1.png'),
-    require('./bgs/start_2.png'),
-    require('./bgs/start_3.png'),
-    require('./bgs/start_4.png'),
-    require('./bgs/start_5.png'),
-    require('./bgs/start_6.png'),
-  ],
-
-  emergencyBGs: [
-    require('./bgs/emergency_1.png'),
-    require('./bgs/emergency_2.png'),
-    require('./bgs/emergency_3.png'),
-    require('./bgs/emergency_4.png'),
-    require('./bgs/emergency_5.png'),
-  ],
-
-  visualBGs: [
-    require('./bgs/visual1.png'),
-    require('./bgs/visual2.png'),
-    require('./bgs/visual3.png'),
-    require('./bgs/visual4.png'),
-  ],
-
-  empowerBGs: [
-    require('./bgs/empower1.png'),
-    require('./bgs/empower2.png'),
-    require('./bgs/empower3.png'),
-    require('./bgs/empower4.png'),
-    require('./bgs/empower5.png'),
-    require('./bgs/empower6.png'),
-  ],
-
-  // workaround for android rtl issue with carousel
-  // switch between first 2 items in courses coursel
-  // notice this will NOT work when adding more courses !
-  starthereBGs: Platform.select({
-    android: [
-      require('./bgs/starter.gif'),
-      require('./bgs/start_2.png'),
-      require('./bgs/start_3.png'),
-      require('./bgs/start_4.png'),
-      require('./bgs/start_5.png'),
-      require('./bgs/start_6.png'),
-    ],
-    ios: [
-      require('./bgs/starter.gif'),
-      require('./bgs/start_2.png'),
-      require('./bgs/start_3.png'),
-      require('./bgs/start_4.png'),
-      require('./bgs/start_5.png'),
-      require('./bgs/start_6.png'),
-    ],
-  }),
-
   // new
   bg_1: require('./new/bg_1.png'),
   bg_2: require('./new/bg_2.png'),
@@ -227,9 +185,9 @@ const findCustomThumbnail = thumbnail => {
   if (arr.length > 1) {
     const [customCategory, customIndex] = arr;
     const customKey = categoryBGs(customCategory);
-    if (images[customKey]) {
-      const customImages = images[customKey];
-      // eslint-disable-next-line max-depth
+    if (BGS[customKey]) {
+      const customImages = BGS[customKey];
+
       if (customIndex < customImages.length) {
         return customImages[customIndex];
       }
@@ -238,27 +196,31 @@ const findCustomThumbnail = thumbnail => {
   return null;
 };
 
-export const categoryImage = (category, index, thumbnail) => {
+export const getCategoryImgName = (
+  category: string,
+  index: number,
+  thumbnail: string,
+) => {
   const key = categoryBGs(category);
   try {
-    if (!images[key]) {
+    if (!BGS[key]) {
       // custom category
       if (thumbnail) {
         // custom thumbnail
         const customThumbnail = findCustomThumbnail(thumbnail);
-        // eslint-disable-next-line max-depth
+
         if (customThumbnail) {
           return customThumbnail;
         }
       }
       // default image - in case category was not found and there's no thumbnail
-      return images.sleepBGs[0];
+      return BGS.sleepBGs[0];
     }
-    const categoryImages = images[key];
+    const categoryImages = BGS[key];
     const imageIdx = index % categoryImages?.length;
     return categoryImages[imageIdx];
   } catch (e) {
-    return images.sleepBGs[0];
+    return BGS.sleepBGs[0];
   }
 };
 
