@@ -1,5 +1,7 @@
 import Collection from '@common/components/Collection';
 import SessionsGrid from '@common/components/SessionsGrid';
+import Meditate from '@common/components/animation/Meditate';
+import NotFound from '@common/components/animation/NotFound';
 import { colors } from '@common/theme';
 import { useNavigation } from '@react-navigation/native';
 import { useDebouncedState } from '@services/hooks/useDebouncedState';
@@ -66,16 +68,30 @@ const Meditations = () => {
       )}
 
       {!isLoading && searchQuery.length > 0 && searchQuery.length <= 2 && (
-        <View className="px-4 py-2 w-full h-48 flex items-center justify-center">
-          <Text className="text-gray-500">נא להזין לפחות 3 תווים לחיפוש</Text>
+        <View className="flex-1 flex items-center justify-center">
+          <View className="px-4 py-2">
+            <Text className="text-gray-500 text-center">
+              אנא הכניסו לפחות 3 תווים לחיפוש
+            </Text>
+          </View>
+          <View className="h-48 w-8/12">
+            <Meditate />
+          </View>
         </View>
       )}
 
       {!isLoading &&
         searchQuery.length > 2 &&
         filteredCategories.length === 0 && (
-          <View className="px-4 py-2 w-full h-48 flex items-center justify-center">
-            <Text className="text-gray-500">לא נמצאו תוצאות</Text>
+          <View className="flex-1 flex items-center justify-center">
+            <View className="px-4 py-2">
+              <Text className="text-gray-500 text-center">
+                אין תוצאות עבור "{searchQuery}"
+              </Text>
+            </View>
+            <View className="h-48 w-8/12">
+              <NotFound />
+            </View>
           </View>
         )}
 
