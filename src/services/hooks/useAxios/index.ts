@@ -56,7 +56,11 @@ const httpRequest = async ({ method, url }, apiParams, userId) => {
   return { data, status };
 };
 
-const refreshAccessToken = async (id, email, refreshToken) => {
+const refreshAccessToken = async (
+  id: string,
+  email: string,
+  refreshToken: string,
+) => {
   if (email && refreshToken) {
     try {
       const { data } = await httpRequest(

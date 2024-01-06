@@ -175,7 +175,7 @@ export default () => {
         },
         token: { refreshToken, accessToken },
       } = data;
-      // console.log('XXXXXuserXXXXX', userProgress);
+
       dispatch(
         login({
           id,

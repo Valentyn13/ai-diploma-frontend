@@ -1,17 +1,11 @@
 import theme, { colors } from '@common/theme';
 import { useNavigation, useRoute } from '@react-navigation/native';
-import React, { FC, useCallback } from 'react';
-import {
-  FlatList,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-} from 'react-native';
+import React, { FC } from 'react';
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import Icon from 'react-native-vector-icons/Feather';
 
-import MeditationItem from './MeditationItem';
+import SessionsGrid from './SessionsGrid';
 
 const Header: FC<{ title: string }> = ({ title }) => {
   const { goBack } = useNavigation();
@@ -52,36 +46,11 @@ const GroupedMeditations = () => {
   const route = useRoute();
   const { title, meditations } = route.params || { title: '', meditations: [] };
 
-  const renderMeditationItem = useCallback(
-    ({ item, index }) => (
-      <MeditationItem key={item.id} item={item} index={index} />
-    ),
-    [],
-  );
-
   return (
     <SafeAreaView
       edges={['top', 'right', 'left']}
       className="bg-[#fdedd6] flex-1">
-      <FlatList
-        contentContainerStyle={{
-          flexGrow: 1,
-          paddingVertical: 10,
-          paddingHorizontal: 10,
-        }}
-        data={meditations}
-        keyExtractor={item => item.id}
-        renderItem={renderMeditationItem}
-        numColumns={2}
-        ListHeaderComponent={() => <Header title={title} />}
-        stickyHeaderIndices={[0]}
-        showsVerticalScrollIndicator={false}
-        getItemLayout={(_, index) => ({
-          length: theme.dimens.winWidth / 2 - 16,
-          offset: 280 * index,
-          index,
-        })}
-      />
+      <SessionsGrid meditations={meditations} title={title} />
     </SafeAreaView>
   );
 };

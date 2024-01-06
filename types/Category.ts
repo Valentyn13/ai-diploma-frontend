@@ -1,8 +1,10 @@
+import { Meditation } from './Meditation';
+
 export interface Category {
   id: string;
   title: string;
   info?: string | null;
   height?: string;
-  meditations: Record<string, unknown>[];
+  meditations: Meditation[];
   order: number;
 }
