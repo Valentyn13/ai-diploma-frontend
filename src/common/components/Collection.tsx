@@ -18,9 +18,16 @@ interface Props {
   onShowAll: () => void;
   title: string;
   limit?: number;
+  shuffle?: boolean;
 }
 
-const Collection: FC<Props> = ({ items, onShowAll, title, limit = 5 }) => (
+const Collection: FC<Props> = ({
+  items,
+  onShowAll,
+  title,
+  limit = 5,
+  shuffle = true,
+}) => (
   <View>
     <View className="flex flex-row items-end justify-between w-full pl-2 mb-1">
       <ListTitle t={title} />
@@ -35,7 +42,9 @@ const Collection: FC<Props> = ({ items, onShowAll, title, limit = 5 }) => (
         <Text className="text-neutral-500">{i18n.t('noSessions')}</Text>
       </View>
     )}
-    <HorizontalList data={shuffleArray(items).slice(0, limit)} />
+    <HorizontalList
+      data={(shuffle ? shuffleArray(items) : items).slice(0, limit)}
+    />
   </View>
 );
 

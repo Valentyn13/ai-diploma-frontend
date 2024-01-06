@@ -1,6 +1,7 @@
 import Collection from '@common/components/Collection';
 import CoursesCarousel from '@common/components/CoursesCarousel';
 import Divider from '@common/components/Divider';
+import DynamicComposition from '@common/components/DynamicComposition';
 import Feeling from '@common/components/Feeling';
 import Logo from '@common/components/Logo';
 import { SubTitle } from '@common/components/Styled';
@@ -191,6 +192,7 @@ const Feed: FC<FeedProps> = ({ navigation }) => {
           <View className="absolute w-full h-full">
             <LinearGradient colorList={colorList} angle={90} />
           </View>
+
           <View className="h-80" />
           {COLLECTIONS_TIME_OF_DAY.filter(
             ({ id }) => id === getCollectionIdByTime(),
@@ -213,69 +215,75 @@ const Feed: FC<FeedProps> = ({ navigation }) => {
         </View>
 
         <View className="bg-[#FCE8CD]">
-          <View className="flex w-full items-center px-2 mt-4">
-            <ListTitle k="personalized" />
-            <View className="my-4 w-11/12 flex items-center">
-              <Feeling onClick={() => setIsOpen(true)} isMale={sex === 'M'} />
+          <DynamicComposition>
+            <View className="flex w-full items-center px-2 mt-4 flex-1">
+              <ListTitle k="personalized" />
+              <View className="my-4 w-11/12 flex items-center">
+                <Feeling onClick={() => setIsOpen(true)} isMale={sex === 'M'} />
+              </View>
+              <Divider className="my-6" />
             </View>
-            <Divider className="my-6" />
-          </View>
 
-          {collections.slice(0, 2).map(({ id, title, items }) => (
-            <>
-              <Collection
-                key={id}
-                title={title}
-                items={items}
-                onShowAll={() => {
-                  onShowAll(title, items);
-                }}
+            {collections.slice(0, 2).map(({ id, title, items }) => (
+              <View className="flex-1">
+                <Collection
+                  key={id}
+                  title={title}
+                  items={items}
+                  onShowAll={() => {
+                    onShowAll(title, items);
+                  }}
+                />
+                <Divider className="my-6" />
+              </View>
+            ))}
+
+            <View className="flex-1">
+              <View className="flex flex-row items-end justify-between w-full px-2 mb-1">
+                <ListTitle k="צוות המורים" />
+              </View>
+              <InstructorList />
+              <Divider className="my-6" />
+            </View>
+
+            {collections.slice(2, 3).map(({ id, title, items }) => (
+              <View className="flex-1">
+                <Collection
+                  key={id}
+                  title={title}
+                  items={items}
+                  onShowAll={() => {
+                    onShowAll(title, items);
+                  }}
+                />
+                <Divider className="my-6" />
+              </View>
+            ))}
+
+            <View className="flex-1">
+              <CoursesCarousel
+                withParallax
+                height={280}
+                title="courses"
+                fullScreen={false}
               />
               <Divider className="my-6" />
-            </>
-          ))}
+            </View>
 
-          <View className="flex flex-row items-end justify-between w-full px-2 mb-1">
-            <ListTitle k="צוות המורים" />
-          </View>
-          <InstructorList />
-          <Divider className="my-6" />
-
-          {collections.slice(2, 3).map(({ id, title, items }) => (
-            <>
-              <Collection
-                key={id}
-                title={title}
-                items={items}
-                onShowAll={() => {
-                  onShowAll(title, items);
-                }}
-              />
-              <Divider className="my-6" />
-            </>
-          ))}
-
-          <CoursesCarousel
-            withParallax
-            height={280}
-            title="courses"
-            fullScreen={false}
-          />
-          <Divider className="my-6" />
-
-          {collections.slice(3, 5).map(({ id, title, items }) => (
-            <>
-              <Collection
-                key={id}
-                title={title}
-                items={items}
-                onShowAll={() => {
-                  onShowAll(title, items);
-                }}
-              />
-              <Divider className="my-6" />
-            </>
-          ))}
+            {collections.slice(3, 5).map(({ id, title, items }) => (
+              <View className="flex-1">
+                <Collection
+                  key={id}
+                  title={title}
+                  items={items}
+                  onShowAll={() => {
+                    onShowAll(title, items);
+                  }}
+                />
+                <Divider className="my-6" />
+              </View>
+            ))}
+          </DynamicComposition>
         </View>
       </ScrollView>
       {showNotificationModal && (

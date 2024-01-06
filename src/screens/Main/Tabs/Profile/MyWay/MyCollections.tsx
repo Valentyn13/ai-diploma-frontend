@@ -20,7 +20,7 @@ const MyCollections = () => {
 
   const uniqueHistory = useMemo(() => {
     const ids = history.map(({ id }) => id);
-    const uniqueIds = [...new Set(ids)];
+    const uniqueIds = [...new Set(ids.reverse())];
     return uniqueIds.map(id => history.find(m => m.id === id));
   }, [history]);
 
@@ -35,6 +35,7 @@ const MyCollections = () => {
   return (
     <View>
       <Collection
+        shuffle={false}
         title={i18n.t('favorites')}
         items={favMeditations.reverse()}
         onShowAll={() => {
@@ -44,10 +45,11 @@ const MyCollections = () => {
       <Divider className="my-6" />
 
       <Collection
+        shuffle={false}
         title={i18n.t('history')}
-        items={uniqueHistory.reverse()}
+        items={uniqueHistory}
         onShowAll={() => {
-          onShowAll(i18n.t('history'), uniqueHistory.reverse());
+          onShowAll(i18n.t('history'), uniqueHistory);
         }}
       />
     </View>

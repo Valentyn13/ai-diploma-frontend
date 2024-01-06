@@ -1,3 +1,4 @@
+import { stringToDate } from '@utils/string';
 import { Platform } from 'react-native';
 import { createSelector } from 'reselect';
 
@@ -164,19 +165,10 @@ export const firstCourseSelector = createSelector([getCourses], courses => {
 
 export const favoriteMeditationsSelector = createSelector(
   [allMeditations, state => state.userPreferences.favoriteMeditations],
-  (allMeds, favMeds) => {
-    const favourite = [];
-    const fave = Object.keys(favMeds);
-
-    allMeds.map(item => {
-      fave.map(value => {
-        if (value === item.id) {
-          favourite.push(item);
-        }
-      });
-    });
-    return favourite.length > 0 ? favourite : [];
-  },
+  (allMeds, favMeds) =>
+    Object.keys(favMeds)
+      .map(value => findMeditation(allMeds, value))
+      .filter(item => item !== undefined),
 );
 
 export const practiceHistorySelector = createSelector(
@@ -188,7 +180,7 @@ export const practiceHistorySelector = createSelector(
         ...findMeditation(allMeds, id),
         timestamp,
       }))
-      .sort((a, b) => new Date(a.timestamp) - new Date(b.timestamp)),
+      .sort((a, b) => stringToDate(a.timestamp) - stringToDate(b.timestamp)),
 );
 
 export const latestMeditationSelector = createSelector(
