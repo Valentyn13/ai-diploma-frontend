@@ -29,7 +29,6 @@ const BgPlayer: FC = () => {
       volume={volume}
       audioOnly
       disableFocus
-      playWhenInactive
       ignoreSilentSwitch="ignore"
       source={{
         uri,
