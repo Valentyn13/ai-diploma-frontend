@@ -218,7 +218,7 @@ const Feed: FC<FeedProps> = ({ navigation }) => {
           <DynamicComposition>
             <View className="flex w-full items-center px-2 mt-4 flex-1">
               <ListTitle k="personalized" />
-              <View className="my-4 w-11/12 flex items-center">
+              <View className="my-4 w-full flex items-center px-8">
                 <Feeling onClick={() => setIsOpen(true)} isMale={sex === 'M'} />
               </View>
               <Divider className="my-6" />
