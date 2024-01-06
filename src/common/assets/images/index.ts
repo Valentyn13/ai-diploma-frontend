@@ -87,17 +87,13 @@ const images: Record<string, any> = {
   heartSelected: require('./heartSelected.png'),
   music: require('./music.png'),
   down: require('./down.png'),
-  bg: require('./bg.png'),
   tempBg: require('./tempBg.png'),
   logo: require('./logo.png'),
   badge: require('./badge.png'),
   close: require('./close.png'),
-  playerBg: require('./playerBg.png'),
   info: require('./info.png'),
   intro1: require('./intro1.png'),
   intro2: require('./intro2.png'),
-  onboardStudy: require('./onboard_study.png'),
-  onboardSleep: require('./onboard_sleep.png'),
   onboardRelax: require('./onboard_relax.png'),
   male: require('./male.png'),
   female: require('./female.png'),
@@ -138,8 +134,6 @@ const images: Record<string, any> = {
   army: require('./army_bg.png'),
   sleep: require('./sleep_bg.png'),
 
-  starterGif: require('./bgs/starter.gif'),
-
   // new
   bg_1: require('./new/bg_1.png'),
   bg_2: require('./new/bg_2.png'),
@@ -173,7 +167,6 @@ const images: Record<string, any> = {
   ic_sleep: require('./new/ic_sleep.png'),
   apple_logo: require('./new/apple-logo.png'),
   placeHolder: require('./placeHoder.jpeg'),
-  back_arrow: require('./arrow.png'),
 };
 
 const image = name => images[name];

@@ -2,7 +2,6 @@ import image from '@common/assets/images';
 import i18n from '@services/localization/i18n';
 import PropTypes from 'prop-types';
 import React from 'react';
-import { Platform } from 'react-native';
 import Dash from 'react-native-dash';
 import styled from 'styled-components';
 
@@ -199,34 +198,6 @@ TouchableIcon.defaultProps = {
   size: undefined,
   color: undefined,
 };
-
-export const BackIcon = styled(Icon).attrs(({ theme: { colors } }) => ({
-  name: 'back_arrow',
-  color: colors.textColor,
-  size: 20,
-}))`
-  margin-left: ${Platform.OS === 'ios' ? 20 : 10}px;
-  margin-right: ${Platform.OS === 'ios' ? 20 : 10}px;
-`;
-
-// Layouts
-
-// export const VerticalLayout = ({components}) => (
-//   <Container>
-//     {components.map(({flex = 1, color = null, component = null, style = {}}, index) => (
-//       /* eslint-disable react/no-array-index-key */
-//       <Container key={index} {...{flex, color, style}}>
-//         {component}
-//       </Container>
-//     ))}
-//   </Container>
-// );
-
-// VerticalLayout.propTypes = {
-//   components: PropTypes.arrayOf(PropTypes.shape({}).isRequired).isRequired,
-// };
-
-// UI Elements
 
 export const Separator = styled.View`
   height: 1px;
