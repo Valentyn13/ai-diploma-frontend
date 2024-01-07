@@ -296,6 +296,7 @@ export const COLLECTIONS_TIME_OF_DAY = [
       '63c0efce2c4099bc0e36e44f',
       '644fc3948b29c767b4e6b66f',
       '64f57470d1342603f4d29cf9',
+      '6471b01a538c7fe78164398a',
       '63aa61c65fbca84d76752332',
     ],
   },
@@ -306,10 +307,7 @@ export const COLLECTIONS_TIME_OF_DAY = [
       '64046020420a84635493a7f5',
       '649543530e66f2955d2ecbe6',
       '649546820e66f2955d2ecbea',
-      '657147d0042258f6bc2d20a9',
-      '65715043042258f6bc2d20bb',
-      '657150c5042258f6bc2d20bd',
-      '65714feb042258f6bc2d20b9',
+      '6471b01a538c7fe78164398a',
     ],
   },
   {
@@ -356,10 +354,9 @@ export const COLLECTIONS = [
     trackIds: [
       '64954c1c0e66f2955d2ecbed',
       '649543530e66f2955d2ecbe6',
-      '64954ae20e66f2955d2ecbec',
       '644fc4398b29c767b4e6b671',
       '644fc3948b29c767b4e6b66f',
-      '63c0efce2c4099bc0e36e44f',
+      '6537b3d1092f89755aeb901a',
       '648c0c220e66f2955d2ecbd1',
       '62bd6c670888f539f97d85d0',
     ],
@@ -406,10 +403,8 @@ export const COLLECTIONS = [
     trackIds: [
       '6404605b420a84635493a7f6',
       '6482034d0e66f2955d2ecbb9',
-      '643fd04089ea3102dfe03b34',
       '6444fa6489ea3102dfe03b3f',
       '63b3fb8ae6e4abaf47376671',
-      '64954a480e66f2955d2ecbeb',
       '649543530e66f2955d2ecbe6',
     ],
   },
@@ -419,11 +414,8 @@ export const COLLECTIONS = [
     trackIds: [
       '654c74b8ba86f01d58165692',
       '64d2f01242357e4b9d18fe36',
-      '64bb80efb8394af97a9c0c0b',
       '6437c1ddc90514876f526229',
       '6404605b420a84635493a7f6',
-      '63b4e6574f831d8583577623',
-      '62bd72d20888f539f97d85eb',
     ],
   },
   {
@@ -431,8 +423,6 @@ export const COLLECTIONS = [
     title: 'אהבה עצמית',
     trackIds: [
       '649543530e66f2955d2ecbe6',
-      '64954c1c0e66f2955d2ecbed',
-      '5eca520c10fe0480d350c993',
       '6482034d0e66f2955d2ecbb9',
       '6471b01a538c7fe78164398a',
       '643fd04089ea3102dfe03b34',
@@ -447,7 +437,7 @@ export const COLLECTIONS = [
     title: 'לחיות בריא',
     trackIds: [
       '64954ae20e66f2955d2ecbec',
-      '64954a480e66f2955d2ecbeb',
+      '6537b3d1092f89755aeb901a',
       '657147d0042258f6bc2d20a9',
       '649543530e66f2955d2ecbe6',
       '644fc4038b29c767b4e6b670',
@@ -461,11 +451,11 @@ export const COLLECTIONS = [
     trackIds: [
       '63c22de34e4c5b11918e609a',
       '63c4fff9c1ab3549d358c3d3',
-      '63ce034c98817417bbcf9b69',
-      '649543530e66f2955d2ecbe6',
       '644fc4038b29c767b4e6b670',
+      '648b00f40e66f2955d2ecbca',
+      '63c22de34e4c5b11918e609a',
       '644fc3948b29c767b4e6b66f',
-      '638edb9e132405bcd302f6c1',
+      '647d9465a09dc890566da73e',
     ],
   },
   {
