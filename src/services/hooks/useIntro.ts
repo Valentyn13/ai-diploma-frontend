@@ -24,8 +24,10 @@ export const useIntro = () => {
       cached?.sex === undefined;
 
     if (!isFirst) {
-      dispatch(chooseSex({ sex: cached.sex }));
-      dispatch(chooseCategories({ categories: cached.categories }));
+      setTimeout(() => {
+        dispatch(chooseSex({ sex: cached.sex }));
+        dispatch(chooseCategories({ categories: cached.categories }));
+      }, 0);
     }
 
     return isFirst;
