@@ -47,7 +47,7 @@ const ParallaxScrollView: FC<PropsWithChildren & { image: string }> = ({
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: '#FFF8EE',
+    backgroundColor: '#fdedd6',
     flex: 1,
   },
   header: {
