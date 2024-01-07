@@ -193,8 +193,8 @@ export const latestMeditationSelector = createSelector(
       if (!b.createdAt) {
         return -1;
       }
-      const dateA = stringToDate(a.createdAt);
-      const dateB = stringToDate(b.createdAt);
+      const dateA = new Date(a.createdAt);
+      const dateB = new Date(b.createdAt);
       return dateB - dateA;
     });
 
