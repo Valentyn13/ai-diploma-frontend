@@ -3,8 +3,7 @@ import { SubTitle } from '@common/components/Styled';
 import i18n from '@services/localization/i18n';
 import { shuffleArray } from '@utils/rand';
 import React, { FC } from 'react';
-import { Text, View } from 'react-native';
-import { TouchableOpacity } from 'react-native-gesture-handler';
+import { Pressable, Text, View } from 'react-native';
 import styled from 'styled-components/native';
 
 const ListTitle = styled(SubTitle)`
@@ -30,12 +29,14 @@ const Collection: FC<Props> = ({
   shuffle = true,
 }) => (
   <View>
-    <View className="flex flex-row items-end justify-between w-full pl-2 mb-1">
+    <View className="flex flex-row items-center justify-between w-full mb-5 pl-5 pr-3">
       <ListTitle t={title} />
       {items.length > limit && (
-        <TouchableOpacity onPress={() => onShowAll()} className="p-2">
-          <Text className="text-xs text-neutral-800">{i18n.t('showAll')}</Text>
-        </TouchableOpacity>
+        <Pressable onPress={() => onShowAll()} className="p-2">
+          <Text className="text-[13px] leading-4 text-neutral-700">
+            {i18n.t('showAll')}
+          </Text>
+        </Pressable>
       )}
     </View>
     {items.length === 0 && (

@@ -1,8 +1,6 @@
 import CoursesCarousel from '@common/components/CoursesCarousel';
-import { Screen, StyledSafeAreaView } from '@common/components/Styled';
-import colors from '@common/theme/colors';
 import React, { useState } from 'react';
-import { Dimensions } from 'react-native';
+import { Dimensions, SafeAreaView } from 'react-native';
 
 interface CoursesProps {
   navigation: any;
@@ -21,16 +19,14 @@ const Courses: React.FC<CoursesProps> = ({ navigation }) => {
   // );
 
   return (
-    <StyledSafeAreaView>
-      <Screen color={colors.bgColor}>
-        <CoursesCarousel
-          height={height}
-          title="ourCourses"
-          {...{ selectedCourse }}
-          setSelectedCourse={setSelectedCourse}
-        />
-      </Screen>
-    </StyledSafeAreaView>
+    <SafeAreaView className="flex-1 bg-[#fdedd6]">
+      <CoursesCarousel
+        height={height}
+        title="ourCourses"
+        {...{ selectedCourse }}
+        setSelectedCourse={setSelectedCourse}
+      />
+    </SafeAreaView>
   );
 };
 

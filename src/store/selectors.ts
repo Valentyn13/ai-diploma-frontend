@@ -1,4 +1,3 @@
-import { stringToDate } from '@utils/string';
 import { Platform } from 'react-native';
 import { createSelector } from 'reselect';
 
@@ -180,7 +179,7 @@ export const practiceHistorySelector = createSelector(
         ...findMeditation(allMeds, id),
         timestamp,
       }))
-      .sort((a, b) => stringToDate(a.timestamp) - stringToDate(b.timestamp)),
+      .sort((a, b) => new Date(a.timestamp) - new Date(b.timestamp)),
 );
 
 export const latestMeditationSelector = createSelector(

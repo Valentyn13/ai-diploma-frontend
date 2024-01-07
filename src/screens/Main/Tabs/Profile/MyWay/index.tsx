@@ -17,8 +17,6 @@ import UserMetrics from './UserMetrics';
 const Title = styled(SubTitle)`
   font-size: 22px;
   font-weight: bold;
-  align-self: flex-start;
-  margin-bottom: 10px;
 `;
 
 const Card: FC<PropsWithChildren> = ({ children }) => (
@@ -31,9 +29,9 @@ const MyWay = ({ navigation }) => {
   const dates = meditationsPracticed.map(m => stringToDate(m.timestamp));
 
   return (
-    <View className="flex-1 bg-[#fdedd6] px-4">
+    <View className="flex-1 bg-[#fdedd6]">
       <ScrollView showsVerticalScrollIndicator={false}>
-        <View className="flex items-end mt-4">
+        <View className="absolute right-5">
           <CircleButton
             backgroundColor="#00000060"
             color="white"
@@ -51,19 +49,25 @@ const MyWay = ({ navigation }) => {
             }}
           />
         </View>
-        <Title className="ml-4" t="הרגעים שלי" />
-        <Card>
-          <UserMetrics />
-          <View className="my-3" />
-          <Badges />
-        </Card>
-        <Divider className="my-6" />
-        <Title className="ml-4" t="המסלול שלי" />
-        <Card>
-          <Strikes dates={dates} />
-        </Card>
-        <Divider className="my-6" />
-        <MyCollections />
+        <View className="px-5 mt-8">
+          <Title className="mb-4" t="הרגעים שלי" />
+          <Card>
+            <UserMetrics />
+            <View className="my-3" />
+            <Badges />
+          </Card>
+          <Divider className="my-6" />
+        </View>
+        <View className="px-5">
+          <Title className="mb-4" t="המסלול שלי" />
+          <Card>
+            <Strikes dates={dates} />
+          </Card>
+          <Divider className="my-6" />
+        </View>
+        <View className="pb-4">
+          <MyCollections />
+        </View>
       </ScrollView>
     </View>
   );

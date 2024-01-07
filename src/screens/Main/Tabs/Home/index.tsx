@@ -193,11 +193,15 @@ const Feed: FC<FeedProps> = ({ navigation }) => {
             <LinearGradient colorList={colorList} angle={90} />
           </View>
 
-          <View className="h-80" />
+          <View className="h-[260px]" />
           {COLLECTIONS_TIME_OF_DAY.filter(
             ({ id }) => id === getCollectionIdByTime(),
           ).map((collection: any) => (
-            <>
+            <View
+              style={{
+                marginTop: 100,
+                paddingTop: 60,
+              }}>
               <Collection
                 key={collection.id}
                 title={collection.title}
@@ -210,13 +214,13 @@ const Feed: FC<FeedProps> = ({ navigation }) => {
                 }}
               />
               <Divider className="my-6" />
-            </>
+            </View>
           ))}
         </View>
 
         <View className="bg-[#FCE8CD]">
           <DynamicComposition>
-            <View className="flex w-full items-center px-2 mt-4 flex-1">
+            <View className="flex w-full items-center px-5 mt-4 flex-1">
               <ListTitle k="personalized" />
               <View className="my-4 w-full flex items-center px-8">
                 <Feeling onClick={() => setIsOpen(true)} isMale={sex === 'M'} />
@@ -240,7 +244,7 @@ const Feed: FC<FeedProps> = ({ navigation }) => {
             ))}
 
             <View className="flex-1">
-              <View className="flex flex-row items-end justify-between w-full px-2 mb-1">
+              <View className="flex flex-row items-end justify-between w-full px-5 mb-4">
                 <ListTitle k="צוות המורים" />
               </View>
               <InstructorList />

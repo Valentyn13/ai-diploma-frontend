@@ -1,13 +1,22 @@
-export function stringToDate(dateTimeString) {
-  // Split the date and time by the comma
-  const [datePart, timePart] = dateTimeString.split(', ');
+import dayjs from 'dayjs';
+import customParseFormat from 'dayjs/plugin/customParseFormat';
 
-  // Further split the date and time parts
-  const [day, month, year] = datePart.split('/');
-  const [hours, minutes, seconds] = timePart.split(':');
+dayjs.extend(customParseFormat);
 
-  // Construct a new Date object
-  const date = new Date(year, month - 1, day, hours, minutes, seconds);
+const dateFormatsToTry = [
+  'ddd MMM D HH:mm:ss YYYY',
+  'ddd MMM  D HH:mm:ss YYYY',
+  'MM/DD/YYYY, h:mm:ss A',
+  'DD/MM/YYYY, HH:mm:ss',
+  "YYYY-MM-DD'T'HH:mm:ss.SSS'Z'",
+];
 
-  return date;
+export function stringToDate(dateString: string) {
+  for (let format of dateFormatsToTry) {
+    const d = dayjs(dateString, format);
+    if (d.isValid()) {
+      return d.toDate();
+    }
+  }
+  return new Date();
 }

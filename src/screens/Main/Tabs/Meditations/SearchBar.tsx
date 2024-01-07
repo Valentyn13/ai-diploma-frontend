@@ -13,14 +13,14 @@ const SearchBar: FC<Props> = ({ searchQuery, setSearchQuery }) => {
   const ref = useRef(null);
 
   return (
-    <View className="relative py-2 px-2 rounded-full mt-8 flex-row items-center w-11/12 mx-auto mb-4 border border-gray-300">
+    <View className="relative py-2 px-2 rounded-full mt-8 flex-row items-center w-full mx-auto mb-4 border border-[#E0D3BC]">
       <Icon
         style={{
           transform: [{ rotateY: '180deg' }],
           marginLeft: scale(10),
         }}
         size={scale(18)}
-        color="grey"
+        color="#E0D3BC"
         name="magnifying-glass"
       />
       <TextInput

@@ -24,7 +24,7 @@ interface CoursesCarouselProps {
 const CarouselTitle = styled(SubTitle)`
   font-size: 22px;
   font-weight: bold;
-  align-self: flex-start;
+  margin-bottom: 20px;
 `;
 
 const CoursesCarousel: FC<CoursesCarouselProps> = ({
@@ -53,7 +53,7 @@ const CoursesCarousel: FC<CoursesCarouselProps> = ({
   }, [courses, fullScreen, selectedCourse, setSelectedCourse]);
 
   return (
-    <View className="pl-2">
+    <View className="pt-6 px-5">
       <CarouselTitle k={title} />
       <Carousel2
         withParallax={withParallax}

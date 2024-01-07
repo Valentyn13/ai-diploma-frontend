@@ -1,4 +1,5 @@
 import Collection from '@common/components/Collection';
+import Divider from '@common/components/Divider';
 import SessionsGrid from '@common/components/SessionsGrid';
 import Meditate from '@common/components/animation/Meditate';
 import NotFound from '@common/components/animation/NotFound';
@@ -18,7 +19,7 @@ import SearchBar from './SearchBar';
 
 const Meditations = () => {
   const [isLoading, setIsLoading] = useState(false);
-  const [searchQuery, setSearchQuery] = useDebouncedState('', 200);
+  const [searchQuery, setSearchQuery] = useDebouncedState('', 500);
   const { navigate } = useNavigation();
   const categories = useSelector(categoriesSelector) as Category[];
 
@@ -43,22 +44,25 @@ const Meditations = () => {
   );
 
   return (
-    <View
+    <ScrollView
+      showsVerticalScrollIndicator={false}
       style={{
         backgroundColor: colors.bgColor,
         display: 'flex',
         flex: 1,
       }}>
-      <SearchBar
-        searchQuery={searchQuery}
-        setSearchQuery={v => {
-          if (!isLoading) {
-            setIsLoading(true);
-          }
+      <View className="mb-8 px-5">
+        <SearchBar
+          searchQuery={searchQuery}
+          setSearchQuery={v => {
+            if (!isLoading) {
+              setIsLoading(true);
+            }
 
-          setSearchQuery(v);
-        }}
-      />
+            setSearchQuery(v);
+          }}
+        />
+      </View>
 
       {isLoading && (
         <View className="px-4 py-2 w-full h-48 flex items-center justify-center">
@@ -98,11 +102,11 @@ const Meditations = () => {
       {!isLoading &&
         searchQuery.length === 0 &&
         filteredCategories.length > 0 && (
-          <ScrollView>
+          <View>
             {filteredCategories
               .sort((a, b) => a.order - b.order)
               .map(category => (
-                <View className="mb-4" key={category.id}>
+                <View key={category.id}>
                   <Collection
                     items={category.meditations}
                     title={category.title}
@@ -110,9 +114,10 @@ const Meditations = () => {
                       onShowAll(category.title, category.meditations)
                     }
                   />
+                  <Divider className="my-6" />
                 </View>
               ))}
-          </ScrollView>
+          </View>
         )}
 
       {searchQuery.length > 2 && filteredCategories.length > 0 && (
@@ -125,7 +130,7 @@ const Meditations = () => {
           )}
         />
       )}
-    </View>
+    </ScrollView>
   );
 };
 

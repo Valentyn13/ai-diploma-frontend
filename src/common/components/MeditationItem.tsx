@@ -92,10 +92,9 @@ const MeditationItem: React.FC<MeditationItemProps> = memo(
             ? theme.dimens.winWidth / 2.4
             : theme.dimens.winWidth / 2,
           height: horizontal ? 220 : 280,
-          maxWidth: theme.dimens.winWidth / 2 - 16,
+          maxWidth: theme.dimens.winWidth / 2 - 28,
         }}
-        onPress={navigateToMeditation}
-        className="flex-1 overflow-hidden m-1">
+        onPress={navigateToMeditation}>
         <View
           className="flex-1 overflow-hidden"
           style={{

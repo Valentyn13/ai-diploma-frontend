@@ -46,10 +46,12 @@ const HorizontalList: FC<HorizontalListProps> = ({
 
   return (
     <FlatList
+      contentContainerStyle={{ paddingHorizontal: 20, gap: 16 }}
       horizontal={true}
       showsHorizontalScrollIndicator={false}
       data={data}
       renderItem={renderItem}
+      // add gap between items
       keyExtractor={(item: any) =>
         `${item.id || item.name || item.title}-${uniqueRandomKey}`
       }
