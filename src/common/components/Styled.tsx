@@ -26,7 +26,7 @@ export const TouchableCenteredView = styled.TouchableOpacity`
 export const Container = styled(CenteredView)`
   flex: ${({ flex }) => flex || 1};
   align-self: stretch;
-  background-color: #513f73;
+  background-color: #fdedd6;
 `;
 
 export const ContainerCourse = styled(CenteredView)`

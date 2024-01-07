@@ -1,5 +1,4 @@
-import Logo from '@common/components/Logo';
-import { Container } from '@common/components/Styled';
+import { Container, Icon } from '@common/components/Styled';
 import WithPulse from '@common/components/transitions/WIthPulse';
 import WithFadeIn from '@common/components/transitions/WithFadeIn';
 import WithRotate from '@common/components/transitions/WithRotate';
@@ -75,7 +74,7 @@ const Splash: FC<SplashProps> = ({ navigation: { navigate, replace } }) => {
             <WithRotate degrees={10} duration={600}>
               <WithScale scaleValue={0.9} duration={550}>
                 <WithRotate degrees={-20} duration={600}>
-                  <Logo />
+                  <Icon name="logo" size={100} />
                 </WithRotate>
               </WithScale>
             </WithRotate>
@@ -90,7 +89,7 @@ const Splash: FC<SplashProps> = ({ navigation: { navigate, replace } }) => {
               style={{
                 fontFamily: fonts?.light,
               }}
-              className="mt-2 text-center text-2xl font-normal text-white">
+              className="mt-2 text-center text-2xl font-normal text-gray-800">
               רגע
             </Text>
           </WithScale>
