@@ -1,6 +1,11 @@
 import { MEDITATIONS_FEELING_LOCATION } from '@common/constants';
 import { usePurchases } from '@common/context/PurchaseContext';
-import BottomSheet, { BottomSheetFlatList } from '@gorhom/bottom-sheet';
+import BottomSheet, {
+  BottomSheetBackdrop,
+  BottomSheetFlatList,
+  BottomSheetView,
+  TouchableOpacity,
+} from '@gorhom/bottom-sheet';
 import { useNavigation } from '@react-navigation/native';
 import React, {
   FC,
@@ -10,13 +15,13 @@ import React, {
   useRef,
   useState,
 } from 'react';
-import { Text, TouchableOpacity, View } from 'react-native';
+import { StyleSheet, Text } from 'react-native';
+import { scale } from 'react-native-size-matters';
 import Icon from 'react-native-vector-icons/Feather';
 import { useSelector } from 'react-redux';
 import { allMeditations } from 'store/selectors';
 
 import { useSheetStore } from '../../store/useSheetStore';
-import Button from './HighlightButton';
 
 const FEELINGS = {
   calm: { label: 'רגוע', emoji: '😌' },
@@ -79,7 +84,13 @@ const HowUFeel: FC<{ onNext: (f: Feeling) => void; isMale: boolean }> = ({
   );
 
   return (
-    <View>
+    <BottomSheetView
+      style={{
+        flex: 1,
+        width: '100%',
+        justifyContent: 'center',
+        alignItems: 'center',
+      }}>
       <Text
         style={{
           color: 'black',
@@ -98,13 +109,21 @@ const HowUFeel: FC<{ onNext: (f: Feeling) => void; isMale: boolean }> = ({
         numColumns={3}
         scrollEnabled={false}
       />
-      <Button
-        className="mb-2"
-        onPress={() => onNext(selectedFeeling)}
+      <TouchableOpacity
+        style={{
+          padding: 8,
+          margin: 4,
+          borderRadius: 8,
+          justifyContent: 'center',
+          alignItems: 'center',
+          width: '80%',
+          backgroundColor: !selectedFeeling ? '#ddd' : '#273051',
+        }}
         disabled={!selectedFeeling}
-        text="המשך"
-      />
-    </View>
+        onPress={() => onNext(selectedFeeling!)}>
+        <Text className="text-lg text-white">המשך 👈</Text>
+      </TouchableOpacity>
+    </BottomSheetView>
   );
 };
 const PLACES = {
@@ -136,7 +155,13 @@ const WhereYouAt: FC<{ onNext: (l: Place) => void }> = ({ onNext }) => {
   );
 
   return (
-    <View>
+    <BottomSheetView
+      style={{
+        flex: 1,
+        width: '100%',
+        justifyContent: 'center',
+        alignItems: 'center',
+      }}>
       <Text
         style={{
           color: 'black',
@@ -155,13 +180,21 @@ const WhereYouAt: FC<{ onNext: (l: Place) => void }> = ({ onNext }) => {
         numColumns={3}
         scrollEnabled={false}
       />
-      <Button
-        className="mb-2"
-        text="המשך"
+      <TouchableOpacity
+        style={{
+          padding: 8,
+          margin: 4,
+          borderRadius: 8,
+          justifyContent: 'center',
+          alignItems: 'center',
+          width: '80%',
+          backgroundColor: !selectedPlace ? '#ddd' : '#273051',
+        }}
         disabled={!selectedPlace}
-        onPress={() => onNext(selectedPlace!)}
-      />
-    </View>
+        onPress={() => onNext(selectedPlace!)}>
+        <Text className="text-lg text-white">המשך 👈</Text>
+      </TouchableOpacity>
+    </BottomSheetView>
   );
 };
 
@@ -233,8 +266,26 @@ const MeditationPicker = () => {
     [hasPremium, meditations, navigation, selectedFeeling],
   );
 
+  const renderBackdrop = useCallback(
+    props => (
+      <BottomSheetBackdrop
+        {...props}
+        opacity={0.5}
+        enableTouchThrough={false}
+        appearsOnIndex={0}
+        disappearsOnIndex={-1}
+        style={[
+          { backgroundColor: 'rgba(0, 0, 0, 1)' },
+          StyleSheet.absoluteFillObject,
+        ]}
+      />
+    ),
+    [],
+  );
+
   return (
     <BottomSheet
+      backdropComponent={renderBackdrop}
       containerStyle={{ backgroundColor: 'rgba(0, 0, 0, 0.5)' }}
       handleStyle={{ backgroundColor: '#FFF8EE' }}
       enablePanDownToClose
@@ -242,20 +293,38 @@ const MeditationPicker = () => {
       index={1}
       snapPoints={snapPoints}
       onChange={handleSheetChanges}>
-      <View className="bg-[#FFF8EE] flex-1">
+      <BottomSheetView
+        style={{
+          backgroundColor: '#FFF8EE',
+          flex: 1,
+        }}>
         <TouchableOpacity
-          className="absolute top-0 left-4"
+          style={{
+            zIndex: 100,
+            position: 'absolute',
+            top: 0,
+            left: 8,
+            padding: 6,
+            borderRadius: 100,
+          }}
           onPress={() => bottomSheetRef.current!.close()}>
           <Icon name="x" size={24} color="#000" />
         </TouchableOpacity>
-        <View className="flex-1 mt-8 justify-center items-center mb-4">
+        <BottomSheetView
+          style={{
+            flex: 1,
+            marginTop: scale(32),
+            marginBottom: 20,
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}>
           {showWhereYouAt ? (
             <WhereYouAt onNext={onFinish} />
           ) : (
             <HowUFeel onNext={handleNext} isMale={userDetails.sex === 'M'} />
           )}
-        </View>
-      </View>
+        </BottomSheetView>
+      </BottomSheetView>
     </BottomSheet>
   );
 };
