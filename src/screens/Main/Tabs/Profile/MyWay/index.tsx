@@ -22,7 +22,7 @@ const MyWay = ({ navigation }) => {
   const { navigate } = useNavigation();
 
   return (
-    <View className="bg-[#fdedd6]">
+    <View className="flex-1 bg-[#fdedd6]">
       <ScrollView showsVerticalScrollIndicator={false}>
         <View className="flex items-end p-4">
           <CircleButton

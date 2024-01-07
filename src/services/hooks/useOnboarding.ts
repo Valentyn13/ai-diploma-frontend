@@ -1,17 +1,27 @@
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useNavigation } from '@react-navigation/native';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { firstCourseSelector } from 'store/selectors';
 
-import useCache from './useCache';
-
 export const useOnboarding = () => {
-  const [isOldUser, setIsOldUser] = useCache<boolean>('secondTime', true);
+  const [isOldUser, setIsOldUser] = useState(true);
   const { navigate } = useNavigation();
   const firstCourse = useSelector<any, any>(firstCourseSelector);
 
   useEffect(() => {
-    if (!isOldUser && firstCourse && firstCourse.meditations?.length) {
+    const fetchIsOldUser = async () => {
+      const isOldUserCache = await AsyncStorage.getItem('secondTime');
+      if (!isOldUserCache) {
+        setIsOldUser(false);
+      }
+    };
+
+    fetchIsOldUser();
+  }, []);
+
+  useEffect(() => {
+    if (!isOldUser && firstCourse?.meditations?.length) {
       // @ts-ignore
       navigate('Main', {
         screen: 'MeditationPlayer',
@@ -21,6 +31,7 @@ export const useOnboarding = () => {
       });
 
       setIsOldUser(true);
+      AsyncStorage.setItem('secondTime', 'true');
     }
   }, [isOldUser, firstCourse, navigate, setIsOldUser]);
 };
