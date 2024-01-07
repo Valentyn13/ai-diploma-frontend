@@ -1,6 +1,3 @@
-/* eslint-disable react-native/no-color-literals */
-
-/* eslint-disable react-native/no-inline-styles */
 import { checkVersion } from '@utils/checkVersion';
 import React from 'react';
 import {
@@ -29,8 +26,7 @@ function StoreUpdate({ children }) {
         });
       }
     }
-    // TODO: remove the comment here
-    // checkForUpdates();
+    checkForUpdates();
   }, []);
 
   const toggleUpdate = () => {
@@ -88,7 +84,7 @@ function StoreUpdate({ children }) {
                     fontWeight: '700',
                   }}>
                   ({newUpdate.latestVersion})
-                </Text>{' '} 
+                </Text>{' '}
                 {'update-desc-2'}{' '}
                 <Text
                   style={{
