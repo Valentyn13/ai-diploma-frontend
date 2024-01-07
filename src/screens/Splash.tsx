@@ -1,5 +1,5 @@
 import Logo from '@common/components/Logo';
-import { Container, TopTitle } from '@common/components/Styled';
+import { Container } from '@common/components/Styled';
 import WithPulse from '@common/components/transitions/WIthPulse';
 import WithFadeIn from '@common/components/transitions/WithFadeIn';
 import WithRotate from '@common/components/transitions/WithRotate';
@@ -8,20 +8,16 @@ import WithTranslateY from '@common/components/transitions/WithTranslateY';
 import config from '@common/config';
 import { fonts } from '@common/theme';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import { AMPLITUDE_EVENTS, useAmplitude } from '@services/hooks/useAmplitude';
 import useAppData from '@services/hooks/useAppData';
 import { useIntro } from '@services/hooks/useIntro';
 import React, { FC, useEffect, useState } from 'react';
 import { Text } from 'react-native';
 import { useSelector } from 'react-redux';
-import styled from 'styled-components/native';
 
 import { RootStackParamList } from './RootNavigator';
 
 type RootState = any;
-
-const AppNameTitle = styled(TopTitle)`
-  margin-top: 20px;
-`;
 
 type SplashProps = NativeStackScreenProps<RootStackParamList, 'Splash'>;
 
@@ -29,6 +25,7 @@ const Splash: FC<SplashProps> = ({ navigation: { navigate, replace } }) => {
   const { isFirstTimeUser } = useIntro();
   const { getAppData } = useAppData();
   const [animationFinished, setAnimationFinished] = useState(false);
+  const { logEvent, uploadEvents } = useAmplitude();
 
   const isLoaded = useSelector((state: RootState) => state.appData.loaded);
   const accessToken = useSelector(
@@ -41,6 +38,8 @@ const Splash: FC<SplashProps> = ({ navigation: { navigate, replace } }) => {
         if (accessToken) {
           getAppData();
         } else if (isFirstTimeUser) {
+          logEvent(AMPLITUDE_EVENTS.ONBOARDING_START);
+          uploadEvents();
           navigate('Onboarding');
         } else {
           navigate('Auth');
@@ -50,6 +49,7 @@ const Splash: FC<SplashProps> = ({ navigation: { navigate, replace } }) => {
     );
 
     return () => clearTimeout(timer);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [accessToken, getAppData, isFirstTimeUser, navigate]);
 
   useEffect(() => {

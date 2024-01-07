@@ -4,7 +4,8 @@ import AppText from '@common/components/AppText';
 import WithFadeIn from '@common/components/transitions/WithFadeIn';
 import WithSlideInX from '@common/components/transitions/WithSlideInX';
 import WithSlideInY from '@common/components/transitions/WithSlideInY';
-import React from 'react';
+import { AMPLITUDE_EVENTS, useAmplitude } from '@services/hooks/useAmplitude';
+import React, { useEffect } from 'react';
 import { Dimensions, Image, SafeAreaView, View } from 'react-native';
 import { scale } from 'react-native-size-matters';
 import styled from 'styled-components';
@@ -21,6 +22,14 @@ export const BgImage = styled.ImageBackground.attrs(({ name, isFirst }) => ({
 
 const IntroRelax = ({ navigation: { navigate } }) => {
   const { width } = Dimensions.get('screen');
+  const { logEvent, uploadEvents } = useAmplitude();
+
+  useEffect(() => {
+    logEvent(AMPLITUDE_EVENTS.ONBOARDING_SCREEN_VIEW, { screen: 'relax' });
+    uploadEvents();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: '#fcf2e3' }}>
       <View

@@ -6,8 +6,9 @@ import WithFadeIn from '@common/components/transitions/WithFadeIn';
 import WithSlideInX from '@common/components/transitions/WithSlideInX';
 import WithSlideInY from '@common/components/transitions/WithSlideInY';
 import { ProgressView } from '@react-native-community/progress-view';
+import { AMPLITUDE_EVENTS, useAmplitude } from '@services/hooks/useAmplitude';
 import PropTypes from 'prop-types';
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { Dimensions, Image, Platform, View } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { scale } from 'react-native-size-matters';
@@ -62,13 +63,25 @@ const PickExperience = ({ navigation: { navigate } }) => {
   const dispatch = useDispatch();
 
   const { width } = Dimensions.get('screen');
+  const { logEvent, uploadEvents } = useAmplitude();
+
+  useEffect(() => {
+    logEvent(AMPLITUDE_EVENTS.ONBOARDING_SCREEN_VIEW, { screen: 'experience' });
+    uploadEvents();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const onContinue = useCallback(() => {
     if (!experience) {
       return;
     }
+
+    logEvent(AMPLITUDE_EVENTS.ONBOARDING_FINISH);
+    uploadEvents();
+
     dispatch(chooseExperience({ experience }));
     navigate('Onboarding', { screen: 'CategoriesSelector' });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dispatch, experience, navigate]);
 
   return (

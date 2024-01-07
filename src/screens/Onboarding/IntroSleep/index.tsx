@@ -5,8 +5,9 @@ import WithFadeIn from '@common/components/transitions/WithFadeIn';
 import WithSlideInX from '@common/components/transitions/WithSlideInX';
 import WithSlideInY from '@common/components/transitions/WithSlideInY';
 import { useNavigation } from '@react-navigation/native';
+import { AMPLITUDE_EVENTS, useAmplitude } from '@services/hooks/useAmplitude';
 import i18n from '@services/localization/i18n';
-import React, { FC } from 'react';
+import React, { FC, useEffect } from 'react';
 import { Dimensions, Image, View } from 'react-native';
 import { scale } from 'react-native-size-matters';
 import styled from 'styled-components/native';
@@ -50,6 +51,13 @@ const ElegantButton = styled(AppButton)`
 const IntroSleep: FC = () => {
   const { navigate } = useNavigation<any>();
   const { width } = Dimensions.get('screen');
+  const { logEvent, uploadEvents } = useAmplitude();
+
+  useEffect(() => {
+    logEvent(AMPLITUDE_EVENTS.ONBOARDING_SCREEN_VIEW, { screen: 'welcome' });
+    uploadEvents();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <ElegantView>

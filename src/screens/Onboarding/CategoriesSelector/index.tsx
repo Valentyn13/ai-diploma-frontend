@@ -13,10 +13,11 @@ import WithSlideInY from '@common/components/transitions/WithSlideInY';
 import { ProgressView } from '@react-native-community/progress-view';
 import { useNavigation } from '@react-navigation/native';
 import { captureMessage } from '@sentry/react-native';
+import { AMPLITUDE_EVENTS, useAmplitude } from '@services/hooks/useAmplitude';
 import useCache from '@services/hooks/useCache';
 import { INTRO_METADATA_KEY, IntroMetadata } from '@services/hooks/useIntro';
 import PropTypes from 'prop-types';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Dimensions, FlatList, Image, Platform, View } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { scale } from 'react-native-size-matters';
@@ -129,6 +130,13 @@ const Intro = () => {
   });
   const dispatch = useDispatch();
   const [selectedItems, setSelectedItems] = useState([]);
+  const { logEvent, uploadEvents } = useAmplitude();
+
+  useEffect(() => {
+    logEvent(AMPLITUDE_EVENTS.ONBOARDING_SCREEN_VIEW, { screen: 'categories' });
+    uploadEvents();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const onContinue = () => {
     dispatch(chooseCategories({ categories: selectedItems }));

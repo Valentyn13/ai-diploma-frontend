@@ -135,17 +135,25 @@ const Settings = ({ navigation }) => {
   }, [isNotification, notificationTime]);
 
   const openEmailClient = () => {
-    const emailAddress = 'hello@rega.co.il';
-    const emailSubject = 'היי, רציתי לשאול שאלה';
-    const emailBody = '';
+    const instagramUrl = 'https://www.instagram.com/rega.app';
+    const instagramDMUrl = 'instagram://direct_message?username=rega.app';
 
-    const emailUrl = `mailto:${emailAddress}?subject=${encodeURIComponent(
-      emailSubject,
-    )}&body=${encodeURIComponent(emailBody)}`;
+    // const emailAddress = 'hello@rega.co.il';
+    // const emailSubject = 'היי, רציתי לשאול שאלה';
+    // const emailBody = '';
 
-    Linking.openURL(emailUrl).catch(err =>
-      console.error('An error occurred', err),
-    );
+    // const emailUrl = `mailto:${emailAddress}?subject=${encodeURIComponent(
+    //   emailSubject,
+    // )}&body=${encodeURIComponent(emailBody)}`;
+
+    Linking.openURL(instagramDMUrl).catch(err => {
+      Linking.openURL(instagramUrl).catch(err =>
+        Alert.alert(
+          'לא ניתן לפתוח את האפליקציה',
+          'אנא צרו קשר עם התמיכה במייל hello@rega.co.il, תודה',
+        ),
+      );
+    });
   };
 
   return (

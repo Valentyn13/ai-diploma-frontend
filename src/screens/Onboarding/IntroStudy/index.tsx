@@ -5,7 +5,8 @@ import { Title } from '@common/components/Styled';
 import WithFadeIn from '@common/components/transitions/WithFadeIn';
 import WithSlideInX from '@common/components/transitions/WithSlideInX';
 import WithSlideInY from '@common/components/transitions/WithSlideInY';
-import React from 'react';
+import { AMPLITUDE_EVENTS, useAmplitude } from '@services/hooks/useAmplitude';
+import React, { useEffect } from 'react';
 import { Dimensions, Image, Platform, View } from 'react-native';
 import { scale } from 'react-native-size-matters';
 import styled from 'styled-components';
@@ -35,6 +36,13 @@ const ButtonContainer = styled.View`
 
 const IntroStudy = ({ navigation: { navigate } }) => {
   const { width } = Dimensions.get('screen');
+  const { logEvent, uploadEvents } = useAmplitude();
+
+  useEffect(() => {
+    logEvent(AMPLITUDE_EVENTS.ONBOARDING_SCREEN_VIEW, { screen: 'impact' });
+    uploadEvents();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <View
