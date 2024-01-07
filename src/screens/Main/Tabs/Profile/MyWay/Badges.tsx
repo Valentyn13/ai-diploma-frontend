@@ -9,7 +9,9 @@ const Badge = ({ badge: { badge } = {} }) => (
     <View className="flex items-center justify-center w-16 h-16 rounded-full bg-[#513F73]">
       <Icon name={badge} size={40} color="#fff" />
     </View>
-    <Text className="text-lg text-black text-center mt-4">{i18n.t(badge)}</Text>
+    <Text className="text-xs text-black text-center mt-4 w-8/12">
+      {i18n.t(badge)}
+    </Text>
   </View>
 );
 

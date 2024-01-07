@@ -14,12 +14,6 @@ const InstructorContainer = styled.View`
   align-items: flex-start;
   flex: 1;
 `;
-// const ListTitle = styled(SubTitle)`
-//   margin-bottom: 10px;
-//   font-size: 18px;
-//   font-weight: bold;
-//   align-self: flex-start;
-// `;
 
 const InstructorList = () => {
   const { updateIstructorTractionData } = useInstructor();
@@ -73,6 +67,11 @@ const InstructorList = () => {
       </TouchableOpacity>
     );
   };
+
+  const instructorWithNoRega = instructors.filter(
+    instructor => instructor.name !== 'כלים מבית רגע',
+  );
+
   return (
     <InstructorContainer>
       <FlatList
@@ -83,7 +82,12 @@ const InstructorList = () => {
           display: 'flex',
           alignItems: 'center',
         }}
-        data={shuffleArray(instructors, instructors.length)}
+        data={[
+          ...instructors.filter(
+            instructor => instructor.name === 'כלים מבית רגע',
+          ),
+          ...shuffleArray(instructorWithNoRega, instructorWithNoRega.length),
+        ]}
         renderItem={renderItem}
         initialNumToRender={20}
         keyExtractor={item => item._id}
