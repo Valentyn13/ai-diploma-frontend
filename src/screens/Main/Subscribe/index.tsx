@@ -4,13 +4,19 @@ import { useNavigation } from '@react-navigation/native';
 import rudderClient, {
   RUDDER_LOG_LEVEL,
 } from '@rudderstack/rudder-sdk-react-native';
-import { AmplitudeInstance, useAmplitude } from '@services/hooks/useAmplitude';
+import { useAmplitude } from '@services/hooks/useAmplitude';
 import i18n from '@services/localization/i18n';
 import { logEvent } from '@utils/analytics';
 import get from '@utils/get';
-import { FC, default as React, useEffect, useState } from 'react';
-import { ActivityIndicator, Alert, StatusBar, Text, View } from 'react-native';
-import { TouchableOpacity } from 'react-native-gesture-handler';
+import React, { FC, useEffect, useState } from 'react';
+import {
+  ActivityIndicator,
+  Alert,
+  StatusBar,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import { LinearGradient } from 'react-native-gradients';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import Icon2 from 'react-native-vector-icons/Feather';
@@ -162,7 +168,7 @@ const Subscribe: FC = () => {
   );
   const availablePackages = get(plans, 'availablePackages', []);
 
-  const amplitudeInstance: AmplitudeInstance = useAmplitude();
+  const amplitudeInstance = useAmplitude();
   const numberOfPackage = availablePackages.length || 0;
 
   const initRudderstack = async () => {

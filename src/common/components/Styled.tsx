@@ -29,6 +29,12 @@ export const Container = styled(CenteredView)`
   background-color: #513f73;
 `;
 
+export const ContainerCourse = styled(CenteredView)`
+  flex: ${({ flex }) => flex || 1};
+  align-self: stretch;
+  background-color: #fdedd6;
+`;
+
 export const ScrollViewContainer = styled.ScrollView.attrs({
   showsVerticalScrollIndicator: false,
 })`

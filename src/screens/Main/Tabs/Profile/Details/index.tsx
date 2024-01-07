@@ -9,8 +9,14 @@ import { CircleButton } from '@common/components/buttons/CircleButton';
 import colors from '@common/theme/colors';
 import useUpdateProfile from '@services/hooks/useUpdateProfile';
 import React, { FC, useEffect, useState } from 'react';
-import { ActivityIndicator, Alert, Image, Modal, View } from 'react-native';
-import { TouchableOpacity } from 'react-native-gesture-handler';
+import {
+  ActivityIndicator,
+  Alert,
+  Image,
+  Modal,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { scale } from 'react-native-size-matters';
 import { useSelector } from 'react-redux';
@@ -119,102 +125,107 @@ const Details: FC<DetailsProps> = ({ navigation }) => {
         onRequestClose={() => {
           console.log('Modal has been closed.');
         }}>
-        <View
-          style={{ flex: 1, borderWidth: 2, backgroundColor: colors.bgColor }}>
-          <Title
-            t="עריכת פרופיל"
-            style={{
-              textAlign: 'center',
-              paddingTop: 60,
-              fontSize: 23,
-              fontWeight: 'bold',
-            }}
-          />
+        <View className="flex-1">
           <View
             style={{
-              backgroundColor: 'white',
-              paddingVertical: 10,
-              alignSelf: 'center',
-              paddingHorizontal: 10,
-              borderRadius: 8,
-              marginTop: scale(40),
-              flexDirection: 'row',
-              alignItems: 'center',
-              width: '90%',
-              height: scale(60),
+              flex: 1,
+              borderWidth: 2,
+              backgroundColor: colors.bgColor,
             }}>
-            <Image source={image('profile')} />
-            <AppTextInput
-              onChangeText={text => setNewName(text)}
-              returnKeyType="done"
-              placeholder="שם פרטי"
+            <Title
+              t="עריכת פרופיל"
               style={{
-                width: '90%',
-                marginHorizontal: 20,
-                fontSize: 20,
-                textAlign: 'right',
+                textAlign: 'center',
+                paddingTop: 60,
+                fontSize: 23,
+                fontWeight: 'bold',
               }}
-              value={newName}
             />
-          </View>
-          <View
-            style={{
-              alignItems: 'center',
-              alignSelf: 'center',
-              width: '90%',
-              marginTop: 30,
-            }}>
-            <TouchableOpacity
-              onPress={() => setNewSex('F')}
+            <View
+              style={{
+                backgroundColor: 'white',
+                paddingVertical: 10,
+                alignSelf: 'center',
+                paddingHorizontal: 10,
+                borderRadius: 8,
+                marginTop: scale(40),
+                flexDirection: 'row',
+                alignItems: 'center',
+                width: '90%',
+                height: scale(60),
+              }}>
+              <Image source={image('profile')} />
+              <AppTextInput
+                onChangeText={text => setNewName(text)}
+                returnKeyType="done"
+                placeholder="שם פרטי"
+                style={{
+                  width: '90%',
+                  marginHorizontal: 20,
+                  fontSize: 20,
+                  textAlign: 'right',
+                }}
+                value={newName}
+              />
+            </View>
+            <View
               style={{
                 alignItems: 'center',
-                width: '100%',
-                paddingVertical: 36,
-                paddingHorizontal: 20,
-                backgroundColor: newsex === 'F' ? '#D66366' : 'white',
-                borderRadius: 12,
-                height: 100,
+                alignSelf: 'center',
+                width: '90%',
+                marginTop: 30,
               }}>
-              <AppText
+              <TouchableOpacity
+                onPress={() => setNewSex('F')}
                 style={{
-                  color: newsex === 'F' ? 'white' : '#D66366',
-                  fontSize: 20,
+                  alignItems: 'center',
+                  width: '100%',
+                  paddingVertical: 36,
+                  paddingHorizontal: 20,
+                  backgroundColor: newsex === 'F' ? '#D66366' : 'white',
+                  borderRadius: 12,
+                  height: 100,
                 }}>
-                נקבה
-              </AppText>
-            </TouchableOpacity>
-            <TouchableOpacity
-              onPress={() => setNewSex('M')}
-              style={{
-                alignItems: 'center',
-                width: '100%',
-                marginTop: scale(15),
-                paddingVertical: 36,
-                paddingHorizontal: 20,
-                backgroundColor: newsex === 'M' ? '#D66366' : 'white',
-                borderRadius: 12,
-                height: 100,
-              }}>
-              <AppText
+                <AppText
+                  style={{
+                    color: newsex === 'F' ? 'white' : '#D66366',
+                    fontSize: 20,
+                  }}>
+                  נקבה
+                </AppText>
+              </TouchableOpacity>
+              <TouchableOpacity
+                onPress={() => setNewSex('M')}
                 style={{
-                  color: newsex === 'M' ? 'white' : '#D66366',
-                  fontSize: 20,
+                  alignItems: 'center',
+                  width: '100%',
+                  marginTop: scale(15),
+                  paddingVertical: 36,
+                  paddingHorizontal: 20,
+                  backgroundColor: newsex === 'M' ? '#D66366' : 'white',
+                  borderRadius: 12,
+                  height: 100,
                 }}>
-                זכר
-              </AppText>
-            </TouchableOpacity>
+                <AppText
+                  style={{
+                    color: newsex === 'M' ? 'white' : '#D66366',
+                    fontSize: 20,
+                  }}>
+                  זכר
+                </AppText>
+              </TouchableOpacity>
+            </View>
           </View>
-          <View
-            style={{ position: 'absolute', bottom: 80, alignSelf: 'center' }}>
-            <AppButton onPress={() => submit()} style={{}}>
-              עדכן פרופיל
-            </AppButton>
-          </View>
-          <View
-            style={{ position: 'absolute', bottom: 30, alignSelf: 'center' }}>
-            <AppButton onPress={() => setToggleModal(false)} style={{}}>
-              לְבַטֵל
-            </AppButton>
+          <View className="absolute bottom-10 w-full flex items-center">
+            <View className="flex flex-col space-y-4 w-11/12">
+              <AppButton onPress={() => submit()} style={{}}>
+                שנה פרטים
+              </AppButton>
+
+              <AppButton onPress={() => setToggleModal(false)} style={{}}>
+                ביטול
+              </AppButton>
+            </View>
           </View>
         </View>
         {updateloader && (
@@ -225,81 +236,85 @@ const Details: FC<DetailsProps> = ({ navigation }) => {
       </Modal>
 
       <Modal visible={passwordModal}>
-        <View
-          style={{ flex: 1, borderWidth: 2, backgroundColor: colors.bgColor }}>
-          <Title
-            k="Edit profile"
-            style={{
-              textAlign: 'center',
-              paddingTop: 60,
-              fontSize: 23,
-              fontWeight: 'bold',
-            }}
-          />
+        <View className="flex-1">
           <View
+            className="flex-1 px-8 py-4"
             style={{
-              backgroundColor: 'white',
-              paddingVertical: 10,
-              paddingHorizontal: 10,
-              borderRadius: 10,
-              marginTop: scale(14),
-              flexDirection: 'row',
-              alignItems: 'center',
-              width: '100%',
-              height: scale(60),
+              flex: 1,
+              borderWidth: 2,
+              backgroundColor: colors.bgColor,
             }}>
-            <Image source={image('lock')} />
-            <AppTextInput
-              onChangeText={text => setPassword(text)}
-              returnKeyType="done"
-              secureTextEntry
-              placeholder="סיסמא"
+            <Title
+              t="שינוי סיסמא"
               style={{
-                width: '90%',
-                marginHorizontal: 20,
-                fontSize: 20,
-                textAlign: 'right',
+                textAlign: 'center',
+                paddingTop: 60,
+                fontSize: 23,
+                fontWeight: 'bold',
               }}
             />
-          </View>
-          <View
-            style={{
-              backgroundColor: 'white',
-              paddingVertical: 10,
-              paddingHorizontal: 10,
-              borderRadius: 8,
-              marginTop: scale(14),
-              flexDirection: 'row',
-              alignItems: 'center',
-              width: '100%',
-              height: scale(60),
-            }}>
-            <Image source={image('lock')} />
-            <AppTextInput
-              onChangeText={text => setVerifyPassword(text)}
-              returnKeyType="done"
-              secureTextEntry
-              placeholder="וידוא סיסמא"
+            <View
               style={{
-                width: '90%',
-                marginHorizontal: 20,
-                fontSize: 20,
-                textAlign: 'right',
-              }}
-            />
+                backgroundColor: 'white',
+                paddingVertical: 10,
+                paddingHorizontal: 10,
+                borderRadius: 10,
+                marginTop: scale(14),
+                flexDirection: 'row',
+                alignItems: 'center',
+                width: '100%',
+                height: scale(60),
+              }}>
+              <Image source={image('lock')} />
+              <AppTextInput
+                onChangeText={text => setPassword(text)}
+                returnKeyType="done"
+                secureTextEntry
+                placeholder="סיסמא"
+                style={{
+                  width: '90%',
+                  marginHorizontal: 20,
+                  fontSize: 20,
+                  textAlign: 'right',
+                }}
+              />
+            </View>
+            <View
+              style={{
+                backgroundColor: 'white',
+                paddingVertical: 10,
+                paddingHorizontal: 10,
+                borderRadius: 8,
+                marginTop: scale(14),
+                flexDirection: 'row',
+                alignItems: 'center',
+                width: '100%',
+                height: scale(60),
+              }}>
+              <Image source={image('lock')} />
+              <AppTextInput
+                onChangeText={text => setVerifyPassword(text)}
+                returnKeyType="done"
+                secureTextEntry
+                placeholder="וידוא סיסמא"
+                style={{
+                  width: '90%',
+                  marginHorizontal: 20,
+                  fontSize: 20,
+                  textAlign: 'right',
+                }}
+              />
+            </View>
           </View>
-
-          <View
-            style={{ position: 'absolute', bottom: 80, alignSelf: 'center' }}>
-            <AppButton onPress={() => submitChangePassword()} style={{}}>
-              שנה סיסמא
-            </AppButton>
-          </View>
-          <View
-            style={{ position: 'absolute', bottom: 30, alignSelf: 'center' }}>
-            <AppButton onPress={() => setPasswordModal(false)} style={{}}>
-              לְבַטֵל
-            </AppButton>
+          <View className="absolute bottom-10 w-full flex items-center">
+            <View className="flex flex-col space-y-4 w-11/12">
+              <AppButton onPress={() => submitChangePassword()} style={{}}>
+                שנה סיסמא
+              </AppButton>
+              <AppButton onPress={() => setPasswordModal(false)} style={{}}>
+                ביטול
+              </AppButton>
+            </View>
           </View>
         </View>
         {updateloader && (

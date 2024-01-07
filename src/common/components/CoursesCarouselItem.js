@@ -7,7 +7,7 @@ import { View } from 'react-native';
 import styled from 'styled-components';
 
 import CourseMeditations from './CourseMeditations';
-import { Container, ListItemCaption } from './Styled';
+import { ContainerCourse, ListItemCaption } from './Styled';
 
 const BGS_ASSETS_URL = 'https://d137rfe7jg135q.cloudfront.net/bgs/';
 
@@ -69,18 +69,18 @@ const CoursesCarouselItem = ({
   const { hasPremium } = usePurchases();
 
   return (
-    <Container>
+    <ContainerCourse>
       <CourseItem {...{ item, index, onItemPress, fullScreen }} />
       {fullScreen && (
-        <Container flex={HEIGHT_RATIO.BOTTOM}>
+        <ContainerCourse flex={HEIGHT_RATIO.BOTTOM}>
           <CourseMeditations
             data={item.meditations}
             isCategoryLocked={item.isCategoryLocked}
             hasPremium={hasPremium}
           />
-        </Container>
+        </ContainerCourse>
       )}
-    </Container>
+    </ContainerCourse>
   );
 };
 
