@@ -42,6 +42,8 @@ const styles = StyleSheet.create({
   },
 });
 
+const MAX_MEDITATIONS = 40;
+
 const GroupedMeditations = () => {
   const route = useRoute();
   const { title, meditations } = route.params || { title: '', meditations: [] };
@@ -50,7 +52,10 @@ const GroupedMeditations = () => {
     <SafeAreaView
       edges={['top', 'right', 'left']}
       className="bg-[#fdedd6] flex-1">
-      <SessionsGrid meditations={meditations} title={title} />
+      <SessionsGrid
+        meditations={meditations.slice(0, MAX_MEDITATIONS)}
+        title={title}
+      />
     </SafeAreaView>
   );
 };
