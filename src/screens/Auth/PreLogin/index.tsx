@@ -77,7 +77,7 @@ const PreLogin: FC<PreLoginProps> = ({ navigation: { navigate } }) => {
       alert(
         'היי אנחנו חווים תקלה בהתחברות דרך ערוץ זה, אנא נסו שנית או בחרו ערוץ התחברות אחר',
       );
-    } finally {
+
       setIsLoading(false);
     }
   };
