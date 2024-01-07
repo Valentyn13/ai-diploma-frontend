@@ -2,6 +2,7 @@ import { PurchaseProvider } from '@common/context/PurchaseContext';
 import StoreUpdate from '@common/storeUpdate';
 import theme from '@common/theme';
 import colors from '@common/theme/colors';
+import { BottomSheetModalProvider } from '@gorhom/bottom-sheet';
 import { NavigationContainer } from '@react-navigation/native';
 import * as Sentry from '@sentry/react-native';
 import React, { useEffect } from 'react';
@@ -62,16 +63,18 @@ const App: React.FC = () => {
       <GestureHandlerRootView className="flex-1">
         <Provider store={store}>
           <PurchaseProvider>
-            <PersistGate loading={null} persistor={persistor}>
-              <StatusBar hidden />
-              <ThemeProvider theme={theme}>
-                <StoreUpdate>
-                  <View style={styles.rootContainer}>
-                    <RootNavigator />
-                  </View>
-                </StoreUpdate>
-              </ThemeProvider>
-            </PersistGate>
+            <BottomSheetModalProvider>
+              <PersistGate loading={null} persistor={persistor}>
+                <StatusBar hidden />
+                <ThemeProvider theme={theme}>
+                  <StoreUpdate>
+                    <View style={styles.rootContainer}>
+                      <RootNavigator />
+                    </View>
+                  </StoreUpdate>
+                </ThemeProvider>
+              </PersistGate>
+            </BottomSheetModalProvider>
           </PurchaseProvider>
         </Provider>
       </GestureHandlerRootView>

@@ -92,13 +92,7 @@ const TabNavigator = () => {
           />
         ))}
       </Tab.Navigator>
-      {isOpen && (
-        <>
-          {/* TODO: fix ui glitch when on picker hide  */}
-          {/* <View className="w-full h-full bg-black/40 absolute top-0 left-0" /> */}
-          <MeditationPicker />
-        </>
-      )}
+      <MeditationPicker />
     </SafeAreaView>
   );
 };

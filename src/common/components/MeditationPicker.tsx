@@ -1,8 +1,9 @@
 import { MEDITATIONS_FEELING_LOCATION } from '@common/constants';
 import { usePurchases } from '@common/context/PurchaseContext';
-import BottomSheet, {
+import {
   BottomSheetBackdrop,
   BottomSheetFlatList,
+  BottomSheetModal,
   BottomSheetView,
   TouchableOpacity,
 } from '@gorhom/bottom-sheet';
@@ -203,8 +204,8 @@ const MeditationPicker = () => {
   const { hasPremium } = usePurchases();
   const meditations = useSelector(allMeditations);
   const navigation = useNavigation();
-  const setIsOpen = useSheetStore(state => state.setIsOpen);
-  const bottomSheetRef = useRef<BottomSheet>(null);
+  const { isOpen, setIsOpen } = useSheetStore(state => state);
+  const bottomSheetRef = useRef<BottomSheetModal>(null);
   const [showWhereYouAt, setShowWhereYouAt] = useState(false);
   const [selectedFeeling, setSelectedFeeling] = useState<Feeling | null>(null);
 
@@ -283,8 +284,16 @@ const MeditationPicker = () => {
     [],
   );
 
+  useEffect(() => {
+    if (isOpen) {
+      bottomSheetRef.current!.present();
+    } else {
+      bottomSheetRef.current!.close();
+    }
+  }, [isOpen]);
+
   return (
-    <BottomSheet
+    <BottomSheetModal
       backdropComponent={renderBackdrop}
       containerStyle={{ backgroundColor: 'rgba(0, 0, 0, 0.5)' }}
       handleStyle={{ backgroundColor: '#FFF8EE' }}
@@ -325,7 +334,7 @@ const MeditationPicker = () => {
           )}
         </BottomSheetView>
       </BottomSheetView>
-    </BottomSheet>
+    </BottomSheetModal>
   );
 };
 
