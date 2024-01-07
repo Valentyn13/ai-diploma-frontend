@@ -2,9 +2,10 @@ import { isValid, parse } from 'date-fns';
 
 export function stringToDate(dateString: string) {
   const dateFormatsToTry = [
-    'dd/MM/yyyy HH:mm:ss',
-    'HH:mm:ss',
-    'EEE MMM dd HH:mm:ss yyyy',
+    'EEE MMM d HH:mm:ss yyyy',
+    'EEE MMM  d HH:mm:ss yyyy',
+    'MM/dd/yyyy, h:mm:ss a',
+    'dd/MM/yyyy, HH:mm:ss',
     "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'",
   ];
 
