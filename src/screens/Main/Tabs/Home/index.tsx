@@ -224,9 +224,10 @@ const Feed: FC<FeedProps> = ({ navigation }) => {
               <Divider className="my-6" />
             </View>
 
-            {collections.slice(0, 2).map(({ id, title, items }) => (
+            {collections.map(({ id, title, items }) => (
               <View className="flex-1">
                 <Collection
+                  shuffle={id !== 'top-rated' && id !== 'latest-release'}
                   key={id}
                   title={title}
                   items={items}
@@ -246,20 +247,6 @@ const Feed: FC<FeedProps> = ({ navigation }) => {
               <Divider className="my-6" />
             </View>
 
-            {collections.slice(2, 3).map(({ id, title, items }) => (
-              <View className="flex-1">
-                <Collection
-                  key={id}
-                  title={title}
-                  items={items}
-                  onShowAll={() => {
-                    onShowAll(title, items);
-                  }}
-                />
-                <Divider className="my-6" />
-              </View>
-            ))}
-
             <View className="flex-1">
               <CoursesCarousel
                 withParallax
@@ -269,20 +256,6 @@ const Feed: FC<FeedProps> = ({ navigation }) => {
               />
               <Divider className="my-6" />
             </View>
-
-            {collections.slice(3, 5).map(({ id, title, items }) => (
-              <View className="flex-1">
-                <Collection
-                  key={id}
-                  title={title}
-                  items={items}
-                  onShowAll={() => {
-                    onShowAll(title, items);
-                  }}
-                />
-                <Divider className="my-6" />
-              </View>
-            ))}
           </DynamicComposition>
         </View>
       </ScrollView>

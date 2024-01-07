@@ -54,7 +54,7 @@ export const allMeditations = createSelector(
 
 export const allMeditationsButCourses = createSelector(
   [getCategories, getCourses],
-  (categories, courses) => [
+  categories => [
     ...categories.reduce(
       (allMeds, category) => [...allMeds, ...mapMeditations(category)],
       [],
@@ -184,34 +184,23 @@ export const practiceHistorySelector = createSelector(
 );
 
 export const latestMeditationSelector = createSelector(
-  [getCategories],
-  categories => {
-    const latest = categories.reduce(
-      (meds, category) => [...meds, ...mapMeditations(category)],
-      [],
-    );
-
-    latest.sort(function (a, b) {
+  [allMeditationsButCourses],
+  items => {
+    const latest = items.slice().sort((a, b) => {
       if (!a.createdAt) {
         return 1;
       }
       if (!b.createdAt) {
         return -1;
       }
-      const dateA = new Date(a.createdAt);
-      const dateB = new Date(b.createdAt);
+      const dateA = stringToDate(a.createdAt);
+      const dateB = stringToDate(b.createdAt);
       return dateB - dateA;
     });
-    const seenIds = {};
-    const uniqueArray = latest.filter(item => {
-      if (seenIds[item.id]) {
-        return false;
-      }
-      seenIds[item.id] = true;
-      return true;
-    });
 
-    return uniqueArray.slice(0, 9);
+    const uniqueIds = [...new Set(latest.map(item => item.id))].slice(0, 9);
+
+    return latest.filter(item => uniqueIds.includes(item.id));
   },
 );
 
