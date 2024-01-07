@@ -4,9 +4,6 @@ import AppText from '@common/components/AppText';
 import AppTextInput from '@common/components/AppTextInput';
 import { CircleButton } from '@common/components/buttons/CircleButton';
 import CheckBox from '@react-native-community/checkbox';
-import rudderClient, {
-  RUDDER_LOG_LEVEL,
-} from '@rudderstack/rudder-sdk-react-native';
 import { useAmplitude } from '@services/hooks/useAmplitude';
 import useAppData from '@services/hooks/useAppData';
 import useLogin from '@services/hooks/useLogin';
@@ -38,19 +35,28 @@ const Register = ({ navigation }) => {
   const [loader, setLoader] = useState(false);
 
   const onContinue = async () => {
-    const fcmToken = await getFcmToken();
     if (!toggleCheckBox) {
       Alert.alert('please select checkbox');
       return;
-    }
-    if (password !== verifyPassword) {
+    } else if (!name) {
+      Alert.alert('please enter name');
+      return;
+    } else if (!email) {
+      Alert.alert('please enter email');
+      return;
+    } else if (!password) {
+      Alert.alert('please enter password');
+      return;
+    } else if (password !== verifyPassword) {
       Alert.alert('סיסמאות לא תואמות');
-    } else if (fcmToken) {
-      // setLoader(true)
-      signUp(email, password, name, fcmToken);
-      // setLoader(false)
     } else {
-      signUp(email, password, name);
+      const fcmToken = await getFcmToken();
+
+      if (fcmToken) {
+        signUp(email, password, name, fcmToken);
+      } else {
+        signUp(email, password, name);
+      }
     }
   };
   const {
@@ -62,34 +68,12 @@ const Register = ({ navigation }) => {
   const appDataloaded = useSelector(state => state.appData.loaded);
   const amplitudeInstance = useAmplitude();
 
-  const initRudderstack = async () => {
-    await rudderClient.setup('2Ah3U42Qc6y9v3PB4w8sKYhvkkJ', {
-      dataPlaneUrl: 'https://regatomxprg.dataplane.rudderstack.com',
-      // trackLifecycleEvents: true,
-      logLevel: RUDDER_LOG_LEVEL.DEBUG,
-      flushQueueSize: 1,
-      configRefreshInterval: 1,
-    });
-  };
   useEffect(() => {
-    initRudderstack();
     if ((accessToken, id)) {
       amplitudeInstance.setUserId(id);
       amplitudeInstance.logEvent('SIGNUP', { userID: id });
       getAppData();
-      rudderClient.identify(
-        'UserID',
-        {
-          userID: id,
-        },
-        null,
-      );
-      rudderClient.track('register', {
-        email: useremail || '',
-      });
-      rudderClient.identify('2CWOG3PZz8NEE6EICJOBFFAroDS', {
-        email: useremail,
-      });
+
       AppEventsLogger.logEvent(
         AppEventsLogger.AppEvents.CompletedRegistration,
         {
