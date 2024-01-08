@@ -16,7 +16,7 @@ import React, {
   useRef,
   useState,
 } from 'react';
-import { Alert, StatusBar, Text, View } from 'react-native';
+import { Alert, Pressable, StatusBar, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import Video from 'react-native-video';
 import { useDispatch, useSelector } from 'react-redux';
@@ -220,8 +220,28 @@ const MeditationPlayer: FC = () => {
     // downloadAndCacheAudio();
   }, [video, audio]);
 
+  const [hideControls, setHideControls] = useState(false);
+
+  useEffect(() => {
+    if (!hideControls) {
+      const timer = setTimeout(() => {
+        setHideControls(true);
+      }, 3000);
+
+      return () => {
+        clearTimeout(timer);
+      };
+    }
+  }, [hideControls]);
+
+  const onVideoPress = () => {
+    setHideControls(!hideControls);
+  };
+
   return (
-    <View className="flex flex-col items-center justify-center w-full h-full bg-black">
+    <Pressable
+      className="flex flex-col items-center justify-center w-full h-full bg-black"
+      onPress={onVideoPress}>
       <View className="absolute top-0 left-0 w-full h-full bg-black/20" />
       <StatusBar animated hidden={true} />
       {cachedVideoUri && (
@@ -285,7 +305,11 @@ const MeditationPlayer: FC = () => {
               />
             )}
           </View>
-          <View className="absolute flex flex-col items-center justify-center h-full w-full">
+          <View
+            style={{
+              display: hideControls ? 'none' : 'flex',
+            }}
+            className="absolute flex flex-col items-center justify-center h-full w-full">
             <CircularPlayer
               togglePlay={togglePlay}
               isPlaying={isPlaying}
@@ -323,7 +347,7 @@ const MeditationPlayer: FC = () => {
           </View>
         </View>
       </SafeAreaView>
-    </View>
+    </Pressable>
   );
 };
 

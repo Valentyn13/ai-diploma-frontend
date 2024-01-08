@@ -1,6 +1,5 @@
 import CircularSlider from '@common/components/CircularSlider';
 import theme from '@common/theme';
-import isLowResolution from '@utils/isLowResolution';
 import React, { FC } from 'react';
 import { ActivityIndicator, TouchableOpacity } from 'react-native';
 import styled from 'styled-components/native';
@@ -19,8 +18,8 @@ interface CircularPlayButtonProps {
   isLoading?: boolean;
 }
 
-const SIZE = isLowResolution ? 100 : 120;
-const WIDTH = isLowResolution ? 15 : 20;
+const SIZE = 120;
+const WIDTH = 20;
 
 const ButtonContainer = styled.View`
   width: ${SIZE}px;
