@@ -85,7 +85,7 @@ const Instructors = () => {
                 {instructor.name}
               </Text>
               <Text className="text-sm ml-3 text-left">
-                {getSessionsByInstructor(instructor._id).length} שיעורים
+                {getSessionsByInstructor(instructor._id).length} תרגולים
               </Text>
             </View>
           </TouchableOpacity>
