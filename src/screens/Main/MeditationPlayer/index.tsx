@@ -222,6 +222,7 @@ const MeditationPlayer: FC = () => {
 
   return (
     <View className="flex flex-col items-center justify-center w-full h-full bg-black">
+      <View className="absolute top-0 left-0 w-full h-full bg-black/20" />
       <StatusBar animated hidden={true} />
       {cachedVideoUri && (
         <VideoPlayer

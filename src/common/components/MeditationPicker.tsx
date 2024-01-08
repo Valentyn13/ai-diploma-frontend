@@ -17,6 +17,7 @@ import React, {
   useState,
 } from 'react';
 import { StyleSheet, Text } from 'react-native';
+import { useReducedMotion } from 'react-native-reanimated';
 import { scale } from 'react-native-size-matters';
 import Icon from 'react-native-vector-icons/Feather';
 import { useSelector } from 'react-redux';
@@ -292,8 +293,11 @@ const MeditationPicker = () => {
     }
   }, [isOpen]);
 
+  const reducedMotion = useReducedMotion();
+
   return (
     <BottomSheetModal
+      animateOnMount={!reducedMotion}
       backdropComponent={renderBackdrop}
       containerStyle={{ backgroundColor: 'rgba(0, 0, 0, 0.5)' }}
       handleStyle={{ backgroundColor: '#FFF8EE' }}
