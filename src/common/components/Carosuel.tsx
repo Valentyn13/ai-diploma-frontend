@@ -162,11 +162,7 @@ const PAGE_WIDTH = Dimensions.get('window').width;
 
 interface CoursesCarouselProps {
   fullScreen: boolean;
-  selectedCourse?: {
-    id: string;
-  } | null;
-  height?: number;
-  setSelectedCourse?: (course: any) => void;
+  activeItem?: number;
   data: any[];
   withParallax?: boolean;
 }
@@ -174,25 +170,28 @@ interface CoursesCarouselProps {
 const Carousel2: FC<CoursesCarouselProps> = ({
   data,
   fullScreen,
-  setSelectedCourse,
+  activeItem = 0,
   withParallax = false,
 }) => {
-  const progressValue = useSharedValue<number>(0);
-
+  const progressValue = useSharedValue<number>(activeItem);
   const { navigate } = useNavigation();
 
   const onItemPress = useCallback(
     (item: any) => {
       navigate('Courses', { item });
     },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [],
+    [navigate],
   );
 
   const renderItem = useCallback(
     ({ item, index }: { item: any; index: number }) => {
       return (
-        <CoursesCarouselItem {...{ item, index, fullScreen, onItemPress }} />
+        <CoursesCarouselItem
+          item={item}
+          index={index}
+          fullScreen={fullScreen}
+          onPress={() => onItemPress(item)}
+        />
       );
     },
     [fullScreen, onItemPress],

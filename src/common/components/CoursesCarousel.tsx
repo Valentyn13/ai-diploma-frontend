@@ -1,5 +1,4 @@
-import { useNavigation } from '@react-navigation/native';
-import React, { FC, useEffect, useState } from 'react';
+import React, { FC, useMemo } from 'react';
 import { View } from 'react-native';
 import { useSelector } from 'react-redux';
 import { coursesSelector } from 'store/selectors';
@@ -14,9 +13,8 @@ interface CoursesCarouselProps {
   fullScreen?: boolean;
   selectedCourse?: {
     id: string;
-  } | null;
+  };
   height?: number;
-  setSelectedCourse?: (course: any) => void; // Adjust the type accordingly
   isTest?: boolean;
   withParallax?: boolean;
 }
@@ -31,31 +29,23 @@ const CoursesCarousel: FC<CoursesCarouselProps> = ({
   title,
   fullScreen = true,
   selectedCourse = null,
-  setSelectedCourse,
   withParallax = false,
 }) => {
-  const [activeItem, setActiveItem] = useState(0);
-  const { navigate } = useNavigation();
-
   const courses = useSelector(coursesSelector) as Course[];
 
-  const onItemPress = (item: any) => {
-    navigate('Courses', { item });
-  };
-
-  useEffect(() => {
-    if (fullScreen && selectedCourse) {
-      const idx = courses.findIndex(({ id }) => id === selectedCourse.id);
-      const newselected = courses.find(({ id }) => id === selectedCourse.id);
-      setSelectedCourse?.(newselected);
-      setActiveItem(idx);
-    }
-  }, [courses, fullScreen, selectedCourse, setSelectedCourse]);
+  const selected = useMemo(
+    () =>
+      selectedCourse
+        ? courses.findIndex(({ id }) => id === selectedCourse.id)
+        : undefined,
+    [courses, selectedCourse],
+  );
 
   return (
     <View className="pt-6 px-5">
       <CarouselTitle k={title} />
       <Carousel2
+        activeItem={selected}
         withParallax={withParallax}
         fullScreen={fullScreen}
         data={courses.sort((a, b) => b.name.localeCompare(a.name))}

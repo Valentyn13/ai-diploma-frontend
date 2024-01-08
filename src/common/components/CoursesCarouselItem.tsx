@@ -39,13 +39,13 @@ const CourseTitle = styled(ListItemCaption)`
   margin-top: 32px;
 `;
 
-const CourseItem = ({ item, index, onItemPress, fullScreen }) =>
+const CourseItem = ({ item, index, onPress, fullScreen }) =>
   fullScreen ? (
     <Item index={index}>
       <CourseTitle t={item.title} />
     </Item>
   ) : (
-    <TouchableItem onPress={onItemPress}>
+    <TouchableItem onPress={onPress}>
       <Item index={index}>
         <View className="absolute bottom-0 w-full bg-[#160f29] px-4 py-2 justify-center items-start rounded-b-lg">
           <AppText bold style={{ color: 'white', fontSize: 26 }}>
@@ -59,18 +59,17 @@ const CourseItem = ({ item, index, onItemPress, fullScreen }) =>
     </TouchableItem>
   );
 
-const CoursesCarouselItem = ({
-  item,
-  index,
-  onItemPress: onItem,
-  fullScreen,
-}) => {
-  const onItemPress = () => onItem(item);
+const CoursesCarouselItem = ({ item, index, onPress, fullScreen }) => {
   const { hasPremium } = usePurchases();
 
   return (
     <Container>
-      <CourseItem {...{ item, index, onItemPress, fullScreen }} />
+      <CourseItem
+        index={index}
+        item={item}
+        onPress={onPress}
+        fullScreen={fullScreen}
+      />
       {fullScreen && (
         <Container flex={HEIGHT_RATIO.BOTTOM}>
           <CourseMeditations
@@ -90,12 +89,11 @@ CoursesCarouselItem.propTypes = {
     meditations: PropTypes.arrayOf(PropTypes.shape({}).isRequired).isRequired,
   }).isRequired,
   index: PropTypes.number.isRequired,
-  onItemPress: PropTypes.func.isRequired,
+  onPress: PropTypes.func.isRequired,
   fullScreen: PropTypes.bool,
 };
 
 CoursesCarouselItem.defaultProps = {
-  // onItemPress: undefined,
   fullScreen: false,
 };
 
@@ -105,7 +103,7 @@ CourseItem.propTypes = {
     title: PropTypes.string.isRequired,
   }).isRequired,
   index: PropTypes.number.isRequired,
-  onItemPress: PropTypes.func.isRequired,
+  onPress: PropTypes.func.isRequired,
 };
 
 CourseItem.defaultProps = {
