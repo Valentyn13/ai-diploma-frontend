@@ -31,7 +31,7 @@ const MyWay = ({ navigation }) => {
   return (
     <View className="flex-1 bg-[#fdedd6]">
       <ScrollView showsVerticalScrollIndicator={false}>
-        <View className="absolute right-5">
+        <View className="absolute right-5 top-5">
           <CircleButton
             backgroundColor="#00000060"
             color="white"
@@ -49,8 +49,8 @@ const MyWay = ({ navigation }) => {
             }}
           />
         </View>
-        <View className="px-5 mt-8">
-          <Title className="mb-4" t="הרגעים שלי" />
+        <View className="px-5 mt-16">
+          <Title className="mb-5" t="הרגעים שלי" />
           <Card>
             <UserMetrics />
             <View className="my-3" />
@@ -59,7 +59,7 @@ const MyWay = ({ navigation }) => {
           <Divider className="mb-6 mt-4" />
         </View>
         <View className="px-5">
-          <Title className="mb-4" t="המסלול שלי" />
+          <Title className="mb-5" t="המסלול שלי" />
           <Card>
             <Strikes dates={dates} />
           </Card>
