@@ -1,12 +1,7 @@
 import image from '@common/assets/images';
 import AppButton from '@common/components/AppButton';
 import AppText from '@common/components/AppText';
-import {
-  BoldTitle,
-  Container,
-  SubTitle,
-  Title,
-} from '@common/components/Styled';
+import { Title } from '@common/components/Styled';
 import WithFadeIn from '@common/components/transitions/WithFadeIn';
 import WithSlideInX from '@common/components/transitions/WithSlideInX';
 import WithSlideInY from '@common/components/transitions/WithSlideInY';
@@ -16,14 +11,12 @@ import { captureMessage } from '@sentry/react-native';
 import { AMPLITUDE_EVENTS, useAmplitude } from '@services/hooks/useAmplitude';
 import useCache from '@services/hooks/useCache';
 import { INTRO_METADATA_KEY, IntroMetadata } from '@services/hooks/useIntro';
-import PropTypes from 'prop-types';
 import React, { useEffect, useState } from 'react';
 import { Dimensions, FlatList, Image, Platform, View } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { scale } from 'react-native-size-matters';
 import { useDispatch } from 'react-redux';
 import { chooseCategories } from 'store/actions';
-import styled from 'styled-components';
 
 const CATEGORIES = [
   {
@@ -51,75 +44,6 @@ const CATEGORIES = [
     intro: 'studentsIntro',
   },
 ];
-
-const NUM_OF_ITEMS_IN_ROW = 3;
-
-const CategorySelectorTitle = styled(Title)`
-  align-self: flex-start;
-`;
-
-const CategorySelectionInfo = styled(SubTitle)`
-  margin-top: 20px;
-`;
-
-const CategorySelectorContainer = styled(TouchableOpacity)`
-  background-color: ${({ theme: { colors }, highlight }) =>
-    highlight ? colors.selectedCategoryColor : colors.itemBgColor};
-  width: ${({ theme: { dimens } }) =>
-    (dimens.winWidth - dimens.margin * 4) / NUM_OF_ITEMS_IN_ROW}px;
-  height: ${({ theme: { dimens } }) =>
-    (dimens.winWidth - dimens.margin * 4) / NUM_OF_ITEMS_IN_ROW}px;
-  padding: 8px;
-`;
-
-const CategoriesSelectorRow = styled.View`
-  flex-direction: row;
-  align-self: stretch;
-  justify-content: space-between;
-  margin-top: ${({ theme: { dimens } }) => dimens.margin}px;
-`;
-
-const PickCount = styled(BoldTitle)`
-  font-size: 28px;
-  margin-bottom: 20px;
-`;
-
-const ButtonsContainer = styled(Container)`
-  justify-content: flex-end;
-  padding-bottom: 10px;
-`;
-
-const CategoryIcon = styled.ImageBackground.attrs(({ id, isFirst }) => ({
-  resizeMode: isFirst ? 'cover' : 'contain',
-  source: image('categoryIcons')[id],
-}))`
-  width: 100%;
-  height: auto;
-  max-height: 60%;
-  flex: 1;
-  margin: 4px 0 8px;
-`;
-
-const CategorySelector = ({ idx, toggleItem, isSelected, canSelect }) => {
-  const { key, intro } = CATEGORIES[idx];
-
-  const handleSelect = () => {
-    if (isSelected(key)) {
-      return toggleItem(key);
-    }
-
-    return canSelect && toggleItem(key);
-  };
-
-  return (
-    <CategorySelectorContainer
-      onPress={handleSelect}
-      highlight={isSelected(key)}>
-      <CategoryIcon id={idx} />
-      <Title k={intro} />
-    </CategorySelectorContainer>
-  );
-};
 
 const MAX_SELECTION = 3;
 
@@ -368,12 +292,6 @@ const Intro = () => {
       </View>
     </View>
   );
-};
-
-CategorySelector.propTypes = {
-  idx: PropTypes.number.isRequired,
-  isSelected: PropTypes.func.isRequired,
-  toggleItem: PropTypes.func.isRequired,
 };
 
 export default Intro;
