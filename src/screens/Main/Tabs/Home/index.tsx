@@ -6,6 +6,7 @@ import Feeling from '@common/components/Feeling';
 import Logo from '@common/components/Logo';
 import { SubTitle } from '@common/components/Styled';
 import BgSelector from '@common/components/buttons/BgSelector';
+import ShowAll from '@common/components/buttons/ShowAll';
 import {
   COLLECTIONS,
   COLLECTIONS_TIME_OF_DAY,
@@ -250,8 +251,9 @@ const Feed: FC<FeedProps> = ({ navigation }) => {
             ))}
 
             <View className="flex-1">
-              <View className="flex flex-row items-end justify-between w-full px-5 mb-5">
+              <View className="flex flex-row items-center justify-between w-full mb-5 pl-5 pr-3">
                 <ListTitle k="צוות המורים" />
+                <ShowAll onPress={() => navigation.navigate('Instructors')} />
               </View>
               <InstructorList />
               <Divider className="my-6" />

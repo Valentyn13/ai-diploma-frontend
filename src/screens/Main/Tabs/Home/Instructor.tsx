@@ -28,7 +28,7 @@ const Instructor = () => {
 
   return (
     <View className="relative w-full h-full">
-      <View className="absolute top-4 left-4 z-10">
+      <View className="absolute top-5 left-5 z-10">
         <CircleButton
           size={40}
           icon="chevron-down"
