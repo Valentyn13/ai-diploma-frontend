@@ -262,15 +262,16 @@ const Settings = ({ navigation }) => {
       ),
     },
     {
-      title: 'מדיניות הפרטיות ותנאי השימוש',
-      onPress: () => navigation.navigate('PrivacyPolicy'),
-      icon: 'book',
-    },
-    {
       title: 'צור קשר',
       onPress: onContactUs,
       icon: 'instagram',
     },
+    {
+      title: 'מדיניות הפרטיות ותנאי השימוש',
+      onPress: () => navigation.navigate('PrivacyPolicy'),
+      icon: 'book',
+    },
+
     {
       title: 'מחיקת נתונים',
       onPress: deleteDataConfirm,
