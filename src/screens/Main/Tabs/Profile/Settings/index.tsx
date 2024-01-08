@@ -1,13 +1,7 @@
-import AppTextInput from '@common/components/AppTextInput';
-import Button from '@common/components/Button';
-import {
-  BoldTitle,
-  ButtonTitle,
-  Screen,
-  SmallText,
-  SubTitle,
-} from '@common/components/Styled';
+/* eslint-disable handle-callback-err */
+import { BoldTitle } from '@common/components/Styled';
 import { CircleButton } from '@common/components/buttons/CircleButton';
+import theme from '@common/theme';
 import colors from '@common/theme/colors';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import rudderClient, {
@@ -23,33 +17,25 @@ import PropTypes from 'prop-types';
 import React, { useEffect } from 'react';
 import {
   Alert,
+  FlatList,
   Linking,
   Platform,
-  ScrollView,
+  SafeAreaView,
   Switch,
   Text,
   TouchableOpacity,
   View,
 } from 'react-native';
 import DeviceInfo from 'react-native-device-info';
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import Modal from 'react-native-modal';
-import { scale } from 'react-native-size-matters';
+import Icon from 'react-native-vector-icons/FontAwesome6';
 import { useDispatch, useSelector } from 'react-redux';
 import { logout } from 'store/actions';
-import styled from 'styled-components';
-
-const SettingsScreen = styled(Screen)`
-  justify-content: flex-end;
-  padding-bottom: 50px;
-`;
 
 const Settings = ({ navigation }) => {
   const [showModal, setShowModal] = React.useState(false);
   const [showTime, setShowTime] = React.useState(false);
 
-  const [cancelSubscriptionModal, setCancelSubscriptionModal] =
-    React.useState(false);
   const dispatch = useDispatch();
   const { name, email, isNotification, notificationTime } = useSelector(
     state => state.userDetails,
@@ -110,12 +96,9 @@ const Settings = ({ navigation }) => {
     }
   };
 
-  const onToggleSiwtch = e => {
+  const onToggleSwitch = e => {
     setIsNotificationLocal(e);
-    if (e) {
-      setShowTime(true);
-    } else {
-      setShowTime(false);
+    if (!e) {
       cancelNotification();
     }
   };
@@ -123,6 +106,7 @@ const Settings = ({ navigation }) => {
   const onTimeSave = () => {
     setShowTime(false);
     saveNotification(notificationTimeLocal);
+    setIsNotificationLocal(true);
   };
 
   useEffect(() => {
@@ -134,234 +118,225 @@ const Settings = ({ navigation }) => {
     }
   }, [isNotification, notificationTime]);
 
-  const openEmailClient = () => {
+  const onContactUs = () => {
     const instagramUrl = 'https://www.instagram.com/rega.app';
     const instagramDMUrl = 'instagram://direct_message?username=rega.app';
 
-    // const emailAddress = 'hello@rega.co.il';
-    // const emailSubject = 'היי, רציתי לשאול שאלה';
-    // const emailBody = '';
+    const emailAddress = 'hello@rega.co.il';
+    const emailSubject = 'היי, רציתי לשאול שאלה';
+    const emailBody = '';
 
-    // const emailUrl = `mailto:${emailAddress}?subject=${encodeURIComponent(
-    //   emailSubject,
-    // )}&body=${encodeURIComponent(emailBody)}`;
+    const emailUrl = `mailto:${emailAddress}?subject=${encodeURIComponent(
+      emailSubject,
+    )}&body=${encodeURIComponent(emailBody)}`;
 
     Linking.openURL(instagramDMUrl).catch(err => {
-      Linking.openURL(instagramUrl).catch(err =>
-        Alert.alert(
-          'לא ניתן לפתוח את האפליקציה',
-          'אנא צרו קשר עם התמיכה במייל hello@rega.co.il, תודה',
-        ),
-      );
+      Linking.openURL(instagramUrl).catch(err => {
+        Linking.openURL(emailUrl).catch(err =>
+          Alert.alert(
+            'לא ניתן לפתוח את האפליקציה',
+            'אנא צרו קשר עם התמיכה במייל hello@rega.co.il, תודה',
+          ),
+        );
+      });
     });
   };
 
+  const deleteDataConfirm = () => {
+    Alert.alert(
+      'מחיקת נתונים',
+      'האם אתם בטוחים שאתם רוצים למחוק את הנתונים שלכם?',
+      [
+        {
+          text: 'ביטול',
+          onPress: () => {},
+          style: 'cancel',
+        },
+        {
+          text: 'מחיקה',
+          onPress: () => {
+            DeleteUserData();
+          },
+          style: 'destructive',
+        },
+      ],
+      { cancelable: true },
+    );
+  };
+
+  const cancelSubscriptionPrompt = () => {
+    Alert.prompt(
+      'ביטול רישום',
+      'הכנס את כתובת האימייל שלך ואת הסיבה לביטול הרישום',
+      [
+        {
+          text: 'ביטול',
+          onPress: () => {},
+          style: 'cancel',
+          isPreferred: true,
+        },
+        {
+          text: 'שלח',
+          onPress: () => {
+            dispatch(cancelSubsciption(data));
+          },
+          style: 'destructive',
+        },
+      ],
+      'plain-text',
+      'אני רוצה לבטל את הרישום כי...',
+    );
+  };
+
+  const logoutConfirm = () => {
+    Alert.alert(
+      'התנתקות',
+      'חבל לנו לראות אותך עוזב אותנו, האם אתם בטוחים?',
+      [
+        {
+          text: 'התנתק',
+          onPress: () => {
+            onLogout();
+          },
+          style: 'destructive',
+        },
+        {
+          text: 'ביטול',
+          onPress: () => {},
+          style: 'cancel',
+          isPreferred: true,
+        },
+      ],
+      { cancelable: true },
+    );
+  };
+
+  const list = [
+    {
+      title: 'הגדרות משתמש',
+      onPress: () =>
+        navigation.navigate('Main', {
+          screen: 'Tabs',
+          params: {
+            screen: 'Profile',
+            params: {
+              screen: 'SettingsNavigator',
+              params: {
+                screen: 'Details',
+              },
+            },
+          },
+        }),
+      icon: 'user-large',
+    },
+    {
+      title: 'התראות',
+      onPress: () => setShowTime(true),
+      icon: 'bullhorn',
+      // eslint-disable-next-line react/no-unstable-nested-components
+      left: () => (
+        <View className="flex flex-row items-center">
+          {isNotificationLocal === true && notificationTimeLocal !== null && (
+            <Text className="text-sm text-left mr-4">
+              {`כל יום ב-${notificationTimeLocal
+                .getHours()
+                .toLocaleString('en-US', {
+                  minimumIntegerDigits: 2,
+                  useGrouping: false,
+                })}:${notificationTimeLocal
+                .getMinutes()
+                .toLocaleString('en-US', {
+                  minimumIntegerDigits: 2,
+                  useGrouping: false,
+                })}`}
+            </Text>
+          )}
+          <Switch
+            trackColor={{
+              true: '#513F73',
+            }}
+            onValueChange={onToggleSwitch}
+            value={isNotificationLocal}
+          />
+        </View>
+      ),
+    },
+    {
+      title: 'מדיניות הפרטיות ותנאי השימוש',
+      onPress: () => navigation.navigate('PrivacyPolicy'),
+      icon: 'book',
+    },
+    {
+      title: 'צור קשר',
+      onPress: onContactUs,
+      icon: 'instagram',
+    },
+    {
+      title: 'מחיקת נתונים',
+      onPress: deleteDataConfirm,
+      icon: 'trash',
+    },
+    {
+      title: 'ביטול רישום',
+      onPress: cancelSubscriptionPrompt,
+      icon: 'ban',
+    },
+    {
+      title: 'התנתקות',
+      onPress: logoutConfirm,
+      icon: 'right-from-bracket',
+    },
+  ];
+
   return (
-    <View className="relative flex-1">
-      <SettingsScreen color={colors.bgColor}>
-        <View className="absolute left-4 top-4 z-10">
+    <SafeAreaView className="relative w-full h-full flex-1 bg-[#FCE8CD]">
+      <View className="relative p-5 flex flex-row items-center">
+        <View className="absolute top-5 left-5 z-10">
           <CircleButton
-            backgroundColor="#00000060"
-            color="#fff"
-            onPress={navigation.goBack}
             size={40}
             icon="chevron-right"
+            onPress={navigation.goBack}
+            backgroundColor="#00000060"
+            color="#fff"
           />
         </View>
-        <View className="flex-1 mt-5">
-          <Text className="text-center text-2xl font-bold text-black">
-            הגדרות
-          </Text>
-        </View>
-
-        <Button
-          title="הגדרות משתמש"
-          logout
-          big
-          onPress={() =>
-            navigation.navigate('Main', {
-              screen: 'Tabs',
-              params: {
-                screen: 'Profile',
-                params: {
-                  screen: 'SettingsNavigator',
-                  params: {
-                    screen: 'Details',
-                  },
-                },
-              },
-            })
-          }
-        />
-
-        <View style={{ height: 10 }} />
-
-        <View
-          style={{
-            display: 'flex',
-            paddingVertical: 14,
-            marginBottom: 60,
-            flexDirection: 'row',
-            justifyContent: 'space-between',
-            paddingHorizontal: 10,
-            alignContent: 'center',
-            alignItems: 'center',
-            borderRadius: 10,
-            backgroundColor: colors.logoutButtonColor,
-          }}>
-          <ButtonTitle t="התראות" />
-
-          <View
-            style={{
-              flexDirection: 'row',
-              alignItems: 'center',
-            }}>
-            {isNotificationLocal === true && notificationTimeLocal !== null && (
-              <ButtonTitle
-                t={`כל יום ב-${notificationTimeLocal.getHours()}:${notificationTimeLocal.getMinutes()}`}
-                style={{ marginLeft: 20, marginRight: 20 }}
-              />
-            )}
-            <Switch
-              style={{ transform: [{ scaleX: 1.2 }, { scaleY: 1.2 }] }}
-              trackColor={{
-                false: colors.logoutButtonColor,
-                true: colors.bgColor,
-              }}
-              thumbColor={
-                isNotificationLocal ? colors.logoutButtonColor : '#f4f3f4'
-              }
-              ios_backgroundColor={
-                isNotification ? colors.bgColor : colors.logoutButtonColor
-              }
-              onValueChange={onToggleSiwtch}
-              value={isNotificationLocal}
-            />
-          </View>
-        </View>
-        <Button
-          title="מדיניות הפרטיות ותנאי השימוש"
-          logout
-          big
-          onPress={() => navigation.navigate('PrivacyPolicy')}
-        />
-        <View style={{ height: 10 }} />
-        <Button title="צור קשר" logout big onPress={openEmailClient} />
-        <View style={{ height: 10 }} />
-        <Button
-          title="למחוק נתונים"
-          logout
-          big
-          onPress={() => setShowModal(true)}
-        />
-        <View style={{ height: 10 }} />
-        <Button
-          title="בטל רישום"
-          logout
-          big
-          onPress={() => setCancelSubscriptionModal(true)}
-        />
-        <View style={{ height: 10 }} />
-        <Button title="logout" logout big onPress={onLogout} />
-        <View style={{ height: 10 }} />
-        <SmallText t={`ver: ${DeviceInfo.getVersion()}`} />
-      </SettingsScreen>
-      <Modal isVisible={showModal}>
-        <View
-          style={{
-            width: '80%',
-            height: '40%',
-            backgroundColor: '#fff',
-            alignSelf: 'center',
-            borderRadius: 10,
-          }}>
-          <BoldTitle
-            t="האם אתה בטוח?"
-            style={{ textAlign: 'center', paddingVertical: 15, color: 'red' }}
-          />
-          <View style={{ borderWidth: 0.2, width: '100%', height: 2 }} />
-          <SubTitle
-            t="פעולה זו תמחק את ההעדפה שלך לצמיתות"
-            style={{
-              textAlign: 'left',
-              paddingVertical: 15,
-              fontSize: 14,
-              paddingHorizontal: 10,
-            }}
-          />
-          <SubTitle
-            t="לא תוכל לראות תוכן על סמך העדפותיך"
-            style={{
-              textAlign: 'left',
-              paddingVertical: 10,
-              fontSize: 14,
-              paddingHorizontal: 10,
-            }}
-          />
-          <SubTitle
-            t="לא תוכל לראות את התוכן המועדף עליך"
-            style={{
-              textAlign: 'left',
-              paddingVertical: 10,
-              fontSize: 14,
-              paddingHorizontal: 10,
-            }}
-          />
-          <View
-            style={{
-              width: '100%',
-              justifyContent: 'space-around',
-              flexDirection: 'row',
-              marginTop: 50,
-            }}>
-            <TouchableOpacity
-              style={{
-                width: 70,
-                paddingVertical: 10,
-                backgroundColor: 'red',
-                borderRadius: 10,
-              }}
-              onPress={() => {
-                DeleteUserData();
-                setShowModal(false);
-              }}>
-              <SubTitle
-                t="לִמְחוֹק"
-                style={{
-                  textAlign: 'center',
-                  fontSize: 14,
-                  color: '#fff',
-                  fontWeight: '800',
-                }}
-              />
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={{
-                width: 70,
-                borderWidth: 1,
-                paddingVertical: 10,
-                backgroundColor: '#273051',
-                borderRadius: 10,
-              }}
-              onPress={() => setShowModal(false)}>
-              <SubTitle
-                t="ביטול"
-                style={{
-                  textAlign: 'center',
-                  fontSize: 14,
-                  color: '#fff',
-                  fontWeight: '800',
-                }}
-              />
-            </TouchableOpacity>
-          </View>
-        </View>
-      </Modal>
-      <CancelSubscription
-        cancelSubscriptionModal={cancelSubscriptionModal}
-        setCancelSubscriptionModal={setCancelSubscriptionModal}
-        cancelSubsciption={cancelSubsciption}
+        <Text
+          className="flex-1 text-3xl font-bold text-center"
+          style={{ fontFamily: theme.fonts!.regular }}>
+          הגדרות
+        </Text>
+      </View>
+      <View className="w-full border-b border-[#513F73]/10" />
+      <FlatList
+        showsVerticalScrollIndicator={false}
+        data={list}
+        keyExtractor={item => item.title}
+        renderItem={({ item: { onPress, title, icon, left = null } }) => (
+          <TouchableOpacity
+            onPress={onPress}
+            className="flex flex-row items-center py-4 px-5 border-b border-[#513F73]/10">
+            <View className="flex flex-row items-center justify-between flex-1">
+              <View className="flex flex-row items-center">
+                <Icon
+                  style={{
+                    width: 20,
+                  }}
+                  name={icon}
+                  size={20}
+                  color="#160f29"
+                />
+                <Text className="text-lg font-medium ml-4 text-left">
+                  {title}
+                </Text>
+              </View>
+              {left && left()}
+            </View>
+          </TouchableOpacity>
+        )}
       />
+      <Text className="text-center text-sm mt-2 mb-1 text-gray-500">
+        גרסה נוכחית {DeviceInfo.getVersion()}
+      </Text>
       {showTime && Platform.OS === 'android' && (
         <DateTimePicker
           value={notificationTimeLocal}
@@ -392,173 +367,23 @@ const Settings = ({ navigation }) => {
               onChange={onChange}
               textColor={colors.textColor}
             />
-            <Button title="שמור" onPress={onTimeSave} />
+            <View className="items-center flex flex-row justify-around">
+              <TouchableOpacity
+                onPress={() => setShowTime(false)}
+                className="bg-red-500 py-2 px-6 rounded">
+                <Text className="text-white">ביטול</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                onPress={onTimeSave}
+                className="bg-[#273051] py-2 px-6 rounded">
+                <Text className="text-white">שמירה</Text>
+              </TouchableOpacity>
+            </View>
           </View>
         )}
       </Modal>
-    </View>
+    </SafeAreaView>
   );
-};
-
-const CancelSubscription = ({
-  cancelSubscriptionModal,
-  setCancelSubscriptionModal,
-  cancelSubsciption,
-}) => {
-  const [email, setEmail] = React.useState();
-  const [reason, setReason] = React.useState();
-  const dispatch = useDispatch();
-  function isValidEmail(emailParam) {
-    // Define a regular expression pattern for a valid email address
-    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
-    // Use the test method of the regular expression object to check if the email matches the pattern
-    return emailPattern.test(emailParam);
-  }
-  const onSend = async () => {
-    if (!email || !isValidEmail(email)) {
-      Alert.alert('כתובת אימייל לא חוקית');
-    } else if (!reason || reason.length < 10) {
-      Alert.alert('הסיבה צריכה להיות גדולה מ-10 תווים ');
-    } else {
-      const data = {
-        email,
-        reason,
-      };
-      dispatch(cancelSubsciption(data));
-      setCancelSubscriptionModal(false);
-    }
-  };
-  return (
-    <Modal isVisible={cancelSubscriptionModal} animationIn="fadeInUp">
-      <View
-        style={{
-          flex: 1,
-          backgroundColor: 'white',
-          width: '100%',
-          justifyContent: 'center',
-          borderRadius: 10,
-          marginTop: 15,
-        }}>
-        <ScrollView contentContainerStyle={{ flex: 1, height: '70%' }}>
-          <BoldTitle
-            t=" בטל רישום"
-            style={{ textAlign: 'center', marginVertical: 43, color: '#000' }}
-          />
-          <KeyboardAwareScrollView>
-            <View
-              style={{
-                backgroundColor: 'white',
-                paddingVertical: 10,
-                paddingHorizontal: 10,
-                borderRadius: 10,
-                marginTop: scale(14),
-                flexDirection: 'row',
-                alignItems: 'center',
-                width: '95%',
-                height: scale(60),
-                flexDirection: 'column',
-                borderWidth: 0.6,
-                alignSelf: 'center',
-              }}>
-              <AppTextInput
-                onChangeText={text => setEmail(text)}
-                value={email}
-                returnKeyType="done"
-                placeholder="אימייל"
-                style={{
-                  width: '80%',
-                  marginHorizontal: 20,
-                  fontSize: 20,
-                  textAlign: 'right',
-                }}
-              />
-            </View>
-            <View
-              style={{
-                borderWidth: 0.6,
-                backgroundColor: 'white',
-                paddingVertical: 10,
-                paddingHorizontal: 10,
-                borderRadius: 10,
-                marginTop: scale(14),
-                flexDirection: 'row',
-                alignItems: 'center',
-                width: '95%',
-                height: scale(150),
-                flexDirection: 'column',
-                alignSelf: 'center',
-              }}>
-              <AppTextInput
-                onChangeText={text => setReason(text)}
-                value={reason}
-                returnKeyType="done"
-                placeholder="סיבה"
-                style={{
-                  width: '80%',
-                  marginHorizontal: 20,
-                  fontSize: 20,
-                  textAlign: 'right',
-                }}
-              />
-            </View>
-            <View
-              style={{
-                Width: '100%',
-                justifyContent: 'space-around',
-                flexDirection: 'row',
-                marginHorizontal: 20,
-                marginVertical: 20,
-              }}>
-              <TouchableOpacity
-                style={{
-                  width: 70,
-                  paddingVertical: 10,
-                  backgroundColor: 'red',
-                  borderRadius: 10,
-                }}
-                onPress={onSend}>
-                <SubTitle
-                  t="שליחה"
-                  style={{
-                    textAlign: 'center',
-                    fontSize: 14,
-                    color: '#fff',
-                    fontWeight: '800',
-                  }}
-                />
-              </TouchableOpacity>
-              <TouchableOpacity
-                style={{
-                  width: 70,
-                  borderWidth: 1,
-                  paddingVertical: 10,
-                  backgroundColor: '#273051',
-                  borderRadius: 10,
-                }}
-                onPress={() => setCancelSubscriptionModal(false)}>
-                <SubTitle
-                  t="ביטול"
-                  style={{
-                    textAlign: 'center',
-                    fontSize: 14,
-                    color: '#fff',
-                    fontWeight: '800',
-                  }}
-                />
-              </TouchableOpacity>
-            </View>
-          </KeyboardAwareScrollView>
-        </ScrollView>
-      </View>
-    </Modal>
-  );
-};
-
-CancelSubscription.propTypes = {
-  cancelSubsciption: PropTypes.func.isRequired,
-  cancelSubscriptionModal: PropTypes.bool.isRequired,
-  setCancelSubscriptionModal: PropTypes.func.isRequired,
 };
 
 Settings.propTypes = {

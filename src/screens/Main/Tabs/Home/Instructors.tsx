@@ -1,4 +1,5 @@
 import { CircleButton } from '@common/components/buttons/CircleButton';
+import theme from '@common/theme';
 import { useNavigation } from '@react-navigation/native';
 import { shuffleArray } from '@utils/rand';
 import React, { useCallback, useMemo } from 'react';
@@ -55,7 +56,9 @@ const Instructors = () => {
             color="#fff"
           />
         </View>
-        <Text className="flex-1 text-2xl font-bold text-center mt-1">
+        <Text
+          className="flex-1 text-3xl font-bold text-center"
+          style={{ fontFamily: theme.fonts!.regular }}>
           המורים שלנו
         </Text>
       </View>
@@ -63,7 +66,7 @@ const Instructors = () => {
       <FlatList
         showsVerticalScrollIndicator={false}
         data={[
-          // ...instructors.filter(({ name }) => name === 'כלים מבית רגע'),
+          ...instructors.filter(({ name }) => name === 'כלים מבית רגע'),
           ...shuffleArray(instructorsWithNoRega),
         ]}
         keyExtractor={item => item._id}
