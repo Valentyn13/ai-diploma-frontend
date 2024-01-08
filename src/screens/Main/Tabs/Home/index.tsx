@@ -22,7 +22,7 @@ import { useOnboarding } from '@services/hooks/useOnboarding';
 import i18n from '@services/localization/i18n';
 import { logEvent } from '@utils/analytics';
 import { getRandomElements } from '@utils/rand';
-import { getCollectionIdByTime } from '@utils/time';
+import { getBGImageByTime, getCollectionIdByTime } from '@utils/time';
 import React, { FC, useCallback, useEffect, useMemo, useState } from 'react';
 import { ImageBackground, ScrollView, View } from 'react-native';
 import { LinearGradient } from 'react-native-gradients';
@@ -49,6 +49,11 @@ const ListTitle = styled(SubTitle)`
 `;
 
 type FeedProps = NativeStackScreenProps<RootStackParamList, 'Main'>;
+
+const BGS = {
+  sunrise: require('./bgs/sunrise.png'),
+  sunset: require('./bgs/sunset.png'),
+};
 
 const Feed: FC<FeedProps> = ({ navigation }) => {
   const { getAppData } = useAppData();
@@ -165,13 +170,14 @@ const Feed: FC<FeedProps> = ({ navigation }) => {
   return (
     <View className="h-full w-full bg-[#FCE8CD]">
       <ImageBackground
-        source={require('./bg.jpg')}
+        source={BGS[getBGImageByTime()]}
+        resizeMode="cover"
         style={{
           position: 'absolute',
           flex: 1,
           height: '100%',
           width: '100%',
-          top: -200,
+          top: -100,
         }}
       />
       <View className="absolute -top-4 self-center">

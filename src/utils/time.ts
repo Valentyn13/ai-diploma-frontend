@@ -15,6 +15,16 @@ export function getGreeting() {
   }
 }
 
+export function getBGImageByTime() {
+  const id = getCollectionIdByTime();
+
+  if (id === 'morning' || id === 'noon') {
+    return 'sunrise';
+  } else {
+    return 'sunset';
+  }
+}
+
 export function getCollectionIdByTime() {
   const now = new Date();
   const hours = now.getHours();
