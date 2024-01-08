@@ -5,11 +5,11 @@ import { Text, View } from 'react-native';
 import { useSelector } from 'react-redux';
 
 const Badge = ({ badge: { badge } = {} }) => (
-  <View className="flex-1 flex items-center">
+  <View className="w-[33%] flex items-center mb-4">
     <View className="flex items-center justify-center w-16 h-16 rounded-full bg-[#513F73]">
       <Icon name={badge} size={40} color="#fff" />
     </View>
-    <Text className="text-xs text-black text-center mt-4 w-8/12">
+    <Text className="text-xs text-black text-center mt-2 w-20">
       {i18n.t(badge)}
     </Text>
   </View>
@@ -19,7 +19,7 @@ const Badges = () => {
   const { badgesAchieved } = useSelector(state => state.userProgress);
 
   return (
-    <View className="flex flex-row">
+    <View className="flex flex-row flex-wrap justify-between items-center space-y-4">
       {badgesAchieved.map(badge => (
         <Badge key={badge.badge} badge={badge} />
       ))}

@@ -5,9 +5,9 @@ import { useSelector } from 'react-redux';
 
 const MetricBox = ({ value, title, ...props }) => (
   <View
-    className="flex flex-1 text-center h-32 justify-center items-center text-white bg-[#513F73] rounded"
+    className="flex flex-1 text-center h-20 justify-center items-center text-white bg-[#513F73] rounded-lg"
     {...props}>
-    <Text className="text-4xl font-bold text-white text-left">{value}</Text>
+    <Text className="text-3xl font-bold text-white text-left">{value}</Text>
     <Text className="text-lg text-white text-left">{title}</Text>
   </View>
 );

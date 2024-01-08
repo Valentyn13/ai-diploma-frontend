@@ -56,14 +56,14 @@ const MyWay = ({ navigation }) => {
             <View className="my-3" />
             <Badges />
           </Card>
-          <Divider className="my-6" />
+          <Divider className="mb-6 mt-4" />
         </View>
         <View className="px-5">
           <Title className="mb-4" t="המסלול שלי" />
           <Card>
             <Strikes dates={dates} />
           </Card>
-          <Divider className="my-6" />
+          <Divider className="mb-6 mt-4" />
         </View>
         <View className="pb-4">
           <MyCollections />
