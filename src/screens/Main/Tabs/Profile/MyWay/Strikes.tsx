@@ -8,6 +8,42 @@ import { Text, View } from 'react-native';
 import { Calendar, LocaleConfig } from 'react-native-calendars';
 import Icon from 'react-native-vector-icons/FontAwesome6';
 
+LocaleConfig.locales.he = {
+  monthNames: [
+    'ינואר',
+    'פברואר',
+    'מרץ',
+    'אפריל',
+    'מאי',
+    'יוני',
+    'יולי',
+    'אוגוסט',
+    'ספטמבר',
+    'אוקטובר',
+    'נובמבר',
+    'דצמבר',
+  ],
+  monthNamesShort: [
+    'ינו.',
+    'פבר.',
+    'מרץ',
+    'אפר.',
+    'מאי',
+    'יוני',
+    'יולי',
+    'אוג.',
+    'ספט.',
+    'אוק.',
+    'נוב.',
+    'דצמ.',
+  ],
+  dayNames: ['ראשון', 'שני', 'שלישי', 'רביעי', 'חמישי', 'שישי', 'שבת'],
+  dayNamesShort: ['א', 'ב', 'ג', 'ד', 'ה', 'ו', 'ש'],
+  today: 'היום',
+};
+
+LocaleConfig.defaultLocale = 'he';
+
 const colors = {
   primary: '#D66366',
   darkAccent: '#513F73',
@@ -66,7 +102,6 @@ const Strikes: FC<{ dates: Date[] }> = ({ dates }) => {
       <Header stats={stats} />
       <Calendar
         markingType="period"
-        maxDate={new Date().toString()}
         markedDates={markedDates}
         style={{ borderRadius: 10 }}
         theme={{
@@ -88,42 +123,6 @@ const Strikes: FC<{ dates: Date[] }> = ({ dates }) => {
 };
 
 export default Strikes;
-
-LocaleConfig.locales.he = {
-  monthNames: [
-    'ינואר',
-    'פברואר',
-    'מרץ',
-    'אפריל',
-    'מאי',
-    'יוני',
-    'יולי',
-    'אוגוסט',
-    'ספטמבר',
-    'אוקטובר',
-    'נובמבר',
-    'דצמבר',
-  ],
-  monthNamesShort: [
-    'ינו.',
-    'פבר.',
-    'מרץ',
-    'אפר.',
-    'מאי',
-    'יוני',
-    'יולי',
-    'אוג.',
-    'ספט.',
-    'אוק.',
-    'נוב.',
-    'דצמ.',
-  ],
-  dayNames: ['ראשון', 'שני', 'שלישי', 'רביעי', 'חמישי', 'שישי', 'שבת'],
-  dayNamesShort: ['א', 'ב', 'ג', 'ד', 'ה', 'ו', 'ש'],
-  today: 'היום',
-};
-
-LocaleConfig.defaultLocale = 'he';
 
 const Stat: FC<StatProps> = ({ title, count, icon }) => {
   return (

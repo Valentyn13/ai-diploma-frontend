@@ -264,7 +264,7 @@ const MeditationPlayer: FC = () => {
       />
       <SafeAreaView className="flex-col h-full w-full">
         <View className="relative flex flex-col items-center justify-center w-full h-full">
-          <View className="absolute top-0 flex flex-row items-center w-full justify-between px-4 z-10">
+          <View className="absolute top-0 flex flex-row items-center w-full justify-between px-5 z-10">
             <CircleButton
               size={40}
               icon="x"
@@ -317,7 +317,7 @@ const MeditationPlayer: FC = () => {
               }}
             />
           </View>
-          <View className="absolute bottom-4 left-4">
+          <View className="absolute bottom-5 left-5">
             <FavoriteButton id={id} />
           </View>
         </View>
