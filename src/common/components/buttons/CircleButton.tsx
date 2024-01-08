@@ -16,6 +16,7 @@ export const CircleButton: React.FC<{
   size = 10,
   icon,
   color = '#fff',
+  ...props
 }) => (
   <TouchableOpacity
     onPress={onPress}
@@ -28,7 +29,8 @@ export const CircleButton: React.FC<{
       borderRadius: size / 2,
       justifyContent: 'center',
       alignItems: 'center',
-    }}>
+    }}
+    {...props}>
     <Icon name={icon} size={size / 2} color={color} />
   </TouchableOpacity>
 );

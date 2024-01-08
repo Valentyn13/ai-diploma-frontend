@@ -220,9 +220,9 @@ const Feed: FC<FeedProps> = ({ navigation }) => {
 
         <View className="bg-[#FCE8CD]">
           <DynamicComposition>
-            <View className="flex w-full items-center px-5 mt-4 flex-1">
+            <View className="flex w-full items-center px-5 flex-1">
               <ListTitle k="personalized" />
-              <View className="my-4 w-full flex items-center px-8">
+              <View className="w-full flex items-center px-8 mt-5">
                 <Feeling onClick={() => setIsOpen(true)} isMale={sex === 'M'} />
               </View>
               <Divider className="my-6" />
@@ -244,7 +244,7 @@ const Feed: FC<FeedProps> = ({ navigation }) => {
             ))}
 
             <View className="flex-1">
-              <View className="flex flex-row items-end justify-between w-full px-5 mb-4">
+              <View className="flex flex-row items-end justify-between w-full px-5 mb-5">
                 <ListTitle k="צוות המורים" />
               </View>
               <InstructorList />

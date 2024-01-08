@@ -1,13 +1,10 @@
-import MeditationItem from '@common/components/MeditationItem';
 import ParallaxScrollView from '@common/components/ParallaxScrollView';
+import SessionsGrid from '@common/components/SessionsGrid';
 import { CircleButton } from '@common/components/buttons/CircleButton';
-import theme from '@common/theme';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import useInstructor from '@services/hooks/useInstructor';
-import React, { useCallback, useMemo } from 'react';
-import { FlatList, Linking, Text, View } from 'react-native';
-import { TouchableOpacity } from 'react-native-gesture-handler';
-import Icon from 'react-native-vector-icons/FontAwesome6';
+import React, { useMemo } from 'react';
+import { Linking, Text, View } from 'react-native';
 import { useSelector } from 'react-redux';
 import { allMeditations as allMeditationsSelector } from 'store/selectors';
 
@@ -29,13 +26,6 @@ const Instructor = () => {
 
   const { updateIstructorTractionData } = useInstructor();
 
-  const renderMeditationItem = useCallback(
-    ({ item, index }) => (
-      <MeditationItem key={item.id} item={item} index={index} />
-    ),
-    [],
-  );
-
   return (
     <View className="relative w-full h-full">
       <View className="absolute top-4 left-4 z-10">
@@ -48,71 +38,59 @@ const Instructor = () => {
         />
       </View>
       <ParallaxScrollView image={instructor?.image}>
-        <View className="p-5">
-          <View className="flex flex-row justify-between items-center mt-2">
-            <Text className="text-2xl font-bold">{instructor?.name}</Text>
-            <View className="flex flex-row space-x-2">
-              {instructor.SocialIconLink && (
-                <TouchableOpacity
-                  onPress={() => {
-                    const data = {
-                      ...instructor,
-                      social_link_press: true,
-                    };
-                    updateIstructorTractionData(data);
-                    const url = instructor.SocialIconLink;
-                    Linking.canOpenURL(url);
-                    Linking.openURL(url);
-                  }}>
-                  <Icon
-                    name="instagram"
-                    size={28}
-                    color={theme.colors.textColor}
+        <View className="px-5 flex-1 mt-8">
+          <View className="mb-8">
+            <View className="flex flex-row justify-between items-center">
+              <Text className="text-2xl font-bold">{instructor?.name}</Text>
+              <View className="flex flex-row">
+                {instructor.SocialIconLink && (
+                  <View className="mr-1">
+                    <CircleButton
+                      size={40}
+                      icon="instagram"
+                      onPress={() => {
+                        const data = {
+                          ...instructor,
+                          social_link_press: true,
+                        };
+                        updateIstructorTractionData(data);
+                        const url = instructor.SocialIconLink;
+                        Linking.canOpenURL(url);
+                        Linking.openURL(url);
+                      }}
+                      backgroundColor="#00000060"
+                    />
+                  </View>
+                )}
+
+                {instructor.buttonLink && (
+                  <CircleButton
+                    size={40}
+                    icon="link"
+                    onPress={() => {
+                      const data = {
+                        ...instructor,
+                        button_press: true,
+                      };
+                      updateIstructorTractionData(data);
+                      const url = instructor.buttonLink;
+                      Linking.canOpenURL(url);
+                      Linking.openURL(url);
+                    }}
+                    backgroundColor="#00000060"
                   />
-                </TouchableOpacity>
-              )}
-              {instructor.buttonLink && (
-                <TouchableOpacity
-                  onPress={() => {
-                    const data = {
-                      ...instructor,
-                      button_press: true,
-                    };
-                    updateIstructorTractionData(data);
-                    const url = instructor.buttonLink;
-                    Linking.canOpenURL(url);
-                    Linking.openURL(url);
-                  }}>
-                  <Icon name="link" size={28} color={theme.colors.textColor} />
-                </TouchableOpacity>
-              )}
+                )}
+              </View>
             </View>
+            <Text className="text-left text-base leading-none font-normal mt-4">
+              {instructor?.description}
+            </Text>
           </View>
-          <Text className="text-left text-base leading-none font-normal mt-4">
-            {instructor?.description}
+          <Text className="text-center text-base leading-none font-normal text-gray-500 mb-4">
+            {meditations.length} תרגולים
           </Text>
+          <SessionsGrid meditations={meditations} />
         </View>
-        <Text className="text-center text-base leading-none font-normal mt-2 text-gray-500">
-          {meditations.length} מדיטציות
-        </Text>
-        <FlatList
-          contentContainerStyle={{
-            flexGrow: 1,
-            paddingVertical: 10,
-            paddingHorizontal: 10,
-          }}
-          data={meditations}
-          scrollEnabled={false}
-          keyExtractor={item => item.id}
-          renderItem={renderMeditationItem}
-          numColumns={2}
-          showsVerticalScrollIndicator={false}
-          getItemLayout={(_, index) => ({
-            length: theme.dimens.winWidth / 2 - 16,
-            offset: 280 * index,
-            index,
-          })}
-        />
       </ParallaxScrollView>
     </View>
   );

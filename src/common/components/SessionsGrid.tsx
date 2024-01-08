@@ -12,8 +12,8 @@ const Header: FC<{ title: string }> = ({ title }) => {
   const { goBack } = useNavigation();
 
   return (
-    <View className="relative flex flex-col items-center justify-center mt-8">
-      <View className="absolute left-5 top-0">
+    <View className="relative flex flex-row items-start justify-center mt-8">
+      <View className="absolute left-0">
         <CircleButton
           backgroundColor="#00000060"
           color="#fff"
@@ -23,7 +23,7 @@ const Header: FC<{ title: string }> = ({ title }) => {
         />
       </View>
       <Text
-        className="text-center text-3xl font-bold mb-6"
+        className="text-2xl font-bold leading-10"
         style={{ fontFamily: theme.fonts!.regular }}>
         {title}
       </Text>
@@ -67,9 +67,10 @@ const SessionsGrid: FC<{ meditations: Meditation[]; title?: string }> = ({
     <ScrollView showsVerticalScrollIndicator={false}>
       {title && <Header title={title} />}
       <FlatList
-        style={{ flex: 1 }}
         contentContainerStyle={{
-          paddingHorizontal: 20,
+          paddingTop: 20,
+          paddingBottom: 100,
+          rowGap: 20,
         }}
         columnWrapperStyle={{
           justifyContent: 'space-between',

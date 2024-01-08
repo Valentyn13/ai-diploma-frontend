@@ -121,14 +121,16 @@ const Meditations = () => {
         )}
 
       {searchQuery.length > 2 && filteredCategories.length > 0 && (
-        <SessionsGrid
-          meditations={shuffleArray(
-            filteredCategories.reduce(
-              (acc, curr) => [...acc, ...curr.meditations],
-              [] as Meditation[],
-            ),
-          )}
-        />
+        <View className="px-5">
+          <SessionsGrid
+            meditations={shuffleArray(
+              filteredCategories.reduce(
+                (acc, curr) => [...acc, ...curr.meditations],
+                [] as Meditation[],
+              ),
+            )}
+          />
+        </View>
       )}
     </ScrollView>
   );

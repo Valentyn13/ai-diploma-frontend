@@ -52,10 +52,12 @@ const GroupedMeditations = () => {
     <SafeAreaView
       edges={['top', 'right', 'left']}
       className="bg-[#fdedd6] flex-1">
-      <SessionsGrid
-        meditations={meditations.slice(0, MAX_MEDITATIONS)}
-        title={title}
-      />
+      <View className="px-5">
+        <SessionsGrid
+          meditations={meditations.slice(0, MAX_MEDITATIONS)}
+          title={title}
+        />
+      </View>
     </SafeAreaView>
   );
 };
