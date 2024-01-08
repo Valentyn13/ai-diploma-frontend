@@ -104,6 +104,7 @@ const Strikes: FC<{ dates: Date[] }> = ({ dates }) => {
         markingType="period"
         markedDates={markedDates}
         style={{ borderRadius: 10 }}
+        enableSwipeMonths
         theme={{
           backgroundColor: 'transparent',
           calendarBackground: 'transparent',
