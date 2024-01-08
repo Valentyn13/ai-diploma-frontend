@@ -1,5 +1,4 @@
 import { MEDITATIONS_FEELING_LOCATION } from '@common/constants';
-import { usePurchases } from '@common/context/PurchaseContext';
 import {
   BottomSheetBackdrop,
   BottomSheetFlatList,
@@ -201,7 +200,8 @@ const WhereYouAt: FC<{ onNext: (l: Place) => void }> = ({ onNext }) => {
 
 const MeditationPicker = () => {
   const userDetails = useSelector(state => state.userDetails);
-  const { hasPremium } = usePurchases();
+  // const { hasPremium } = usePurchases();
+  const hasPremium = true;
   const meditations = useSelector(allMeditations);
   const navigation = useNavigation();
   const { isOpen, setIsOpen } = useSheetStore(state => state);
@@ -239,6 +239,8 @@ const MeditationPicker = () => {
         navigation.navigate('Main', {
           screen: 'Subscribe',
         });
+        setSelectedFeeling(null);
+        setShowWhereYouAt(false);
         return;
       }
 
@@ -263,6 +265,9 @@ const MeditationPicker = () => {
         screen: 'MeditationPlayer',
         params: { item },
       });
+
+      setSelectedFeeling(null);
+      setShowWhereYouAt(false);
     },
     [hasPremium, meditations, navigation, selectedFeeling],
   );
