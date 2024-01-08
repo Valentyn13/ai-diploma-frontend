@@ -59,9 +59,8 @@ const BGS = {
 const Feed: FC<FeedProps> = ({ navigation }) => {
   const { getAppData } = useAppData();
   const { getArticleData } = useArticleData();
-  const { email, name, sex } = useSelector((state: any) => state.userDetails);
-  const { articles } = useSelector((state: any) => state.articleData);
-  const { setPurchaserIdentity, hasPremium } = usePurchases();
+  const { email, sex } = useSelector((state: any) => state.userDetails);
+  const { setPurchaserIdentity } = usePurchases();
   const [showNotificationModal, setshowNotificationModal] = useState(false);
 
   const dispatch = useDispatch();
