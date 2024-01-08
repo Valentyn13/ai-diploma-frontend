@@ -112,7 +112,7 @@ const HowUFeel: FC<{ onNext: (f: Feeling) => void; isMale: boolean }> = ({
       <TouchableOpacity
         style={{
           padding: 8,
-          margin: 4,
+          marginBottom: 20,
           borderRadius: 8,
           justifyContent: 'center',
           alignItems: 'center',
@@ -183,7 +183,7 @@ const WhereYouAt: FC<{ onNext: (l: Place) => void }> = ({ onNext }) => {
       <TouchableOpacity
         style={{
           padding: 8,
-          margin: 4,
+          marginBottom: 20,
           borderRadius: 8,
           justifyContent: 'center',
           alignItems: 'center',
@@ -209,7 +209,7 @@ const MeditationPicker = () => {
   const [showWhereYouAt, setShowWhereYouAt] = useState(false);
   const [selectedFeeling, setSelectedFeeling] = useState<Feeling | null>(null);
 
-  const snapPoints = useMemo(() => ['20%', 340], []);
+  const snapPoints = useMemo(() => ['20%', 360], []);
 
   useEffect(() => {
     if (bottomSheetRef.current) {
@@ -257,7 +257,7 @@ const MeditationPicker = () => {
       let item = meditations.find(m => m.id === id);
 
       if (!item) {
-        item = meditations.find(m => m.name === 'שחרור היום');
+        item = meditations.find(m => m.name === 'שחרור היום') || meditations[0];
       }
 
       // @ts-ignore

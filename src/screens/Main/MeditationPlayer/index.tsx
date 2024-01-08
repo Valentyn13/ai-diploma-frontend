@@ -226,7 +226,7 @@ const MeditationPlayer: FC = () => {
     if (!hideControls) {
       const timer = setTimeout(() => {
         setHideControls(true);
-      }, 3000);
+      }, 5000);
 
       return () => {
         clearTimeout(timer);
