@@ -1,4 +1,4 @@
-import { getCurrentHour } from './time';
+import { getCurrentDay, getCurrentHour, getCurrentMonth } from './time';
 
 function seededRandom(seed: number) {
   var x = Math.sin(seed) * 10000;
@@ -7,8 +7,8 @@ function seededRandom(seed: number) {
 
 export function getRandomElements(arr: any[], x: number) {
   let selectedElements = [];
-  let seed = getCurrentHour();
-  let arrCopy = [...arr];
+  let seed = getCurrentHour() + getCurrentDay() + getCurrentMonth();
+  let arrCopy = arr.slice();
 
   for (let i = 0; i < x; i++) {
     let index = Math.floor(seededRandom(seed + i) * arrCopy.length);
@@ -20,15 +20,5 @@ export function getRandomElements(arr: any[], x: number) {
 }
 
 export function shuffleArray(arr: any[]) {
-  let seed = getCurrentHour();
-  let shuffledArray = arr.slice();
-
-  for (let i = 0; i < shuffledArray.length; i++) {
-    let index = Math.floor(seededRandom(seed + i) * shuffledArray.length);
-    let temp = shuffledArray[i];
-    shuffledArray[i] = shuffledArray[index];
-    shuffledArray[index] = temp;
-  }
-
-  return shuffledArray;
+  return getRandomElements(arr, arr.length);
 }

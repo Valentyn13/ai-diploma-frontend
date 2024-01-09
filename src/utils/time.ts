@@ -46,3 +46,13 @@ export function getCurrentHour() {
   const now = new Date();
   return now.getHours();
 }
+
+export function getCurrentDay() {
+  const now = new Date();
+  return now.getDate();
+}
+
+export function getCurrentMonth() {
+  const now = new Date();
+  return now.getMonth();
+}
