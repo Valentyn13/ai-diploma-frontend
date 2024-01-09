@@ -18,7 +18,7 @@ export function getGreeting() {
 export function getBGImageByTime() {
   const id = getCollectionIdByTime();
 
-  if (id === 'morning' || id === 'noon') {
+  if (id === 'morning' || id === 'noon' || id === 'afternoon') {
     return 'sunrise';
   } else {
     return 'sunset';
