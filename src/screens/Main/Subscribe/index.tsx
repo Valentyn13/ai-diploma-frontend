@@ -26,17 +26,15 @@ interface PlanItemProps {
   onPress: () => void;
 }
 
-const SubscribeButton: React.FC<PlanItemProps> = ({ onPress }) => {
-  return (
-    <TouchableOpacity
-      onPress={onPress}
-      className="bg-white rounded-3xl p-4 w-11/12 ">
-      <Text className="text-[#1B1B1B] text-center text-lg leading-5">
-        {i18n.t('subscribeBtn1')}
-      </Text>
-    </TouchableOpacity>
-  );
-};
+const SubscribeButton: React.FC<PlanItemProps> = ({ onPress }) => (
+  <TouchableOpacity
+    onPress={onPress}
+    className="bg-white rounded-3xl p-3 w-full">
+    <Text className="text-[#1B1B1B] text-center text-lg">
+      {i18n.t('subscribeBtn1')}
+    </Text>
+  </TouchableOpacity>
+);
 
 const PackageItem: React.FC<{
   onPress: () => void;
@@ -57,7 +55,7 @@ const PackageItem: React.FC<{
     <TouchableOpacity
       activeOpacity={3}
       onPress={onPress}
-      className={`relative flex justify-center rounded-md p-2 h-14 w-11/12 mb-3 border border-white bg-transparent ${
+      className={`relative flex justify-center rounded-md p-2 h-14 w-full mb-3 border border-white bg-transparent ${
         selected ? 'border-white border-2' : 'border-[#2C344D]'
       } transition-all duration-300`}>
       {showBadge && (
@@ -76,11 +74,11 @@ const PackageItem: React.FC<{
           {subTitle}
         </View>
         <Text
-          className={`text-center text-md font-extralight ${
+          className={`text-center text-base font-normal ${
             selected ? 'text-white' : 'text-[#2C344D]'
           }`}>
           {monthPrice.toFixed(2)}
-          <Text className="text-xs font-extralight">₪/חודש</Text>
+          <Text className="text-xs font-normal">₪/חודש</Text>
         </Text>
       </View>
     </TouchableOpacity>
@@ -247,7 +245,7 @@ const Subscribe: FC = () => {
               <Text className="text-white text-center font-black text-2xl mt-12 mb-6">
                 קחו רגע לעצמכם, מגיע לכם.
               </Text>
-              <SubscriptionPoint text="Point1" showIcon />
+              <SubscriptionPoint text="point1" showIcon />
               <SubscriptionPoint text="point2" showIcon />
               <SubscriptionPoint text="point3" showIcon />
             </View>
@@ -262,7 +260,7 @@ const Subscribe: FC = () => {
               </View>
             </View>
             <View className="relative flex-1">
-              <View className="w-full bg-[#0A1129] absolute bottom-0 self-center h-68 rounded-t-xl flex flex-col items-center p-4">
+              <View className="w-full bg-[#0A1129] absolute bottom-0 self-center h-80 rounded-t-xl flex flex-col items-center p-4">
                 <PackageItem
                   showBadge={true}
                   selected={selectedPlan === 'annual'}
@@ -270,16 +268,22 @@ const Subscribe: FC = () => {
                   title="מנוי שנתי"
                   monthPrice={plans.annual.product.price / 12}
                   subTitle={
-                    <Text className="text-white text-center text-sm leading-5">
-                      <Text className="text-[#FFC107]">
-                        ₪{plans.annual.product.price.toFixed(2)}{' '}
+                    <Text className="text-white text-center text-sm">
+                      <Text
+                        className={
+                          selectedPlan === 'annual'
+                            ? 'text-[#FFC107]'
+                            : 'text-[#2C344D]'
+                        }>
+                        ₪{plans.annual.product.price.toFixed(2)}
+                        {'  '}
                       </Text>
                       <Text
                         className={`line-through ${
-                          selectedPlan === PLANS.annual.identifier
+                          selectedPlan === 'annual'
                             ? 'text-white'
                             : 'text-[#2C344D]'
-                        } `}>
+                        }`}>
                         ₪{(plans.monthly.product.price * 12).toFixed(2)}
                       </Text>
                     </Text>
@@ -291,15 +295,20 @@ const Subscribe: FC = () => {
                   onPress={() => setSelectedPlan('monthly')}
                   title="מנוי חודשי"
                 />
-                <View className="mt-5" />
+                <View className="mt-2" />
                 <SubscribeButton
                   onPress={() => onSubscribe(plans[selectedPlan])}
                 />
                 <TouchableOpacity onPress={goBack}>
-                  <Text className="text-white text-center text-xs mt-5 underline">
+                  <Text className="text-white text-center text-base mt-4 underline">
                     לא, תודה
                   </Text>
                 </TouchableOpacity>
+                <Text className="text-white text-center text-xs mt-4">
+                  נסו את האפליקציה במשך 7 ימים בחינם! לאחר תקופה זו יתבצע חיוב
+                  אוטומטי בסך 159.90 שח עבור שנת שימוש באפליקציה. ניתן לבטל את
+                  המנוי בכל רגע וללא עלות.
+                </Text>
               </View>
             </View>
             {purchasing && (
