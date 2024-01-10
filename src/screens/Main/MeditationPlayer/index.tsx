@@ -235,7 +235,9 @@ const MeditationPlayer: FC = () => {
   }, [hideControls]);
 
   const onVideoPress = () => {
-    setHideControls(!hideControls);
+    if (hideControls) {
+      setHideControls(false);
+    }
   };
 
   return (
