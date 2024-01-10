@@ -5,13 +5,12 @@ import { SubTitle, TouchableIcon } from '@common/components/Styled';
 import WithFadeIn from '@common/components/transitions/WithFadeIn';
 import WithSlideInX from '@common/components/transitions/WithSlideInX';
 import WithSlideInY from '@common/components/transitions/WithSlideInY';
-import { ProgressView } from '@react-native-community/progress-view';
 import { AMPLITUDE_EVENTS, useAmplitude } from '@services/hooks/useAmplitude';
 import useCache from '@services/hooks/useCache';
 import { INTRO_METADATA_KEY, IntroMetadata } from '@services/hooks/useIntro';
 import PropTypes from 'prop-types';
 import React, { useEffect, useState } from 'react';
-import { Dimensions, Image, Platform, View } from 'react-native';
+import { Dimensions, Image, Platform, Text, View } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { scale } from 'react-native-size-matters';
 import { useDispatch } from 'react-redux';
@@ -182,18 +181,18 @@ const ChooseSex = ({ navigation: { navigate } }) => {
           position: 'absolute',
           height: 20,
           transform: [{ rotateY: Platform.OS === 'ios' ? '0deg' : '180deg' }],
-        }}>
-        <ProgressView
-          progressViewStyle="default"
-          progressTintColor="black"
-          trackTintColor="gray"
-          progress={0.3}
-        />
-      </View>
+        }}
+      />
       <View
         className="w-full"
         style={{ position: 'absolute', bottom: 0, padding: scale(40) }}>
-        <AppButton onPress={() => onContinue()}>{'המשך'}</AppButton>
+        <AppButton onPress={onContinue}>{'המשך'}</AppButton>
+        {/* generate an outlined button */}
+        <TouchableOpacity
+          onPress={onContinue}
+          className="w-full mt-4 flex items-center justify-center border rounded border-gray-300 py-2">
+          <Text className="text-lg text-gray-500">{'דלג'}</Text>
+        </TouchableOpacity>
       </View>
     </View>
   );
