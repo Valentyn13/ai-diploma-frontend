@@ -48,7 +48,7 @@ const SexChooser = ({ sex, onPress }) => (
 
 const ChooseSex = ({ navigation: { navigate } }) => {
   const dispatch = useDispatch();
-  const [sex, setSex] = useState();
+  const [sex, setSex] = useState<'M' | 'F'>();
   const [value, setValue] = useCache<IntroMetadata>(INTRO_METADATA_KEY, {
     categories: [],
   });
@@ -63,16 +63,12 @@ const ChooseSex = ({ navigation: { navigate } }) => {
   }, []);
 
   const onContinue = () => {
-    if (sex) {
-      dispatch(chooseSex({ sex }));
-      setValue({
-        ...value,
-        sex,
-      });
-      navigate('Onboarding', { screen: 'PickExperience' });
-    } else {
-      alert('אנא בחר מין');
-    }
+    dispatch(chooseSex({ sex: sex ?? 'M' }));
+    setValue({
+      ...value,
+      sex,
+    });
+    navigate('Onboarding', { screen: 'PickExperience' });
   };
 
   return (

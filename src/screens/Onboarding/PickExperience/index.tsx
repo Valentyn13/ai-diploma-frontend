@@ -72,14 +72,10 @@ const PickExperience = ({ navigation: { navigate } }) => {
   }, []);
 
   const onContinue = useCallback(() => {
-    if (!experience) {
-      return;
-    }
-
     logEvent(AMPLITUDE_EVENTS.ONBOARDING_FINISH);
     uploadEvents();
 
-    dispatch(chooseExperience({ experience }));
+    dispatch(chooseExperience({ experience: experience || 'Beginner' }));
     navigate('Onboarding', { screen: 'CategoriesSelector' });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dispatch, experience, navigate]);
@@ -221,7 +217,7 @@ const PickExperience = ({ navigation: { navigate } }) => {
       <View
         className="w-full"
         style={{ position: 'absolute', bottom: 0, padding: scale(40) }}>
-        <AppButton onPress={() => onContinue()}>המשך</AppButton>
+        <AppButton onPress={onContinue}>המשך</AppButton>
       </View>
     </View>
   );
