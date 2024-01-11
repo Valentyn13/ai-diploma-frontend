@@ -165,9 +165,22 @@ const Settings = ({ navigation }) => {
   };
 
   const cancelSubscriptionPrompt = () => {
+    if (Platform.OS === 'android') {
+      Linking.openURL(
+        'https://play.google.com/store/account/subscriptions',
+      ).catch(err => {
+        Alert.alert(
+          'לא ניתן לפתוח את האפליקציה',
+          'אנא צרו קשר עם התמיכה במייל hello@rega.co.il, תודה',
+        );
+      });
+
+      return;
+    }
+
     Alert.prompt(
-      'ביטול רישום',
-      'הכנס את כתובת האימייל שלך ואת הסיבה לביטול הרישום',
+      'ביטול מנוי',
+      'הכנס את כתובת האימייל שלך ואת הסיבה לביטול המנוי',
       [
         {
           text: 'ביטול',
@@ -278,7 +291,7 @@ const Settings = ({ navigation }) => {
       icon: 'trash',
     },
     {
-      title: 'ביטול רישום',
+      title: 'ביטול מנוי',
       onPress: cancelSubscriptionPrompt,
       icon: 'ban',
     },
@@ -302,7 +315,7 @@ const Settings = ({ navigation }) => {
           />
         </View>
         <Text
-          className="flex-1 text-3xl font-bold text-center"
+          className="flex-1 text-3xl font-bold text-center text-black"
           style={{ fontFamily: theme.fonts!.regular }}>
           הגדרות
         </Text>
@@ -326,7 +339,7 @@ const Settings = ({ navigation }) => {
                   size={20}
                   color="#160f29"
                 />
-                <Text className="text-lg font-medium ml-4 text-left">
+                <Text className="text-lg font-medium ml-4 text-left text-black">
                   {title}
                 </Text>
               </View>
