@@ -1,5 +1,9 @@
 const { getDefaultConfig, mergeConfig } = require('@react-native/metro-config');
 
+const {
+  createSentryMetroSerializer
+} = require("@sentry/react-native/dist/js/tools/sentryMetroSerializer");
+
 /**
  * Metro configuration
  * https://facebook.github.io/metro/docs/configuration
@@ -15,6 +19,7 @@ const config = {
       },
     }),
   },
+
   server: {
     rewriteRequestUrl: url => {
       if (!url.endsWith('.bundle')) {
@@ -28,6 +33,10 @@ const config = {
       );
     },
   },
+
+  serializer: {
+    customSerializer: createSentryMetroSerializer()
+  }
 };
 
 module.exports = mergeConfig(getDefaultConfig(__dirname), config);

@@ -5,6 +5,7 @@ import colors from '@common/theme/colors';
 import { BottomSheetModalProvider } from '@gorhom/bottom-sheet';
 import { NavigationContainer } from '@react-navigation/native';
 import * as Sentry from '@sentry/react-native';
+import useSentry from '@services/hooks/useSentry';
 import React, { useEffect } from 'react';
 import { StatusBar, StyleSheet, View } from 'react-native';
 import { Settings } from 'react-native-fbsdk-next';
@@ -20,10 +21,6 @@ import {
 import RootNavigator from './screens/RootNavigator';
 import configureStore from './store';
 
-Sentry.init({
-  dsn: 'https://7cbd351b42844e4f925dd289d1781977@o4504887076978688.ingest.sentry.io/4504887078223872',
-});
-
 const { store, persistor } = configureStore();
 Settings.initializeSDK();
 
@@ -36,6 +33,7 @@ const styles = StyleSheet.create({
 });
 
 const App: React.FC = () => {
+  useSentry();
   useEffect(() => {
     requestUserPermission();
     notificationListner();
@@ -82,5 +80,4 @@ const App: React.FC = () => {
   );
 };
 
-// App = codePush(codePushOptions)(App);
-export default App;
+export default Sentry.wrap(App);

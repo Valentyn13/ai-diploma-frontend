@@ -766,7 +766,7 @@ PODS:
   - RNScreens (3.29.0):
     - RCT-Folly (= 2021.07.22.00)
     - React-Core
-  - RNSentry (5.15.1):
+  - RNSentry (5.15.2):
     - hermes-engine
     - React-Core
     - React-hermes
@@ -1216,7 +1216,7 @@ SPEC CHECKSUMS:
   RNReanimated: fdbaa9c964bbab7fac50c90862b6cc5f041679b9
   RNRudderSdk: 3113e10525cef12079c91b68ac755875cf5f042b
   RNScreens: 3c5b9f4a9dcde752466854b6109b79c0e205dad3
-  RNSentry: a6202c19ca31b69969dface2ea0db093e36c97a3
+  RNSentry: b7f4f53bb7076f119558f8898fca901b48213f12
   RNSound: 6c156f925295bdc83e8e422e7d8b38d33bc71852
   RNSVG: ba3e7232f45e34b7b47e74472386cf4e1a676d0a
   RSCrashReporter: 6b8376ac729b0289ebe0908553e5f56d8171f313

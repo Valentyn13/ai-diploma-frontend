@@ -1,0 +1,20 @@
+import * as Sentry from '@sentry/react-native';
+import { useEffect } from 'react';
+
+const SENTRY_DSN =
+  'https://5a917437add5f5db03979e732124c433@o4506552352702464.ingest.sentry.io/4506552357421056';
+
+const useSentry = () => {
+  useEffect(() => {
+    Sentry.init({
+      dsn: SENTRY_DSN,
+      tracesSampleRate: 1.0,
+    });
+
+    return () => {
+      Sentry.close();
+    };
+  }, []);
+};
+
+export default useSentry;
