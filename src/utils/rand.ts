@@ -5,7 +5,7 @@ function seededRandom(seed: number) {
   return x - Math.floor(x);
 }
 
-export function getRandomElements(arr: any[], x: number) {
+export function getRandomElements<T>(arr: T[], x: number) {
   let selectedElements = [];
   let seed = getCurrentHour() + getCurrentDay() + getCurrentMonth();
   let arrCopy = arr.slice();
