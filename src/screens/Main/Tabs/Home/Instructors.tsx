@@ -14,14 +14,6 @@ import {
 import { useSelector } from 'react-redux';
 import { allMeditations as allMeditationsSelector } from 'store/selectors';
 
-type Instructor = {
-  _id: string;
-  name: string;
-  avatar: string;
-  description: string;
-  categories: string[];
-};
-
 const Instructors = () => {
   const navigation = useNavigation();
   const instructors = useSelector((state: any) => state.appData.instructors);
@@ -57,7 +49,7 @@ const Instructors = () => {
           />
         </View>
         <Text
-          className="flex-1 text-3xl font-bold text-center"
+          className="flex-1 text-3xl font-bold text-center text-black"
           style={{ fontFamily: theme.fonts!.regular }}>
           המורים שלנו
         </Text>
@@ -81,10 +73,10 @@ const Instructors = () => {
               style={{ width: 50, height: 50, borderRadius: 25 }}
             />
             <View>
-              <Text className="text-lg font-bold ml-3 text-left">
+              <Text className="text-lg font-bold ml-3 text-left text-black">
                 {instructor.name}
               </Text>
-              <Text className="text-sm ml-3 text-left">
+              <Text className="text-sm ml-3 text-left text-black">
                 {getSessionsByInstructor(instructor._id).length} תרגולים
               </Text>
             </View>
