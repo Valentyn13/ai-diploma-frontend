@@ -27,9 +27,13 @@ const CategoriesSelection: FC<Props> = ({ categories, onPress }) => {
         <ImageBackground
           className="relative flex-1 w-full h-full items-center justify-center"
           source={{ uri: getCategoryImg(item.meditations[0].categoryName, 0) }}>
-          <View className="absolute top-0 left-0 w-full h-full bg-black opacity-50" />
-          <Text className="text-2xl">{emoji}</Text>
-          <Text className="text-lg text-white mt-2">{title}</Text>
+          <View className="absolute top-0 left-0 w-full h-full bg-black/70" />
+          <View className="px-1 flex flex-col items-center justify-center">
+            <Text className="text-xl">{emoji}</Text>
+            <Text className="text-lg text-white mt-2 tracking-wide text-center">
+              {title}
+            </Text>
+          </View>
         </ImageBackground>
       </TouchableOpacity>
     );
