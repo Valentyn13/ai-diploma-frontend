@@ -347,6 +347,8 @@ export const VIDEOS: Record<string, string> = {
   noseBreath: 'nose-breath.mp4',
 };
 
+export const LIMIT_MAX_MEDITATIONS_FEED = 3;
+
 export const COLLECTIONS = [
   {
     id: 'body-mind',
