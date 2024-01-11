@@ -2,13 +2,13 @@ import Collection from '@common/components/Collection';
 import Divider from '@common/components/Divider';
 import { useNavigation } from '@react-navigation/native';
 import i18n from '@services/localization/i18n';
-import React, { useMemo } from 'react';
-import { View } from 'react-native';
-import { useSelector } from 'react-redux';
 import {
   favoriteMeditationsSelector,
   practiceHistorySelector,
-} from 'store/selectors';
+} from '@store/selectors';
+import React, { useMemo } from 'react';
+import { View } from 'react-native';
+import { useSelector } from 'react-redux';
 import { Meditation } from 'types/Meditation';
 
 const MyCollections = () => {

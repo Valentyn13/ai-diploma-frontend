@@ -4,13 +4,13 @@ import { usePurchases } from '@common/context/PurchaseContext';
 import theme from '@common/theme';
 import { useNavigation } from '@react-navigation/native';
 import { useAmplitude } from '@services/hooks/useAmplitude';
+import { meditationInstructor } from '@store/selectors';
 import { logEvent } from '@utils/analytics';
 import meditationTime from '@utils/meditationTime';
 import React, { memo, useCallback } from 'react';
 import { ImageBackground, Pressable, Text, View } from 'react-native';
 import IconFontAwesome from 'react-native-vector-icons/FontAwesome6';
 import { useSelector } from 'react-redux';
-import { meditationInstructor } from 'store/selectors';
 
 const BGS_ASSETS_URL = 'https://d137rfe7jg135q.cloudfront.net/bgs/';
 

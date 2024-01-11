@@ -7,6 +7,8 @@ import {
   TouchableOpacity,
 } from '@gorhom/bottom-sheet';
 import { useNavigation } from '@react-navigation/native';
+import { allMeditations } from '@store/selectors';
+import { useSheetStore } from '@store/useSheetStore';
 import React, {
   FC,
   useCallback,
@@ -19,9 +21,6 @@ import { StyleSheet, Text } from 'react-native';
 import { scale } from 'react-native-size-matters';
 import Icon from 'react-native-vector-icons/Feather';
 import { useSelector } from 'react-redux';
-import { allMeditations } from 'store/selectors';
-
-import { useSheetStore } from '../../store/useSheetStore';
 
 const FEELINGS = {
   calm: { label: 'רגוע', emoji: '😌' },

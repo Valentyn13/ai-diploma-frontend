@@ -1,8 +1,8 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useNavigation } from '@react-navigation/native';
+import { firstCourseSelector } from '@store/selectors';
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { firstCourseSelector } from 'store/selectors';
 
 export const useOnboarding = () => {
   const [isOldUser, setIsOldUser] = useState(true);

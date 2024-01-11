@@ -15,6 +15,7 @@ import useAppState from '@services/hooks/useAppState';
 import useArticleData from '@services/hooks/useArticleData';
 import useFeed from '@services/hooks/useFeed';
 import { useOnboarding } from '@services/hooks/useOnboarding';
+import { useSheetStore } from '@store/useSheetStore';
 import { getBGImageByTime } from '@utils/time';
 import React, { FC, useCallback, useEffect, useState } from 'react';
 import { ImageBackground, ScrollView, View } from 'react-native';
@@ -23,7 +24,6 @@ import { useSelector } from 'react-redux';
 import styled from 'styled-components/native';
 import { Meditation } from 'types/Meditation';
 
-import { useSheetStore } from '../../../../store/useSheetStore';
 import InstructorList from './InstructorList';
 import ReminderPopup from './ReminderPopup';
 

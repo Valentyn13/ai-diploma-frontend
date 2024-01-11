@@ -1,7 +1,7 @@
 import api from '@services/api';
+import * as actions from '@store/actions';
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import * as actions from 'store/actions';
 
 import useAxios from './useAxios';
 

@@ -1,3 +1,5 @@
+import CircularPlayer from './CircularPlayer';
+import TimesLabel from './TimesLabel';
 import FavoriteButton from '@common/components/FavoriteButton';
 import { CircleButton } from '@common/components/buttons/CircleButton';
 import { useNavigation, useRoute } from '@react-navigation/native';
@@ -5,6 +7,9 @@ import { captureException } from '@sentry/react-native';
 import { useAmplitude } from '@services/hooks/useAmplitude';
 import useInstructor from '@services/hooks/useInstructor';
 import useUpdateMeditation from '@services/hooks/useUpdateMeditation';
+import { meditationStarted, minutesPracticed } from '@store/actions';
+import { meditationInstructor } from '@store/selectors';
+import { useBgTrackStore } from '@store/useBgTrackStore';
 import logger from '@utils/logger';
 import { getVideoName } from '@utils/video';
 import PropTypes from 'prop-types';
@@ -21,13 +26,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import Video from 'react-native-video';
 import { useDispatch, useSelector } from 'react-redux';
 import RNFetchBlob from 'rn-fetch-blob';
-import { meditationStarted, minutesPracticed } from 'store/actions';
-import { meditationInstructor } from 'store/selectors';
 import styled from 'styled-components';
-
-import { useBgTrackStore } from '../../../store/useBgTrackStore';
-import CircularPlayer from './CircularPlayer';
-import TimesLabel from './TimesLabel';
 
 const ASSETS_URL = 'https://d137rfe7jg135q.cloudfront.net/';
 const OLD_ASSETS_URL = 'https://regameditation.s3.us-east-2.amazonaws.com/';

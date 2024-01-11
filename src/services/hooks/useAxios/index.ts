@@ -1,13 +1,13 @@
 import config from '@common/config';
 import * as Sentry from '@sentry/react-native';
 import api from '@services/api';
+import { logout, setAccessToken, setLoaderFalse } from '@store/actions';
 import alert from '@utils/alert';
 import logger from '@utils/logger';
 import { getToken, storeToken } from '@utils/tokenHolder';
 import axios from 'axios';
 import { useCallback, useEffect, useMemo, useReducer } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { logout, setAccessToken, setLoaderFalse } from 'store/actions';
 
 import usePrevious from '../usePrevious';
 import { actions, initialResponse, responseReducer } from './reducers';

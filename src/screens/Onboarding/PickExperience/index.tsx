@@ -6,13 +6,13 @@ import WithFadeIn from '@common/components/transitions/WithFadeIn';
 import WithSlideInX from '@common/components/transitions/WithSlideInX';
 import WithSlideInY from '@common/components/transitions/WithSlideInY';
 import { AMPLITUDE_EVENTS, useAmplitude } from '@services/hooks/useAmplitude';
+import { chooseExperience } from '@store/actions';
 import PropTypes from 'prop-types';
 import React, { useCallback, useEffect, useState } from 'react';
 import { Dimensions, Image, Platform, Text, View } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { scale } from 'react-native-size-matters';
 import { useDispatch } from 'react-redux';
-import { chooseExperience } from 'store/actions';
 import styled from 'styled-components';
 
 const EXPERIENCE = [

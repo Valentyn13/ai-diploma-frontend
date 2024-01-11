@@ -1,7 +1,7 @@
 import api from '@services/api';
+import { setUserData } from '@store/actions';
 import { useCallback, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import { setUserData } from 'store/actions';
 
 import useAxios from './useAxios';
 

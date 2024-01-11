@@ -6,12 +6,12 @@ import NotFound from '@common/components/animation/NotFound';
 import { colors } from '@common/theme';
 import { useNavigation } from '@react-navigation/native';
 import { useDebouncedState } from '@services/hooks/useDebouncedState';
+import { categoriesSelector } from '@store/selectors';
 import { searchInCategories } from '@utils/category';
 import { shuffleArray } from '@utils/rand';
 import React, { useEffect, useMemo, useState } from 'react';
 import { ActivityIndicator, ScrollView, Text, View } from 'react-native';
 import { useSelector } from 'react-redux';
-import { categoriesSelector } from 'store/selectors';
 import { Category } from 'types/Category';
 import { Meditation } from 'types/Meditation';
 

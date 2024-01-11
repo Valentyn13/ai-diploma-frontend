@@ -4,16 +4,16 @@ import {
   LIMIT_MAX_MEDITATIONS_FEED,
 } from '@common/constants';
 import i18n from '@services/localization/i18n';
-import { getRandomElements } from '@utils/rand';
-import { getCollectionIdByTime } from '@utils/time';
-import { useCallback, useMemo } from 'react';
-import { useSelector } from 'react-redux';
 import {
   allMeditations as allMeditationsSelector,
   homeMeditationsSelector,
   latestMeditationSelector,
   toptMeditationSelector,
-} from 'store/selectors';
+} from '@store/selectors';
+import { getRandomElements } from '@utils/rand';
+import { getCollectionIdByTime } from '@utils/time';
+import { useCallback, useMemo } from 'react';
+import { useSelector } from 'react-redux';
 import { Meditation } from 'types/Meditation';
 
 interface Collection {

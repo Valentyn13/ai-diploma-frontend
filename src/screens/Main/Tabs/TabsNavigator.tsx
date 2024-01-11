@@ -3,12 +3,12 @@ import { Icon } from '@common/components/Styled';
 import colors from '@common/theme/colors';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import i18n from '@services/localization/i18n';
+import { useSheetStore } from '@store/useSheetStore';
 import React from 'react';
 import { StatusBar } from 'react-native';
 import Animated from 'react-native-reanimated';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
-import { useSheetStore } from '../../../store/useSheetStore';
 import Courses from './Courses';
 import Home from './Home';
 import Meditations from './Meditations';

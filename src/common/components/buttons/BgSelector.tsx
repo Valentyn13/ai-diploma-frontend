@@ -1,8 +1,7 @@
-import { useNavigation } from '@react-navigation/native';
-import React from 'react';
-
-import { useBgTrackStore } from '../../../store/useBgTrackStore';
 import { CircleButton } from './CircleButton';
+import { useNavigation } from '@react-navigation/native';
+import { useBgTrackStore } from '@store/useBgTrackStore';
+import React from 'react';
 
 const BgSelector: React.FC = () => {
   const { navigate } = useNavigation();
