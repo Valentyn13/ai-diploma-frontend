@@ -75,14 +75,14 @@ const MusicModal = () => {
       </View>
       <View className="w-full flex flex-col">
         <Text
-          className="text-center text-3xl font-bold mb-6"
+          className="text-center text-3xl font-bold mb-6 text-black"
           style={{ fontFamily: theme.fonts.regular }}>
           עוצמת קול
         </Text>
         <Volume volume={volume} setVolume={setVolume} />
 
         <Text
-          className="text-center text-3xl font-bold mt-12 mb-6"
+          className="text-center text-3xl font-bold mt-12 mb-6 text-black"
           style={{ fontFamily: theme.fonts.regular }}>
           בחרו מוזיקת רקע
         </Text>
