@@ -20,6 +20,7 @@ import {
 } from './helper/pushNotifications';
 import RootNavigator from './screens/RootNavigator';
 import configureStore from './store';
+import trackPlayerInit from './trackPlayerInit';
 
 const { store, persistor } = configureStore();
 Settings.initializeSDK();
@@ -40,11 +41,7 @@ const App: React.FC = () => {
   }, []);
 
   useEffect(() => {
-    const init = async () => {
-      // trackPlayerInit();
-    };
-
-    init();
+    trackPlayerInit();
   }, []);
 
   const linking = {

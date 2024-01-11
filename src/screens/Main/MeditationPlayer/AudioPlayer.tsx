@@ -1,4 +1,6 @@
-import React, { FC, useEffect } from 'react';
+import { getCategoryImgName } from '@common/assets/images';
+import { BGS_ASSETS_URL } from '@common/constants';
+import React, { FC, useEffect, useMemo } from 'react';
 import { Text, View } from 'react-native';
 import TrackPlayer, { useProgress } from 'react-native-track-player';
 
@@ -7,9 +9,23 @@ interface Props {
   url: string;
   title: string;
   artist: string;
+  thumbnail: string;
+  categoryName: string;
 }
 
-const AudioPlayer: FC<Props> = ({ id, url, title, artist }) => {
+const AudioPlayer: FC<Props> = ({
+  id,
+  url,
+  title,
+  artist,
+  thumbnail,
+  categoryName,
+}) => {
+  const pathName = useMemo(
+    () => getCategoryImgName(categoryName, 0, thumbnail),
+    [categoryName, thumbnail],
+  );
+
   useEffect(() => {
     const addTrack = async () => {
       await TrackPlayer.add({
@@ -17,7 +33,7 @@ const AudioPlayer: FC<Props> = ({ id, url, title, artist }) => {
         url,
         title,
         artist,
-        artwork: require('../../../common/assets/images/bgs/work2.jpg'),
+        artwork: `${BGS_ASSETS_URL}${pathName}`,
       });
 
       TrackPlayer.play();
@@ -28,7 +44,7 @@ const AudioPlayer: FC<Props> = ({ id, url, title, artist }) => {
     return () => {
       TrackPlayer.reset();
     };
-  }, [artist, id, title, url]);
+  }, [artist, id, pathName, title, url]);
 
   const progress = useProgress();
 

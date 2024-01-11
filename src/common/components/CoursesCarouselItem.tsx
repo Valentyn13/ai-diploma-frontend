@@ -1,5 +1,6 @@
 import { getCategoryImgName } from '@common/assets/images';
 import AppText from '@common/components/AppText';
+import { BGS_ASSETS_URL } from '@common/constants';
 import { usePurchases } from '@common/context/PurchaseContext';
 import PropTypes from 'prop-types';
 import React from 'react';
@@ -8,8 +9,6 @@ import styled from 'styled-components';
 
 import CourseMeditations from './CourseMeditations';
 import { Container, ListItemCaption } from './Styled';
-
-const BGS_ASSETS_URL = 'https://d137rfe7jg135q.cloudfront.net/bgs/';
 
 export const HEIGHT_RATIO = {
   TOP: 2.0,

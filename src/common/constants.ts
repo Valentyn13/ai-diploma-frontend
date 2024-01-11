@@ -338,6 +338,8 @@ export const ABSTRACT_VIDEOS: Record<string, string> = {
   empower: 'empower.mp4',
 };
 
+export const BGS_ASSETS_URL = 'https://d137rfe7jg135q.cloudfront.net/bgs/';
+
 export const VIDEOS: Record<string, string> = {
   ...ABSTRACT_VIDEOS,
   south: 'beterSelf.mp4',

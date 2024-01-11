@@ -26,6 +26,7 @@ import { meditationInstructor } from 'store/selectors';
 import styled from 'styled-components';
 
 import { useBgTrackStore } from '../../../store/useBgTrackStore';
+import AudioPlayer from './AudioPlayer';
 import CircularPlayer from './CircularPlayer';
 import TimesLabel from './TimesLabel';
 
@@ -44,14 +45,6 @@ const VideoPlayer = styled(Video).attrs(() => ({
   left: 0;
   bottom: 0;
   right: 0;
-`;
-
-const AudioPlayer = styled(Video).attrs(() => ({}))`
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 0;
-  height: 0;
 `;
 
 const MeditationPlayer: FC = () => {
@@ -78,7 +71,7 @@ const MeditationPlayer: FC = () => {
   const amplitudeInstance = useAmplitude();
   const dispatch = useDispatch();
 
-  const { name, title, categoryName, url, id, animation } =
+  const { name, title, categoryName, url, id, animation, thumbnail } =
     route.params?.item || {};
 
   const instructor = useSelector(state => meditationInstructor(state, id));
@@ -264,8 +257,15 @@ const MeditationPlayer: FC = () => {
         />
       )}
 
-      {/* <AudioPlayer id={id} url={url} title={name} artist={instructor?.name} /> */}
       <AudioPlayer
+        id={id}
+        url={url}
+        title={name}
+        artist={instructor?.name}
+        thumbnail={thumbnail}
+        categoryName={categoryName}
+      />
+      {/* <AudioPlayer
         audioOnly
         disableFocus
         playWhenInactive
@@ -284,7 +284,7 @@ const MeditationPlayer: FC = () => {
           bufferForPlaybackMs: 2500,
           bufferForPlaybackAfterRebufferMs: 4000,
         }}
-      />
+      /> */}
       <SafeAreaView className="flex-col h-full w-full">
         <View className="relative flex flex-col items-center justify-center w-full h-full">
           <View className="absolute top-0 flex flex-row items-center w-full justify-between px-5 z-10">

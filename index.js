@@ -5,9 +5,10 @@ import TrackPlayer from 'react-native-track-player';
 
 import App from './App';
 import { name as appName } from './app.json';
+import { PlaybackService } from './service';
 
 messaging().setBackgroundMessageHandler(async remoteMessage => {});
 
-TrackPlayer.registerPlaybackService(() => require('./service'));
+TrackPlayer.registerPlaybackService(() => PlaybackService);
 
 AppRegistry.registerComponent(appName, () => App);
