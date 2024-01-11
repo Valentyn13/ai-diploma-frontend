@@ -110,6 +110,13 @@ export const SubTitle = styled(BaseText)`
   letter-spacing: 0.58px;
 `;
 
+export const ListTitle = styled(SubTitle)`
+  font-size: 22px;
+  font-weight: bold;
+  align-self: flex-start;
+  letter-spacing: 0.1px;
+`;
+
 export const BoldSubTitle = styled(BaseText)`
   font-size: 17px;
   letter-spacing: 0.58px;

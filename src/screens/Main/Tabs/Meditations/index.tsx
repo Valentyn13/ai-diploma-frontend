@@ -1,11 +1,14 @@
+import CategoriesSelection from '@common/components/CategoriesSelection';
 import Collection from '@common/components/Collection';
 import Divider from '@common/components/Divider';
 import SessionsGrid from '@common/components/SessionsGrid';
+import { ListTitle } from '@common/components/Styled';
 import Meditate from '@common/components/animation/Meditate';
 import NotFound from '@common/components/animation/NotFound';
 import { colors } from '@common/theme';
 import { useNavigation } from '@react-navigation/native';
 import { useDebouncedState } from '@services/hooks/useDebouncedState';
+import useDiscovery from '@services/hooks/useDiscovery';
 import { categoriesSelector } from '@store/selectors';
 import { searchInCategories } from '@utils/category';
 import { shuffleArray } from '@utils/rand';
@@ -18,6 +21,7 @@ import { Meditation } from 'types/Meditation';
 import SearchBar from './SearchBar';
 
 const Meditations = () => {
+  const [firstCollection, ...collections] = useDiscovery();
   const [isLoading, setIsLoading] = useState(false);
   const [searchQuery, setSearchQuery] = useDebouncedState('', 500);
   const { navigate } = useNavigation();
@@ -103,20 +107,41 @@ const Meditations = () => {
         searchQuery.length === 0 &&
         filteredCategories.length > 0 && (
           <View>
-            {filteredCategories
-              .sort((a, b) => a.order - b.order)
-              .map(category => (
-                <View key={category.id}>
-                  <Collection
-                    items={category.meditations}
-                    title={category.title}
-                    onShowAll={() =>
-                      onShowAll(category.title, category.meditations)
-                    }
-                  />
-                  <Divider className="my-6" />
-                </View>
-              ))}
+            <View>
+              <Collection
+                items={firstCollection.items}
+                title={firstCollection.title}
+                onShowAll={() =>
+                  onShowAll(firstCollection.title, firstCollection.items)
+                }
+              />
+              <Divider className="my-6" />
+            </View>
+            <View className="px-3">
+              <View className="mb-5 px-2">
+                <ListTitle t="על פי קטגוריה" />
+              </View>
+              <CategoriesSelection
+                categories={categories}
+                onPress={(c: Category) => {
+                  if (!c) {
+                    return;
+                  }
+                  onShowAll(c.title, c.meditations);
+                }}
+              />
+              <Divider className="my-6" />
+            </View>
+            {shuffleArray(collections).map(category => (
+              <View key={category.id}>
+                <Collection
+                  items={category.items}
+                  title={category.title}
+                  onShowAll={() => onShowAll(category.title, category.items)}
+                />
+                <Divider className="my-6" />
+              </View>
+            ))}
           </View>
         )}
 

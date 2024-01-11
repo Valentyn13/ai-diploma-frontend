@@ -1,4 +1,4 @@
-import { getCategoryImgName } from '@common/assets/images';
+import { getCategoryImg } from '@common/assets/images/index';
 import { CATEGORY_COLOR } from '@common/constants';
 import { usePurchases } from '@common/context/PurchaseContext';
 import theme from '@common/theme';
@@ -11,8 +11,6 @@ import React, { memo, useCallback } from 'react';
 import { ImageBackground, Pressable, Text, View } from 'react-native';
 import IconFontAwesome from 'react-native-vector-icons/FontAwesome6';
 import { useSelector } from 'react-redux';
-
-const BGS_ASSETS_URL = 'https://d137rfe7jg135q.cloudfront.net/bgs/';
 
 interface MeditationItemProps {
   horizontal?: boolean;
@@ -83,8 +81,6 @@ const MeditationItem: React.FC<MeditationItemProps> = memo(
       index,
     ]);
 
-    const pathName = getCategoryImgName(categoryName, index, thumbnail);
-
     return (
       <Pressable
         style={{
@@ -103,7 +99,7 @@ const MeditationItem: React.FC<MeditationItemProps> = memo(
           <ImageBackground
             className="flex-1 items-center justify-center"
             resizeMode="cover"
-            source={{ uri: `${BGS_ASSETS_URL}${pathName}` }}>
+            source={{ uri: getCategoryImg(categoryName, index, thumbnail) }}>
             <View
               style={{
                 // @ts-ignore

@@ -1,4 +1,4 @@
-import { getCategoryImgName } from '@common/assets/images';
+import { getCategoryImg } from '@common/assets/images/index';
 import AppText from '@common/components/AppText';
 import { usePurchases } from '@common/context/PurchaseContext';
 import PropTypes from 'prop-types';
@@ -8,8 +8,6 @@ import styled from 'styled-components';
 
 import CourseMeditations from './CourseMeditations';
 import { Container, ListItemCaption } from './Styled';
-
-const BGS_ASSETS_URL = 'https://d137rfe7jg135q.cloudfront.net/bgs/';
 
 export const HEIGHT_RATIO = {
   TOP: 2.0,
@@ -28,7 +26,7 @@ const Item = styled.ImageBackground.attrs(({ index }) => ({
   resizeMode: 'cover',
   borderRadius: 8,
   overflow: 'hidden',
-  source: { uri: `${BGS_ASSETS_URL}${getCategoryImgName('starthere', index)}` },
+  source: { uri: getCategoryImg('starthere', index) },
 }))`
   flex: 1;
   margin-bottom: 20px;
