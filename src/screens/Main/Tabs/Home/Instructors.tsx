@@ -1,6 +1,7 @@
 import { CircleButton } from '@common/components/buttons/CircleButton';
 import theme from '@common/theme';
 import { useNavigation } from '@react-navigation/native';
+import { allMeditations as allMeditationsSelector } from '@store/selectors';
 import { shuffleArray } from '@utils/rand';
 import React, { useCallback, useMemo } from 'react';
 import {
@@ -12,7 +13,6 @@ import {
   View,
 } from 'react-native';
 import { useSelector } from 'react-redux';
-import { allMeditations as allMeditationsSelector } from 'store/selectors';
 
 const Instructors = () => {
   const navigation = useNavigation();

@@ -7,39 +7,23 @@ import Logo from '@common/components/Logo';
 import { SubTitle } from '@common/components/Styled';
 import BgSelector from '@common/components/buttons/BgSelector';
 import ShowAll from '@common/components/buttons/ShowAll';
-import {
-  COLLECTIONS,
-  COLLECTIONS_TIME_OF_DAY,
-  SHOULD_SHOW_REMINDER_POPUP_STATUS_TURNED_ON,
-} from '@common/constants';
 import { usePurchases } from '@common/context/PurchaseContext';
-import { useFocusEffect } from '@react-navigation/native';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { RootStackParamList } from '@screens/RootNavigator';
 import useAppData from '@services/hooks/useAppData';
 import useAppState from '@services/hooks/useAppState';
 import useArticleData from '@services/hooks/useArticleData';
+import useFeed from '@services/hooks/useFeed';
 import { useOnboarding } from '@services/hooks/useOnboarding';
-import i18n from '@services/localization/i18n';
-import { logEvent } from '@utils/analytics';
-import { getRandomElements } from '@utils/rand';
-import { getBGImageByTime, getCollectionIdByTime } from '@utils/time';
-import React, { FC, useCallback, useEffect, useMemo, useState } from 'react';
+import { useSheetStore } from '@store/useSheetStore';
+import { getBGImageByTime } from '@utils/time';
+import React, { FC, useCallback, useEffect, useState } from 'react';
 import { ImageBackground, ScrollView, View } from 'react-native';
 import { LinearGradient } from 'react-native-gradients';
-import { useDispatch, useSelector } from 'react-redux';
-import { turnOffShowReminderPopup } from 'store/actions';
-import {
-  allMeditations as allMeditationsSelector,
-  homeCategoriesSelector,
-  homeMeditationsSelector,
-  latestMeditationSelector,
-  toptMeditationSelector,
-} from 'store/selectors';
+import { useSelector } from 'react-redux';
 import styled from 'styled-components/native';
 import { Meditation } from 'types/Meditation';
 
-import { useSheetStore } from '../../../../store/useSheetStore';
 import InstructorList from './InstructorList';
 import ReminderPopup from './ReminderPopup';
 
@@ -59,58 +43,26 @@ const BGS = {
 const Feed: FC<FeedProps> = ({ navigation }) => {
   const { getAppData } = useAppData();
   const { getArticleData } = useArticleData();
-  const { email, sex } = useSelector((state: any) => state.userDetails);
+  const { sex } = useSelector((state: any) => state.userDetails);
   const { setPurchaserIdentity } = usePurchases();
   const [showNotificationModal, setshowNotificationModal] = useState(false);
-
-  const dispatch = useDispatch();
-
-  const [data, setData] = useState([]);
-  const meditations = useSelector(homeMeditationsSelector);
-  const latest = useSelector(latestMeditationSelector);
-  const topRated = useSelector(toptMeditationSelector);
-  const allMeditations = useSelector(allMeditationsSelector);
-  const { shouldShowReminderPopup } = useSelector(
-    (state: any) => state.userProgress,
-  );
-  const categories = useSelector(homeCategoriesSelector);
-  categories.sort((a: any, b: any) => a.order - b.order);
+  const [firstCollection, ...collections]: Collection[] = useFeed();
 
   useOnboarding();
-
-  const notificationModal = useCallback(async () => {
-    logEvent('ReminderPopupOpened', { email });
-    dispatch(turnOffShowReminderPopup());
-    setshowNotificationModal(true);
-  }, [dispatch, email]);
 
   const onForeground = useCallback(() => {
     getAppData();
     getArticleData();
   }, [getAppData, getArticleData]);
 
-  useFocusEffect(
-    useCallback(() => {
-      setData(meditations);
-      if (
-        shouldShowReminderPopup === SHOULD_SHOW_REMINDER_POPUP_STATUS_TURNED_ON
-      ) {
-        notificationModal();
-      }
-    }, [meditations, shouldShowReminderPopup, notificationModal]),
-  );
-
   useEffect(() => {
     setPurchaserIdentity();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  useAppState(
-    {
-      onForeground,
-    },
-    [onForeground],
-  );
+  useAppState({
+    onForeground,
+  });
 
   useEffect(() => {
     getArticleData();
@@ -133,39 +85,11 @@ const Feed: FC<FeedProps> = ({ navigation }) => {
     { offset: '100%', color: '#000', opacity: '0' },
   ];
 
-  const idToItem = useCallback(
-    (id: string) => allMeditations.find((m: any) => m.id === id),
-    [allMeditations],
-  );
-
   interface Collection {
     id: string;
     title: string;
     items: Meditation[];
   }
-
-  const collections: Collection[] = useMemo(() => {
-    const fixedCollections: Collection[] = [
-      {
-        id: 'greeting-general',
-        title: i18n.t('Greeting_general'),
-        items: data,
-      },
-      { id: 'latest-release', title: i18n.t('latest_release'), items: latest },
-      { id: 'top-rated', title: i18n.t('most_played'), items: topRated },
-    ];
-
-    const dynamicCollections: Collection[] = getRandomElements(
-      COLLECTIONS,
-      3,
-    ).map(({ title, id, trackIds }) => ({
-      id,
-      title,
-      items: trackIds.map(idToItem).filter(Boolean),
-    }));
-
-    return getRandomElements([...dynamicCollections, ...fixedCollections], 6);
-  }, [data, idToItem, latest, topRated]);
 
   return (
     <View className="h-full w-full bg-[#FCE8CD]">
@@ -200,28 +124,23 @@ const Feed: FC<FeedProps> = ({ navigation }) => {
           </View>
 
           <View className="h-[260px]" />
-          {COLLECTIONS_TIME_OF_DAY.filter(
-            ({ id }) => id === getCollectionIdByTime(),
-          ).map((collection: any) => (
-            <View
-              style={{
-                marginTop: 100,
-                paddingTop: 60,
-              }}>
-              <Collection
-                key={collection.id}
-                title={collection.title}
-                items={collection.trackIds.map(idToItem).filter(Boolean)}
-                onShowAll={() => {
-                  onShowAll(
-                    collection.title,
-                    collection.trackIds.map(idToItem).filter(Boolean),
-                  );
-                }}
-              />
-              <Divider className="my-6" />
-            </View>
-          ))}
+
+          <View
+            style={{
+              marginTop: 100,
+              paddingTop: 60,
+            }}
+            className="flex-1">
+            <Collection
+              key="by-time"
+              title={firstCollection.title}
+              items={firstCollection.items}
+              onShowAll={() => {
+                onShowAll(firstCollection.title, firstCollection.items);
+              }}
+            />
+            <Divider className="my-6" />
+          </View>
         </View>
 
         <View className="bg-[#FCE8CD]">

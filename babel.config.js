@@ -29,7 +29,7 @@ module.exports = {
           '@services': './src/services',
           '@utils': './src/utils',
           '@screens': './src/screens',
-          store: './src/store',
+          '@store': './src/store',
         },
       },
     ],

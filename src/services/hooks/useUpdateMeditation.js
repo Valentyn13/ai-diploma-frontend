@@ -2,7 +2,7 @@
 import api from '@services/api';
 
 // import {useDispatch, useSelector} from 'react-redux';
-// import {setUpdateLoaderFalse} from 'store/actions';
+// import {setUpdateLoaderFalse} from '@store/actions';
 import useAxios from './useAxios';
 
 export default () => {

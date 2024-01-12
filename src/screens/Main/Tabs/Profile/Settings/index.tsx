@@ -10,6 +10,7 @@ import rudderClient, {
 import { useAmplitude } from '@services/hooks/useAmplitude';
 import useDeleteData from '@services/hooks/useDeleteData';
 import useUpdateProfile from '@services/hooks/useUpdateProfile';
+import { logout } from '@store/actions';
 import { logEvent } from '@utils/analytics';
 import { fbLogout } from '@utils/facebook';
 import { googleSignOut } from '@utils/google';
@@ -30,7 +31,6 @@ import DeviceInfo from 'react-native-device-info';
 import Modal from 'react-native-modal';
 import Icon from 'react-native-vector-icons/FontAwesome6';
 import { useDispatch, useSelector } from 'react-redux';
-import { logout } from 'store/actions';
 
 const Settings = ({ navigation }) => {
   const [showModal, setShowModal] = React.useState(false);

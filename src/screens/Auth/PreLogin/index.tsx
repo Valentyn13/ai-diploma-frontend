@@ -6,6 +6,7 @@ import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { RootStackParamList } from '@screens/RootNavigator';
 import useAppData from '@services/hooks/useAppData';
 import useLogin from '@services/hooks/useLogin';
+import { firstCourseSelector } from '@store/selectors';
 import alert from '@utils/alert';
 import logger from '@utils/logger';
 import React, { FC, useEffect, useState } from 'react';
@@ -14,7 +15,6 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
 import { scale } from 'react-native-size-matters';
 import IconFA from 'react-native-vector-icons/FontAwesome6';
 import { useSelector } from 'react-redux';
-import { firstCourseSelector } from 'store/selectors';
 
 type PreLoginProps = NativeStackScreenProps<
   RootStackParamList,

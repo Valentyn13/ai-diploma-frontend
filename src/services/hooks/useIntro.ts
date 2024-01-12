@@ -1,6 +1,6 @@
+import { chooseCategories, chooseSex } from '@store/actions';
 import { useMemo } from 'react';
 import { useDispatch } from 'react-redux';
-import { chooseCategories, chooseSex } from 'store/actions';
 
 import useCache from './useCache';
 

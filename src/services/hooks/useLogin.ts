@@ -1,5 +1,6 @@
 import { captureMessage } from '@sentry/react-native';
 import api from '@services/api';
+import { login, setLoder } from '@store/actions';
 import { applelogin } from '@utils/apple';
 import { fbLogin } from '@utils/facebook';
 import { googleSignIn } from '@utils/google';
@@ -7,7 +8,6 @@ import logger from '@utils/logger';
 import { useCallback, useEffect } from 'react';
 import { Alert } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
-import { login, setLoder } from 'store/actions';
 
 import { getFcmToken } from '../../helper/pushNotifications';
 import useAxios from './useAxios';

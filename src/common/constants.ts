@@ -336,18 +336,20 @@ export const ABSTRACT_VIDEOS: Record<string, string> = {
   work: 'work.mp4',
   advance: 'advance.mp4',
   empower: 'empower.mp4',
+  south: 'beterSelf.mp4',
 };
 
 export const BGS_ASSETS_URL = 'https://d137rfe7jg135q.cloudfront.net/bgs/';
 
 export const VIDEOS: Record<string, string> = {
   ...ABSTRACT_VIDEOS,
-  south: 'beterSelf.mp4',
   breath478: 'breathe-4-7-8.mp4',
   breathbox: 'breathe-box.mp4',
   circlebreating: 'circle-breathing.mp4',
   noseBreath: 'nose-breath.mp4',
 };
+
+export const LIMIT_MAX_MEDITATIONS_FEED = 3;
 
 export const COLLECTIONS = [
   {

@@ -1,4 +1,4 @@
-import { getCategoryImgName } from '@common/assets/images';
+import { getCategoryImg } from '@common/assets/images/index';
 import AppText from '@common/components/AppText';
 import { BGS_ASSETS_URL } from '@common/constants';
 import { usePurchases } from '@common/context/PurchaseContext';
@@ -27,7 +27,7 @@ const Item = styled.ImageBackground.attrs(({ index }) => ({
   resizeMode: 'cover',
   borderRadius: 8,
   overflow: 'hidden',
-  source: { uri: `${BGS_ASSETS_URL}${getCategoryImgName('starthere', index)}` },
+  source: { uri: getCategoryImg('starthere', index) },
 }))`
   flex: 1;
   margin-bottom: 20px;

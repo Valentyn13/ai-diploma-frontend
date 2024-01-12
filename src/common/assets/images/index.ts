@@ -192,7 +192,7 @@ const findCustomThumbnail = thumbnail => {
 export const getCategoryImgName = (
   category: string,
   index: number,
-  thumbnail: string,
+  thumbnail?: string,
 ) => {
   const key = categoryBGs(category);
   try {
@@ -216,5 +216,13 @@ export const getCategoryImgName = (
     return BGS.sleepBGs[0];
   }
 };
+
+const BGS_ASSETS_URL = 'https://d137rfe7jg135q.cloudfront.net/bgs/';
+
+export const getCategoryImg = (
+  category: string,
+  index: number,
+  thumbnail?: string,
+) => `${BGS_ASSETS_URL}${getCategoryImgName(category, index, thumbnail)}`;
 
 export default image;

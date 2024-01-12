@@ -1,11 +1,11 @@
 import { BG_TRACKS } from '@common/constants';
 import theme from '@common/theme';
 import { useNavigation } from '@react-navigation/native';
+import { useBgTrackStore } from '@store/useBgTrackStore';
 import React, { useCallback } from 'react';
 import { FlatList, Text, View } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
-import { useBgTrackStore } from '../../store/useBgTrackStore';
 import Volume from './Volume';
 import { CircleButton } from './buttons/CircleButton';
 

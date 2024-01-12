@@ -1,7 +1,10 @@
 import { colors } from '@common/theme';
+import {
+  addFavoriteMeditation,
+  removeFavoriteMeditation,
+} from '@store/actions';
 import React, { FC, useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { addFavoriteMeditation, removeFavoriteMeditation } from 'store/actions';
 
 import { TouchableIcon } from './Styled';
 

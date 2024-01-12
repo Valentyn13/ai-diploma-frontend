@@ -1,9 +1,9 @@
 import { captureException } from '@sentry/react-native';
 import api from '@services/api';
+import { setAppData } from '@store/actions';
 import captureMessage from '@utils/captureMessage';
 import { useCallback, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import { setAppData } from 'store/actions';
 
 import useAxios from './useAxios';
 

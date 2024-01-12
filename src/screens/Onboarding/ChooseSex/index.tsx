@@ -8,13 +8,13 @@ import WithSlideInY from '@common/components/transitions/WithSlideInY';
 import { AMPLITUDE_EVENTS, useAmplitude } from '@services/hooks/useAmplitude';
 import useCache from '@services/hooks/useCache';
 import { INTRO_METADATA_KEY, IntroMetadata } from '@services/hooks/useIntro';
+import { chooseSex } from '@store/actions';
 import PropTypes from 'prop-types';
 import React, { useEffect, useState } from 'react';
 import { Dimensions, Image, Platform, Text, View } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { scale } from 'react-native-size-matters';
 import { useDispatch } from 'react-redux';
-import { chooseSex } from 'store/actions';
 import styled from 'styled-components';
 
 export const BgImage = styled.ImageBackground.attrs(({ name, isFirst }) => ({

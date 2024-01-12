@@ -1,7 +1,7 @@
+import { coursesSelector } from '@store/selectors';
 import React, { FC, useMemo } from 'react';
 import { View } from 'react-native';
 import { useSelector } from 'react-redux';
-import { coursesSelector } from 'store/selectors';
 import styled from 'styled-components/native';
 import { Course } from 'types/Course';
 
