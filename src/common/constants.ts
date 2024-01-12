@@ -339,6 +339,8 @@ export const ABSTRACT_VIDEOS: Record<string, string> = {
   south: 'beterSelf.mp4',
 };
 
+export const BGS_ASSETS_URL = 'https://d137rfe7jg135q.cloudfront.net/bgs/';
+
 export const VIDEOS: Record<string, string> = {
   ...ABSTRACT_VIDEOS,
   breath478: 'breathe-4-7-8.mp4',

@@ -39,14 +39,6 @@ const App: React.FC = () => {
     notificationListner();
   }, []);
 
-  useEffect(() => {
-    const init = async () => {
-      // trackPlayerInit();
-    };
-
-    init();
-  }, []);
-
   const linking = {
     prefixes: ['rega://'],
     config: {

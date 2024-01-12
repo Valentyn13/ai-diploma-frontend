@@ -1,5 +1,6 @@
 import { getCategoryImg } from '@common/assets/images/index';
 import AppText from '@common/components/AppText';
+import { BGS_ASSETS_URL } from '@common/constants';
 import { usePurchases } from '@common/context/PurchaseContext';
 import PropTypes from 'prop-types';
 import React from 'react';

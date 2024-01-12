@@ -1,5 +1,4 @@
-import CircularPlayer from './CircularPlayer';
-import TimesLabel from './TimesLabel';
+import { getCategoryImgName } from '@common/assets/images';
 import FavoriteButton from '@common/components/FavoriteButton';
 import { CircleButton } from '@common/components/buttons/CircleButton';
 import { useNavigation, useRoute } from '@react-navigation/native';
@@ -13,23 +12,30 @@ import { useBgTrackStore } from '@store/useBgTrackStore';
 import logger from '@utils/logger';
 import { getVideoName } from '@utils/video';
 import PropTypes from 'prop-types';
-import React, {
-  FC,
-  useCallback,
-  useEffect,
-  useMemo,
-  useRef,
-  useState,
-} from 'react';
-import { Alert, Pressable, StatusBar, Text, View } from 'react-native';
+import React, { FC, useCallback, useEffect, useMemo, useState } from 'react';
+import {
+  ActivityIndicator,
+  Alert,
+  Pressable,
+  StatusBar,
+  Text,
+  View,
+} from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import TrackPlayer, { useProgress } from 'react-native-track-player';
 import Video from 'react-native-video';
 import { useDispatch, useSelector } from 'react-redux';
 import RNFetchBlob from 'rn-fetch-blob';
 import styled from 'styled-components';
 
+import AudioPlayer from './AudioPlayer';
+import PlayerControls from './PlayerButtons';
+import TimesLabel from './TimesLabel';
+
 const ASSETS_URL = 'https://d137rfe7jg135q.cloudfront.net/';
 const OLD_ASSETS_URL = 'https://regameditation.s3.us-east-2.amazonaws.com/';
+
+const BGS_ASSETS_URL = 'https://d137rfe7jg135q.cloudfront.net/bgs/';
 
 const VIDEO_URL = `${ASSETS_URL}videos/`;
 const SOUNDS_URL = `${ASSETS_URL}sounds/`;
@@ -45,24 +51,14 @@ const VideoPlayer = styled(Video).attrs(() => ({
   right: 0;
 `;
 
-const AudioPlayer = styled(Video).attrs(() => ({}))`
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 0;
-  height: 0;
-`;
-
 const MeditationPlayer: FC = () => {
   const [cachedVideoUri, setCachedVideoUri] = useState(null);
   const route = useRoute();
-  const audioPlayerRef = useRef(null);
   const { updateIstructorTractionData } = useInstructor();
   const { goBack, navigate } = useNavigation();
   const { updateMeditationCount } = useUpdateMeditation();
-  const [currentTime, setCurrentTime] = useState(0);
+  const { position, duration } = useProgress();
   const [startTime, setStartTime] = useState(0);
-  const [duration, setDuration] = useState(0);
   const [sliderEditing, setSliderEditing] = useState(false);
   const [isPlaying, setIsPlaying] = useState(true);
   const [isLoading, setIsLoading] = useState(true);
@@ -77,7 +73,7 @@ const MeditationPlayer: FC = () => {
   const amplitudeInstance = useAmplitude();
   const dispatch = useDispatch();
 
-  const { name, title, categoryName, url, id, animation } =
+  const { name, title, categoryName, url, id, animation, thumbnail } =
     route.params?.item || {};
 
   const instructor = useSelector(state => meditationInstructor(state, id));
@@ -95,10 +91,10 @@ const MeditationPlayer: FC = () => {
   const hasAnimation = animation !== null && animation !== undefined;
 
   const updateTimePlayed = useCallback(() => {
-    const minutesPlayed = (currentTime - startTime) / 60;
+    const minutesPlayed = (position - startTime) / 60;
 
     dispatch(minutesPracticed({ minutesPlayed }));
-  }, [currentTime, dispatch, startTime]);
+  }, [dispatch, position, startTime]);
 
   useEffect(() => {
     dispatch(meditationStarted({ id }));
@@ -117,14 +113,13 @@ const MeditationPlayer: FC = () => {
   };
 
   const onLoad = ({ duration: value }) => {
-    setDuration(value);
     setIsLoading(false);
   };
 
   const onProgress = useCallback(
     ({ currentTime: value }) => {
       if (!sliderEditing) {
-        setCurrentTime(value);
+        TrackPlayer.seekTo(value);
       }
     },
     [sliderEditing],
@@ -134,23 +129,6 @@ const MeditationPlayer: FC = () => {
     captureException(error);
     Alert.alert('בעיה בהשמעת המדיטציה, נסה שנית');
   };
-
-  const onSliderEditStart = useCallback(() => {
-    updateTimePlayed();
-    setSliderEditing(true);
-  }, [updateTimePlayed]);
-
-  const onSliderEditEnd = useCallback(endTime => {
-    setSliderEditing(false);
-    setStartTime(endTime);
-  }, []);
-
-  const onSliderEditing = useCallback(value => {
-    setCurrentTime(value);
-    if (audioPlayerRef.current) {
-      audioPlayerRef.current.seek(value);
-    }
-  }, []);
 
   const onEnd = () => {
     togglePlay();
@@ -164,8 +142,10 @@ const MeditationPlayer: FC = () => {
     currentTime: PropTypes.number.isRequired,
   };
 
-  // const poster = useMemo(() => categoryImage(categoryName), [categoryName]);
-  const poster = useMemo(() => 'https://picsum.photos/200', []);
+  const poster = useMemo(
+    () => `${BGS_ASSETS_URL}${getCategoryImgName(categoryName, 0, thumbnail)}`,
+    [categoryName, thumbnail],
+  );
 
   const audio = url;
 
@@ -204,19 +184,7 @@ const MeditationPlayer: FC = () => {
       }
     };
 
-    const downloadAndCacheAudio = async () => {
-      const audioUri = await downloadAndCacheFile(
-        `${SOUNDS_URL}${audio}`,
-        audio,
-      );
-      if (audioUri) {
-        // Update the source of the AudioPlayer
-        audioPlayerRef.current.setNativeProps({ source: { uri: audioUri } });
-      }
-    };
-
     downloadAndCacheVideo();
-    // downloadAndCacheAudio();
   }, [video, audio]);
 
   const [hideControls, setHideControls] = useState(false);
@@ -233,6 +201,8 @@ const MeditationPlayer: FC = () => {
     }
   }, [hideControls]);
 
+  const isReady = true;
+
   const onVideoPress = () => {
     if (hideControls) {
       setHideControls(false);
@@ -247,6 +217,8 @@ const MeditationPlayer: FC = () => {
       <StatusBar animated hidden={true} />
       {cachedVideoUri && (
         <VideoPlayer
+          poster={poster}
+          posterResizeMode="cover"
           style={{ zIndex: -1, backgroundColor: 'black' }}
           source={{
             uri: cachedVideoUri,
@@ -263,26 +235,16 @@ const MeditationPlayer: FC = () => {
         />
       )}
 
-      {/* <AudioPlayer id={id} url={url} title={name} artist={instructor?.name} /> */}
       <AudioPlayer
-        audioOnly
-        disableFocus
-        playWhenInactive
-        ignoreSilentSwitch="ignore"
-        ref={audioPlayerRef}
-        source={{ uri: url.replace(OLD_ASSETS_URL, ASSETS_URL) }}
-        paused={!isPlaying}
-        onLoad={onLoad}
-        onProgress={onProgress}
-        onEnd={onEnd}
-        onError={onError}
-        progressUpdateInterval={1000}
-        bufferConfig={{
-          minBufferMs: 15000,
-          maxBufferMs: 50000,
-          bufferForPlaybackMs: 2500,
-          bufferForPlaybackAfterRebufferMs: 4000,
-        }}
+        id={id}
+        url={url.replace(OLD_ASSETS_URL, ASSETS_URL)}
+        title={name}
+        artist={instructor?.name}
+        artwork={`${BGS_ASSETS_URL}${getCategoryImgName(
+          categoryName,
+          0,
+          thumbnail,
+        )}`}
       />
       <SafeAreaView className="flex-col h-full w-full">
         <View className="relative flex flex-col items-center justify-center w-full h-full">
@@ -311,18 +273,17 @@ const MeditationPlayer: FC = () => {
               display: hideControls ? 'none' : 'flex',
             }}
             className="absolute flex flex-col items-center justify-center h-full w-full">
-            <CircularPlayer
-              togglePlay={togglePlay}
-              isPlaying={isPlaying}
-              currentTime={currentTime}
-              onSliderEditStart={onSliderEditStart}
-              onSliderEditEnd={onSliderEditEnd}
-              onSliderEditing={onSliderEditing}
-              duration={duration}
-              setCurrentTime={setCurrentTime}
-              isLoading={isLoading}
-            />
-            <TimesLabel {...{ currentTime, duration }} color="#fff" />
+            {!isReady ? (
+              <ActivityIndicator size="large" />
+            ) : (
+              <>
+                <TimesLabel
+                  {...{ currentTime: position, duration }}
+                  color="#fff"
+                />
+                <PlayerControls />
+              </>
+            )}
           </View>
           <View className="absolute bottom-20 w-full flex-col items-center">
             <Text className="text-2xl font-bold text-white">
