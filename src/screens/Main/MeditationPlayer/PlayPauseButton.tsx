@@ -48,7 +48,7 @@ const PlayPauseButton: FC<{ isPlaying: boolean; onBtnPress: () => void }> = ({
   };
 
   return (
-    <TouchableOpacity onPress={onPress}>
+    <TouchableOpacity onPress={onPress} className="p-6">
       <Animated.View style={animatedStyle}>
         <Svg
           height={svgHeight}
