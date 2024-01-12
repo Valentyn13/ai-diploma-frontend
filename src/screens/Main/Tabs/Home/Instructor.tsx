@@ -41,7 +41,9 @@ const Instructor = () => {
         <View className="px-5 flex-1 mt-8">
           <View className="mb-8">
             <View className="flex flex-row justify-between items-center">
-              <Text className="text-2xl font-bold">{instructor?.name}</Text>
+              <Text className="text-2xl font-bold text-black">
+                {instructor?.name}
+              </Text>
               <View className="flex flex-row">
                 {instructor.SocialIconLink && (
                   <View className="mr-1">
@@ -82,11 +84,11 @@ const Instructor = () => {
                 )}
               </View>
             </View>
-            <Text className="text-left text-base leading-none font-normal mt-4">
+            <Text className="text-left text-base leading-none font-normal mt-4 text-black">
               {instructor?.description}
             </Text>
           </View>
-          <Text className="text-center text-base leading-none font-normal text-gray-500 mb-4">
+          <Text className="text-center text-base leading-none font-normal text-gray-700 mb-4">
             {meditations.length} תרגולים
           </Text>
           <SessionsGrid meditations={meditations} />

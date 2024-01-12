@@ -89,7 +89,7 @@ const Splash: FC<SplashProps> = ({ navigation: { navigate, replace } }) => {
               style={{
                 fontFamily: fonts?.light,
               }}
-              className="mt-2 text-center text-2xl font-normal text-gray-800">
+              className="mt-2 text-center text-2xl font-medium text-gray-800">
               רגע
             </Text>
           </WithScale>
