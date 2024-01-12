@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { View } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import TrackPlayer, {
   State,
+  useIsPlaying,
   usePlaybackState,
 } from 'react-native-track-player';
 import Icon from 'react-native-vector-icons/FontAwesome6';
@@ -11,14 +12,15 @@ import PlayPauseButton from './PlayPauseButton';
 
 const PlayerControls: React.FC = () => {
   const { state } = usePlaybackState();
+  const { playing } = useIsPlaying();
 
-  const togglePlay = async () => {
-    if (state === State.Playing) {
+  const togglePlay = useCallback(() => {
+    if (playing) {
       TrackPlayer.pause();
     } else {
       TrackPlayer.play();
     }
-  };
+  }, [playing]);
 
   return (
     <View className="relative flex flex-row justify-between mt-2 items-center w-8/12">

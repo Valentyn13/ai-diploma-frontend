@@ -2,32 +2,24 @@ import { getCategoryImgName } from '@common/assets/images';
 import FavoriteButton from '@common/components/FavoriteButton';
 import { CircleButton } from '@common/components/buttons/CircleButton';
 import { useNavigation, useRoute } from '@react-navigation/native';
-import { captureException } from '@sentry/react-native';
 import { useAmplitude } from '@services/hooks/useAmplitude';
 import useInstructor from '@services/hooks/useInstructor';
 import useUpdateMeditation from '@services/hooks/useUpdateMeditation';
-import { meditationStarted, minutesPracticed } from '@store/actions';
+import { meditationStarted } from '@store/actions';
 import { meditationInstructor } from '@store/selectors';
 import { useBgTrackStore } from '@store/useBgTrackStore';
 import logger from '@utils/logger';
 import { getVideoName } from '@utils/video';
-import PropTypes from 'prop-types';
-import React, { FC, useCallback, useEffect, useMemo, useState } from 'react';
+import React, { FC, useEffect, useMemo, useState } from 'react';
 import {
   ActivityIndicator,
-  Alert,
   Pressable,
   StatusBar,
   Text,
   View,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import TrackPlayer, {
-  State,
-  useIsPlaying,
-  usePlayWhenReady,
-  useProgress,
-} from 'react-native-track-player';
+import { useIsPlaying, useProgress } from 'react-native-track-player';
 import Video from 'react-native-video';
 import { useDispatch, useSelector } from 'react-redux';
 import RNFetchBlob from 'rn-fetch-blob';
@@ -43,7 +35,6 @@ const OLD_ASSETS_URL = 'https://regameditation.s3.us-east-2.amazonaws.com/';
 const BGS_ASSETS_URL = 'https://d137rfe7jg135q.cloudfront.net/bgs/';
 
 const VIDEO_URL = `${ASSETS_URL}videos/`;
-const SOUNDS_URL = `${ASSETS_URL}sounds/`;
 
 const VideoPlayer = styled(Video).attrs(() => ({
   resizeMode: 'cover',
@@ -63,10 +54,6 @@ const MeditationPlayer: FC = () => {
   const { goBack, navigate } = useNavigation();
   const { updateMeditationCount } = useUpdateMeditation();
   const { position, duration } = useProgress();
-  const [startTime, setStartTime] = useState(0);
-  const [sliderEditing, setSliderEditing] = useState(false);
-  const [isPlaying, setIsPlaying] = useState(true);
-  const [isLoading, setIsLoading] = useState(true);
   const { selectedTrack } = useBgTrackStore(state => state);
 
   const toggleBgMenu = () => {
@@ -85,7 +72,7 @@ const MeditationPlayer: FC = () => {
 
   useEffect(() => {
     updateMeditationCount(id);
-    // TODO: fix dependencies, currently updateMeditationCount is NOT in dependencies array since it causes 'Maximum update depth exceeded' error
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id]);
 
   const video = useMemo(
@@ -95,52 +82,16 @@ const MeditationPlayer: FC = () => {
 
   const hasAnimation = animation !== null && animation !== undefined;
 
-  const updateTimePlayed = useCallback(() => {
-    const minutesPlayed = (position - startTime) / 60;
-
-    dispatch(minutesPracticed({ minutesPlayed }));
-  }, [dispatch, position, startTime]);
-
   useEffect(() => {
     dispatch(meditationStarted({ id }));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id]);
-
-  const togglePlay = useCallback(() => {
-    setIsPlaying(!isPlaying);
-  }, [isPlaying]);
 
   const onClose = () => {
     amplitudeInstance.logEvent('MEDITATION_STOP', { categoryName });
     amplitudeInstance.uploadEvents();
 
     goBack();
-  };
-
-  const onLoad = ({ duration: value }) => {
-    setIsLoading(false);
-  };
-
-  const onProgress = useCallback(
-    ({ currentTime: value }) => {
-      if (!sliderEditing) {
-        TrackPlayer.seekTo(value);
-      }
-    },
-    [sliderEditing],
-  );
-
-  const onError = error => {
-    captureException(error);
-    Alert.alert('בעיה בהשמעת המדיטציה, נסה שנית');
-  };
-
-  onLoad.propTypes = {
-    duration: PropTypes.number.isRequired,
-  };
-
-  onProgress.propTypes = {
-    currentTime: PropTypes.number.isRequired,
   };
 
   const poster = useMemo(
@@ -180,7 +131,6 @@ const MeditationPlayer: FC = () => {
         video,
       );
       if (videoUri) {
-        setIsLoading(false);
         setCachedVideoUri(videoUri);
       }
     };
@@ -202,8 +152,7 @@ const MeditationPlayer: FC = () => {
     }
   }, [hideControls]);
 
-  const isPlayWhenReady = usePlayWhenReady();
-  const { state } = useIsPlaying();
+  const { bufferingDuringPlay, playing } = useIsPlaying();
 
   const onVideoPress = () => {
     if (hideControls) {
@@ -225,7 +174,7 @@ const MeditationPlayer: FC = () => {
           source={{
             uri: cachedVideoUri,
           }}
-          paused={!isPlaying}
+          paused={!playing}
           onError={error => logger.log('error', error)}
           progressUpdateInterval={1000}
           bufferConfig={{
@@ -275,8 +224,7 @@ const MeditationPlayer: FC = () => {
               display: hideControls ? 'none' : 'flex',
             }}
             className="absolute flex flex-col items-center justify-center h-full w-full">
-            {isPlayWhenReady &&
-            (state === State.Loading || state === State.Buffering) ? (
+            {bufferingDuringPlay ? (
               <ActivityIndicator size="large" />
             ) : (
               <>

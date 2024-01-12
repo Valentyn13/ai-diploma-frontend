@@ -1,4 +1,6 @@
+import { captureException } from '@sentry/react-native';
 import { useEffect } from 'react';
+import { Alert } from 'react-native';
 import TrackPlayer, {
   AppKilledPlaybackBehavior,
   Capability,
@@ -45,7 +47,8 @@ const useTrackPlayerEventsHandler = () => {
       Event.RemoteStop,
       Event.RemoteJumpForward,
       Event.RemoteJumpBackward,
-      Event.RemoteSeek,
+      Event.PlaybackError,
+      Event.PlaybackActiveTrackChanged,
     ],
     async event => {
       switch (event.type) {
@@ -66,9 +69,11 @@ const useTrackPlayerEventsHandler = () => {
           const positionBackward = await TrackPlayer.getProgress();
           TrackPlayer.seekTo(positionBackward.position - event.interval);
           break;
-        case Event.RemoteSeek:
-          TrackPlayer.seekTo(event.position);
+        case Event.PlaybackError:
+          captureException(event);
+          Alert.alert('בעיה בניגון התרגול הנבחר', 'אנא נסו שנית');
           break;
+
         default:
           break;
       }
