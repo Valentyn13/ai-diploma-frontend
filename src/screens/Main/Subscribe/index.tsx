@@ -1,6 +1,6 @@
 import SubscriptionPoint from '@common/components/SubscriptionPoint';
 import { usePurchases } from '@common/context/PurchaseContext';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useRoute } from '@react-navigation/native';
 import rudderClient, {
   RUDDER_LOG_LEVEL,
 } from '@rudderstack/rudder-sdk-react-native';
@@ -21,20 +21,6 @@ import { LinearGradient } from 'react-native-gradients';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import Icon2 from 'react-native-vector-icons/Feather';
 import { useSelector } from 'react-redux';
-
-interface PlanItemProps {
-  onPress: () => void;
-}
-
-const SubscribeButton: React.FC<PlanItemProps> = ({ onPress }) => (
-  <TouchableOpacity
-    onPress={onPress}
-    className="bg-white rounded-3xl p-3 w-full">
-    <Text className="text-[#1B1B1B] text-center text-lg">
-      {i18n.t('subscribeBtn1')}
-    </Text>
-  </TouchableOpacity>
-);
 
 const PackageItem: React.FC<{
   onPress: () => void;
@@ -159,6 +145,7 @@ const PLANS = {
 };
 
 const Subscribe: FC = () => {
+  const route = useRoute();
   const { goBack } = useNavigation();
   const { plans, makePurchase, purchasing } = usePurchases();
   const { email, name: userName } = useSelector(
@@ -168,6 +155,9 @@ const Subscribe: FC = () => {
 
   const amplitudeInstance = useAmplitude();
   const numberOfPackage = availablePackages.length || 0;
+
+  // @ts-ignore
+  const isFirstTime = route.params?.isFirstTime as boolean;
 
   const initRudderstack = async () => {
     await rudderClient.setup('2Ah3U42Qc6y9v3PB4w8sKYhvkkJ', {
@@ -245,9 +235,9 @@ const Subscribe: FC = () => {
               <Text className="text-white text-center font-black text-2xl mt-12 mb-6">
                 קחו רגע לעצמכם, מגיע לכם.
               </Text>
-              <SubscriptionPoint text="point1" showIcon />
-              <SubscriptionPoint text="point2" showIcon />
-              <SubscriptionPoint text="point3" showIcon />
+              <SubscriptionPoint text="point1" />
+              <SubscriptionPoint text="point2" />
+              <SubscriptionPoint text="point3" />
             </View>
             <View className="mt-10 self-center px-12">
               <Text className="text-white text-left">
@@ -260,55 +250,74 @@ const Subscribe: FC = () => {
               </View>
             </View>
             <View className="relative flex-1">
-              <View className="w-full bg-[#0A1129] absolute bottom-0 self-center h-80 rounded-t-xl flex flex-col items-center p-4">
-                <PackageItem
-                  showBadge={true}
-                  selected={selectedPlan === 'annual'}
-                  onPress={() => setSelectedPlan('annual')}
-                  title="מנוי שנתי"
-                  monthPrice={plans.annual.product.price / 12}
-                  subTitle={
-                    <Text className="text-white text-center text-sm">
-                      <Text
-                        className={
-                          selectedPlan === 'annual'
-                            ? 'text-[#FFC107]'
-                            : 'text-[#2C344D]'
-                        }>
-                        ₪{plans.annual.product.price.toFixed(2)}
-                        {'  '}
-                      </Text>
-                      <Text
-                        className={`line-through ${
-                          selectedPlan === 'annual'
-                            ? 'text-white'
-                            : 'text-[#2C344D]'
-                        }`}>
-                        ₪{(plans.monthly.product.price * 12).toFixed(2)}
-                      </Text>
-                    </Text>
-                  }
-                />
-                <PackageItem
-                  monthPrice={plans.monthly.product.price}
-                  selected={selectedPlan === 'monthly'}
-                  onPress={() => setSelectedPlan('monthly')}
-                  title="מנוי חודשי"
-                />
+              <View
+                style={{
+                  height: isFirstTime ? 160 : 320,
+                }}
+                className="w-full bg-[#0A1129] absolute bottom-0 self-center rounded-t-xl flex flex-col items-center p-4">
+                {!isFirstTime && (
+                  <View className="w-full">
+                    <PackageItem
+                      showBadge={true}
+                      selected={selectedPlan === 'annual'}
+                      onPress={() => setSelectedPlan('annual')}
+                      title="מנוי שנתי"
+                      monthPrice={plans.annual.product.price / 12}
+                      subTitle={
+                        <Text className="text-white text-center text-sm">
+                          <Text
+                            className={
+                              selectedPlan === 'annual'
+                                ? 'text-[#FFC107]'
+                                : 'text-[#2C344D]'
+                            }>
+                            ₪{plans.annual.product.price.toFixed(2)}
+                            {'  '}
+                          </Text>
+                          <Text
+                            className={`line-through ${
+                              selectedPlan === 'annual'
+                                ? 'text-white'
+                                : 'text-[#2C344D]'
+                            }`}>
+                            ₪{(plans.monthly.product.price * 12).toFixed(2)}
+                          </Text>
+                        </Text>
+                      }
+                    />
+                    <PackageItem
+                      monthPrice={plans.monthly.product.price}
+                      selected={selectedPlan === 'monthly'}
+                      onPress={() => setSelectedPlan('monthly')}
+                      title="מנוי חודשי"
+                    />
+                  </View>
+                )}
                 <View className="mt-2" />
-                <SubscribeButton
+                <TouchableOpacity
                   onPress={() => onSubscribe(plans[selectedPlan])}
-                />
-                <TouchableOpacity onPress={goBack}>
-                  <Text className="text-white text-center text-base mt-4 underline">
-                    לא, תודה
+                  className="bg-white rounded-3xl p-3 w-full">
+                  <Text className="text-[#1B1B1B] text-center text-lg">
+                    {isFirstTime
+                      ? 'הירשמו ונסו שבוע חינם'
+                      : i18n.t('subscribeBtn1')}
                   </Text>
                 </TouchableOpacity>
-                <Text className="text-white text-center text-xs mt-4">
-                  נסו את האפליקציה במשך 7 ימים בחינם! לאחר תקופה זו יתבצע חיוב
-                  אוטומטי בסך 159.90 שח עבור שנת שימוש באפליקציה. ניתן לבטל את
-                  המנוי בכל רגע וללא עלות.
-                </Text>
+
+                {!isFirstTime && (
+                  <TouchableOpacity onPress={goBack}>
+                    <Text className="text-white text-center text-base mt-4 underline">
+                      לא, תודה
+                    </Text>
+                  </TouchableOpacity>
+                )}
+                {selectedPlan === 'annual' && (
+                  <Text className="text-white text-center text-xs mt-4">
+                    נסו את האפליקציה במשך 7 ימים בחינם! לאחר תקופה זו יתבצע חיוב
+                    אוטומטי בסך 159.90 שח עבור שנת שימוש באפליקציה. ניתן לבטל את
+                    המנוי בכל רגע וללא עלות.
+                  </Text>
+                )}
               </View>
             </View>
             {purchasing && (

@@ -23,6 +23,11 @@ export const useOnboarding = () => {
   useEffect(() => {
     if (!isOldUser && firstCourse?.meditations?.length) {
       // @ts-ignore
+      navigate('Subscribe', {
+        isFirstTime: true,
+      });
+
+      // @ts-ignore
       navigate('Main', {
         screen: 'MeditationPlayer',
         params: {

@@ -26,7 +26,6 @@ const BgPlayer: FC = () => {
   return (
     <Video
       volume={volume}
-      audioOnly
       disableFocus
       ignoreSilentSwitch="ignore"
       source={{

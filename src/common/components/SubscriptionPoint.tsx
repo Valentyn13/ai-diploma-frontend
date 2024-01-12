@@ -4,15 +4,15 @@ import { Text, View } from 'react-native';
 import { scale } from 'react-native-size-matters';
 import Icon from 'react-native-vector-icons/Feather';
 
-const SubscriptionPoint = ({ text, showIcon = false }) => (
+const SubscriptionPoint = ({ text }: { text: string }) => (
   <View
     style={{
       alignSelf: 'center',
       flexDirection: 'row',
-      width: showIcon ? '80%' : '90%',
+      width: '80%',
       alignItems: 'center',
     }}>
-    {showIcon && <Icon name="check-circle" size={scale(16)} color="white" />}
+    <Icon name="check-circle" size={scale(16)} color="white" />
     <View
       style={{
         flex: 1,
