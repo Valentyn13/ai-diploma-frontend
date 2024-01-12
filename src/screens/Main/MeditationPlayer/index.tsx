@@ -277,12 +277,12 @@ const MeditationPlayer: FC = () => {
             className="absolute flex flex-col items-center justify-center h-full w-full">
             {isPlayWhenReady &&
             (state === State.Loading || state === State.Buffering) ? (
+              <ActivityIndicator size="large" />
+            ) : (
               <>
                 <TimesLabel position={position} duration={duration} />
                 <PlayerControls />
               </>
-            ) : (
-              <ActivityIndicator size="large" />
             )}
           </View>
           <View className="absolute bottom-20 w-full flex-col items-center">
