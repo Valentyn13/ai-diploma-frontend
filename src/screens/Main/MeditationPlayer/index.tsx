@@ -10,7 +10,14 @@ import { meditationInstructor } from '@store/selectors';
 import { useBgTrackStore } from '@store/useBgTrackStore';
 import logger from '@utils/logger';
 import { getVideoName } from '@utils/video';
-import React, { FC, useEffect, useMemo, useState } from 'react';
+import React, {
+  FC,
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from 'react';
 import {
   ActivityIndicator,
   Pressable,
@@ -18,6 +25,12 @@ import {
   Text,
   View,
 } from 'react-native';
+import Animated, {
+  runOnJS,
+  useAnimatedStyle,
+  useSharedValue,
+  withTiming,
+} from 'react-native-reanimated';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useIsPlaying, useProgress } from 'react-native-track-player';
 import Video from 'react-native-video';
@@ -48,19 +61,38 @@ const VideoPlayer = styled(Video).attrs(() => ({
 `;
 
 const MeditationPlayer: FC = () => {
-  const [cachedVideoUri, setCachedVideoUri] = useState(null);
+  const [cachedVideoUri, setCachedVideoUri] = useState<string>();
   const route = useRoute();
   const { updateIstructorTractionData } = useInstructor();
   const { goBack, navigate } = useNavigation();
   const { updateMeditationCount } = useUpdateMeditation();
   const { position, duration } = useProgress();
   const { selectedTrack } = useBgTrackStore(state => state);
+  const [hideControls, setHideControls] = useState(false);
+  const hideTimerRef = useRef<NodeJS.Timeout | null>(null);
+  const controlsOpacity = useSharedValue(1);
+
+  const { bufferingDuringPlay, playing } = useIsPlaying();
 
   const toggleBgMenu = () => {
+    // @ts-ignore
     navigate('Main', {
       screen: 'BGMusicPicker',
     });
   };
+
+  const animatedStyle = useAnimatedStyle(() => {
+    return {
+      opacity: controlsOpacity.value,
+    };
+  });
+
+  const fadeOutControls = useCallback(() => {
+    controlsOpacity.value = withTiming(0, { duration: 500 }, () => {
+      'worklet';
+      runOnJS(setHideControls)(true);
+    });
+  }, [controlsOpacity]);
 
   const amplitudeInstance = useAmplitude();
   const dispatch = useDispatch();
@@ -79,8 +111,6 @@ const MeditationPlayer: FC = () => {
     () => getVideoName(categoryName, animation),
     [animation, categoryName],
   );
-
-  const hasAnimation = animation !== null && animation !== undefined;
 
   useEffect(() => {
     dispatch(meditationStarted({ id }));
@@ -102,20 +132,21 @@ const MeditationPlayer: FC = () => {
   const audio = url;
 
   useEffect(() => {
-    const downloadAndCacheFile = async (url, fileName) => {
+    const downloadAndCacheFile = async (
+      fileBaseUrl: string,
+      fileName: string,
+    ) => {
       const { dirs } = RNFetchBlob.fs;
       const filePath = `${dirs.CacheDir}/${fileName}`;
 
       try {
         await RNFetchBlob.fs.stat(filePath);
-        // File already exists, no need to download again
         return `file://${filePath}`;
       } catch (error) {
-        // File does not exist, download it
         try {
           await RNFetchBlob.config({ fileCache: true, path: filePath }).fetch(
             'GET',
-            url,
+            fileBaseUrl,
           );
           return `file://${filePath}`;
         } catch (downloadError) {
@@ -138,41 +169,138 @@ const MeditationPlayer: FC = () => {
     downloadAndCacheVideo();
   }, [video, audio]);
 
-  const [hideControls, setHideControls] = useState(false);
+  const resetHideControlsTimer = useCallback(() => {
+    if (playing) {
+      controlsOpacity.value = withTiming(1); // Show controls
+      setHideControls(false);
+
+      if (hideTimerRef.current) {
+        clearTimeout(hideTimerRef.current);
+      }
+
+      hideTimerRef.current = setTimeout(() => {
+        if (playing) {
+          fadeOutControls(); // Start fading out
+        }
+      }, 5000);
+    }
+  }, [controlsOpacity, fadeOutControls, playing]);
 
   useEffect(() => {
-    if (!hideControls) {
-      const timer = setTimeout(() => {
-        setHideControls(true);
-      }, 5000);
+    resetHideControlsTimer();
 
-      return () => {
-        clearTimeout(timer);
-      };
-    }
-  }, [hideControls]);
+    return () => {
+      if (hideTimerRef.current) {
+        clearTimeout(hideTimerRef.current);
+      }
+    };
+  }, [playing, resetHideControlsTimer]);
 
-  const { bufferingDuringPlay, playing } = useIsPlaying();
-
-  const onVideoPress = () => {
+  const renderControls = () => {
     if (hideControls) {
-      setHideControls(false);
+      return null;
     }
+
+    return (
+      <Animated.View
+        style={[animatedStyle]}
+        className="absolute flex flex-col items-center justify-center h-full w-full">
+        {!playing && bufferingDuringPlay ? (
+          <ActivityIndicator size="large" />
+        ) : (
+          <>
+            <TimesLabel position={position} duration={duration} />
+            <PlayerControls />
+          </>
+        )}
+      </Animated.View>
+    );
+  };
+
+  const renderHeader = () => {
+    if (hideControls) {
+      return null;
+    }
+
+    return (
+      <Animated.View
+        style={[animatedStyle]}
+        className="absolute top-0 flex flex-row items-center w-full justify-between p-4 z-10">
+        <CircleButton
+          size={40}
+          icon="x"
+          onPress={onClose}
+          backgroundColor="#00000060"
+          color="white"
+        />
+        <CircleButton
+          size={40}
+          icon="music"
+          onPress={toggleBgMenu}
+          backgroundColor={selectedTrack === 'off' ? '#00000060' : 'white'}
+          color={selectedTrack === 'off' ? 'white' : 'black'}
+        />
+      </Animated.View>
+    );
+  };
+
+  const renderFooter = () => {
+    if (hideControls) {
+      return null;
+    }
+
+    return (
+      <Animated.View
+        style={[animatedStyle]}
+        className="absolute bottom-20 w-full flex-col items-center">
+        <Text className="text-2xl font-bold text-white">{name || title}</Text>
+        <Text className="text-base font-light text-white mb-2">
+          {instructor?.name}
+        </Text>
+
+        <CircleButton
+          backgroundColor="#00000060"
+          color="white"
+          size={40}
+          icon="info"
+          onPress={() => {
+            updateIstructorTractionData(instructor);
+            // @ts-ignore
+            navigate('Instructor', { id: instructor._id });
+          }}
+        />
+      </Animated.View>
+    );
+  };
+
+  const renderFavorite = () => {
+    if (hideControls) {
+      return null;
+    }
+
+    return (
+      <Animated.View
+        style={[animatedStyle]}
+        className="absolute bottom-5 left-5">
+        <FavoriteButton id={id} />
+      </Animated.View>
+    );
   };
 
   return (
-    <Pressable
-      className="flex flex-col items-center justify-center w-full h-full bg-black"
-      onPress={onVideoPress}>
-      <View className="absolute top-0 left-0 w-full h-full bg-black/20" />
+    <>
       <StatusBar animated hidden={true} />
-      {cachedVideoUri && (
+      <Pressable
+        className="flex flex-col items-center justify-center w-full h-full bg-black"
+        onPress={resetHideControlsTimer}>
+        <View className="absolute top-0 left-0 w-full h-full bg-black/50" />
+
         <VideoPlayer
           poster={poster}
           posterResizeMode="cover"
           style={{ zIndex: -1, backgroundColor: 'black' }}
           source={{
-            uri: cachedVideoUri,
+            uri: cachedVideoUri || `${VIDEO_URL}${video}`,
           }}
           paused={!playing}
           onError={error => logger.log('error', error)}
@@ -184,80 +312,28 @@ const MeditationPlayer: FC = () => {
             bufferForPlaybackAfterRebufferMs: 4000,
           }}
         />
-      )}
 
-      <AudioPlayer
-        id={id}
-        url={url.replace(OLD_ASSETS_URL, ASSETS_URL)}
-        title={name}
-        artist={instructor?.name}
-        artwork={`${BGS_ASSETS_URL}${getCategoryImgName(
-          categoryName,
-          0,
-          thumbnail,
-        )}`}
-      />
-      <SafeAreaView className="flex-col h-full w-full">
-        <View className="relative flex flex-col items-center justify-center w-full h-full">
-          <View className="absolute top-0 flex flex-row items-center w-full justify-between p-4 z-10">
-            <CircleButton
-              size={40}
-              icon="x"
-              onPress={onClose}
-              backgroundColor="#00000060"
-              color="white"
-            />
-            {hasAnimation === false && (
-              <CircleButton
-                size={40}
-                icon="music"
-                onPress={toggleBgMenu}
-                backgroundColor={
-                  selectedTrack === 'off' ? '#00000060' : 'white'
-                }
-                color={selectedTrack === 'off' ? 'white' : 'black'}
-              />
-            )}
+        <AudioPlayer
+          id={id}
+          url={url.replace(OLD_ASSETS_URL, ASSETS_URL)}
+          title={name}
+          artist={instructor?.name}
+          artwork={`${BGS_ASSETS_URL}${getCategoryImgName(
+            categoryName,
+            0,
+            thumbnail,
+          )}`}
+        />
+        <SafeAreaView className="flex-col h-full w-full">
+          <View className="relative flex flex-col items-center justify-center w-full h-full">
+            {renderHeader()}
+            {renderControls()}
+            {renderFooter()}
+            {renderFavorite()}
           </View>
-          <View
-            style={{
-              display: hideControls ? 'none' : 'flex',
-            }}
-            className="absolute flex flex-col items-center justify-center h-full w-full">
-            {bufferingDuringPlay ? (
-              <ActivityIndicator size="large" />
-            ) : (
-              <>
-                <TimesLabel position={position} duration={duration} />
-                <PlayerControls />
-              </>
-            )}
-          </View>
-          <View className="absolute bottom-20 w-full flex-col items-center">
-            <Text className="text-2xl font-bold text-white">
-              {name || title}
-            </Text>
-            <Text className="text-base font-light text-white mb-2">
-              {instructor?.name}
-            </Text>
-
-            <CircleButton
-              backgroundColor="#00000060"
-              color="white"
-              size={40}
-              icon="info"
-              onPress={() => {
-                updateIstructorTractionData(instructor);
-                navigate('Instructor', { id: instructor._id });
-              }}
-            />
-          </View>
-          <View className="absolute bottom-5 left-5">
-            <FavoriteButton id={id} />
-          </View>
-        </View>
-      </SafeAreaView>
-    </Pressable>
+        </SafeAreaView>
+      </Pressable>
+    </>
   );
 };
 

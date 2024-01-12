@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useState } from 'react';
+import React, { FC, useEffect } from 'react';
 import { TouchableOpacity } from 'react-native';
 import Animated, {
   Easing,
@@ -10,10 +10,9 @@ import Animated, {
 import Svg, { G, Line, Path } from 'react-native-svg';
 
 const PlayPauseButton: FC<{ isPlaying: boolean; onBtnPress: () => void }> = ({
-  isPlaying: initIsPlaying,
+  isPlaying,
   onBtnPress = () => {},
 }) => {
-  const [isPlaying, setIsPlaying] = useState(true);
   const animation = useSharedValue(0);
 
   const svgHeight = '45.5';
@@ -35,12 +34,11 @@ const PlayPauseButton: FC<{ isPlaying: boolean; onBtnPress: () => void }> = ({
   });
 
   useEffect(() => {
-    setIsPlaying(initIsPlaying);
     animation.value = withTiming(isPlaying ? 0 : 1, {
       duration: 300,
-      easing: Easing.out(Easing.cubic), // Using easing function for smoother transition
+      easing: Easing.out(Easing.cubic),
     });
-  }, [animation, initIsPlaying, isPlaying]);
+  }, [animation, isPlaying]);
 
   const onPress = (e: any) => {
     onBtnPress();
