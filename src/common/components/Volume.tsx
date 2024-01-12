@@ -11,12 +11,12 @@ const Volume: FC<Props> = ({ volume, setVolume }) => {
   return (
     <View className="w-full flex items-center justify-center">
       <View className="relative w-2/3 flex items-center justify-center">
-        <Text className="absolute -left-8 text-sm font-light w-6">🔇</Text>
-        <Text className="absolute -right-8 text-sm font-bold w-6">🔊</Text>
+        <Text className="absolute -right-8 text-sm font-light w-6">🔇</Text>
+        <Text className="absolute -left-8 text-sm font-bold w-6">🔊</Text>
         <Slider
           tapToSeek={true}
           inverted
-          style={{ width: '100%', height: 40, direction: 'ltr' }}
+          style={{ width: '100%', height: 40 }}
           minimumValue={0}
           maximumValue={1}
           step={0.01}

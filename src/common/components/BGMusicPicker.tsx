@@ -79,7 +79,9 @@ const MusicModal = () => {
           style={{ fontFamily: theme.fonts.regular }}>
           עוצמת קול
         </Text>
-        <Volume volume={volume} setVolume={setVolume} />
+        <View>
+          <Volume volume={volume} setVolume={setVolume} />
+        </View>
 
         <Text
           className="text-center text-3xl font-bold mt-12 mb-6 text-black"
