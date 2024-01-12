@@ -15,8 +15,8 @@ export const useBgTrackStore = create<TrackStore>(
   persist(
     set => ({
       selectedTrack: 'ocean',
+      volume: 0.3,
       setSelectedTrack: (selectedTrack: BgTrackID) => set({ selectedTrack }),
-      volume: 0.35,
       setVolume: (volume: number) => set({ volume }),
     }),
     {
