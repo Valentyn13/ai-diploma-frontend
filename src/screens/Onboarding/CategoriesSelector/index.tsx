@@ -31,17 +31,10 @@ const CATEGORIES = [
     key: 'army',
     intro: 'armyIntro',
   },
-  {
-    key: 'On the Road',
-    intro: 'onTheRoadIntro',
-  },
+
   {
     key: 'South',
     intro: 'southIntro',
-  },
-  {
-    key: 'Students',
-    intro: 'studentsIntro',
   },
 ];
 
@@ -115,6 +108,7 @@ const Intro = () => {
       </View>
       <View style={{ alignItems: 'center', width: '90%' }}>
         <FlatList
+          scrollEnabled={false}
           style={{ marginTop: scale(15) }}
           columnWrapperStyle={{ justifyContent: 'center' }}
           numColumns={2}
