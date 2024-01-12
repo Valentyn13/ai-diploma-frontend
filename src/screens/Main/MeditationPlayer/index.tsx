@@ -22,7 +22,12 @@ import {
   View,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import TrackPlayer, { useProgress } from 'react-native-track-player';
+import TrackPlayer, {
+  State,
+  useIsPlaying,
+  usePlayWhenReady,
+  useProgress,
+} from 'react-native-track-player';
 import Video from 'react-native-video';
 import { useDispatch, useSelector } from 'react-redux';
 import RNFetchBlob from 'rn-fetch-blob';
@@ -130,10 +135,6 @@ const MeditationPlayer: FC = () => {
     Alert.alert('בעיה בהשמעת המדיטציה, נסה שנית');
   };
 
-  const onEnd = () => {
-    togglePlay();
-  };
-
   onLoad.propTypes = {
     duration: PropTypes.number.isRequired,
   };
@@ -201,7 +202,8 @@ const MeditationPlayer: FC = () => {
     }
   }, [hideControls]);
 
-  const isReady = true;
+  const isPlayWhenReady = usePlayWhenReady();
+  const { state } = useIsPlaying();
 
   const onVideoPress = () => {
     if (hideControls) {
@@ -273,13 +275,14 @@ const MeditationPlayer: FC = () => {
               display: hideControls ? 'none' : 'flex',
             }}
             className="absolute flex flex-col items-center justify-center h-full w-full">
-            {!isReady ? (
-              <ActivityIndicator size="large" />
-            ) : (
+            {isPlayWhenReady &&
+            (state === State.Loading || state === State.Buffering) ? (
               <>
                 <TimesLabel position={position} duration={duration} />
                 <PlayerControls />
               </>
+            ) : (
+              <ActivityIndicator size="large" />
             )}
           </View>
           <View className="absolute bottom-20 w-full flex-col items-center">
