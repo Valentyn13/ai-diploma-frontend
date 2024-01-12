@@ -196,6 +196,19 @@ const MeditationPlayer: FC = () => {
     };
   }, [playing, resetHideControlsTimer]);
 
+  const renderOverlay = () => {
+    if (hideControls) {
+      return null;
+    }
+
+    return (
+      <Animated.View
+        style={[animatedStyle]}
+        className="absolute top-0 left-0 w-full h-full bg-black/50"
+      />
+    );
+  };
+
   const renderControls = () => {
     if (hideControls) {
       return null;
@@ -293,7 +306,7 @@ const MeditationPlayer: FC = () => {
       <Pressable
         className="flex flex-col items-center justify-center w-full h-full bg-black"
         onPress={resetHideControlsTimer}>
-        <View className="absolute top-0 left-0 w-full h-full bg-black/50" />
+        {renderOverlay()}
 
         <VideoPlayer
           poster={poster}
