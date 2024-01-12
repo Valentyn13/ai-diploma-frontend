@@ -277,10 +277,7 @@ const MeditationPlayer: FC = () => {
               <ActivityIndicator size="large" />
             ) : (
               <>
-                <TimesLabel
-                  {...{ currentTime: position, duration }}
-                  color="#fff"
-                />
+                <TimesLabel position={position} duration={duration} />
                 <PlayerControls />
               </>
             )}
