@@ -23,7 +23,7 @@ const Header: FC<{ title: string }> = ({ title }) => {
         />
       </View>
       <Text
-        className="text-3xl font-bold text-center"
+        className="text-3xl font-bold text-center text-black"
         style={{ fontFamily: theme.fonts!.regular }}>
         {title}
       </Text>

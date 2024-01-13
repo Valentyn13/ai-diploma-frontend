@@ -8,7 +8,7 @@ import { StatusBar } from 'react-native';
 import Animated from 'react-native-reanimated';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
-import Courses from './Courses/index2';
+import Courses from './Courses';
 import Home from './Home';
 import Meditations from './Meditations';
 import Profile from './Profile';

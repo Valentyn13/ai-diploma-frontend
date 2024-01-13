@@ -70,7 +70,7 @@ const Meditations = () => {
 
       {isLoading && (
         <View className="px-4 py-2 w-full h-48 flex items-center justify-center">
-          <ActivityIndicator size="large" color={colors.primary} />
+          <ActivityIndicator size="large" color="#000" />
           <Text className="text-gray-500 mt-2">מחפש...</Text>
         </View>
       )}
