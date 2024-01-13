@@ -213,8 +213,8 @@ const PickExperience = ({ navigation: { navigate } }) => {
         <AppButton onPress={onContinue}>המשך</AppButton>
         <TouchableOpacity
           onPress={onContinue}
-          className="w-full mt-4 flex items-center justify-center border rounded border-gray-300 py-2">
-          <Text className="text-lg text-gray-500">{'דלג'}</Text>
+          className="w-full mt-4 flex items-center justify-center border rounded border-[#273051] py-2">
+          <Text className="text-base text-[#273051]">{'דלג'}</Text>
         </TouchableOpacity>
       </View>
     </View>

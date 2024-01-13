@@ -122,7 +122,7 @@ const Intro = () => {
               case 0:
                 imageSelector = (
                   <Image
-                    source={image('ic_mental')}
+                    source={image('ic_sleep')}
                     style={{
                       position: 'absolute',
                       bottom: 5,
@@ -168,7 +168,7 @@ const Intro = () => {
               case 3:
                 imageSelector = (
                   <Image
-                    source={image('ic_car')}
+                    source={image('ic_mental')}
                     style={{
                       position: 'absolute',
                       bottom: 0,

@@ -88,7 +88,6 @@ const IntroStudy = ({ navigation: { navigate } }) => {
       <Image
         style={{
           position: 'absolute',
-          right: scale(60),
           width: scale(300),
           resizeMode: 'contain',
           height: scale(280),

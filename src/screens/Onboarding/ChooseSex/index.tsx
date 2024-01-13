@@ -187,11 +187,10 @@ const ChooseSex = ({ navigation: { navigate } }) => {
         className="w-full"
         style={{ position: 'absolute', bottom: 0, padding: scale(40) }}>
         <AppButton onPress={onContinue}>{'המשך'}</AppButton>
-        {/* generate an outlined button */}
         <TouchableOpacity
           onPress={onContinue}
-          className="w-full mt-4 flex items-center justify-center border rounded border-gray-300 py-2">
-          <Text className="text-lg text-gray-500">{'דלג'}</Text>
+          className="w-full mt-4 flex items-center justify-center border rounded border-[#273051] py-2">
+          <Text className="text-base text-[#273051]">{'דלג'}</Text>
         </TouchableOpacity>
       </View>
     </View>
