@@ -476,3 +476,6 @@ export const COLLECTIONS = [
     ],
   },
 ];
+
+export const MEDITATIONS_IMAGES_URL =
+  'https://d137rfe7jg135q.cloudfront.net/sessions/meditations/';

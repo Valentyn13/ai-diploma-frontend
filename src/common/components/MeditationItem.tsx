@@ -1,5 +1,5 @@
 import { getCategoryImg } from '@common/assets/images/index';
-import { CATEGORY_COLOR } from '@common/constants';
+import { CATEGORY_COLOR, MEDITATIONS_IMAGES_URL } from '@common/constants';
 import { usePurchases } from '@common/context/PurchaseContext';
 import theme from '@common/theme';
 import { useNavigation } from '@react-navigation/native';
@@ -43,6 +43,7 @@ const MeditationItem: React.FC<MeditationItemProps> = memo(
       thumbnail,
       isCategoryLocked,
       categoryTitle,
+      image,
     },
     index,
   }) => {
@@ -97,9 +98,17 @@ const MeditationItem: React.FC<MeditationItemProps> = memo(
             borderRadius: big ? 16 : 8,
           }}>
           <ImageBackground
+            style={{
+              // @ts-ignore
+              backgroundColor: CATEGORY_COLOR[categoryName] || '#0B2761',
+            }}
             className="flex-1 items-center justify-center"
             resizeMode="cover"
-            source={{ uri: getCategoryImg(categoryName, index, thumbnail) }}>
+            source={{
+              uri: image
+                ? `${MEDITATIONS_IMAGES_URL}${image}`
+                : getCategoryImg(categoryName, index, thumbnail),
+            }}>
             <View
               style={{
                 // @ts-ignore
