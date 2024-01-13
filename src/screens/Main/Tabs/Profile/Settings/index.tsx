@@ -250,7 +250,7 @@ const Settings = ({ navigation }) => {
       left: () => (
         <View className="flex flex-row items-center">
           {isNotificationLocal === true && notificationTimeLocal !== null && (
-            <Text className="text-sm text-left mr-4">
+            <Text className="text-sm text-left mr-4 text-black">
               {`כל יום ב-${notificationTimeLocal
                 .getHours()
                 .toLocaleString('en-US', {
@@ -268,6 +268,7 @@ const Settings = ({ navigation }) => {
             trackColor={{
               true: '#513F73',
             }}
+            thumbColor="#fff"
             onValueChange={onToggleSwitch}
             value={isNotificationLocal}
           />

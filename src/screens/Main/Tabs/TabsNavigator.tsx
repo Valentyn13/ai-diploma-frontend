@@ -55,7 +55,8 @@ const TabNavigator = () => {
         initialRouteName="Home"
         screenOptions={{
           tabBarStyle: {
-            height: 60,
+            height: 64,
+
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
@@ -74,13 +75,15 @@ const TabNavigator = () => {
             options={{
               tabBarItemStyle: {
                 flex: 1,
-                height: 60,
+                paddingBottom: 2,
+                paddingTop: 2,
+                height: 64,
               },
               ...tabScreen(key.toLowerCase()),
               tabBarLabel: i18n.t(`${key.toLowerCase()}`),
               headerShown: false,
               tabBarLabelStyle: {
-                fontSize: 10,
+                fontSize: 12,
                 letterSpacing: 0.58,
                 textAlign: 'center',
                 marginBottom: 4,

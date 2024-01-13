@@ -13,10 +13,6 @@ const useTrackPlayerSetup = () => {
     const initTrackPlayer = async () => {
       await TrackPlayer.setupPlayer();
       TrackPlayer.updateOptions({
-        likeOptions: {
-          isActive: true,
-          title: 'אהבתי',
-        },
         android: {
           appKilledPlaybackBehavior:
             AppKilledPlaybackBehavior.StopPlaybackAndRemoveNotification,
@@ -28,8 +24,6 @@ const useTrackPlayerSetup = () => {
           Capability.SeekTo,
           Capability.JumpForward,
           Capability.JumpBackward,
-          Capability.Like,
-          Capability.Dislike,
         ],
         forwardJumpInterval: 15,
         compactCapabilities: [Capability.Play, Capability.Pause],
@@ -89,6 +83,8 @@ const useTrackPlayerEventsHandler = () => {
 const useTrackPlayer = () => {
   useTrackPlayerSetup();
   useTrackPlayerEventsHandler();
+
+  return;
 };
 
 export default useTrackPlayer;

@@ -72,8 +72,8 @@ const Login: FC = () => {
   }, [userDetails.loader]);
 
   return (
-    <SafeAreaView className="flex-1 bg-[#fdedd6]">
-      <View className="left-4 top-4 z-10">
+    <SafeAreaView className="flex-1 bg-[#fdedd6] p-4">
+      <View className="left-0 top-0 z-10">
         <CircleButton
           backgroundColor="#00000060"
           color="#fff"

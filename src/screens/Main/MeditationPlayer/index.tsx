@@ -32,7 +32,13 @@ import Animated, {
   withTiming,
 } from 'react-native-reanimated';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { useIsPlaying, useProgress } from 'react-native-track-player';
+import {
+  State,
+  useIsPlaying,
+  usePlayWhenReady,
+  usePlaybackState,
+  useProgress,
+} from 'react-native-track-player';
 import Video from 'react-native-video';
 import { useDispatch, useSelector } from 'react-redux';
 import RNFetchBlob from 'rn-fetch-blob';
@@ -61,6 +67,7 @@ const VideoPlayer = styled(Video).attrs(() => ({
 `;
 
 const MeditationPlayer: FC = () => {
+  const [loading, setLoading] = useState(true);
   const [cachedVideoUri, setCachedVideoUri] = useState<string>();
   const route = useRoute();
   const { updateIstructorTractionData } = useInstructor();
@@ -71,8 +78,10 @@ const MeditationPlayer: FC = () => {
   const [hideControls, setHideControls] = useState(false);
   const hideTimerRef = useRef<NodeJS.Timeout | null>(null);
   const controlsOpacity = useSharedValue(1);
+  const { state } = usePlaybackState();
+  const playWhenReady = usePlayWhenReady();
 
-  const { bufferingDuringPlay, playing } = useIsPlaying();
+  const { playing } = useIsPlaying();
 
   const toggleBgMenu = () => {
     // @ts-ignore
@@ -180,7 +189,7 @@ const MeditationPlayer: FC = () => {
 
       hideTimerRef.current = setTimeout(() => {
         if (playing) {
-          fadeOutControls(); // Start fading out
+          fadeOutControls();
         }
       }, 5000);
     }
@@ -218,13 +227,15 @@ const MeditationPlayer: FC = () => {
       <Animated.View
         style={[animatedStyle]}
         className="absolute flex flex-col items-center justify-center h-full w-full">
-        {!playing && bufferingDuringPlay ? (
-          <ActivityIndicator size="large" />
-        ) : (
+        {state === State.Playing ||
+        state === State.Paused ||
+        state === State.Stopped ? (
           <>
             <TimesLabel position={position} duration={duration} />
             <PlayerControls />
           </>
+        ) : (
+          <ActivityIndicator color="#fff" size="large" />
         )}
       </Animated.View>
     );

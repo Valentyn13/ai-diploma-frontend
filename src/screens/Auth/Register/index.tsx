@@ -117,7 +117,7 @@ const Register = ({ navigation }) => {
         }}
         extraScrollHeight={40}
         keyboardOpeningTime={0}>
-        <AppText black style={{ fontSize: 18, marginTop: scale(50) }}>
+        <AppText style={{ color: '#000', fontSize: 18, marginTop: scale(50) }}>
           איך זה?
         </AppText>
         <AppText
