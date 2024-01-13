@@ -1,3 +1,4 @@
+/* eslint-disable no-catch-shadow */
 import config from '@common/config';
 import * as Sentry from '@sentry/react-native';
 import api from '@services/api';
@@ -52,6 +53,8 @@ const extractError = error => {
 
 const httpRequest = async ({ method, url }, apiParams, userId) => {
   const apiUrl = url.replace(':userId', userId);
+
+  console.log('apiUrl', `${config.baseURL}${apiUrl}`);
   const { data, status } = await httpClient[method](apiUrl, apiParams);
   return { data, status };
 };
@@ -108,15 +111,20 @@ export default ({
 
       const { setAuthToken } = requestApi;
 
+      console.log('step 1');
       if (setAuthToken) {
         const token = await getToken();
         if (token) {
           setAuthHeader(token);
         } else {
+          console.log('no token');
+
           dispatch({ type: actions.fail, payload: 'MissingToken' });
           return null;
         }
       }
+
+      console.log('step 2');
 
       const apiParams = fetchParams || params;
 
@@ -126,6 +134,8 @@ export default ({
           apiParams,
           userDetails.id,
         );
+
+        console.log('step 3');
 
         const { token } = data;
 
@@ -160,16 +170,11 @@ export default ({
                 userDetails.id,
               );
               if (res.err) {
-                // console.log(res.err);
-                // if (showError) {
-                //   alert(res.err);
-                // }
                 dispatch({ type: actions.fail, payload: res.err });
               }
               dispatch({ type: actions.success, payload: res.data });
             } else {
               dispatchAction(logout());
-              // fbLogout();
             }
           } else {
             Sentry.captureException(error);
@@ -179,9 +184,11 @@ export default ({
                 requestApi.url === 'auth/facebook' ||
                 requestApi.url === 'auth/google'
               ) {
+                console.error(error);
                 alert(
                   'היי אנחנו חווים תקלה בהתחברות דרך ערוץ זה, אנא נסו שנית או בחרו ערוץ התחברות אחר',
                 );
+                dispatchAction(setLoaderFalse());
               } else {
                 if (
                   requestApi.url === 'auth/register' ||
