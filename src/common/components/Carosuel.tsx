@@ -189,12 +189,11 @@ const Carousel2: FC<CoursesCarouselProps> = ({
         <CoursesCarouselItem
           item={item}
           index={index}
-          fullScreen={fullScreen}
           onPress={() => onItemPress(item)}
         />
       );
     },
-    [fullScreen, onItemPress],
+    [onItemPress],
   );
 
   return (

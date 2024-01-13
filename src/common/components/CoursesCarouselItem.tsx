@@ -1,14 +1,11 @@
 import { getCategoryImg } from '@common/assets/images/index';
 import AppText from '@common/components/AppText';
-import { BGS_ASSETS_URL } from '@common/constants';
-import { usePurchases } from '@common/context/PurchaseContext';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { View } from 'react-native';
 import styled from 'styled-components';
 
-import CourseMeditations from './CourseMeditations';
-import { Container, ListItemCaption } from './Styled';
+import { Container } from './Styled';
 
 export const HEIGHT_RATIO = {
   TOP: 2.0,
@@ -34,53 +31,26 @@ const Item = styled.ImageBackground.attrs(({ index }) => ({
   width: 100%;
 `;
 
-const CourseTitle = styled(ListItemCaption)`
-  margin-top: 32px;
-`;
-
-const CourseItem = ({ item, index, onPress, fullScreen }) =>
-  fullScreen ? (
+const CourseItem = ({ item, index, onPress }) => (
+  <TouchableItem onPress={onPress}>
     <Item index={index}>
-      <CourseTitle t={item.title} />
+      <View className="absolute bottom-0 w-full bg-[#160f29] px-4 py-2 justify-center items-start rounded-b-lg">
+        <AppText bold style={{ color: 'white', fontSize: 26 }}>
+          {item.title}
+        </AppText>
+        <AppText style={{ color: 'white', fontSize: 16 }}>
+          {item.subTitle}
+        </AppText>
+      </View>
     </Item>
-  ) : (
-    <TouchableItem onPress={onPress}>
-      <Item index={index}>
-        <View className="absolute bottom-0 w-full bg-[#160f29] px-4 py-2 justify-center items-start rounded-b-lg">
-          <AppText bold style={{ color: 'white', fontSize: 26 }}>
-            {item.title}
-          </AppText>
-          <AppText style={{ color: 'white', fontSize: 16 }}>
-            {item.subTitle}
-          </AppText>
-        </View>
-      </Item>
-    </TouchableItem>
-  );
+  </TouchableItem>
+);
 
-const CoursesCarouselItem = ({ item, index, onPress, fullScreen }) => {
-  const { hasPremium } = usePurchases();
-
-  return (
-    <Container>
-      <CourseItem
-        index={index}
-        item={item}
-        onPress={onPress}
-        fullScreen={fullScreen}
-      />
-      {fullScreen && (
-        <Container flex={HEIGHT_RATIO.BOTTOM}>
-          <CourseMeditations
-            data={item.meditations}
-            isCategoryLocked={item.isCategoryLocked}
-            hasPremium={hasPremium}
-          />
-        </Container>
-      )}
-    </Container>
-  );
-};
+const CoursesCarouselItem = ({ item, index, onPress }) => (
+  <Container>
+    <CourseItem index={index} item={item} onPress={onPress} />
+  </Container>
+);
 
 CoursesCarouselItem.propTypes = {
   item: PropTypes.shape({
