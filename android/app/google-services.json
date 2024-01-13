@@ -14,7 +14,39 @@
       },
       "oauth_client": [
         {
-          "client_id": "778912505810-unjum4j2igs5eo64r15m39s436e3fl71.apps.googleusercontent.com",
+          "client_id": "778912505810-79jfo8sf4cpmuo1v3bnhsadrdl1hee6h.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.rega.regaapp",
+            "certificate_hash": "dec282457d9464e50919b5b9ff1cb6744636da2b"
+          }
+        },
+        {
+          "client_id": "778912505810-8dqm9h90kl0tof2h2b5rvbrpfvl0vcbn.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.rega.regaapp",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "778912505810-qipanjurjh33jhkn2v7aeb8sovskqur5.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.rega.regaapp",
+            "certificate_hash": "2e4c23de34303171dc5ca5db8117f846312fa151"
+          }
+        },
+        {
+          "client_id": "778912505810-roko0d5rt23i32jdbkb2as25avob23su.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.rega.regaapp",
+            "certificate_hash": "52b2fa774dca140baf2aec85ff608b10cccef062"
+          }
+        },
+        {
+          "client_id": "778912505810-b2ubc43p66i4ebe1b4e4quf7r8kqoi6v.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
@@ -27,7 +59,7 @@
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "778912505810-unjum4j2igs5eo64r15m39s436e3fl71.apps.googleusercontent.com",
+              "client_id": "778912505810-b2ubc43p66i4ebe1b4e4quf7r8kqoi6v.apps.googleusercontent.com",
               "client_type": 3
             },
             {
