@@ -2,6 +2,7 @@ import { captureException } from '@sentry/react-native';
 import { useEffect } from 'react';
 import { Alert } from 'react-native';
 import TrackPlayer, {
+  AppKilledPlaybackBehavior,
   Capability,
   Event,
   useTrackPlayerEvents,
@@ -16,6 +17,10 @@ const useTrackPlayerSetup = () => {
           isActive: true,
           title: 'אהבתי',
         },
+        android: {
+          appKilledPlaybackBehavior:
+            AppKilledPlaybackBehavior.StopPlaybackAndRemoveNotification,
+        },
         capabilities: [
           Capability.Play,
           Capability.Stop,
@@ -27,11 +32,7 @@ const useTrackPlayerSetup = () => {
           Capability.Dislike,
         ],
         forwardJumpInterval: 15,
-        compactCapabilities: [
-          Capability.Play,
-          Capability.Pause,
-          // Capability.Like,
-        ],
+        compactCapabilities: [Capability.Play, Capability.Pause],
       });
     };
 
