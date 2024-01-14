@@ -20,6 +20,7 @@ import React, {
 } from 'react';
 import {
   ActivityIndicator,
+  Alert,
   Pressable,
   StatusBar,
   Text,
@@ -35,7 +36,6 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import {
   State,
   useIsPlaying,
-  usePlayWhenReady,
   usePlaybackState,
   useProgress,
 } from 'react-native-track-player';
@@ -79,9 +79,23 @@ const MeditationPlayer: FC = () => {
   const hideTimerRef = useRef<NodeJS.Timeout | null>(null);
   const controlsOpacity = useSharedValue(1);
   const { state } = usePlaybackState();
-  const playWhenReady = usePlayWhenReady();
-
   const { playing } = useIsPlaying();
+
+  useEffect(() => {
+    if (state === State.Ready) {
+      setLoading(false);
+    } else if (state === State.Error) {
+      setLoading(false);
+      Alert.alert('שגיאה', 'אירעה שגיאה בזמן הטעינה, נסה שנית מאוחר יותר', [
+        {
+          text: 'אוקיי',
+          onPress: () => {
+            goBack();
+          },
+        },
+      ]);
+    }
+  }, [state]);
 
   const toggleBgMenu = () => {
     // @ts-ignore
@@ -227,15 +241,13 @@ const MeditationPlayer: FC = () => {
       <Animated.View
         style={[animatedStyle]}
         className="absolute flex flex-col items-center justify-center h-full w-full">
-        {state === State.Playing ||
-        state === State.Paused ||
-        state === State.Stopped ? (
+        {loading ? (
+          <ActivityIndicator color="#fff" size="large" />
+        ) : (
           <>
             <TimesLabel position={position} duration={duration} />
             <PlayerControls />
           </>
-        ) : (
-          <ActivityIndicator color="#fff" size="large" />
         )}
       </Animated.View>
     );
