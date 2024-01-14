@@ -41,7 +41,7 @@ export default {
   female: 'נקבה',
   home: 'בית',
   courses: 'קורסים',
-  meditations: 'ברגע זה',
+  meditations: 'גלו עוד',
   profile: 'פרופיל',
   categories: 'נושאים',
   recommended: 'מומלץ עבורך',
