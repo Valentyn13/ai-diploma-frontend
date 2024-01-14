@@ -54,7 +54,6 @@ const extractError = error => {
 const httpRequest = async ({ method, url }, apiParams, userId) => {
   const apiUrl = url.replace(':userId', userId);
 
-  console.log('apiUrl', `${config.baseURL}${apiUrl}`);
   const { data, status } = await httpClient[method](apiUrl, apiParams);
   return { data, status };
 };
@@ -123,8 +122,6 @@ export default ({
           return null;
         }
       }
-
-      console.log('step 2');
 
       const apiParams = fetchParams || params;
 
