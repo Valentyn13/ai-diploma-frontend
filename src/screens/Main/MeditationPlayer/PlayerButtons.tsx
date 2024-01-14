@@ -1,16 +1,12 @@
-import React, { useCallback } from 'react';
+import React, { FC, useCallback } from 'react';
 import { View } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
-import TrackPlayer, {
-  useIsPlaying,
-  usePlaybackState,
-} from 'react-native-track-player';
+import TrackPlayer, { useIsPlaying } from 'react-native-track-player';
 import Icon from 'react-native-vector-icons/FontAwesome6';
 
 import PlayPauseButton from './PlayPauseButton';
 
-const PlayerControls: React.FC = () => {
-  const { state } = usePlaybackState();
+const PlayerControls: FC = () => {
   const { playing } = useIsPlaying();
 
   const togglePlay = useCallback(() => {

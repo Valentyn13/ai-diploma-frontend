@@ -24,7 +24,6 @@ import {
   Pressable,
   StatusBar,
   Text,
-  View,
 } from 'react-native';
 import Animated, {
   runOnJS,
@@ -232,7 +231,71 @@ const MeditationPlayer: FC = () => {
     );
   };
 
-  const renderControls = () => {
+  const renderControls = () => (
+    <Animated.View
+      style={[animatedStyle]}
+      className="absolute flex flex-col items-center justify-center h-full w-full">
+      {loading ? (
+        <ActivityIndicator color="#fff" size="large" />
+      ) : (
+        <>
+          <TimesLabel position={position} duration={duration} />
+          <PlayerControls />
+        </>
+      )}
+    </Animated.View>
+  );
+
+  const renderHeader = () => (
+    <Animated.View
+      style={[animatedStyle]}
+      className="absolute top-0 flex flex-row items-center w-full justify-between p-4 z-10">
+      <CircleButton
+        size={40}
+        icon="x"
+        onPress={onClose}
+        backgroundColor="#00000060"
+        color="white"
+      />
+      <CircleButton
+        size={40}
+        icon="music"
+        onPress={toggleBgMenu}
+        backgroundColor={selectedTrack === 'off' ? '#00000060' : 'white'}
+        color={selectedTrack === 'off' ? 'white' : 'black'}
+      />
+    </Animated.View>
+  );
+  const renderFooter = () => (
+    <Animated.View
+      style={[animatedStyle]}
+      className="absolute bottom-20 w-full flex-col items-center">
+      <Text className="text-2xl font-bold text-white">{name || title}</Text>
+      <Text className="text-base font-light text-white mb-2">
+        {instructor?.name}
+      </Text>
+
+      <CircleButton
+        backgroundColor="#00000060"
+        color="white"
+        size={40}
+        icon="info"
+        onPress={() => {
+          updateIstructorTractionData(instructor);
+          // @ts-ignore
+          navigate('Instructor', { id: instructor._id });
+        }}
+      />
+    </Animated.View>
+  );
+
+  const renderFavorite = () => (
+    <Animated.View style={[animatedStyle]} className="absolute bottom-5 left-5">
+      <FavoriteButton id={id} />
+    </Animated.View>
+  );
+
+  const renderView = () => {
     if (hideControls) {
       return null;
     }
@@ -240,85 +303,11 @@ const MeditationPlayer: FC = () => {
     return (
       <Animated.View
         style={[animatedStyle]}
-        className="absolute flex flex-col items-center justify-center h-full w-full">
-        {loading ? (
-          <ActivityIndicator color="#fff" size="large" />
-        ) : (
-          <>
-            <TimesLabel position={position} duration={duration} />
-            <PlayerControls />
-          </>
-        )}
-      </Animated.View>
-    );
-  };
-
-  const renderHeader = () => {
-    if (hideControls) {
-      return null;
-    }
-
-    return (
-      <Animated.View
-        style={[animatedStyle]}
-        className="absolute top-0 flex flex-row items-center w-full justify-between p-4 z-10">
-        <CircleButton
-          size={40}
-          icon="x"
-          onPress={onClose}
-          backgroundColor="#00000060"
-          color="white"
-        />
-        <CircleButton
-          size={40}
-          icon="music"
-          onPress={toggleBgMenu}
-          backgroundColor={selectedTrack === 'off' ? '#00000060' : 'white'}
-          color={selectedTrack === 'off' ? 'white' : 'black'}
-        />
-      </Animated.View>
-    );
-  };
-
-  const renderFooter = () => {
-    if (hideControls) {
-      return null;
-    }
-
-    return (
-      <Animated.View
-        style={[animatedStyle]}
-        className="absolute bottom-20 w-full flex-col items-center">
-        <Text className="text-2xl font-bold text-white">{name || title}</Text>
-        <Text className="text-base font-light text-white mb-2">
-          {instructor?.name}
-        </Text>
-
-        <CircleButton
-          backgroundColor="#00000060"
-          color="white"
-          size={40}
-          icon="info"
-          onPress={() => {
-            updateIstructorTractionData(instructor);
-            // @ts-ignore
-            navigate('Instructor', { id: instructor._id });
-          }}
-        />
-      </Animated.View>
-    );
-  };
-
-  const renderFavorite = () => {
-    if (hideControls) {
-      return null;
-    }
-
-    return (
-      <Animated.View
-        style={[animatedStyle]}
-        className="absolute bottom-5 left-5">
-        <FavoriteButton id={id} />
+        className="relative flex flex-col items-center justify-center w-full h-full">
+        {renderHeader()}
+        {renderControls()}
+        {renderFooter()}
+        {renderFavorite()}
       </Animated.View>
     );
   };
@@ -360,14 +349,7 @@ const MeditationPlayer: FC = () => {
             thumbnail,
           )}`}
         />
-        <SafeAreaView className="flex-col h-full w-full">
-          <View className="relative flex flex-col items-center justify-center w-full h-full">
-            {renderHeader()}
-            {renderControls()}
-            {renderFooter()}
-            {renderFavorite()}
-          </View>
-        </SafeAreaView>
+        <SafeAreaView className="h-full w-full">{renderView()}</SafeAreaView>
       </Pressable>
     </>
   );
