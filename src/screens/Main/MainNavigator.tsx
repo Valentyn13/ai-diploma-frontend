@@ -8,6 +8,7 @@ import BgPlayer from './MeditationPlayer/BgPlayer';
 import Subscribe from './Subscribe';
 import Tabs from './Tabs';
 import Course from './Tabs/Courses/Course';
+import SessionModal from './Tabs/Courses/SessionModal';
 import Instructor from './Tabs/Home/Instructor';
 import Instructors from './Tabs/Home/Instructors';
 import WebView from './WebView';
@@ -22,6 +23,7 @@ export type MainStackParamList = {
   Instructor: { instructor: any };
   Instructors: undefined;
   Course: { id: string };
+  SessionModal: { id: string };
 };
 
 const MainStack = createNativeStackNavigator<MainStackParamList>();
@@ -42,6 +44,13 @@ export default () => {
         <MainStack.Screen
           name="Instructor"
           component={Instructor}
+          options={{
+            presentation: 'modal',
+          }}
+        />
+        <MainStack.Screen
+          name="SessionModal"
+          component={SessionModal}
           options={{
             presentation: 'modal',
           }}

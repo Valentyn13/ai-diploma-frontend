@@ -56,7 +56,6 @@ const Course = () => {
           <Text className="text-center text-base leading-none font-normal text-gray-700 mb-4">
             {course.meditations.length} {i18n.t('sessions')}
           </Text>
-          {/* <SessionsGrid meditations={course.meditations} /> */}
           <CourseMeditations
             history={historyIds}
             items={course.meditations}

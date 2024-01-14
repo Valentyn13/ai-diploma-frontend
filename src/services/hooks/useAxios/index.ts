@@ -110,7 +110,6 @@ export default ({
 
       const { setAuthToken } = requestApi;
 
-      console.log('step 1');
       if (setAuthToken) {
         const token = await getToken();
         if (token) {
@@ -131,8 +130,6 @@ export default ({
           apiParams,
           userDetails.id,
         );
-
-        console.log('step 3');
 
         const { token } = data;
 

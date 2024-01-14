@@ -53,7 +53,7 @@ const MeditationItem: React.FC<MeditationItemProps> = memo(
 
     const { hasPremium } = usePurchases();
 
-    const navigateToMeditation = useCallback(() => {
+    const navigateToPlayer = useCallback(() => {
       if (!hasPremium && isCategoryLocked) {
         // @ts-ignore TODO: fix this
         navigate('Subscribe');
@@ -82,17 +82,25 @@ const MeditationItem: React.FC<MeditationItemProps> = memo(
       index,
     ]);
 
+    const navigateToModal = useCallback(() => {
+      amplitudeInstance.logEvent('MEDITATION_MODAL_CLICKED');
+      logEvent('MEDITATION_MODAL_CLICKED', { id, categoryName });
+      amplitudeInstance.uploadEvents();
+      // @ts-ignore TODO: fix this
+      navigate('SessionModal', { id });
+    }, [amplitudeInstance, categoryName, id, navigate]);
+
     return (
-      <Pressable
+      <View
         style={{
           width: horizontal
             ? theme.dimens.winWidth / 2.4
             : theme.dimens.winWidth / 2,
           height: horizontal ? 220 : 280,
           maxWidth: theme.dimens.winWidth / 2 - 28,
-        }}
-        onPress={navigateToMeditation}>
-        <View
+        }}>
+        <Pressable
+          onPress={navigateToPlayer}
           className="flex-1 overflow-hidden"
           style={{
             borderRadius: big ? 16 : 8,
@@ -130,8 +138,10 @@ const MeditationItem: React.FC<MeditationItemProps> = memo(
               </View>
             )}
           </ImageBackground>
-        </View>
-        <View className="flex flex-col items-start justify-center py-1 px-2 h-12">
+        </Pressable>
+        <Pressable
+          className="flex flex-col items-start justify-center py-1 px-2 h-12"
+          onPress={navigateToModal}>
           <Text className="text-black text-[15px] font-medium text-left tracking-tighter leading-6 w-full">
             {name}
           </Text>
@@ -141,8 +151,8 @@ const MeditationItem: React.FC<MeditationItemProps> = memo(
               {instructor?.name ?? ''}
             </Text>
           </View>
-        </View>
-      </Pressable>
+        </Pressable>
+      </View>
     );
   },
 );

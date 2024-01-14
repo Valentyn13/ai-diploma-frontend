@@ -266,6 +266,17 @@ const MeditationPlayer: FC = () => {
       />
     </Animated.View>
   );
+
+  const onPressInfo = useCallback(() => {
+    amplitudeInstance.logEvent('MEDITATION_MODAL_CLICKED', {
+      id,
+      categoryName,
+    });
+    amplitudeInstance.uploadEvents();
+    // @ts-ignore
+    navigate('SessionModal', { id });
+  }, [amplitudeInstance, categoryName, id, navigate]);
+
   const renderFooter = () => (
     <Animated.View
       style={[animatedStyle]}
@@ -280,11 +291,7 @@ const MeditationPlayer: FC = () => {
         color="white"
         size={40}
         icon="info"
-        onPress={() => {
-          updateIstructorTractionData(instructor);
-          // @ts-ignore
-          navigate('Instructor', { id: instructor._id });
-        }}
+        onPress={onPressInfo}
       />
     </Animated.View>
   );
