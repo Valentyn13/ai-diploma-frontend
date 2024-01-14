@@ -59,7 +59,7 @@ const Instructors = () => {
         showsVerticalScrollIndicator={false}
         data={[
           ...instructors.filter(({ name }) => name === 'כלים מבית רגע'),
-          ...shuffleArray(instructorsWithNoRega),
+          ...shuffleArray(instructorsWithNoRega).slice(0, 6),
         ]}
         keyExtractor={item => item._id}
         renderItem={({ item: instructor }) => (
