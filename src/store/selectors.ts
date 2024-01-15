@@ -199,7 +199,7 @@ export const latestMeditationSelector = createSelector(
       return dateB - dateA;
     });
 
-    const uniqueIds = [...new Set(latest.map(item => item.id))].slice(0, 9);
+    const uniqueIds = [...new Set(latest.map(item => item.id))].slice(0, 19);
 
     return latest.filter(item => uniqueIds.includes(item.id));
   },

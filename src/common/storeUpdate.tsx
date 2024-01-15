@@ -1,49 +1,38 @@
-import { checkVersion } from '@utils/checkVersion';
-import React from 'react';
-import {
-  Linking,
-  Modal,
-  Platform,
-  Text,
-  TouchableOpacity,
-  View,
-} from 'react-native';
+import { getUpdateUrl, shouldUpdate } from '@utils/checkVersion';
+import React, {
+  FC,
+  PropsWithChildren,
+  useCallback,
+  useEffect,
+  useState,
+} from 'react';
+import { Linking, Modal, Text, TouchableOpacity, View } from 'react-native';
 
-function StoreUpdate({ children }) {
-  const [newUpdate, setNewUpdate] = React.useState({
-    state: false,
-    storeUrl: null,
-  });
+const StoreUpdate: FC<PropsWithChildren> = ({ children }) => {
+  const [showModal, setShowModal] = useState(false);
 
-  React.useEffect(() => {
-    async function checkForUpdates() {
-      const version = await checkVersion();
+  const checkVersion = async () => {
+    const needsUpdate = await shouldUpdate();
+    // if (needsUpdate) {
+    //   setShowModal(true);
+    // }
+  };
 
-      if (version && version.isNeeded) {
-        setNewUpdate({
-          state: true,
-          ...version,
-        });
-      }
-    }
-    checkForUpdates();
+  useEffect(() => {
+    checkVersion();
   }, []);
 
-  const toggleUpdate = () => {
-    setNewUpdate({
-      state: false,
-      storeUrl: null,
-    });
-  };
-
-  const downloadNewVersion = () => {
-    Linking.openURL(newUpdate.storeUrl);
-  };
+  const updateApp = useCallback(async () => {
+    const url = await getUpdateUrl();
+    if (url) {
+      await Linking.openURL(url);
+    }
+  }, []);
 
   return (
     <>
-      {newUpdate.state && (
-        <Modal visible transparent>
+      {showModal && (
+        <Modal transparent>
           <View
             style={{
               flex: 1,
@@ -62,38 +51,19 @@ function StoreUpdate({ children }) {
               }}>
               <Text
                 style={{
-                  //   fontFamily: 'Quicksand',
                   fontSize: 17,
                   fontWeight: '700',
-                  //   color: theme.BLACK
                 }}>
                 יש עדכון
               </Text>
               <Text
                 style={{
-                  //   fontFamily: 'Quicksand',
                   fontSize: 14,
                   textAlign: 'center',
                   marginTop: 4,
-                  //   color: theme.BLACK
                 }}>
                 {'עדכון חדש זמין בבקשה עדכן לחוויה טובה יותר'}{' '}
               </Text>
-              {/* <Text
-                  style={{
-                    fontWeight: '700',
-                  }}>
-                  ({newUpdate.latestVersion})
-                </Text>{' '}
-                {'update-desc-2'}{' '}
-                <Text
-                  style={{
-                    fontWeight: '700',
-                  }}>
-                  {Platform.OS === 'ios' ? 'app-store' : 'play-store'}
-                </Text>{' '}
-                {'update-desc-3'}
-              </Text> */}
               <View
                 style={{
                   flexDirection: 'row',
@@ -103,7 +73,7 @@ function StoreUpdate({ children }) {
                   height: 60,
                 }}>
                 <TouchableOpacity
-                  onPress={() => downloadNewVersion()}
+                  onPress={updateApp}
                   style={{
                     backgroundColor: '#273051',
                     display: 'flex',
@@ -115,23 +85,10 @@ function StoreUpdate({ children }) {
                     style={{
                       color: 'white',
                       textAlign: 'center',
-                      paddingVertical: 20,
                     }}>
-                    {' '}
-                    {` ${Platform.OS === 'ios' ? 'לְעַדְכֵּן' : 'לְעַדְכֵּן'}`}
+                    עדכן
                   </Text>
                 </TouchableOpacity>
-                {/* <TouchableOpacity
-                  onPress={() => toggleUpdate()}
-                  style={{
-                    backgroundColor: 'red',
-                    display: 'flex',
-                    flex: 1,
-                    alignItems: 'center',
-                    marginHorizontal: 30,
-                  }}>
-                  <Text style={{textAlign: 'center', color: 'white', paddingVertical: 20}}>{'לבטל'}</Text>
-                </TouchableOpacity> */}
               </View>
             </View>
           </View>
@@ -140,6 +97,6 @@ function StoreUpdate({ children }) {
       {children}
     </>
   );
-}
+};
 
 export default StoreUpdate;
