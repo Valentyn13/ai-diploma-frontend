@@ -1,4 +1,5 @@
 import { PurchaseProvider } from '@common/context/PurchaseContext';
+import { TrackPlayerProvider } from '@common/context/TrackPlayerContext';
 import StoreUpdate from '@common/storeUpdate';
 import theme from '@common/theme';
 import colors from '@common/theme/colors';
@@ -58,9 +59,11 @@ const App: React.FC = () => {
                 <StatusBar hidden />
                 <ThemeProvider theme={theme}>
                   <StoreUpdate>
-                    <View style={styles.rootContainer}>
-                      <RootNavigator />
-                    </View>
+                    <TrackPlayerProvider>
+                      <View style={styles.rootContainer}>
+                        <RootNavigator />
+                      </View>
+                    </TrackPlayerProvider>
                   </StoreUpdate>
                 </ThemeProvider>
               </PersistGate>

@@ -1,4 +1,3 @@
-import useTrackPlayer from '@services/hooks/useTrackPlayer';
 import React, { FC, useEffect } from 'react';
 import TrackPlayer from 'react-native-track-player';
 
@@ -11,8 +10,6 @@ interface Props {
 }
 
 const AudioPlayer: FC<Props> = ({ id, url, title, artist, artwork }) => {
-  useTrackPlayer();
-
   useEffect(() => {
     const addTrack = async () => {
       await TrackPlayer.add({

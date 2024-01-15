@@ -12,6 +12,7 @@ const useTrackPlayerSetup = () => {
   useEffect(() => {
     const initTrackPlayer = async () => {
       await TrackPlayer.setupPlayer();
+
       TrackPlayer.updateOptions({
         android: {
           appKilledPlaybackBehavior:
