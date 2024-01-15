@@ -61,7 +61,7 @@ const getUpdateUrl = async () => {
   if (Platform.OS === 'ios') {
     return `itms-apps://apps.apple.com/${COUNTRY_CODE}app/id${IOS_APP_ID}`;
   } else if (Platform.OS === 'android') {
-    return 'market://details?id=<your_app_id>';
+    return 'market://details?id=com.rega.regaapp';
   }
 };
 
