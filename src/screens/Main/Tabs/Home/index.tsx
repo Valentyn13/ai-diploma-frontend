@@ -25,7 +25,6 @@ import styled from 'styled-components/native';
 import { Meditation } from 'types/Meditation';
 
 import InstructorList from './InstructorList';
-import ReminderPopup from './ReminderPopup';
 
 const ListTitle = styled(SubTitle)`
   font-size: 22px;
@@ -46,7 +45,8 @@ const Feed: FC<FeedProps> = ({ navigation }) => {
   const { sex } = useSelector((state: any) => state.userDetails);
   const { setPurchaserIdentity } = usePurchases();
   const [showNotificationModal, setshowNotificationModal] = useState(false);
-  const [firstCollection, ...collections]: Collection[] = useFeed();
+  const [byTimeCollection, latestCollection, ...collections]: Collection[] =
+    useFeed();
 
   useOnboarding();
 
@@ -133,10 +133,10 @@ const Feed: FC<FeedProps> = ({ navigation }) => {
             className="flex-1">
             <Collection
               key="by-time"
-              title={firstCollection.title}
-              items={firstCollection.items}
+              title={byTimeCollection.title}
+              items={byTimeCollection.items}
               onShowAll={() => {
-                onShowAll(firstCollection.title, firstCollection.items);
+                onShowAll(byTimeCollection.title, byTimeCollection.items);
               }}
             />
             <Divider className="my-6" />
@@ -144,6 +144,18 @@ const Feed: FC<FeedProps> = ({ navigation }) => {
         </View>
 
         <View className="bg-[#FCE8CD]">
+          <View className="flex-1">
+            <Collection
+              shuffle={false}
+              key={latestCollection.id}
+              title={latestCollection.title}
+              items={latestCollection.items}
+              onShowAll={() => {
+                onShowAll(latestCollection.title, latestCollection.items);
+              }}
+            />
+            <Divider className="my-6" />
+          </View>
           <DynamicComposition>
             <View className="flex w-full items-center px-5 flex-1">
               <ListTitle k="personalized" />
@@ -189,13 +201,6 @@ const Feed: FC<FeedProps> = ({ navigation }) => {
           </DynamicComposition>
         </View>
       </ScrollView>
-      {showNotificationModal && (
-        <ReminderPopup
-          isVisible={showNotificationModal}
-          dismiss={() => setshowNotificationModal(false)}
-          navigation={navigation}
-        />
-      )}
     </View>
   );
 };

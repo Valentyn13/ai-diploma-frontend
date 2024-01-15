@@ -84,7 +84,7 @@ const InstructorList = () => {
       }}
       data={[
         ...instructors.filter(({ name }) => name === 'כלים מבית רגע'),
-        ...shuffleArray(instructorWithNoRega),
+        ...shuffleArray(instructorWithNoRega).slice(0, 8),
       ]}
       renderItem={renderItem}
       keyExtractor={item => item._id}

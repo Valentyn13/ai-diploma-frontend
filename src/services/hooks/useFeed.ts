@@ -10,7 +10,7 @@ import {
   latestMeditationSelector,
   toptMeditationSelector,
 } from '@store/selectors';
-import { getRandomElements } from '@utils/rand';
+import { getRandomElements, shuffleArray } from '@utils/rand';
 import { getCollectionIdByTime } from '@utils/time';
 import { useCallback, useMemo } from 'react';
 import { useSelector } from 'react-redux';
@@ -34,15 +34,17 @@ const useFeed = (): Collection[] => {
   );
 
   const firstCollections: Collection[] = useMemo(
-    () =>
-      COLLECTIONS_TIME_OF_DAY.filter(
+    () => [
+      ...COLLECTIONS_TIME_OF_DAY.filter(
         ({ id }) => id === getCollectionIdByTime(),
       ).map(({ title, id, trackIds }) => ({
         id,
         title,
         items: trackIds.map(idToItem).filter(Boolean),
       })),
-    [idToItem],
+      { id: 'latest-release', title: i18n.t('latest_release'), items: latest },
+    ],
+    [idToItem, latest],
   );
 
   const fixedCollections: Collection[] = useMemo(
@@ -52,10 +54,9 @@ const useFeed = (): Collection[] => {
         title: i18n.t('Greeting_general'),
         items: meditations,
       },
-      { id: 'latest-release', title: i18n.t('latest_release'), items: latest },
       { id: 'top-rated', title: i18n.t('most_played'), items: topRated },
     ],
-    [meditations, latest, topRated],
+    [meditations, topRated],
   );
 
   const dynamicCollections: Collection[] = getRandomElements(
@@ -70,7 +71,7 @@ const useFeed = (): Collection[] => {
   const collections: Collection[] = useMemo(
     () => [
       ...firstCollections,
-      ...getRandomElements([...dynamicCollections, ...fixedCollections], 6),
+      ...shuffleArray([...dynamicCollections, ...fixedCollections]),
     ],
     [dynamicCollections, firstCollections, fixedCollections],
   );
