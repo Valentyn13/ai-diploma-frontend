@@ -291,7 +291,11 @@ const MeditationPlayer: FC = () => {
         color="white"
         size={40}
         icon="info"
-        onPress={onPressInfo}
+        onPress={() => {
+          updateIstructorTractionData(instructor);
+          // @ts-ignore
+          navigate('Instructor', { id: instructor._id });
+        }}
       />
     </Animated.View>
   );
