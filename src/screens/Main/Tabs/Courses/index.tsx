@@ -1,7 +1,7 @@
 import { getCategoryImg } from '@common/assets/images';
 import theme from '@common/theme';
 import { coursesSelector } from '@store/selectors';
-import meditationTime from '@utils/meditationTime';
+import meditationTime from '@utils/time';
 import React, { FC } from 'react';
 import {
   FlatList,

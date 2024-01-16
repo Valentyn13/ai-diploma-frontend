@@ -1,5 +1,5 @@
 import FavoriteButton from '@common/components/FavoriteButton';
-import meditationTime from '@utils/meditationTime';
+import meditationTime from '@utils/time';
 import React, { memo } from 'react';
 import { Text, View } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';

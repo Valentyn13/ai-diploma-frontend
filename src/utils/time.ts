@@ -1,3 +1,27 @@
+import i18n from '@services/localization/i18n';
+
+export function meditationTime(duration: number) {
+  const hours = Math.floor(duration / 3600);
+  const minutes = Math.floor((duration % 3600) / 60);
+  const seconds = duration % 60;
+
+  let timeStr = '';
+
+  if (hours > 0) {
+    timeStr += `${hours} ${i18n.t('hours')} `;
+  }
+  if (minutes > 0 || hours > 0) {
+    timeStr += `${minutes} ${i18n.t('minutes')} `;
+  }
+  if (seconds > 0 && hours === 0 && minutes === 0) {
+    timeStr += `${seconds} ${i18n.t('seconds')}`;
+  }
+
+  return timeStr.trim();
+}
+
+export default meditationTime;
+
 export function getGreeting() {
   const now = new Date();
   const hours = now.getHours();

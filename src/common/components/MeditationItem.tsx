@@ -6,7 +6,7 @@ import { useNavigation } from '@react-navigation/native';
 import { useAmplitude } from '@services/hooks/useAmplitude';
 import { meditationInstructor } from '@store/selectors';
 import { logEvent } from '@utils/analytics';
-import meditationTime from '@utils/meditationTime';
+import meditationTime from '@utils/time';
 import React, { memo, useCallback } from 'react';
 import { ImageBackground, Pressable, Text, View } from 'react-native';
 import IconFontAwesome from 'react-native-vector-icons/FontAwesome6';
@@ -133,7 +133,7 @@ const MeditationItem: React.FC<MeditationItemProps> = memo(
               <View className="flex-row bg-black/50 rounded-full px-2 py-1 absolute bottom-2 left-2 items-center">
                 <IconFontAwesome name="play" size={12} color="#fff" />
                 <Text className="ml-2 text-white text-xs">
-                  {meditationTime(duration, true)}
+                  {meditationTime(duration)}
                 </Text>
               </View>
             )}

@@ -52,7 +52,7 @@ export default {
   settings: 'הגדרות',
   aboutCourse: 'על הקורס',
   close: 'סגור',
-  hours: 'שעות',
+  hours: "שע'",
   minutes: "דק'",
   seconds: 'שניות',
   myMoments: 'הרגעים שלי',
