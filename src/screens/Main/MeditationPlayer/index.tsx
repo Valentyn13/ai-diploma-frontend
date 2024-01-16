@@ -5,7 +5,7 @@ import { useNavigation, useRoute } from '@react-navigation/native';
 import { useAmplitude } from '@services/hooks/useAmplitude';
 import useInstructor from '@services/hooks/useInstructor';
 import useUpdateMeditation from '@services/hooks/useUpdateMeditation';
-import { meditationStarted } from '@store/actions';
+import { meditationStarted, minutesPracticed } from '@store/actions';
 import { meditationInstructor } from '@store/selectors';
 import { useBgTrackStore } from '@store/useBgTrackStore';
 import logger from '@utils/logger';
@@ -145,6 +145,39 @@ const MeditationPlayer: FC = () => {
 
     goBack();
   };
+
+  const listenTime = useRef(0);
+  const listenInterval = useRef<NodeJS.Timeout | undefined>();
+
+  const updatePlayedTime = useCallback(() => {
+    if (!listenTime.current) {
+      return;
+    }
+
+    dispatch(minutesPracticed({ minutesPlayed: listenTime.current / 60 }));
+  }, [dispatch]);
+
+  useEffect(() => {
+    if (playing) {
+      listenInterval.current = setInterval(() => {
+        listenTime.current += 1;
+      }, 1000);
+    }
+
+    return () => {
+      if (listenInterval.current) {
+        console.log('destroyed');
+        clearInterval(listenInterval.current);
+        listenInterval.current = undefined;
+      }
+    };
+  }, [playing]);
+
+  useEffect(() => {
+    return () => {
+      updatePlayedTime();
+    };
+  }, [updatePlayedTime]);
 
   const poster = useMemo(
     () => `${BGS_ASSETS_URL}${getCategoryImgName(categoryName, 0, thumbnail)}`,
