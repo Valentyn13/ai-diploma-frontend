@@ -8,8 +8,17 @@ import {
   allMeditations as allMeditationsSelector,
   meditationInstructor,
 } from '@store/selectors';
-import React, { useMemo } from 'react';
-import { Image, Pressable, SafeAreaView, Text, View } from 'react-native';
+import meditationTime from '@utils/time';
+import React, { useCallback, useMemo } from 'react';
+import {
+  Image,
+  Pressable,
+  SafeAreaView,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
+import Icon from 'react-native-vector-icons/FontAwesome6';
 import { useSelector } from 'react-redux';
 import { Meditation } from 'types/Meditation';
 
@@ -38,12 +47,17 @@ const SessionModal = ({ navigation }) => {
     [meditation],
   );
 
+  const onPressPlay = useCallback(() => {
+    if (hasPremium) {
+      navigation.navigate('MeditationPlayer', { item: meditation });
+    } else {
+      navigation.navigate('Subscribe');
+    }
+  }, [hasPremium, meditation, navigation]);
+
   if (!meditation) {
     return navigation.goBack();
   }
-
-  const description =
-    'התמקדות ורוגע לפני מבחן - מדיטציה זו מתמקדת ביצירת אווירה פנימית של שקט ורוגע, במיוחד חשובה לקראת מבחן. דרך תרגילי נשימה מודעת וסריקת גוף, אנחנו מלמדים את המוח לשחרר מחשבות מטרידות ולהתמקד ברגע הנוכחי. התרגול מסייע בשחרור מתחים פיזיים ומנטליים, ומעניק תחושת יציבות וביטחון לקראת האתגר הקרוב. מתאימה במיוחד לסטודנטים ולכל מי שמעוניין לשפר את יכולת הריכוז וההתמודדות עם לחץ.';
 
   return (
     <SafeAreaView className="flex-1 bg-[#fdedd6]">
@@ -59,55 +73,70 @@ const SessionModal = ({ navigation }) => {
         </View>
         <View className="relative mt-8 mx-5">
           <View className="absolute -top-16 right-0">
-            <CircleButton
-              size={60}
-              icon="play"
-              onPress={() => {}}
-              backgroundColor="#513F73"
-              color="white"
-            />
+            <TouchableOpacity
+              onPress={onPressPlay}
+              className="flex-row items-center justify-center rounded-full"
+              style={{
+                backgroundColor: '#273051',
+                width: 60,
+                height: 60,
+                justifyContent: 'center',
+                alignItems: 'center',
+              }}>
+              <Icon
+                style={{
+                  marginRight: 2,
+                }}
+                name="play"
+                size={34}
+                color="#fff"
+              />
+            </TouchableOpacity>
           </View>
-          <View className="flex flex-row items-center justify-between">
+          <View>
             <Text className="text-2xl font-bold text-black text-left">
               {meditation.name}
             </Text>
-            <View>
-              {/* <View className="flex-row bg-black/50 rounded-full px-2 py-1 items-center">
-                <IconFontAwesome name="play" size={12} color="#fff" />
-                <Text className="ml-2 text-white text-xs">
-                  {meditationTime(meditation.duration, true)}
-                </Text>
-              </View> */}
-              <View
-                style={{
+          </View>
+          <View className="flex flex-row items-center justify-between mt-2">
+            <Pressable
+              //@ts-ignore
+              onPress={() =>
+                navigation.navigate('Instructor', { id: instructor._id })
+              }
+              className="flex-row items-center justify-center space-x-2">
+              <Image
+                source={{ uri: instructor.image }}
+                className="bg-black/50 rounded-full w-7 h-7"
+              />
+              <Text className="text-lg font-medium text-black text-left">
+                {instructor.name}
+              </Text>
+            </Pressable>
+          </View>
+
+          <Text className="text-base leading-none font-normal mt-4 text-black text-left">
+            {meditation.description}
+          </Text>
+          <View className="flex flex-row space-x-2 w-full justify-end mt-4">
+            <View className="flex-row bg-black/50 rounded-full px-2 py-1 items-center">
+              <Icon name="play" size={12} color="#fff" />
+              <Text className="ml-2 text-white text-xs">
+                {meditationTime(meditation.duration)}
+              </Text>
+            </View>
+            <View
+              style={{
+                backgroundColor:
                   // @ts-ignore
-                  backgroundColor:
-                    CATEGORY_COLOR[meditation.categoryName] || '#0B2761',
-                }}
-                className="rounded-full px-2 py-1">
-                <Text className="text-white text-xs">
-                  {meditation.categoryTitle}
-                </Text>
-              </View>
+                  CATEGORY_COLOR[meditation.categoryName] || '#0B2761',
+              }}
+              className="rounded-full px-2 py-1">
+              <Text className="text-white text-xs">
+                {meditation.categoryTitle}
+              </Text>
             </View>
           </View>
-          <Pressable
-            //@ts-ignore
-            onPress={() =>
-              navigation.navigate('Instructor', { id: instructor._id })
-            }
-            className="flex-row items-center mt-2">
-            <Image
-              source={{ uri: instructor.image }}
-              className="bg-black/50 rounded-full w-7 h-7 mr-2"
-            />
-            <Text className="text-lg font-medium text-black text-left">
-              {instructor.name}
-            </Text>
-          </Pressable>
-          <Text className="text-base leading-none font-normal mt-4 text-black text-left">
-            {description}
-          </Text>
         </View>
       </ParallaxScrollView>
     </SafeAreaView>

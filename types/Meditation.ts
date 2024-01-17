@@ -10,4 +10,5 @@ export interface Meditation {
   thumbnail: string;
   url: string;
   image?: string;
+  description?: string;
 }

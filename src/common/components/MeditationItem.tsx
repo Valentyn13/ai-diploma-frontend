@@ -25,6 +25,8 @@ interface MeditationItemProps {
     thumbnail?: string;
     isCategoryLocked: boolean;
     categoryTitle: string;
+    image?: string;
+    description?: string;
   };
   index: number;
 }
@@ -91,8 +93,7 @@ const MeditationItem: React.FC<MeditationItemProps> = memo(
     }, [amplitudeInstance, categoryName, id, navigate]);
 
     return (
-      <Pressable
-        onPress={navigateToPlayer}
+      <View
         style={{
           width: horizontal
             ? theme.dimens.winWidth / 2.4
@@ -100,7 +101,8 @@ const MeditationItem: React.FC<MeditationItemProps> = memo(
           height: horizontal ? 220 : 280,
           maxWidth: theme.dimens.winWidth / 2 - 28,
         }}>
-        <View
+        <Pressable
+          onPress={navigateToPlayer}
           className="flex-1 overflow-hidden"
           style={{
             borderRadius: big ? 16 : 8,
@@ -138,8 +140,10 @@ const MeditationItem: React.FC<MeditationItemProps> = memo(
               </View>
             )}
           </ImageBackground>
-        </View>
-        <View className="flex flex-col items-start justify-center py-1 px-2 h-12">
+        </Pressable>
+        <Pressable
+          onPress={navigateToModal}
+          className="flex flex-col items-start justify-center py-1 px-2 h-12">
           <Text className="text-black text-[15px] font-medium text-left tracking-tighter leading-6 w-full">
             {name}
           </Text>
@@ -149,8 +153,8 @@ const MeditationItem: React.FC<MeditationItemProps> = memo(
               {instructor?.name ?? ''}
             </Text>
           </View>
-        </View>
-      </Pressable>
+        </Pressable>
+      </View>
     );
   },
 );

@@ -14,6 +14,7 @@ const mapMeditations = category =>
       animation,
       thumbnail,
       image,
+      description,
     }) => ({
       url,
       duration,
@@ -28,6 +29,7 @@ const mapMeditations = category =>
       thumbnail,
       image,
       isCategoryLocked: category.isCategoryLocked,
+      description,
     }),
   );
 
