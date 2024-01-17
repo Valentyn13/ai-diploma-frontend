@@ -166,7 +166,6 @@ const MeditationPlayer: FC = () => {
 
     return () => {
       if (listenInterval.current) {
-        console.log('destroyed');
         clearInterval(listenInterval.current);
         listenInterval.current = undefined;
       }
