@@ -1,13 +1,16 @@
 import SubscriptionPoint from '@common/components/SubscriptionPoint';
 import { usePurchases } from '@common/context/PurchaseContext';
 import { useNavigation, useRoute } from '@react-navigation/native';
+import { PurchasesPackage } from '@revenuecat/purchases-typescript-internal';
 import rudderClient, {
   RUDDER_LOG_LEVEL,
 } from '@rudderstack/rudder-sdk-react-native';
+import * as Sentry from '@sentry/react-native';
 import { useAmplitude } from '@services/hooks/useAmplitude';
 import i18n from '@services/localization/i18n';
 import { logEvent } from '@utils/analytics';
 import get from '@utils/get';
+import pRetry from 'p-retry';
 import React, { FC, useEffect, useState } from 'react';
 import {
   ActivityIndicator,
@@ -179,19 +182,25 @@ const Subscribe: FC = () => {
 
   const [selectedPlan, setSelectedPlan] = useState('annual');
 
-  const onSubscribe = async (plan: any) => {
+  const onSubscribe = async (plan: PurchasesPackage) => {
     try {
-      await makePurchase(plan);
-      await amplitudeInstance.logRevenue({
+      await pRetry(() => makePurchase(plan), { retries: 3 });
+
+      amplitudeInstance.logRevenue({
         price: plan.product.price,
         productId: plan.product.identifier,
         revenueType: plan.packageType,
       });
-      await rudderClient.track('Subscribe', {
-        price: plan.product.price,
-        productId: plan.product.identifier,
-        revenueType: plan.packageType,
-      });
+
+      try {
+        await rudderClient.track('Subscribe', {
+          price: plan.product.price,
+          productId: plan.product.identifier,
+          revenueType: plan.packageType,
+        });
+      } catch (e) {
+        console.log(e);
+      }
 
       logEvent('Subscribe', {
         userName,
@@ -202,8 +211,9 @@ const Subscribe: FC = () => {
       });
 
       goBack();
-    } catch (e) {
-      Alert.alert('מצטערים קרתה תקלה, אנא פנו לתמיכה שלנו');
+    } catch (error) {
+      Sentry.captureException(error);
+      Alert.alert('מצטערים קרתה תקלה, אנא פנו לתמיכה שלנו באינסטגרם @rega.app');
     }
   };
 

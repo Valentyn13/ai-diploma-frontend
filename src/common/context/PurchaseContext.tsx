@@ -1,4 +1,5 @@
 import { PurchasesPackage } from '@revenuecat/purchases-typescript-internal';
+import { useAmplitude } from '@services/hooks/useAmplitude';
 import logger from '@utils/logger';
 import React, {
   PropsWithChildren,
@@ -15,7 +16,7 @@ import Purchases, {
 import { useSelector } from 'react-redux';
 
 interface PurchaseContextProps {
-  plans: Record<string, any>;
+  plans: Record<string, PurchasesPackage>;
   hasPremium: boolean;
   purchasing: boolean;
   identify: boolean;
@@ -42,8 +43,10 @@ export const PurchaseProvider: React.FC<PropsWithChildren> = ({ children }) => {
   const [hasPremium, setPremium] = useState(true);
   const [purchasing, setPurchasing] = useState(false);
   const [identify, setIdentify] = useState(false);
-  const { id } = useSelector(
-    (state: { userDetails: { id: string } }) => state.userDetails,
+  const amplitudeInstance = useAmplitude();
+  const { id, email } = useSelector(
+    (state: { userDetails: { id: string; email: string } }) =>
+      state.userDetails,
   );
 
   const REVENUECAT_PUB_KEY = 'oyugnzaOUAuXBNLgXifSFaJWEsrpfjkO';
@@ -103,19 +106,26 @@ export const PurchaseProvider: React.FC<PropsWithChildren> = ({ children }) => {
       } catch (e: any) {
         setPurchasing(false);
         logger.error('usePurchases: failed to make purchase', e.message || e);
-        throw new Error('Purchase failed', e.message || e);
+        amplitudeInstance.logEvent('Purchase Failed', {
+          error: e.message || e,
+        });
+        throw new Error('Purchase failed: ', e.message || e);
       }
 
       if (!result?.customerInfo.entitlements.active) {
         setPurchasing(false);
-        throw new Error('Purchase failed');
+        amplitudeInstance.logEvent('Purchase Failed', {
+          error: 'No active entitlements',
+        });
+        throw new Error('Purchase failed: no active entitlements');
       }
 
       setPurchasing(false);
       setPremium(true);
+      amplitudeInstance.logEvent('Purchase Success', { id, email });
       return result;
     },
-    [],
+    [amplitudeInstance, email, id],
   );
 
   const contextValue: PurchaseContextProps = {
