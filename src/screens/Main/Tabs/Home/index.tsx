@@ -15,10 +15,12 @@ import useAppState from '@services/hooks/useAppState';
 import useArticleData from '@services/hooks/useArticleData';
 import useFeed from '@services/hooks/useFeed';
 import { useOnboarding } from '@services/hooks/useOnboarding';
+import useRegaCopilot from '@services/hooks/useRegaCopilot';
 import { useSheetStore } from '@store/useSheetStore';
 import { getBGImageByTime } from '@utils/time';
-import React, { FC, useCallback, useEffect, useState } from 'react';
+import React, { FC, useCallback, useEffect, useRef } from 'react';
 import { ImageBackground, ScrollView, View } from 'react-native';
+import { CopilotStep, walkthroughable } from 'react-native-copilot';
 import { LinearGradient } from 'react-native-gradients';
 import { useSelector } from 'react-redux';
 import styled from 'styled-components/native';
@@ -34,17 +36,18 @@ const ListTitle = styled(SubTitle)`
 
 type FeedProps = NativeStackScreenProps<RootStackParamList, 'Main'>;
 
+const CopilotView = walkthroughable(View);
+
 const BGS = {
   sunrise: require('./bgs/sunrise.png'),
   sunset: require('./bgs/sunset.png'),
 };
 
-const Feed: FC<FeedProps> = ({ navigation }) => {
+const Feed: FC<FeedProps> = ({ navigation, copilot }) => {
   const { getAppData } = useAppData();
   const { getArticleData } = useArticleData();
   const { sex } = useSelector((state: any) => state.userDetails);
   const { setPurchaserIdentity } = usePurchases();
-  const [showNotificationModal, setshowNotificationModal] = useState(false);
   const [byTimeCollection, latestCollection, ...collections]: Collection[] =
     useFeed();
 
@@ -91,6 +94,10 @@ const Feed: FC<FeedProps> = ({ navigation }) => {
     items: Meditation[];
   }
 
+  const scrollRef = useRef<ScrollView>(null);
+
+  useRegaCopilot('Home', 'first', scrollRef.current);
+
   return (
     <View className="h-full w-full bg-[#FCE8CD]">
       <ImageBackground
@@ -109,6 +116,7 @@ const Feed: FC<FeedProps> = ({ navigation }) => {
       </View>
 
       <ScrollView
+        ref={scrollRef}
         style={{
           zIndex: 10,
           backgroundColor: 'transparent',
@@ -125,22 +133,29 @@ const Feed: FC<FeedProps> = ({ navigation }) => {
 
           <View className="h-[260px]" />
 
-          <View
-            style={{
-              marginTop: 100,
-              paddingTop: 60,
-            }}
-            className="flex-1">
-            <Collection
-              key="by-time"
-              title={byTimeCollection.title}
-              items={byTimeCollection.items}
-              onShowAll={() => {
-                onShowAll(byTimeCollection.title, byTimeCollection.items);
+          <CopilotStep
+            text="כאן תוכלו למצוא את אוסף של מדיטציות לפי נושאים שונים"
+            order={1}
+            name="first">
+            <CopilotView
+              copilot={copilot}
+              style={{
+                marginTop: 100,
+                paddingTop: 60,
               }}
-            />
-            <Divider className="my-6" />
-          </View>
+              className="flex-1">
+              <Collection
+                key="by-time"
+                title={byTimeCollection.title}
+                items={byTimeCollection.items}
+                onShowAll={() => {
+                  onShowAll(byTimeCollection.title, byTimeCollection.items);
+                }}
+              />
+
+              <Divider className="my-6" />
+            </CopilotView>
+          </CopilotStep>
         </View>
 
         <View className="bg-[#FCE8CD]">
@@ -156,14 +171,25 @@ const Feed: FC<FeedProps> = ({ navigation }) => {
             />
             <Divider className="my-6" />
           </View>
+
           <DynamicComposition>
-            <View className="flex w-full items-center px-5 flex-1">
-              <ListTitle k="personalized" />
-              <View className="w-full flex items-center mt-5">
-                <Feeling onClick={() => setIsOpen(true)} isMale={sex === 'M'} />
-              </View>
-              <Divider className="my-6" />
-            </View>
+            <CopilotStep
+              text="כאן תוכלו למצוא מדיטציות על פי מצב הרוח והמיקום שלכם..."
+              order={3}
+              name="howufeel">
+              <CopilotView copilot={copilot}>
+                <View className="flex w-full items-center px-5 flex-1">
+                  <ListTitle k="personalized" />
+                  <View className="w-full flex items-center mt-5">
+                    <Feeling
+                      onClick={() => setIsOpen(true)}
+                      isMale={sex === 'M'}
+                    />
+                  </View>
+                  <Divider className="my-6" />
+                </View>
+              </CopilotView>
+            </CopilotStep>
 
             {collections.map(({ id, title, items }) => (
               <View className="flex-1">
@@ -180,24 +206,34 @@ const Feed: FC<FeedProps> = ({ navigation }) => {
               </View>
             ))}
 
-            <View className="flex-1">
-              <View className="flex flex-row items-center justify-between w-full mb-5 pl-5 pr-3">
-                <ListTitle k="צוות המורים" />
-                <ShowAll onPress={() => navigation.navigate('Instructors')} />
-              </View>
-              <InstructorList />
-              <Divider className="my-6" />
-            </View>
+            <CopilotStep
+              text="כאן תוכלו למצוא את המדריכים שלנו"
+              order={4}
+              name="instructors">
+              <CopilotView copilot={copilot} className="flex-1">
+                <View className="flex flex-row items-center justify-between w-full mb-5 pl-5 pr-3">
+                  <ListTitle k="צוות המורים" />
+                  <ShowAll onPress={() => navigation.navigate('Instructors')} />
+                </View>
+                <InstructorList />
+                <Divider className="my-6" />
+              </CopilotView>
+            </CopilotStep>
 
-            <View className="flex-1">
-              <CoursesCarousel
-                withParallax
-                height={280}
-                title="courses"
-                fullScreen={false}
-              />
-              <Divider className="my-6" />
-            </View>
+            <CopilotStep
+              text="כאן מתחילים... תוכלו למצוא קורסים שילמדו אתכם תכנים עמוקים יותר"
+              order={2}
+              name="courses">
+              <CopilotView copilot={copilot} className="flex-1">
+                <CoursesCarousel
+                  withParallax
+                  height={280}
+                  title="courses"
+                  fullScreen={false}
+                />
+                <Divider className="my-6" />
+              </CopilotView>
+            </CopilotStep>
           </DynamicComposition>
         </View>
       </ScrollView>
