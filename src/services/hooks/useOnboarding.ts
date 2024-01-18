@@ -4,6 +4,8 @@ import { firstCourseSelector } from '@store/selectors';
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 
+const KET_SECOND_TIME = 'secondTime';
+
 export const useOnboarding = () => {
   const [isOldUser, setIsOldUser] = useState(true);
   const { navigate } = useNavigation();
@@ -11,7 +13,7 @@ export const useOnboarding = () => {
 
   useEffect(() => {
     const fetchIsOldUser = async () => {
-      const isOldUserCache = await AsyncStorage.getItem('secondTime');
+      const isOldUserCache = await AsyncStorage.getItem(KET_SECOND_TIME);
       if (!isOldUserCache) {
         setIsOldUser(false);
       }
@@ -22,21 +24,27 @@ export const useOnboarding = () => {
 
   useEffect(() => {
     if (!isOldUser && firstCourse?.meditations?.length) {
-      // @ts-ignore
-      navigate('Subscribe', {
-        isFirstTime: true,
-      });
-
-      // @ts-ignore
-      navigate('Main', {
-        screen: 'MeditationPlayer',
-        params: {
-          item: firstCourse.meditations[0],
-        },
-      });
-
-      setIsOldUser(true);
-      AsyncStorage.setItem('secondTime', 'true');
+      setTimeout(() => {
+        // @ts-ignore
+        navigate('Main', {
+          screen: 'MeditationPlayer',
+          params: {
+            item: firstCourse.meditations[0],
+            isFirstTime: true,
+          },
+        });
+      }, 100);
     }
-  }, [isOldUser, firstCourse, navigate, setIsOldUser]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isOldUser, firstCourse.meditations]);
+
+  const updateIsOldUser = async (isOld = true) => {
+    setIsOldUser(isOld);
+    AsyncStorage.setItem(KET_SECOND_TIME, isOld.toString());
+  };
+
+  return {
+    isOldUser,
+    updateIsOldUser,
+  };
 };

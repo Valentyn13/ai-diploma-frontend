@@ -144,6 +144,16 @@ const MeditationPlayer: FC = () => {
     amplitudeInstance.uploadEvents();
 
     goBack();
+
+    // @ts-ignore
+    if (route.params?.isFirstTime) {
+      setTimeout(() => {
+        // @ts-ignore
+        navigate('Subscribe', {
+          isFirstTime: true,
+        });
+      }, 0);
+    }
   };
 
   const listenTime = useRef(0);

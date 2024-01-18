@@ -302,7 +302,7 @@ export const COLLECTIONS_TIME_OF_DAY = [
   },
   {
     id: 'evening',
-    title: 'סוגרים יום בסיפוק',
+    title: 'סוגרים יום עם סיפוק',
     trackIds: [
       '64046020420a84635493a7f5',
       '649543530e66f2955d2ecbe6',
@@ -312,7 +312,7 @@ export const COLLECTIONS_TIME_OF_DAY = [
   },
   {
     id: 'night',
-    title: 'לקראת חלומות נעימים',
+    title: 'חלומות נעימים',
     trackIds: [
       '649545120e66f2955d2ecbe9',
       '63c0edd62c4099bc0e36e441',
