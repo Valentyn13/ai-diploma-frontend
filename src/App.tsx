@@ -62,6 +62,7 @@ const App: React.FC = () => {
                   <StoreUpdate>
                     <TrackPlayerProvider>
                       <CopilotProvider
+                        backdropColor="rgba(0, 0, 0, 0.7)"
                         overlay="svg"
                         arrowColor="#513F73"
                         labels={{
