@@ -482,4 +482,4 @@ export const MEDITATIONS_IMAGES_URL =
 
 export const COUNTRY_CODE = 'IL';
 
-export const KEY_PLAYED_FIRST = 'firstPlay23';
+export const KEY_PLAYED_FIRST = 'firstPlay';

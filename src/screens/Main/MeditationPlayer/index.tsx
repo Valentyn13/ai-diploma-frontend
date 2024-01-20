@@ -1,7 +1,7 @@
 import { getCategoryImgName } from '@common/assets/images';
 import FavoriteButton from '@common/components/FavoriteButton';
 import { CircleButton } from '@common/components/buttons/CircleButton';
-import { useNavigation, useRoute } from '@react-navigation/native';
+import { useRoute } from '@react-navigation/native';
 import { useAmplitude } from '@services/hooks/useAmplitude';
 import useInstructor from '@services/hooks/useInstructor';
 import useUpdateMeditation from '@services/hooks/useUpdateMeditation';
@@ -65,12 +65,12 @@ const VideoPlayer = styled(Video).attrs(() => ({
   right: 0;
 `;
 
-const MeditationPlayer: FC = () => {
+const MeditationPlayer: FC = ({ navigation }) => {
   const [loading, setLoading] = useState(true);
   const [cachedVideoUri, setCachedVideoUri] = useState<string>();
   const route = useRoute();
   const { updateIstructorTractionData } = useInstructor();
-  const { goBack, navigate } = useNavigation();
+  const { goBack, navigate } = navigation;
   const { updateMeditationCount } = useUpdateMeditation();
   const { position, duration } = useProgress();
   const { selectedTrack } = useBgTrackStore(state => state);
@@ -146,7 +146,7 @@ const MeditationPlayer: FC = () => {
     // @ts-ignore
     if (route.params?.isFirstTime) {
       // @ts-ignore
-      navigate('Subscribe', {
+      navigation.replace('Subscribe', {
         isFirstTime: true,
       });
     } else {
