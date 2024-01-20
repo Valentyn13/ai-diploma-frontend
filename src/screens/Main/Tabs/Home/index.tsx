@@ -303,7 +303,7 @@ const WelcomeMessage = ({ onPress }) => {
         ברוכים הבאים לרגע
       </Text>
       <Text style={{ fontSize: 18, marginTop: 10, textAlign: 'center' }}>
-        אנחנו שמחים שאתם מצטרפים אלינו במסע ליצירת רגעים של רוגע ושלווה.
+        המפתח לחיים שלווים ומאושרים יותר מתחיל כאן.
       </Text>
 
       <View className="w-64 h-64 bg-[#513F73]/20 rounded-full mt-6 mb-4">

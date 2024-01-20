@@ -76,7 +76,7 @@ export default () => {
         <MainStack.Screen
           name="Subscribe"
           component={Subscribe}
-          options={{ headerShown: false }}
+          options={{ headerShown: false, presentation: 'fullScreenModal' }}
         />
         <MainStack.Screen
           name="WebView"
