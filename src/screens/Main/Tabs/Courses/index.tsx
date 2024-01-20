@@ -95,7 +95,6 @@ const Courses: FC<CoursesProps> = ({ navigation }) => {
       </Text>
       <View className="p-5">
         <FlatList
-          scrollEnabled={false}
           contentContainerStyle={{
             gap: 16,
             width: '100%',
