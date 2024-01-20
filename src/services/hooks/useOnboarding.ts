@@ -1,19 +1,19 @@
+import { KEY_PLAYED_FIRST } from '@common/constants';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { useNavigation } from '@react-navigation/native';
 import { firstCourseSelector } from '@store/selectors';
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 
-const KET_SECOND_TIME = 'secondTime';
+const KEY_SECOND_TIME = 'secondTime';
 
-export const useOnboarding = () => {
+export const useOnboarding = (navigation: any) => {
   const [isOldUser, setIsOldUser] = useState(true);
-  const { navigate } = useNavigation();
+  const [playedFirst, setPlayedFirst] = useState(true);
   const firstCourse = useSelector<any, any>(firstCourseSelector);
 
   useEffect(() => {
     const fetchIsOldUser = async () => {
-      const isOldUserCache = await AsyncStorage.getItem(KET_SECOND_TIME);
+      const isOldUserCache = await AsyncStorage.getItem(KEY_SECOND_TIME);
       if (!isOldUserCache) {
         setIsOldUser(false);
       }
@@ -23,24 +23,31 @@ export const useOnboarding = () => {
   }, []);
 
   useEffect(() => {
-    if (!isOldUser && firstCourse?.meditations?.length) {
-      setTimeout(() => {
-        // @ts-ignore
-        navigate('Main', {
-          screen: 'MeditationPlayer',
-          params: {
-            item: firstCourse.meditations[0],
-            isFirstTime: true,
-          },
-        });
-      }, 100);
+    const fetchIsFirstPlayed = async () => {
+      const isPlayedFirstCache = await AsyncStorage.getItem(KEY_PLAYED_FIRST);
+      if (!isPlayedFirstCache) {
+        setPlayedFirst(false);
+      }
+    };
+
+    fetchIsFirstPlayed();
+  }, []);
+
+  useEffect(() => {
+    if (!isOldUser && !playedFirst && firstCourse.meditations.length) {
+      navigation.replace('Main', {
+        screen: 'MeditationPlayer',
+        params: {
+          item: firstCourse.meditations[0],
+          isFirstTime: true,
+        },
+      });
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isOldUser, firstCourse.meditations]);
+  }, [isOldUser, firstCourse, playedFirst, navigation]);
 
   const updateIsOldUser = async (isOld = true) => {
     setIsOldUser(isOld);
-    AsyncStorage.setItem(KET_SECOND_TIME, isOld.toString());
+    AsyncStorage.setItem(KEY_SECOND_TIME, isOld.toString());
   };
 
   return {

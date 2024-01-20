@@ -143,16 +143,14 @@ const MeditationPlayer: FC = () => {
     amplitudeInstance.logEvent('MEDITATION_STOP', { categoryName });
     amplitudeInstance.uploadEvents();
 
-    goBack();
-
     // @ts-ignore
     if (route.params?.isFirstTime) {
-      setTimeout(() => {
-        // @ts-ignore
-        navigate('Subscribe', {
-          isFirstTime: true,
-        });
-      }, 0);
+      // @ts-ignore
+      navigate('Subscribe', {
+        isFirstTime: true,
+      });
+    } else {
+      goBack();
     }
   };
 

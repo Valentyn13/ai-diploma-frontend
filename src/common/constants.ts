@@ -481,3 +481,5 @@ export const MEDITATIONS_IMAGES_URL =
   'https://d137rfe7jg135q.cloudfront.net/sessions/meditations/';
 
 export const COUNTRY_CODE = 'IL';
+
+export const KEY_PLAYED_FIRST = 'firstPlay23';

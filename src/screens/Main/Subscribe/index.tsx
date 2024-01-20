@@ -1,5 +1,7 @@
 import SubscriptionPoint from '@common/components/SubscriptionPoint';
+import { KEY_PLAYED_FIRST } from '@common/constants';
 import { usePurchases } from '@common/context/PurchaseContext';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { PurchasesPackage } from '@revenuecat/purchases-typescript-internal';
 import rudderClient, {
@@ -154,9 +156,9 @@ const PLANS = {
   weekly: null,
 };
 
-const Subscribe: FC = () => {
+const Subscribe: FC = ({ navigation }) => {
   const route = useRoute();
-  const { goBack } = useNavigation();
+  const { goBack, navigate } = useNavigation();
   const { plans, makePurchase, purchasing } = usePurchases();
   const { email, name: userName } = useSelector(
     (state: any) => state.userDetails,
@@ -167,7 +169,7 @@ const Subscribe: FC = () => {
   const numberOfPackage = availablePackages.length || 0;
 
   // @ts-ignore
-  const isFirstTime = false;
+  const isFirstTime = route.params?.isFirstTime as boolean;
 
   const initRudderstack = async () => {
     await rudderClient.setup('2Ah3U42Qc6y9v3PB4w8sKYhvkkJ', {
@@ -183,6 +185,16 @@ const Subscribe: FC = () => {
   }, []);
 
   const [selectedPlan, setSelectedPlan] = useState('annual');
+
+  const onClose = async () => {
+    await AsyncStorage.setItem(KEY_PLAYED_FIRST, true.toString());
+
+    if (isFirstTime) {
+      navigation.replace('Main', { screen: 'Home' });
+    } else {
+      goBack();
+    }
+  };
 
   const onSubscribe = async (plan: PurchasesPackage) => {
     try {
@@ -212,7 +224,7 @@ const Subscribe: FC = () => {
         revenueType: plan.packageType,
       });
 
-      goBack();
+      onClose();
     } catch (error) {
       Sentry.captureException(error);
       Alert.alert('מצטערים קרתה תקלה, אנא פנו לתמיכה שלנו באינסטגרם @rega.app');
@@ -246,7 +258,7 @@ const Subscribe: FC = () => {
                 }}
                 size={24}
                 name="x"
-                onPress={goBack}
+                onPress={onClose}
                 color="white"
               />
               <Text className="text-white text-center font-black text-2xl mt-12 mb-6">

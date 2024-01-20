@@ -58,7 +58,7 @@ const Feed: FC<FeedProps> = ({ navigation, copilot }) => {
   const [byTimeCollection, latestCollection, ...collections]: Collection[] =
     useFeed();
 
-  const { isOldUser, updateIsOldUser } = useOnboarding();
+  const { isOldUser, updateIsOldUser } = useOnboarding(navigation);
 
   const onForeground = useCallback(() => {
     getAppData();
@@ -111,7 +111,18 @@ const Feed: FC<FeedProps> = ({ navigation, copilot }) => {
     };
   }, [copilotEvents, onStop]);
 
-  const [showModal, setShowModal] = useState(true);
+  const [showModal, setShowModal] = useState(false);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setShowModal(true);
+    }, 1000);
+
+    return () => {
+      clearTimeout(timer);
+    };
+  }, []);
+
   const scrollRef = useRef<ScrollView>(null);
 
   return (
