@@ -332,9 +332,8 @@ const Subscribe: FC = ({ navigation }) => {
                 </TouchableOpacity>
                 {isFirstTime && (
                   <Text className="text-black text-center text-xs mt-4">
-                    נסו את האפליקציה במשך 7 ימים בחינם! לאחר תקופה זו יתבצע חיוב
-                    אוטומטי בסך 159.90 שח עבור שנת שימוש באפליקציה. ניתן לבטל את
-                    המנוי בכל רגע וללא עלות.
+                    נסו 7 ימים חינם! לאחר מכן תשלום שנתי של 159.90 ש"ח. ביטול
+                    אפשרי בכל עת.
                   </Text>
                 )}
               </SafeAreaView>
