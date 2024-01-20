@@ -104,12 +104,15 @@ export const PurchaseProvider: React.FC<PropsWithChildren> = ({ children }) => {
       try {
         result = await Purchases.purchasePackage(packageToPurchase);
       } catch (e: any) {
+        const message = e.userCancelled ? 'User cancelled' : e.message || e;
         setPurchasing(false);
-        logger.error('usePurchases: failed to make purchase', e.message || e);
+        logger.error('usePurchases: failed to make purchase', message);
         amplitudeInstance.logEvent('Purchase Failed', {
-          error: e.message || e,
+          error: message,
         });
-        throw new Error('Purchase failed: ', e.message || e);
+
+        Purchases.restorePurchases();
+        throw new Error(`Purchase failed: ${message}`);
       }
 
       if (!result?.customerInfo.entitlements.active) {
