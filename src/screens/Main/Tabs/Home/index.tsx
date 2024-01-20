@@ -111,7 +111,7 @@ const Feed: FC<FeedProps> = ({ navigation, copilot }) => {
     };
   }, [copilotEvents, onStop]);
 
-  const [showModal, setShowModal] = useState(false);
+  const [showModal, setShowModal] = useState(true);
   const scrollRef = useRef<ScrollView>(null);
 
   return (
@@ -151,7 +151,7 @@ const Feed: FC<FeedProps> = ({ navigation, copilot }) => {
             <View className="h-[260px]" />
 
             <CopilotStep
-              text="כאן תוכלו למצוא את אוסף של מדיטציות לפי נושאים שונים"
+              text="כאן תוכלו למצוא מגוון עשיר של מדיטציות מותאמות אישית לצרכים שלכם"
               order={1}
               name="first">
               <CopilotView
@@ -191,7 +191,7 @@ const Feed: FC<FeedProps> = ({ navigation, copilot }) => {
 
             <DynamicComposition>
               <CopilotStep
-                text="כאן תוכלו למצוא מדיטציות על פי מצב הרוח והמיקום שלכם..."
+                text="גלו מדיטציות המותאמות למצב הרוח והמיקום שלכם בכל יום"
                 order={3}
                 name="howufeel">
                 <CopilotView copilot={copilot}>
@@ -224,7 +224,7 @@ const Feed: FC<FeedProps> = ({ navigation, copilot }) => {
               ))}
 
               <CopilotStep
-                text="כאן תוכלו למצוא את המדריכים שלנו"
+                text="פגשו את צוות המורים שלנו שינחו אתכם לאורך הדרך"
                 order={4}
                 name="instructors">
                 <CopilotView copilot={copilot} className="flex-1">
@@ -240,7 +240,7 @@ const Feed: FC<FeedProps> = ({ navigation, copilot }) => {
               </CopilotStep>
 
               <CopilotStep
-                text="כאן מתחילים... תוכלו למצוא קורסים שילמדו אתכם תכנים עמוקים יותר"
+                text="התחילו את המסע שלכם - כאן תמצאו את הקורס למתחילים שילמד אתכם את יסודות התרגול"
                 order={2}
                 name="courses">
                 <CopilotView copilot={copilot} className="flex-1">
@@ -303,7 +303,7 @@ const WelcomeMessage = ({ onPress }) => {
         ברוכים הבאים לרגע
       </Text>
       <Text style={{ fontSize: 18, marginTop: 10, textAlign: 'center' }}>
-        שמחים שאתם איתנו, יחד ניצור רגעים של רוגע ושלווה במסע שלנו
+        אנחנו שמחים שאתם מצטרפים אלינו במסע ליצירת רגעים של רוגע ושלווה.
       </Text>
 
       <View className="w-64 h-64 bg-[#513F73]/20 rounded-full mt-6 mb-4">

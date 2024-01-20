@@ -47,7 +47,7 @@ const PackageItem: React.FC<{
       activeOpacity={3}
       onPress={onPress}
       className={`relative flex justify-center rounded-md p-2 h-14 w-full mb-3 border border-white bg-transparent ${
-        selected ? 'border-white border-2' : 'border-[#2C344D]'
+        selected ? 'border-[#1E2340] border-[3px]' : 'border-[#1E2340]'
       } transition-all duration-300`}>
       {showBadge && (
         <View className="absolute -top-3 right-4 px-4 h-5 bg-[#F4CE21] rounded-3xl flex justify-center items-center">
@@ -57,19 +57,24 @@ const PackageItem: React.FC<{
       <View className="flex flex-row justify-between items-center">
         <View className="flex flex-col justify-center items-start">
           <Text
-            className={`text-right text-lg ${
-              selected ? 'text-white' : 'text-[#2C344D]'
+            className={`text-right text-lg text-[#1E2340] ${
+              selected ? 'font-bold' : 'font-medium'
             }`}>
             {title}
           </Text>
           {subTitle}
         </View>
         <Text
-          className={`text-center text-base font-normal ${
-            selected ? 'text-white' : 'text-[#2C344D]'
+          className={`text-center text-base text-[#1E2340] ${
+            selected ? 'font-bold' : 'font-medium'
           }`}>
           {monthPrice.toFixed(2)}
-          <Text className="text-xs font-normal">₪/חודש</Text>
+          <Text
+            className={`text-xs font-normal ${
+              selected ? 'font-bold' : 'font-medium'
+            }`}>
+            ₪/חודש
+          </Text>
         </Text>
       </View>
     </TouchableOpacity>
@@ -162,7 +167,7 @@ const Subscribe: FC = () => {
   const numberOfPackage = availablePackages.length || 0;
 
   // @ts-ignore
-  const isFirstTime = route.params?.isFirstTime as boolean;
+  const isFirstTime = false;
 
   const initRudderstack = async () => {
     await rudderClient.setup('2Ah3U42Qc6y9v3PB4w8sKYhvkkJ', {
@@ -245,28 +250,26 @@ const Subscribe: FC = () => {
                 color="white"
               />
               <Text className="text-white text-center font-black text-2xl mt-12 mb-6">
-                קחו רגע לעצמכם, מגיע לכם.
+                {isFirstTime
+                  ? 'הירשמו ונסו 7 ימים חינם'
+                  : 'קחו רגע לעצמכם, מגיע לכם.'}
               </Text>
               <SubscriptionPoint text="point1" />
               <SubscriptionPoint text="point2" />
               <SubscriptionPoint text="point3" />
             </View>
-            <View className="mt-8 self-center w-1/2">
-              <Text
-                style={{ fontStyle: 'italic' }}
-                className="text-white text-left">
-                ״אני פשוט מכורה לאפליקציה, ואני ישנה טוב בקטע לא נורמלי״
-              </Text>
 
-              <View className="flex flex-row justify-between items-center mt-3">
-                <Text className="text-left text-white">-עינב</Text>
-                <Text className="text-left text-white">⭐⭐⭐⭐⭐</Text>
-              </View>
+            <View className="mt-10 self-center w-8/12">
+              <Text className="text-white text-center text-lg">
+                קחו רגע לעצמכם - בשביל פחות מ
+                <Text className="font-bold">4 שקלים בשבוע</Text>, האפליקציה שלכם
+                לשנה!
+              </Text>
             </View>
             <View className="relative flex-1">
               <SafeAreaView
                 edges={['bottom', 'left', 'right']}
-                className="w-full bg-[#0A1129] absolute bottom-0 self-center rounded-t-xl flex flex-col items-center p-4">
+                className="w-full bg-[#FAF8F5] absolute bottom-0 self-center rounded-t-xl flex flex-col items-center p-4">
                 {!isFirstTime && (
                   <View className="w-full">
                     <PackageItem
@@ -278,19 +281,19 @@ const Subscribe: FC = () => {
                       subTitle={
                         <Text className="text-white text-center text-sm">
                           <Text
-                            className={
+                            className={`text-[#FFC107] ${
                               selectedPlan === 'annual'
-                                ? 'text-[#FFC107]'
-                                : 'text-[#2C344D]'
-                            }>
+                                ? 'font-bold'
+                                : 'font-medium'
+                            }`}>
                             ₪{plans.annual.product.price.toFixed(2)}
                             {'  '}
                           </Text>
                           <Text
-                            className={`line-through ${
+                            className={`line-through text-[#1E2340] ${
                               selectedPlan === 'annual'
-                                ? 'text-white'
-                                : 'text-[#2C344D]'
+                                ? 'font-bold'
+                                : 'font-medium'
                             }`}>
                             ₪{(plans.monthly.product.price * 12).toFixed(2)}
                           </Text>
@@ -308,15 +311,15 @@ const Subscribe: FC = () => {
                 <View className="mt-2" />
                 <TouchableOpacity
                   onPress={() => onSubscribe(plans[selectedPlan])}
-                  className="bg-white rounded-3xl p-3 w-full">
-                  <Text className="text-[#1B1B1B] text-center text-lg">
+                  className="bg-[#1E2340] rounded-3xl p-3 w-full">
+                  <Text className="text-white text-center text-lg">
                     {isFirstTime
                       ? 'הירשמו ונסו שבוע חינם'
                       : i18n.t('subscribeBtn1')}
                   </Text>
                 </TouchableOpacity>
                 {isFirstTime && (
-                  <Text className="text-white text-center text-xs mt-4">
+                  <Text className="text-black text-center text-xs mt-4">
                     נסו את האפליקציה במשך 7 ימים בחינם! לאחר תקופה זו יתבצע חיוב
                     אוטומטי בסך 159.90 שח עבור שנת שימוש באפליקציה. ניתן לבטל את
                     המנוי בכל רגע וללא עלות.
