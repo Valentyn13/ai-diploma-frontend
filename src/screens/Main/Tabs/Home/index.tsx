@@ -111,7 +111,7 @@ const Feed: FC<FeedProps> = ({ navigation, copilot }) => {
     };
   }, [copilotEvents, onStop]);
 
-  const [showModal, setShowModal] = useState(true);
+  const [showModal, setShowModal] = useState(false);
   const scrollRef = useRef<ScrollView>(null);
 
   return (

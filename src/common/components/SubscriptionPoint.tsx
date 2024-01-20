@@ -6,10 +6,10 @@ import Icon from 'react-native-vector-icons/Feather';
 
 const SubscriptionPoint = ({ text }: { text: string }) => (
   <View
+    className="w-10/12"
     style={{
       alignSelf: 'center',
       flexDirection: 'row',
-      width: '80%',
       alignItems: 'center',
     }}>
     <Icon name="check-circle" size={scale(16)} color="white" />
@@ -19,7 +19,7 @@ const SubscriptionPoint = ({ text }: { text: string }) => (
         paddingVertical: 2,
         paddingLeft: 8,
       }}>
-      <Text className="text-white text-left text-lg">{i18n.t(text)}</Text>
+      <Text className="text-white text-left text-base">{i18n.t(text)}</Text>
     </View>
   </View>
 );

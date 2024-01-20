@@ -15,15 +15,17 @@ import React, { FC, useEffect, useState } from 'react';
 import {
   ActivityIndicator,
   Alert,
+  Image,
   StatusBar,
   Text,
   TouchableOpacity,
   View,
 } from 'react-native';
-import { LinearGradient } from 'react-native-gradients';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import Icon2 from 'react-native-vector-icons/Feather';
 import { useSelector } from 'react-redux';
+
+import subscribe2Bg from '../../../common/assets/images/sub-bg.jpg';
 
 const PackageItem: React.FC<{
   onPress: () => void;
@@ -175,11 +177,6 @@ const Subscribe: FC = () => {
     initRudderstack();
   }, []);
 
-  const colorList = [
-    { offset: '0%', color: '#4A90E2', opacity: '1' },
-    { offset: '100%', color: '#003399', opacity: '1' },
-  ];
-
   const [selectedPlan, setSelectedPlan] = useState('annual');
 
   const onSubscribe = async (plan: PurchasesPackage) => {
@@ -220,12 +217,17 @@ const Subscribe: FC = () => {
   return (
     <>
       <StatusBar hidden />
-      <SafeAreaView
-        edges={['bottom', 'left', 'right']}
-        className="flex-1 bg-[#0A0E1E]">
-        <View className="absolute w-full h-full">
-          <LinearGradient colorList={colorList} angle={90} />
-        </View>
+      <SafeAreaView edges={['top']} className="bg-[#513F73]" />
+      <View className="flex-1">
+        <Image
+          source={subscribe2Bg}
+          style={{
+            position: 'absolute',
+            width: '100%',
+            height: '120%',
+          }}
+          resizeMode="cover"
+        />
 
         {numberOfPackage > 0 ? (
           <>
@@ -249,8 +251,10 @@ const Subscribe: FC = () => {
               <SubscriptionPoint text="point2" />
               <SubscriptionPoint text="point3" />
             </View>
-            <View className="mt-10 self-center px-12">
-              <Text className="text-white text-left">
+            <View className="mt-8 self-center w-1/2">
+              <Text
+                style={{ fontStyle: 'italic' }}
+                className="text-white text-left">
                 ״אני פשוט מכורה לאפליקציה, ואני ישנה טוב בקטע לא נורמלי״
               </Text>
 
@@ -260,10 +264,8 @@ const Subscribe: FC = () => {
               </View>
             </View>
             <View className="relative flex-1">
-              <View
-                style={{
-                  height: isFirstTime ? 160 : 320,
-                }}
+              <SafeAreaView
+                edges={['bottom', 'left', 'right']}
                 className="w-full bg-[#0A1129] absolute bottom-0 self-center rounded-t-xl flex flex-col items-center p-4">
                 {!isFirstTime && (
                   <View className="w-full">
@@ -313,22 +315,14 @@ const Subscribe: FC = () => {
                       : i18n.t('subscribeBtn1')}
                   </Text>
                 </TouchableOpacity>
-
-                {!isFirstTime && (
-                  <TouchableOpacity onPress={goBack}>
-                    <Text className="text-white text-center text-base mt-4 underline">
-                      לא, תודה
-                    </Text>
-                  </TouchableOpacity>
-                )}
-                {selectedPlan === 'annual' && (
+                {isFirstTime && (
                   <Text className="text-white text-center text-xs mt-4">
                     נסו את האפליקציה במשך 7 ימים בחינם! לאחר תקופה זו יתבצע חיוב
                     אוטומטי בסך 159.90 שח עבור שנת שימוש באפליקציה. ניתן לבטל את
                     המנוי בכל רגע וללא עלות.
                   </Text>
                 )}
-              </View>
+              </SafeAreaView>
             </View>
             {purchasing && (
               <View className="absolute top-0 bottom-0 left-0 right-0 flex justify-center items-center bg-black/60">
@@ -341,7 +335,7 @@ const Subscribe: FC = () => {
             <ActivityIndicator size="large" color="#FFF" />
           </View>
         )}
-      </SafeAreaView>
+      </View>
     </>
   );
 };

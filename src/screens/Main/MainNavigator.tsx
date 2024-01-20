@@ -76,7 +76,7 @@ export default () => {
         <MainStack.Screen
           name="Subscribe"
           component={Subscribe}
-          options={{ headerShown: false, presentation: 'modal' }}
+          options={{ headerShown: false }}
         />
         <MainStack.Screen
           name="WebView"
