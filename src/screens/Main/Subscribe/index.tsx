@@ -12,7 +12,6 @@ import { useAmplitude } from '@services/hooks/useAmplitude';
 import i18n from '@services/localization/i18n';
 import { logEvent } from '@utils/analytics';
 import get from '@utils/get';
-import pRetry from 'p-retry';
 import React, { FC, useEffect, useState } from 'react';
 import {
   ActivityIndicator,
@@ -198,7 +197,7 @@ const Subscribe: FC = ({ navigation }) => {
 
   const onSubscribe = async (plan: PurchasesPackage) => {
     try {
-      await pRetry(() => makePurchase(plan), { retries: 3 });
+      await makePurchase(plan);
 
       amplitudeInstance.logRevenue({
         price: plan.product.price,

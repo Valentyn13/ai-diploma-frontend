@@ -102,6 +102,8 @@ export const PurchaseProvider: React.FC<PropsWithChildren> = ({ children }) => {
       let result: MakePurchaseResult;
 
       try {
+        // import pRetry from 'p-retry';
+        // pRetry(() => Purchases.purchasePackage(packageToPurchase), { retries: 3 });
         result = await Purchases.purchasePackage(packageToPurchase);
       } catch (e: any) {
         const message = e.userCancelled ? 'User cancelled' : e.message || e;
