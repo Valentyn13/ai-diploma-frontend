@@ -184,14 +184,14 @@ const ChooseSex = ({ navigation: { navigate } }) => {
         }}
       />
       <View
-        className="w-full"
+        className="w-full space-y-2"
         style={{ position: 'absolute', bottom: 0, padding: scale(40) }}>
-        <AppButton onPress={onContinue}>{'המשך'}</AppButton>
         <TouchableOpacity
           onPress={onContinue}
-          className="w-full mt-4 flex items-center justify-center border rounded border-[#273051] py-2">
+          className="w-full flex items-center justify-center border rounded border-[#273051] py-3">
           <Text className="text-base text-[#273051]">{'דלג'}</Text>
         </TouchableOpacity>
+        <AppButton onPress={onContinue}>{'המשך'}</AppButton>
       </View>
     </View>
   );
