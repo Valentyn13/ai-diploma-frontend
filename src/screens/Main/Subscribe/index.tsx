@@ -157,7 +157,7 @@ const PLANS = {
 
 const Subscribe: FC = ({ navigation }) => {
   const route = useRoute();
-  const { goBack, navigate } = useNavigation();
+  const { goBack } = useNavigation();
   const { plans, makePurchase, purchasing } = usePurchases();
   const { email, name: userName } = useSelector(
     (state: any) => state.userDetails,
@@ -330,10 +330,13 @@ const Subscribe: FC = ({ navigation }) => {
                   </Text>
                 </TouchableOpacity>
                 {isFirstTime && (
-                  <Text className="text-black text-center text-xs mt-4">
-                    נסו את האפליקציה במשך 7 ימים בחינם! לאחר תקופה זו יתבצע חיוב
-                    אוטומטי בסך 159.90 שח עבור שנת שימוש באפליקציה. ניתן לבטל את
-                    המנוי בכל רגע וללא עלות.
+                  <Text className="text-black text-center text-sm mt-4">
+                    נסו את האפליקציה במשך 7 ימים בחינם!{' '}
+                    <Text className="font-bold">
+                      לאחר תקופה זו יתבצע חיוב אוטומטי בסך 159.90 שח עבור שנת
+                      שימוש באפליקציה.
+                    </Text>{' '}
+                    ניתן לבטל את המנוי בכל רגע וללא עלות.
                   </Text>
                 )}
               </SafeAreaView>
