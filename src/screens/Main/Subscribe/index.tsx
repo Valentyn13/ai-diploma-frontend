@@ -17,6 +17,7 @@ import {
   ActivityIndicator,
   Alert,
   Image,
+  Platform,
   StatusBar,
   Text,
   TouchableOpacity,
@@ -330,9 +331,13 @@ const Subscribe: FC = ({ navigation }) => {
                   </Text>
                 </TouchableOpacity>
                 {isFirstTime && (
-                  <Text className="text-black text-center text-sm mt-4">
+                  <Text
+                    className={`text-black text-center mt-4 ${
+                      Platform.OS === 'ios' ? 'text-sm' : 'text-xs'
+                    }`}>
                     נסו את האפליקציה במשך 7 ימים בחינם!{' '}
-                    <Text className="font-bold">
+                    <Text
+                      className={`${Platform.OS === 'ios' ? 'font-bold' : ''}`}>
                       לאחר תקופה זו יתבצע חיוב אוטומטי בסך 159.90 שח עבור שנת
                       שימוש באפליקציה.
                     </Text>{' '}
