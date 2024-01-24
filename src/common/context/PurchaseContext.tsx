@@ -83,8 +83,6 @@ export const PurchaseProvider: React.FC<PropsWithChildren> = ({ children }) => {
       await Purchases.logIn(userId);
       const customerInfo = await Purchases.getCustomerInfo();
       if (Object.entries(customerInfo.entitlements.active).length) {
-        console.log(customerInfo.entitlements.active);
-        console.log('im here');
         setPremium(true);
       } else {
         setPremium(false);

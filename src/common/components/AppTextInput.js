@@ -26,6 +26,7 @@ export default class AppTextInput extends React.PureComponent {
         ref={ref => (this.textInput = ref)}
         allowFontScaling={false}
         placeholderTextColor="#000000"
+        className="text-black"
         style={[style, { fontFamily: font }]}>
         {children}
       </TextInput>

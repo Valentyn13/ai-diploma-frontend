@@ -114,7 +114,12 @@ const PreLogin: FC<PreLoginProps> = ({ navigation: { navigate } }) => {
             justifyContent: 'center',
           }}>
           <ActivityIndicator className="mb-4" size="large" color="#000" />
-          <AppText>טוען...</AppText>
+          <AppText
+            style={{
+              color: '#000',
+            }}>
+            טוען...
+          </AppText>
         </View>
       ) : (
         <View
