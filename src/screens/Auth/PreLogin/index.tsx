@@ -124,10 +124,6 @@ const PreLogin: FC<PreLoginProps> = ({ navigation: { navigate } }) => {
             alignItems: 'center',
             bottom: scale(40),
           }}>
-          <EmailLoginButton
-            onPress={() => navigate('Auth', { screen: 'Login' })}
-          />
-          <Text className="text-center text-black text-lg mt-2 mb-2">או</Text>
           <View className="flex flex-row space-x-4">
             {['facebook', 'google', 'apple'].map(provider => (
               <TouchableOpacity
@@ -135,16 +131,20 @@ const PreLogin: FC<PreLoginProps> = ({ navigation: { navigate } }) => {
                 onPress={() => loginWith(provider)}
                 style={{
                   backgroundColor: '#273051',
-                  width: 48,
-                  height: 48,
-                  borderRadius: 48 / 2,
+                  width: 56,
+                  height: 56,
+                  borderRadius: 56 / 2,
                   justifyContent: 'center',
                   alignItems: 'center',
                 }}>
-                <IconFA name={provider} size={48 / 2} color="#fff" />
+                <IconFA name={provider} size={56 / 2} color="#fff" />
               </TouchableOpacity>
             ))}
           </View>
+          <Text className="text-center text-black text-lg my-2">או</Text>
+          <EmailLoginButton
+            onPress={() => navigate('Auth', { screen: 'Login' })}
+          />
           <Text className="text-center text-black text-md mt-20">
             חדשים פה?
           </Text>
