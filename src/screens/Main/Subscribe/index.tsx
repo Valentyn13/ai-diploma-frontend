@@ -9,6 +9,7 @@ import rudderClient, {
 } from '@rudderstack/rudder-sdk-react-native';
 import * as Sentry from '@sentry/react-native';
 import { useAmplitude } from '@services/hooks/useAmplitude';
+import useObjectFlag from '@services/hooks/useObjectFlag';
 import i18n from '@services/localization/i18n';
 import { logEvent } from '@utils/analytics';
 import get from '@utils/get';
@@ -231,6 +232,12 @@ const Subscribe: FC = ({ navigation }) => {
     }
   };
 
+  const bullets = useObjectFlag('paywall-bullets', [
+    i18n.t('point1'),
+    i18n.t('point2'),
+    i18n.t('point3'),
+  ]);
+
   return (
     <>
       <StatusBar hidden />
@@ -266,9 +273,9 @@ const Subscribe: FC = ({ navigation }) => {
                   ? 'הירשמו ונסו 7 ימים חינם'
                   : 'קחו רגע לעצמכם, מגיע לכם.'}
               </Text>
-              <SubscriptionPoint text="point1" />
-              <SubscriptionPoint text="point2" />
-              <SubscriptionPoint text="point3" />
+              {bullets.map((bullet, index) => (
+                <SubscriptionPoint key={index} text={bullet} />
+              ))}
             </View>
 
             <View className="mt-10 self-center w-8/12">
