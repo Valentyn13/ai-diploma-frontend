@@ -6,7 +6,8 @@ import TrackPlayer from 'react-native-track-player';
 import App from './App';
 import { name as appName } from './app.json';
 import { PlaybackService } from './service';
-import './src/ReactotronConfig.js';
+
+// import './src/ReactotronConfig.js';
 
 messaging().setBackgroundMessageHandler(async remoteMessage => {});
 
