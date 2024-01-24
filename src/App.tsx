@@ -5,7 +5,6 @@ import StoreUpdate from '@common/storeUpdate';
 import theme from '@common/theme';
 import colors from '@common/theme/colors';
 import { BottomSheetModalProvider } from '@gorhom/bottom-sheet';
-import { NavigationContainer } from '@react-navigation/native';
 import * as Sentry from '@sentry/react-native';
 import useSentry from '@services/hooks/useSentry';
 import React, { useEffect } from 'react';
@@ -44,56 +43,45 @@ const App: React.FC = () => {
     notificationListner();
   }, []);
 
-  const linking = {
-    prefixes: ['rega://'],
-    config: {
-      screens: {
-        Home: 'home',
-      },
-    },
-  };
-
   return (
-    <NavigationContainer linking={linking}>
-      <GestureHandlerRootView className="flex-1">
-        <Provider store={store}>
-          <PurchaseProvider>
-            <BottomSheetModalProvider>
-              <LDProvider>
-                <PersistGate loading={null} persistor={persistor}>
-                  <StatusBar hidden />
-                  <ThemeProvider theme={theme}>
-                    <StoreUpdate>
-                      <TrackPlayerProvider>
-                        <CopilotProvider
-                          backdropColor="rgba(0, 0, 0, 0.7)"
-                          overlay="svg"
-                          arrowColor="#513F73"
-                          labels={{
-                            skip: 'דלג',
-                            previous: 'חזור',
-                            next: 'הבא',
-                            finish: 'סיום',
-                          }}
-                          tooltipStyle={{
-                            borderRadius: 8,
-                            padding: 8,
-                            backgroundColor: '#513F73',
-                          }}>
-                          <View style={styles.rootContainer}>
-                            <RootNavigator />
-                          </View>
-                        </CopilotProvider>
-                      </TrackPlayerProvider>
-                    </StoreUpdate>
-                  </ThemeProvider>
-                </PersistGate>
-              </LDProvider>
-            </BottomSheetModalProvider>
-          </PurchaseProvider>
-        </Provider>
-      </GestureHandlerRootView>
-    </NavigationContainer>
+    <GestureHandlerRootView className="flex-1">
+      <Provider store={store}>
+        <PurchaseProvider>
+          <BottomSheetModalProvider>
+            <LDProvider>
+              <PersistGate loading={null} persistor={persistor}>
+                <StatusBar hidden />
+                <ThemeProvider theme={theme}>
+                  <StoreUpdate>
+                    <TrackPlayerProvider>
+                      <CopilotProvider
+                        backdropColor="rgba(0, 0, 0, 0.7)"
+                        overlay="svg"
+                        arrowColor="#513F73"
+                        labels={{
+                          skip: 'דלג',
+                          previous: 'חזור',
+                          next: 'הבא',
+                          finish: 'סיום',
+                        }}
+                        tooltipStyle={{
+                          borderRadius: 8,
+                          padding: 8,
+                          backgroundColor: '#513F73',
+                        }}>
+                        <View style={styles.rootContainer}>
+                          <RootNavigator />
+                        </View>
+                      </CopilotProvider>
+                    </TrackPlayerProvider>
+                  </StoreUpdate>
+                </ThemeProvider>
+              </PersistGate>
+            </LDProvider>
+          </BottomSheetModalProvider>
+        </PurchaseProvider>
+      </Provider>
+    </GestureHandlerRootView>
   );
 };
 

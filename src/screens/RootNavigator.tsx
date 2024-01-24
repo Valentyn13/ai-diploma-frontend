@@ -1,3 +1,4 @@
+import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import AuthNavigator from '@screens/Auth/AuthNavigator';
 import MainNavigator from '@screens/Main/MainNavigator';
@@ -15,20 +16,31 @@ export type RootStackParamList = {
 
 const RootStack = createStackNavigator<RootStackParamList>();
 
+const linking = {
+  prefixes: ['rega://'],
+  config: {
+    screens: {
+      Home: 'home',
+    },
+  },
+};
+
 const Navigator = () => {
   useSyncUserData();
 
   return (
-    <RootStack.Navigator
-      initialRouteName="Splash"
-      screenOptions={{
-        headerShown: false,
-      }}>
-      <RootStack.Screen name="Splash" component={Splash} />
-      <RootStack.Screen name="Onboarding" component={OnboardingNavigator} />
-      <RootStack.Screen name="Auth" component={AuthNavigator} />
-      <RootStack.Screen name="Main" component={MainNavigator} />
-    </RootStack.Navigator>
+    <NavigationContainer linking={linking}>
+      <RootStack.Navigator
+        initialRouteName="Splash"
+        screenOptions={{
+          headerShown: false,
+        }}>
+        <RootStack.Screen name="Splash" component={Splash} />
+        <RootStack.Screen name="Onboarding" component={OnboardingNavigator} />
+        <RootStack.Screen name="Auth" component={AuthNavigator} />
+        <RootStack.Screen name="Main" component={MainNavigator} />
+      </RootStack.Navigator>
+    </NavigationContainer>
   );
 };
 
