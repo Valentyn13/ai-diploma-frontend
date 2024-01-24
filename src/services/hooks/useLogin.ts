@@ -136,8 +136,8 @@ export default () => {
       email,
       password,
       name,
-      sex,
-      categories: selectedCategories,
+      sex: sex || 'M',
+      categories: selectedCategories || [],
       fcmToken,
     });
   };
@@ -254,7 +254,7 @@ export default () => {
   }, [appleLoginCompleted, appleLoginData, dispatchLogin]);
   // register
 
-  const { completed: registerCompleted, data: registerData } = register;
+  const { completed: registerCompleted, data: registerData, error } = register;
 
   useEffect(() => {
     if (registerCompleted) {
@@ -263,8 +263,10 @@ export default () => {
       } else {
         captureMessage('Missing Regsiter Data');
       }
+    } else if (error) {
+      Alert.alert(error);
     }
-  }, [registerCompleted, registerData, dispatchLogin]);
+  }, [registerCompleted, registerData, dispatchLogin, error]);
 
   return {
     loginWithEmail,

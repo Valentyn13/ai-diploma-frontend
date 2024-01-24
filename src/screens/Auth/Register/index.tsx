@@ -265,7 +265,7 @@ const Register = ({ navigation }) => {
           </TouchableOpacity>
         </View>
         <View className="w-full" style={{ marginTop: scale(40) }}>
-          <AppButton onPress={() => onContinue()}>הרשמה</AppButton>
+          <AppButton onPress={onContinue}>הרשמה</AppButton>
         </View>
         {loader && (
           <ActivityIndicator
