@@ -81,8 +81,8 @@ android {
         applicationId "com.rega.regaapp"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 200132
-        versionName "3.132"
+        versionCode 200133
+        versionName "3.133"
     }
     signingConfigs {
         debug {
