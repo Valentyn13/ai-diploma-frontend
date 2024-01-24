@@ -9,11 +9,10 @@ import rudderClient, {
 } from '@rudderstack/rudder-sdk-react-native';
 import * as Sentry from '@sentry/react-native';
 import { useAmplitude } from '@services/hooks/useAmplitude';
-import useObjectFlag from '@services/hooks/useObjectFlag';
 import i18n from '@services/localization/i18n';
 import { logEvent } from '@utils/analytics';
 import get from '@utils/get';
-import React, { FC, useEffect, useState } from 'react';
+import React, { FC, useEffect, useMemo, useState } from 'react';
 import {
   ActivityIndicator,
   Alert,
@@ -232,11 +231,16 @@ const Subscribe: FC = ({ navigation }) => {
     }
   };
 
-  const bullets = useObjectFlag('paywall-bullets', [
-    i18n.t('point1'),
-    i18n.t('point2'),
-    i18n.t('point3'),
-  ]);
+  // const bullets = useObjectFlag('paywall-bullets', [
+  //   i18n.t('point1'),
+  //   i18n.t('point2'),
+  //   i18n.t('point3'),
+  // ]);
+
+  const bullets = useMemo(
+    () => [i18n.t('point1'), i18n.t('point2'), i18n.t('point3')],
+    [],
+  );
 
   return (
     <>
