@@ -74,11 +74,6 @@ export const PurchaseProvider: React.FC<PropsWithChildren> = ({ children }) => {
   }, [getOfferings]);
 
   const setPurchaserIdentity = useCallback(async (userId: string) => {
-    if (!userId) {
-      setPremium(false);
-      return;
-    }
-
     try {
       await Purchases.logIn(userId);
       const customerInfo = await Purchases.getCustomerInfo();
@@ -93,6 +88,10 @@ export const PurchaseProvider: React.FC<PropsWithChildren> = ({ children }) => {
   }, []);
 
   useEffect(() => {
+    if (!id) {
+      return;
+    }
+
     setPurchaserIdentity(id);
   }, [setPurchaserIdentity, id]);
 
@@ -102,8 +101,6 @@ export const PurchaseProvider: React.FC<PropsWithChildren> = ({ children }) => {
       let result: MakePurchaseResult;
 
       try {
-        // import pRetry from 'p-retry';
-        // pRetry(() => Purchases.purchasePackage(packageToPurchase), { retries: 3 });
         result = await Purchases.purchasePackage(packageToPurchase);
       } catch (e: any) {
         const message = e.userCancelled ? 'User cancelled' : e.message || e;
