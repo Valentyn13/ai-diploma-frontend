@@ -8,7 +8,6 @@ import { SubTitle } from '@common/components/Styled';
 import Welcome from '@common/components/animation/Welcome';
 import BgSelector from '@common/components/buttons/BgSelector';
 import ShowAll from '@common/components/buttons/ShowAll';
-import { usePurchases } from '@common/context/PurchaseContext';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { RootStackParamList } from '@screens/RootNavigator';
 import useAppData from '@services/hooks/useAppData';
@@ -54,7 +53,6 @@ const Feed: FC<FeedProps> = ({ navigation, copilot }) => {
   const { getAppData } = useAppData();
   const { getArticleData } = useArticleData();
   const { sex } = useSelector((state: any) => state.userDetails);
-  const { setPurchaserIdentity } = usePurchases();
   const [byTimeCollection, latestCollection, ...collections]: Collection[] =
     useFeed();
 
@@ -64,11 +62,6 @@ const Feed: FC<FeedProps> = ({ navigation, copilot }) => {
     getAppData();
     getArticleData();
   }, [getAppData, getArticleData]);
-
-  useEffect(() => {
-    setPurchaserIdentity();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
 
   useAppState({
     onForeground,

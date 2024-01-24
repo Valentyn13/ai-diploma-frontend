@@ -20,7 +20,6 @@ interface PurchaseContextProps {
   hasPremium: boolean;
   purchasing: boolean;
   identify: boolean;
-  setPurchaserIdentity: () => Promise<void>;
   makePurchase: (
     packageToPurchase: PurchasesPackage,
   ) => Promise<MakePurchaseResult>;
@@ -77,6 +76,7 @@ export const PurchaseProvider: React.FC<PropsWithChildren> = ({ children }) => {
     try {
       await Purchases.logIn(userId);
       const customerInfo = await Purchases.getCustomerInfo();
+
       if (Object.entries(customerInfo.entitlements.active).length) {
         setPremium(true);
       } else {
@@ -134,7 +134,6 @@ export const PurchaseProvider: React.FC<PropsWithChildren> = ({ children }) => {
     plans,
     hasPremium,
     purchasing,
-    setPurchaserIdentity,
     makePurchase,
     identify,
   };
