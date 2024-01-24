@@ -120,7 +120,6 @@ const PreLogin: FC<PreLoginProps> = ({ navigation: { navigate } }) => {
         <View
           style={{
             position: 'absolute',
-            width: '100%',
             alignItems: 'center',
             bottom: scale(40),
           }}>
@@ -141,7 +140,7 @@ const PreLogin: FC<PreLoginProps> = ({ navigation: { navigate } }) => {
               </TouchableOpacity>
             ))}
           </View>
-          <Text className="text-center text-black text-lg my-2">או</Text>
+          <Text className="text-center text-black text-lg my-4">או</Text>
           <EmailLoginButton
             onPress={() => navigate('Auth', { screen: 'Login' })}
           />

@@ -72,7 +72,7 @@ const PackageItem: React.FC<{
           }`}>
           {monthPrice.toFixed(2)}
           <Text
-            className={`text-xs font-normal ${
+            className={`text-xs font-normal leading-5 ${
               selected ? 'font-bold' : 'font-medium'
             }`}>
             ₪/חודש
@@ -81,79 +81,6 @@ const PackageItem: React.FC<{
       </View>
     </TouchableOpacity>
   );
-};
-
-const PLANS = {
-  annual: {
-    identifier: '$rc_annual',
-    offeringIdentifier: 'Premium',
-    packageType: 'ANNUAL',
-    product: {
-      currencyCode: 'ILS',
-      defaultOption: [Object],
-      description: 'גישה חופשית לכל התכנים',
-      discounts: null,
-      identifier: 'yearly_subscription_365:p1y',
-      introPrice: null,
-      presentedOfferingIdentifier: 'Premium',
-      price: 149.9,
-      priceString: '₪149.90',
-      productCategory: 'SUBSCRIPTION',
-      productType: 'AUTO_RENEWABLE_SUBSCRIPTION',
-      subscriptionOptions: [Array],
-      subscriptionPeriod: 'P1Y',
-      title: 'מנוי שנתי (רגע)',
-    },
-  },
-  availablePackages: [
-    {
-      identifier: '$rc_monthly',
-      offeringIdentifier: 'Premium',
-      packageType: 'MONTHLY',
-      product: [Object],
-    },
-    {
-      identifier: '$rc_annual',
-      offeringIdentifier: 'Premium',
-      packageType: 'ANNUAL',
-      product: [Object],
-    },
-    {
-      identifier: 'annual_without_trial',
-      offeringIdentifier: 'Premium',
-      packageType: 'CUSTOM',
-      product: [Object],
-    },
-  ],
-  identifier: 'Premium',
-  lifetime: null,
-  metadata: {},
-  monthly: {
-    identifier: '$rc_monthly',
-    offeringIdentifier: 'Premium',
-    packageType: 'MONTHLY',
-    product: {
-      currencyCode: 'ILS',
-      defaultOption: [Object],
-      description: 'גישה חופשית לכל התכנים',
-      discounts: null,
-      identifier: 'monthlysubscription:p1m',
-      introPrice: [Object],
-      presentedOfferingIdentifier: 'Premium',
-      price: 19.9,
-      priceString: '₪19.90',
-      productCategory: 'SUBSCRIPTION',
-      productType: 'AUTO_RENEWABLE_SUBSCRIPTION',
-      subscriptionOptions: [Array],
-      subscriptionPeriod: 'P1M',
-      title: 'מנוי חודשי (רגע)',
-    },
-  },
-  serverDescription: 'Unlock Premium Content',
-  sixMonth: null,
-  threeMonth: null,
-  twoMonth: null,
-  weekly: null,
 };
 
 const Subscribe: FC = ({ navigation }) => {
@@ -300,7 +227,7 @@ const Subscribe: FC = ({ navigation }) => {
                       selected={selectedPlan === 'annual'}
                       onPress={() => setSelectedPlan('annual')}
                       title="מנוי שנתי"
-                      monthPrice={plans.annual.product.price / 12}
+                      monthPrice={13.32}
                       subTitle={
                         <Text className="text-white text-center text-sm">
                           <Text
@@ -309,7 +236,7 @@ const Subscribe: FC = ({ navigation }) => {
                                 ? 'font-bold'
                                 : 'font-medium'
                             }`}>
-                            ₪{plans.annual.product.price.toFixed(2)}
+                            ₪159.90
                             {'  '}
                           </Text>
                           <Text
@@ -318,13 +245,13 @@ const Subscribe: FC = ({ navigation }) => {
                                 ? 'font-bold'
                                 : 'font-medium'
                             }`}>
-                            ₪{(plans.monthly.product.price * 12).toFixed(2)}
+                            ₪239.90
                           </Text>
                         </Text>
                       }
                     />
                     <PackageItem
-                      monthPrice={plans.monthly.product.price}
+                      monthPrice={19.9}
                       selected={selectedPlan === 'monthly'}
                       onPress={() => setSelectedPlan('monthly')}
                       title="מנוי חודשי"

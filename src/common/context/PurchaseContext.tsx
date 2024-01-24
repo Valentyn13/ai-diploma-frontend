@@ -38,6 +38,11 @@ export const usePurchases = (): PurchaseContextProps => {
   return context;
 };
 
+const REVENUECAT_PUB_KEY = 'oyugnzaOUAuXBNLgXifSFaJWEsrpfjkO';
+
+Purchases.setLogLevel(LOG_LEVEL.ERROR);
+Purchases.configure({ apiKey: REVENUECAT_PUB_KEY });
+
 export const PurchaseProvider: React.FC<PropsWithChildren> = ({ children }) => {
   const [plans, setPlans] = useState<Record<string, any>>({});
   const [hasPremium, setPremium] = useState(true);
@@ -48,8 +53,6 @@ export const PurchaseProvider: React.FC<PropsWithChildren> = ({ children }) => {
     (state: { userDetails: { id: string; email: string } }) =>
       state.userDetails,
   );
-
-  const REVENUECAT_PUB_KEY = 'oyugnzaOUAuXBNLgXifSFaJWEsrpfjkO';
 
   const getOfferings = useCallback(async () => {
     try {
@@ -67,22 +70,21 @@ export const PurchaseProvider: React.FC<PropsWithChildren> = ({ children }) => {
   }, []);
 
   useEffect(() => {
-    Purchases.setLogLevel(LOG_LEVEL.ERROR);
+    getOfferings();
+  }, [getOfferings]);
 
-    if (id) {
-      Purchases.configure({ apiKey: REVENUECAT_PUB_KEY, appUserID: id });
-    } else {
-      Purchases.configure({ apiKey: REVENUECAT_PUB_KEY });
+  const setPurchaserIdentity = useCallback(async (userId: string) => {
+    if (!userId) {
+      setPremium(false);
+      return;
     }
 
-    getOfferings();
-  }, [getOfferings, id]);
-
-  const setPurchaserIdentity = useCallback(async () => {
     try {
-      await Purchases.getAppUserID();
+      await Purchases.logIn(userId);
       const customerInfo = await Purchases.getCustomerInfo();
       if (Object.entries(customerInfo.entitlements.active).length) {
+        console.log(customerInfo.entitlements.active);
+        console.log('im here');
         setPremium(true);
       } else {
         setPremium(false);
@@ -93,8 +95,8 @@ export const PurchaseProvider: React.FC<PropsWithChildren> = ({ children }) => {
   }, []);
 
   useEffect(() => {
-    setPurchaserIdentity();
-  }, [setPurchaserIdentity]);
+    setPurchaserIdentity(id);
+  }, [setPurchaserIdentity, id]);
 
   const makePurchase = useCallback(
     async (packageToPurchase: PurchasesPackage) => {

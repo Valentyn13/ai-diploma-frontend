@@ -1,5 +1,6 @@
 import React from 'react';
 import { Text, View } from 'react-native';
+import { scale } from 'react-native-size-matters';
 import Icon from 'react-native-vector-icons/Feather';
 
 const SubscriptionPoint = ({ text }: { text: string }) => (
@@ -10,14 +11,21 @@ const SubscriptionPoint = ({ text }: { text: string }) => (
       flexDirection: 'row',
       alignItems: 'center',
     }}>
-    <Icon name="check-circle" size={16} color="white" />
+    <Icon name="check-circle" size={scale(16)} color="white" />
     <View
       style={{
         flex: 1,
         paddingVertical: 2,
         paddingLeft: 8,
       }}>
-      <Text className="text-white text-left text-base">{text}</Text>
+      <Text
+        style={{
+          fontSize: scale(16),
+          lineHeight: scale(24),
+        }}
+        className="text-white text-left">
+        {text}
+      </Text>
     </View>
   </View>
 );
