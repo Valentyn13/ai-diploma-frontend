@@ -1,5 +1,6 @@
 import Background from '@common/components/Background';
 import { CircleButton } from '@common/components/buttons/CircleButton';
+import { EXERCISES } from '@common/constants';
 import theme from '@common/theme';
 import React, { useState } from 'react';
 import {
@@ -15,8 +16,6 @@ import Animated, {
   useEvent,
   useHandler,
 } from 'react-native-reanimated';
-
-import { Focus, Sleep, Stress } from './illustrations';
 
 const AnimatedPager = Animated.createAnimatedComponent(PagerView);
 
@@ -44,45 +43,26 @@ const Container = ({
 }: any) => {
   return (
     <View className="flex items-center justify-center" {...props}>
-      <View className="relative flex items-center justify-center">
+      <View className="relative flex items-center justify-center px-5">
         <View className="absolute w-full items-center -top-36">
           <Illustration width="50%" height={100} />
         </View>
         <Text className="text-white text-3xl font-bold mb-4">{title}</Text>
-        <Text className="text-white text-xl text-center">{description}</Text>
+        <Text className="text-white text-lg font-light text-center">
+          {description}
+        </Text>
       </View>
       {children}
     </View>
   );
 };
 
-const exercises = [
-  {
-    title: 'שינה',
-    key: 'sleep',
-    description: 'טכניקת נשימה לשינה טובה ומרגיעה',
-    illustration: Sleep,
-  },
-  {
-    title: 'סטרס',
-    key: 'stress',
-    description: 'טכניקת נשימה להרגעה וליצירת תחושת רוגע',
-    illustration: Stress,
-  },
-  {
-    title: 'פוקוס',
-    key: 'focus',
-    description: 'טכניקת נשימה להתמקדות ולהרגעה',
-    illustration: Focus,
-  },
-];
-
 const Exercises = ({ navigation }) => {
   const [selected, setSelected] = useState(0);
 
   const onStart = () =>
     navigation.navigate('ExercisesPlayer', {
-      exercise: exercises[selected],
+      key: EXERCISES[selected].key,
     });
 
   const handler = usePagerScrollHandler({
@@ -94,7 +74,7 @@ const Exercises = ({ navigation }) => {
 
   return (
     <View className="flex-1">
-      <Background seedString={exercises[selected].key} />
+      <Background seedString={EXERCISES[selected].key} />
       <View className="absolute w-full h-full bg-black/20" />
 
       <SafeAreaView className="flex-1">
@@ -113,13 +93,13 @@ const Exercises = ({ navigation }) => {
           style={styles.pagerView}
           initialPage={selected}
           onPageScroll={handler}>
-          {exercises.map(exercise => (
+          {EXERCISES.map(exercise => (
             <Container key={exercise.key} exercise={exercise} />
           ))}
         </AnimatedPager>
         <View className="absolute w-full bottom-5 p-5">
           <View className="flex flex-row justify-center items-center mb-5">
-            {exercises.map((e, index) => (
+            {EXERCISES.map((e, index) => (
               <View
                 key={e.key}
                 className={`w-2 h-2 rounded-full mx-1 transition duration-300

@@ -1,3 +1,4 @@
+import { EXERCISES } from '@common/constants';
 import { Canvas, LinearGradient, Rect, vec } from '@shopify/react-native-skia';
 import React, { useEffect, useState } from 'react';
 import { View, useWindowDimensions } from 'react-native';
@@ -26,21 +27,14 @@ const getRandomColor = seed => {
     .padStart(2, '0')}${b.toString(16).padStart(2, '0')}`;
 };
 
-const SEED_TO_COLORS = {
-  sleep: ['#B0C4DE', '#4B0082'],
-  focus: ['#328d37', '#32a8d2'],
-  stress: ['#ADD8E6', '#000080'],
-} as const;
-
 const Background = ({ seedString = '0' }) => {
   const { width, height } = useWindowDimensions();
 
   const [colors, setColors] = useState(() => {
-    const seed = stringToSeed(seedString);
     return (
-      SEED_TO_COLORS[seedString] || [
-        getRandomColor(seed),
-        getRandomColor(seed + 1),
+      EXERCISES.find(exercise => exercise.key === seedString)?.colors || [
+        getRandomColor(stringToSeed(seedString)),
+        getRandomColor(stringToSeed(seedString) + 1),
       ]
     );
   });
@@ -48,7 +42,7 @@ const Background = ({ seedString = '0' }) => {
   useEffect(() => {
     const seed = stringToSeed(seedString);
     setColors(
-      SEED_TO_COLORS[seedString] || [
+      EXERCISES.find(exercise => exercise.key === seedString)?.colors || [
         getRandomColor(seed),
         getRandomColor(seed + 1),
       ],

@@ -14,7 +14,7 @@ interface AnimatedCircleProps {
 }
 
 const CircleExercise: FC<PropsWithChildren & AnimatedCircleProps> = ({
-  sequences,
+  sequences = [4, 4, 4, 4],
   children,
 }) => {
   const { width, height } = useWindowDimensions();
@@ -103,7 +103,7 @@ const CircleExercise: FC<PropsWithChildren & AnimatedCircleProps> = ({
             />
           );
         })}
-        <Circle cx={translateX} cy={translateY} r={radius} color="#D66366" />
+        <Circle cx={translateX} cy={translateY} r={radius} color="#273051" />
       </Canvas>
     </View>
   );

@@ -1,12 +1,17 @@
-import React, { FC, useEffect, useRef } from 'react';
+import React, { FC, useEffect, useMemo, useRef, useState } from 'react';
 import { Animated } from 'react-native';
 
-const texts = ['נשמו', 'החזיקו', 'נשפו', 'החזיקו'];
-
-const FadingText: FC<{ duration: number }> = ({ duration }) => {
-  const [index, setIndex] = React.useState(0);
-  const text = texts[index];
+const FadingText: FC<{
+  sequences: { type: string; seconds: number }[];
+}> = ({ sequences }) => {
+  const [index, setIndex] = useState(0);
   const fadeAnim = useRef(new Animated.Value(0)).current;
+
+  const text = useMemo(() => sequences[index].type, [index, sequences]);
+  const duration = useMemo(
+    () => sequences[index].seconds * 1000,
+    [index, sequences],
+  );
 
   useEffect(() => {
     let isMounted = true;
@@ -28,7 +33,7 @@ const FadingText: FC<{ duration: number }> = ({ duration }) => {
               useNativeDriver: true,
             }).start(() => {
               // Update index
-              setIndex(prevIndex => (prevIndex + 1) % texts.length);
+              setIndex(prevIndex => (prevIndex + 1) % sequences.length);
             });
           }
         }, displayDuration);
@@ -43,7 +48,7 @@ const FadingText: FC<{ duration: number }> = ({ duration }) => {
       clearInterval(interval);
       isMounted = false;
     };
-  }, [duration, index, fadeAnim]);
+  }, [index, fadeAnim, sequences.length]);
 
   return (
     <Animated.Text

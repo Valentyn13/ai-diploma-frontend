@@ -1,15 +1,17 @@
 import Background from '@common/components/Background';
 import { CircleButton } from '@common/components/buttons/CircleButton';
-import React from 'react';
+import { EXERCISES } from '@common/constants';
+import React, { useMemo } from 'react';
 import { SafeAreaView, View } from 'react-native';
 
 import Square from './CircleExercise';
 import FadingText from './FadingText';
 
-const duration = 4000;
-
 const ExercisesPlayer = ({ route, navigation }) => {
-  const { exercise } = route.params || { exercise: { key: 'sleep' } };
+  const exercise = useMemo(
+    () => EXERCISES.find(({ key }) => key === route.params.key) || EXERCISES[0],
+    [route.params.key],
+  );
 
   return (
     <View
@@ -35,8 +37,9 @@ const ExercisesPlayer = ({ route, navigation }) => {
         </View>
       </SafeAreaView>
       <View className="absolute flex-1 w-full h-full">
-        <Square sequences={[duration, duration, duration, duration]}>
-          <FadingText duration={duration} />
+        <Square
+          sequences={exercise.sequences.map(({ seconds }) => seconds * 1000)}>
+          <FadingText sequences={exercise.sequences} />
         </Square>
       </View>
     </View>
