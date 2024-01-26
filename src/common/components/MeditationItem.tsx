@@ -19,7 +19,7 @@ interface MeditationItemProps {
     id: string;
     name: string;
     url?: string;
-    duration?: number;
+    duration: number;
     categoryName: string;
     animation?: string;
     thumbnail?: string;
@@ -33,8 +33,6 @@ interface MeditationItemProps {
 
 const MeditationItem: React.FC<MeditationItemProps> = memo(
   ({
-    horizontal = false,
-    big = false,
     item: {
       id,
       name,
@@ -95,17 +93,15 @@ const MeditationItem: React.FC<MeditationItemProps> = memo(
     return (
       <View
         style={{
-          width: horizontal
-            ? theme.dimens.winWidth / 2.4
-            : theme.dimens.winWidth / 2,
-          height: horizontal ? 220 : 280,
+          width: theme.dimens.winWidth / 2.4,
+          height: 220,
           maxWidth: theme.dimens.winWidth / 2 - 28,
         }}>
         <Pressable
           onPress={navigateToPlayer}
           className="flex-1 overflow-hidden"
           style={{
-            borderRadius: big ? 16 : 8,
+            borderRadius: 8,
           }}>
           <ImageBackground
             style={{
