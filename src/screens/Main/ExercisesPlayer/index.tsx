@@ -3,13 +3,13 @@ import { CircleButton } from '@common/components/buttons/CircleButton';
 import React from 'react';
 import { SafeAreaView, View } from 'react-native';
 
+import Square from './CircleExercise';
 import FadingText from './FadingText';
-import Square from './Square';
 
 const duration = 4000;
 
 const ExercisesPlayer = ({ route, navigation }) => {
-  const { exercise } = route.params;
+  const { exercise } = route.params || { exercise: { key: 'sleep' } };
 
   return (
     <View
@@ -34,9 +34,11 @@ const ExercisesPlayer = ({ route, navigation }) => {
           </View>
         </View>
       </SafeAreaView>
-      <Square duration={duration}>
-        <FadingText duration={duration} />
-      </Square>
+      <View className="absolute flex-1 w-full h-full">
+        <Square sequences={[duration, duration, duration, duration]}>
+          <FadingText duration={duration} />
+        </Square>
+      </View>
     </View>
   );
 };
