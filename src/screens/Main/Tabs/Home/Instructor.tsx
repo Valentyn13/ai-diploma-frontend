@@ -88,7 +88,7 @@ const Instructor = () => {
               {instructor?.description}
             </Text>
           </View>
-          <Text className="text-center text-base leading-none font-normal text-gray-700 mb-4">
+          <Text className="text-center text-base leading-none font-normal text-gray-700">
             {meditations.length} תרגולים
           </Text>
           <SessionsGrid meditations={meditations} />

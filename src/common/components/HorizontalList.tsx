@@ -9,34 +9,23 @@ interface Item {
 
 interface HorizontalListProps {
   data: Item[];
-  big?: boolean;
   height?: string;
   renderUsing?: React.ElementType<{
     item: Item;
     index: number;
-    big?: boolean;
     height?: string;
   }>;
 }
 
 const HorizontalList: FC<HorizontalListProps> = ({
   data,
-  big = false,
   height = 'medium',
   renderUsing = null,
 }) => {
   const Child = renderUsing || MeditationItem;
 
   const renderItem: ListRenderItem<any> = ({ item, index }) => {
-    return (
-      <Child
-        horizontal={true}
-        item={item}
-        index={index}
-        big={big}
-        height={height}
-      />
-    );
+    return <Child item={item} index={index} height={height} />;
   };
 
   const uniqueRandomKey = useMemo(
@@ -51,7 +40,6 @@ const HorizontalList: FC<HorizontalListProps> = ({
       showsHorizontalScrollIndicator={false}
       data={data}
       renderItem={renderItem}
-      // add gap between items
       keyExtractor={(item: any) =>
         `${item.id || item.name || item.title}-${uniqueRandomKey}`
       }
