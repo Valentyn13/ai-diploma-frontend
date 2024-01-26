@@ -3,6 +3,8 @@ import GroupedMeditations from '@common/components/GroupedMeditations';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import React from 'react';
 
+import ExercisesPlayer from './ExercisesPlayer';
+import Exercises from './ExercisesPlayer/Exercises';
 import MeditationPlayer from './MeditationPlayer';
 import BgPlayer from './MeditationPlayer/BgPlayer';
 import Subscribe from './Subscribe';
@@ -23,6 +25,8 @@ export type MainStackParamList = {
   Instructor: { instructor: any };
   Instructors: undefined;
   Course: { id: string };
+  ExercisesPlayer: { id: string };
+  Exercises: undefined;
   SessionModal: { id: string };
 };
 
@@ -34,7 +38,7 @@ export default () => {
       <BgPlayer />
 
       <MainStack.Navigator
-        initialRouteName="Tabs"
+        initialRouteName="Exercises"
         screenOptions={{
           headerShown: false,
         }}>
@@ -72,6 +76,16 @@ export default () => {
           name="GroupedMeditations"
           component={GroupedMeditations}
           options={{ headerShown: false }}
+        />
+        <MainStack.Screen
+          name="Exercises"
+          component={Exercises}
+          options={{ headerShown: false, presentation: 'fullScreenModal' }}
+        />
+        <MainStack.Screen
+          name="ExercisesPlayer"
+          component={ExercisesPlayer}
+          options={{ headerShown: false, presentation: 'fullScreenModal' }}
         />
         <MainStack.Screen
           name="Subscribe"
