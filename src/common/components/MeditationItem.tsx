@@ -13,8 +13,6 @@ import IconFontAwesome from 'react-native-vector-icons/FontAwesome6';
 import { useSelector } from 'react-redux';
 
 interface MeditationItemProps {
-  horizontal?: boolean;
-  big?: boolean;
   item: {
     id: string;
     name: string;

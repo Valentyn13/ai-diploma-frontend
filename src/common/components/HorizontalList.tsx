@@ -5,6 +5,8 @@ import { FlatList, ListRenderItem } from 'react-native';
 
 interface Item {
   id: string;
+  name: string;
+  colors: string[];
 }
 
 interface HorizontalListProps {
@@ -12,20 +14,17 @@ interface HorizontalListProps {
   height?: string;
   renderUsing?: React.ElementType<{
     item: Item;
-    index: number;
-    height?: string;
   }>;
 }
 
 const HorizontalList: FC<HorizontalListProps> = ({
   data,
-  height = 'medium',
   renderUsing = null,
 }) => {
   const Child = renderUsing || MeditationItem;
 
   const renderItem: ListRenderItem<any> = ({ item, index }) => {
-    return <Child item={item} index={index} height={height} />;
+    return <Child item={item} index={index} />;
   };
 
   const uniqueRandomKey = useMemo(
