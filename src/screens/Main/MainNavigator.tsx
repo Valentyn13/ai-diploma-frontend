@@ -38,7 +38,7 @@ export default () => {
       <BgPlayer />
 
       <MainStack.Navigator
-        initialRouteName="Exercises"
+        initialRouteName="Tabs"
         screenOptions={{
           headerShown: false,
         }}>

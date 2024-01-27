@@ -57,8 +57,10 @@ const Container = ({
   );
 };
 
-const Exercises = ({ navigation }) => {
-  const [selected, setSelected] = useState(0);
+const Exercises = ({ route, navigation }) => {
+  const [selected, setSelected] = useState(
+    EXERCISES.findIndex(exercise => exercise.key === route.params.key) || 0,
+  );
 
   const onStart = () =>
     navigation.navigate('ExercisesPlayer', {

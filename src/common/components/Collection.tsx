@@ -2,7 +2,7 @@ import HorizontalList from '@common/components/HorizontalList';
 import { SubTitle } from '@common/components/Styled';
 import i18n from '@services/localization/i18n';
 import { shuffleArray } from '@utils/rand';
-import React, { FC } from 'react';
+import React, { ElementType, FC } from 'react';
 import { Pressable, Text, View } from 'react-native';
 import styled from 'styled-components/native';
 
@@ -19,6 +19,9 @@ interface Props {
   title: string;
   limit?: number;
   shuffle?: boolean;
+  renderItem?: ElementType<{
+    item: { id: string; name: string; colors: string[] };
+  }>;
 }
 
 const Collection: FC<Props> = ({
@@ -27,6 +30,7 @@ const Collection: FC<Props> = ({
   title,
   limit = 5,
   shuffle = true,
+  renderItem,
 }) => (
   <View>
     <View className="flex flex-row items-center justify-between w-full mb-5 pl-5 pr-3">
@@ -45,6 +49,7 @@ const Collection: FC<Props> = ({
       </View>
     )}
     <HorizontalList
+      renderUsing={renderItem}
       data={(shuffle ? shuffleArray(items) : items).slice(0, limit)}
     />
   </View>
