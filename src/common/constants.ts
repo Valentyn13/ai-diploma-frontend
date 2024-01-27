@@ -1,3 +1,5 @@
+import { Focus, Sleep, Stress } from '@common/assets/illustrations';
+
 export const SHOULD_SHOW_REMINDER_POPUP_STATUS_NOT_INITIALIED =
   'SHOULD_SHOW_REMINDER_POPUP_STATUS_NOT_INITIALIED';
 export const SHOULD_SHOW_REMINDER_POPUP_STATUS_TURNED_ON =
@@ -483,3 +485,49 @@ export const MEDITATIONS_IMAGES_URL =
 export const COUNTRY_CODE = 'IL';
 
 export const KEY_PLAYED_FIRST = 'firstPlay';
+
+export const EXERCISES = [
+  {
+    title: 'שינה',
+    key: 'sleep',
+    description:
+      'טכניקת הנשימה 4-7-8 יעילה להירדמות מהירה: שאיפה ל-4 שניות, עצירת נשימה ל-7 שניות, ונשיפה איטית ל-8 שניות. השיטה מרגיעה את המוח ומשרירי הגוף ועוזרת להירדם במהירות ובאיכות.',
+
+    sequences: [
+      { seconds: 4, type: 'שאיפה' },
+      { seconds: 7, type: 'החזיקו' },
+      { seconds: 8, type: 'נשיפה' },
+    ],
+    illustration: Sleep,
+    colors: ['#B0C4DE', '#4B0082'],
+  },
+  {
+    title: 'סטרס',
+    key: 'stress',
+    description:
+      'טכניקת הנשימה הסרעפתית האיטית והעמוקה כוללת שאיפה איטית דרך האף למשך 4 שניות, עצירת נשימה למשך 7 שניות ונשיפה איטית דרך הפה למשך 8 שניות. הטכניקה מפעילה את תגובת ההרגעה של הגוף ובכך מפחיתה לחץ.',
+    sequences: [
+      { seconds: 4, type: 'שאיפה' },
+      { seconds: 7, type: 'החזיקו' },
+      { seconds: 8, type: 'נשיפה' },
+    ],
+    colors: ['#ADD8E6', '#000080'],
+    illustration: Stress,
+  },
+  {
+    title: 'פוקוס',
+    key: 'focus',
+    description:
+      'טכניקת הנשימה 4-4-4-4 כוללת שאיפה למשך 4 שניות, עצירת נשימה למשך 4 שניות, נשיפה למשך 4 שניות והמתנה למשך 4 שניות לפני החזרה על המחזור. הטכניקה משפרת ריכוז וביצועים במצבי לחץ.',
+    sequences: [
+      { seconds: 4, type: 'שאיפה' },
+      { seconds: 4, type: 'החזיקו' },
+      { seconds: 4, type: 'נשיפה' },
+      { seconds: 4, type: 'החזיקו' },
+    ],
+    colors: ['#328d37', '#32a8d2'],
+    illustration: Focus,
+  },
+];
+
+export type IExercise = (typeof EXERCISES)[number];

@@ -1,4 +1,3 @@
-import { colors } from '@common/theme';
 import { useNavigation } from '@react-navigation/native';
 import { FC, default as React, useCallback } from 'react';
 import type {
@@ -18,15 +17,11 @@ import {
 } from 'react-native';
 import { LongPressGestureHandler } from 'react-native-gesture-handler';
 import type { AnimateProps } from 'react-native-reanimated';
-import Animated, {
-  Extrapolation,
-  interpolate,
-  useAnimatedStyle,
-  useSharedValue,
-} from 'react-native-reanimated';
+import Animated, { useSharedValue } from 'react-native-reanimated';
 import Carousel from 'react-native-reanimated-carousel';
 
 import CoursesCarouselItem from './CoursesCarouselItem';
+import PaginationItem from './PaginationItem';
 
 interface Props {
   style?: StyleProp<ViewStyle>;
@@ -237,60 +232,6 @@ const Carousel2: FC<CoursesCarouselProps> = ({
         }}
         data={data}
         renderItem={renderItem}
-      />
-    </View>
-  );
-};
-
-const PaginationItem: React.FC<{
-  index: number;
-  length: number;
-  animValue: Animated.SharedValue<number>;
-  isRotate?: boolean;
-}> = props => {
-  const { animValue, index, length } = props;
-  const width = 10;
-
-  const animStyle = useAnimatedStyle(() => {
-    let inputRange = [index - 1, index, index + 1];
-    let outputRange = [-width, 0, width];
-
-    if (index === 0 && animValue?.value > length - 1) {
-      inputRange = [length - 1, length, length + 1];
-      outputRange = [-width, 0, width];
-    }
-
-    return {
-      transform: [
-        {
-          translateX: interpolate(
-            animValue?.value,
-            inputRange,
-            outputRange,
-            Extrapolation.CLAMP,
-          ),
-        },
-      ],
-    };
-  }, [animValue, index, length]);
-  return (
-    <View
-      style={{
-        backgroundColor: 'white',
-        width,
-        height: width,
-        borderRadius: 50,
-        overflow: 'hidden',
-      }}>
-      <Animated.View
-        style={[
-          {
-            borderRadius: 50,
-            backgroundColor: colors.selected,
-            flex: 1,
-          },
-          animStyle,
-        ]}
       />
     </View>
   );
