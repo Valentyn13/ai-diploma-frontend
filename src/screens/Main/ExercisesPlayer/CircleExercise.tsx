@@ -1,4 +1,4 @@
-import { Canvas, Circle, Path, Rect, Skia } from '@shopify/react-native-skia';
+import { Canvas, Circle, Path, Skia } from '@shopify/react-native-skia';
 import React, { FC, PropsWithChildren, useEffect } from 'react';
 import { View, useWindowDimensions } from 'react-native';
 import {
@@ -84,21 +84,17 @@ const CircleExercise: FC<PropsWithChildren & AnimatedCircleProps> = ({
 
         {indicatorAngles.map((angle2, index) => {
           const rectWidth = 14;
-          const rectHeight = 14;
+          const circleRadius = rectWidth / 2;
 
-          const rectCenterX = xCenter + bigCircleRadius * Math.cos(angle2);
-          const rectCenterY = yCenter + bigCircleRadius * Math.sin(angle2);
-
-          const rectX = rectCenterX - rectWidth / 2;
-          const rectY = rectCenterY - rectHeight / 2;
+          const circleCenterX = xCenter + bigCircleRadius * Math.cos(angle2);
+          const circleCenterY = yCenter + bigCircleRadius * Math.sin(angle2);
 
           return (
-            <Rect
+            <Circle
               key={index}
-              x={rectX}
-              y={rectY}
-              width={rectWidth}
-              height={rectHeight}
+              cx={circleCenterX}
+              cy={circleCenterY}
+              r={circleRadius}
               color="#FFEFD7"
             />
           );
