@@ -4,13 +4,13 @@ import { EXERCISES } from '@common/constants';
 import React, { useMemo } from 'react';
 import { SafeAreaView, View } from 'react-native';
 
-import Square from './CircleExercise';
+import CircleExercise from './CircleExercise';
 import FadingText from './FadingText';
 
 const ExercisesPlayer = ({ route, navigation }) => {
   const exercise = useMemo(
-    () => EXERCISES.find(({ key }) => key === route.params.key) || EXERCISES[0],
-    [route.params.key],
+    () => EXERCISES.find(({ id }) => id === route.params.id) || EXERCISES[0],
+    [route.params.id],
   );
 
   return (
@@ -22,7 +22,7 @@ const ExercisesPlayer = ({ route, navigation }) => {
         alignItems: 'center',
         position: 'relative',
       }}>
-      <Background seedString={exercise.key} />
+      <Background seed={exercise.id} />
       <SafeAreaView className="w-full flex-1 z-10">
         <View className="flex-1">
           <View className="absolute left-5 top-5">
@@ -37,10 +37,10 @@ const ExercisesPlayer = ({ route, navigation }) => {
         </View>
       </SafeAreaView>
       <View className="absolute flex-1 w-full h-full">
-        <Square
+        <CircleExercise
           sequences={exercise.sequences.map(({ seconds }) => seconds * 1000)}>
           <FadingText sequences={exercise.sequences} />
-        </Square>
+        </CircleExercise>
       </View>
     </View>
   );

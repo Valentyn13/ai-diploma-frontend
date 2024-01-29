@@ -14,7 +14,7 @@ interface AnimatedCircleProps {
 }
 
 const CircleExercise: FC<PropsWithChildren & AnimatedCircleProps> = ({
-  sequences = [4, 4, 4, 4],
+  sequences,
   children,
 }) => {
   const { width, height } = useWindowDimensions();

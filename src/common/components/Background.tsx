@@ -27,12 +27,12 @@ const getRandomColor = seed => {
     .padStart(2, '0')}${b.toString(16).padStart(2, '0')}`;
 };
 
-const Background = ({ seedString = '0' }) => {
+const Background = ({ seed: seedString = '0' }) => {
   const { width, height } = useWindowDimensions();
 
   const [colors, setColors] = useState(() => {
     return (
-      EXERCISES.find(exercise => exercise.key === seedString)?.colors || [
+      EXERCISES.find(exercise => exercise.id === seedString)?.colors || [
         getRandomColor(stringToSeed(seedString)),
         getRandomColor(stringToSeed(seedString) + 1),
       ]
@@ -42,7 +42,7 @@ const Background = ({ seedString = '0' }) => {
   useEffect(() => {
     const seed = stringToSeed(seedString);
     setColors(
-      EXERCISES.find(exercise => exercise.key === seedString)?.colors || [
+      EXERCISES.find(exercise => exercise.id === seedString)?.colors || [
         getRandomColor(seed),
         getRandomColor(seed + 1),
       ],

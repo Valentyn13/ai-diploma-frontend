@@ -59,12 +59,12 @@ const Container = ({
 
 const Exercises = ({ route, navigation }) => {
   const [selected, setSelected] = useState(
-    EXERCISES.findIndex(exercise => exercise.key === route.params.key) || 0,
+    EXERCISES.findIndex(exercise => exercise.id === route.params.id) || 0,
   );
 
   const onStart = () =>
     navigation.navigate('ExercisesPlayer', {
-      key: EXERCISES[selected].key,
+      id: EXERCISES[selected].id,
     });
 
   const handler = usePagerScrollHandler({
@@ -76,7 +76,7 @@ const Exercises = ({ route, navigation }) => {
 
   return (
     <View className="flex-1">
-      <Background seedString={EXERCISES[selected].key} />
+      <Background seed={EXERCISES[selected].id} />
       <View className="absolute w-full h-full bg-black/20" />
 
       <SafeAreaView className="flex-1">
@@ -96,14 +96,14 @@ const Exercises = ({ route, navigation }) => {
           initialPage={selected}
           onPageScroll={handler}>
           {EXERCISES.map(exercise => (
-            <Container key={exercise.key} exercise={exercise} />
+            <Container key={exercise.id} exercise={exercise} />
           ))}
         </AnimatedPager>
         <View className="absolute w-full bottom-5 p-5">
           <View className="flex flex-row justify-center items-center mb-5">
             {EXERCISES.map((e, index) => (
               <View
-                key={e.key}
+                key={e.id}
                 className={`w-2 h-2 rounded-full mx-1 transition duration-300
                  ${index === selected ? 'bg-white w-4 h-4' : 'bg-white/60'}`}
               />

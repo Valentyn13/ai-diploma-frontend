@@ -232,9 +232,9 @@ const Feed: FC<FeedProps> = ({ navigation, copilot }) => {
               <View className="flex-1">
                 <Collection
                   title="תרגולי נשימה"
-                  items={EXERCISES.map(({ key, title, colors }) => ({
-                    id: key,
-                    name: title,
+                  items={EXERCISES.map(({ id, name, colors }) => ({
+                    id,
+                    name,
                     colors,
                   }))}
                   onShowAll={() => {}}

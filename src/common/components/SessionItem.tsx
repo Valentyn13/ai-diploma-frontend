@@ -28,7 +28,7 @@ const SessionItem: React.FC<SessionItemProps> = memo(
 
       // @ts-ignore TODO: fix this
       navigate('Exercises', {
-        key: id,
+        id,
       });
     }, [navigate, amplitudeInstance, id]);
 
