@@ -62,7 +62,7 @@
     "react-native-keyboard-aware-scroll-view": "^0.9.5",
     "react-native-modal": "^13.0.1",
     "react-native-pager-view": "^6.2.3",
-    "react-native-purchases": "^7.5.0",
+    "react-native-purchases": "^7.17.0",
     "react-native-push-notification": "^8.1.1",
     "react-native-reanimated": "^3.6.1",
     "react-native-reanimated-carousel": "^3.5.1",
