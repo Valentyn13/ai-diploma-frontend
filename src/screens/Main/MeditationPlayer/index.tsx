@@ -232,20 +232,18 @@ const MeditationPlayer: FC = ({ navigation }) => {
   }, [video, audio]);
 
   const resetHideControlsTimer = useCallback(() => {
-    if (playing) {
-      controlsOpacity.value = withTiming(1); // Show controls
-      setHideControls(false);
+    controlsOpacity.value = withTiming(1); // Show controls
+    setHideControls(false);
 
-      if (hideTimerRef.current) {
-        clearTimeout(hideTimerRef.current);
-      }
-
-      hideTimerRef.current = setTimeout(() => {
-        if (playing) {
-          fadeOutControls();
-        }
-      }, 5000);
+    if (hideTimerRef.current) {
+      clearTimeout(hideTimerRef.current);
     }
+
+    hideTimerRef.current = setTimeout(() => {
+      if (playing) {
+        fadeOutControls();
+      }
+    }, 5000);
   }, [controlsOpacity, fadeOutControls, playing]);
 
   useEffect(() => {

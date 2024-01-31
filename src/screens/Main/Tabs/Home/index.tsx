@@ -4,12 +4,10 @@ import Divider from '@common/components/Divider';
 import DynamicComposition from '@common/components/DynamicComposition';
 import Feeling from '@common/components/Feeling';
 import Logo from '@common/components/Logo';
-import SessionItem from '@common/components/SessionItem';
 import { SubTitle } from '@common/components/Styled';
 import Welcome from '@common/components/animation/Welcome';
 import BgSelector from '@common/components/buttons/BgSelector';
 import ShowAll from '@common/components/buttons/ShowAll';
-import { EXERCISES } from '@common/constants';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { RootStackParamList } from '@screens/RootNavigator';
 import useAppData from '@services/hooks/useAppData';
@@ -229,7 +227,8 @@ const Feed: FC<FeedProps> = ({ navigation, copilot }) => {
                 </View>
               ))}
 
-              <View className="flex-1">
+              {/* commented until integration to history & favorites */}
+              {/* <View className="flex-1">
                 <Collection
                   title="תרגולי נשימה"
                   items={EXERCISES.map(({ id, name, colors }) => ({
@@ -241,7 +240,7 @@ const Feed: FC<FeedProps> = ({ navigation, copilot }) => {
                   renderItem={SessionItem}
                 />
                 <Divider className="my-6" />
-              </View>
+              </View> */}
 
               <CopilotStep
                 text="פגשו את צוות המורים שלנו שינחו אתכם לאורך הדרך"

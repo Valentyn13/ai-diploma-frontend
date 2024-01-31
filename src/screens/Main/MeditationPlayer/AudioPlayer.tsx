@@ -21,6 +21,11 @@ const AudioPlayer: FC<Props> = ({ id, url, title, artist, artwork }) => {
       });
 
       TrackPlayer.play();
+
+      // @ts-ignore
+      TrackPlayer.addEventListener('playback-queue-ended', () => {
+        TrackPlayer.seekTo(0);
+      });
     };
 
     addTrack();

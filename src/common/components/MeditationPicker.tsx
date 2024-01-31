@@ -106,7 +106,7 @@ const HowUFeel: FC<{ onNext: (f: Feeling) => void; isMale: boolean }> = ({
         renderItem={renderItem}
         keyExtractor={item => item}
         numColumns={3}
-        scrollEnabled={false}
+        scrollEnabled={true}
       />
       <TouchableOpacity
         style={{
@@ -177,7 +177,7 @@ const WhereYouAt: FC<{ onNext: (l: Place) => void }> = ({ onNext }) => {
         renderItem={renderItem}
         keyExtractor={item => item}
         numColumns={3}
-        scrollEnabled={false}
+        scrollEnabled={true}
       />
       <TouchableOpacity
         style={{
@@ -235,6 +235,7 @@ const MeditationPicker = () => {
       bottomSheetRef.current!.close();
 
       if (!hasPremium) {
+        // @ts-ignore
         navigation.navigate('Main', {
           screen: 'Subscribe',
         });
