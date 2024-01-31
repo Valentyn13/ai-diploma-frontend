@@ -2322,10 +2322,10 @@
     color "^4.2.3"
     warn-once "^0.1.0"
 
-"@revenuecat/purchases-typescript-internal@9.0.0":
-  version "9.0.0"
-  resolved "https://registry.yarnpkg.com/@revenuecat/purchases-typescript-internal/-/purchases-typescript-internal-9.0.0.tgz#d71c2d6b5d59388c66e93caeeefbbb7cdb34ceba"
-  integrity sha512-yOavjkAEB+w9+uKOJMuudGVgfQouvm5QaGc12Fnjl0YLUn3laGe+nw9+bEibcf0B3XTKVLfhv18Hw/qlc4mMKw==
+"@revenuecat/purchases-typescript-internal@9.3.0":
+  version "9.3.0"
+  resolved "https://registry.yarnpkg.com/@revenuecat/purchases-typescript-internal/-/purchases-typescript-internal-9.3.0.tgz#26d5a235562885ec484c53a26795728a5473c546"
+  integrity sha512-Z6ZZxcTz83LIlHHLnr3WlFDc/tVPLKezVTW2pro1N35Uymweu+dlpsb/VSIeEjxoZ/zGRqN4AJkECOQUQtIyyQ==
 
 "@rudderstack/rudder-sdk-react-native@^1.11.1":
   version "1.11.2"
@@ -7687,12 +7687,12 @@ react-native-pager-view@^6.2.3:
   resolved "https://registry.yarnpkg.com/react-native-pager-view/-/react-native-pager-view-6.2.3.tgz#698f6387fdf06cecc3d8d4792604419cb89cb775"
   integrity sha512-dqVpXWFtPNfD3D2QQQr8BP+ullS5MhjRJuF8Z/qml4QTILcrWaW8F5iAxKkQR3Jl0ikcEryG/+SQlNcwlo0Ggg==
 
-react-native-purchases@^7.17.0:
-  version "7.17.0"
-  resolved "https://registry.yarnpkg.com/react-native-purchases/-/react-native-purchases-7.17.0.tgz#937967307d700275d958851f3d5dbb3cd03f1511"
-  integrity sha512-IdneoLuWqHUwa6oMNyalJ2Puh3yCpL2RtQfuf1nowuQnyuyqCCftCbk4kIdAJ9pnsx6JO9Qk6g4xg0Ehs+nkYg==
+react-native-purchases@^7.5.0:
+  version "7.18.0"
+  resolved "https://registry.yarnpkg.com/react-native-purchases/-/react-native-purchases-7.18.0.tgz#fcbcf2df4fc74ad58f704bbc93bb80ec8e19d44f"
+  integrity sha512-U9evUL9LxC8ISF4teX9oqLna3x4JogOE8dw8CG76EFjY8+PgMBtggbBUWy1UzfgkVV74imvWLbKsrjNdaEDUCw==
   dependencies:
-    "@revenuecat/purchases-typescript-internal" "9.0.0"
+    "@revenuecat/purchases-typescript-internal" "9.3.0"
 
 react-native-push-notification@^8.1.1:
   version "8.1.1"
