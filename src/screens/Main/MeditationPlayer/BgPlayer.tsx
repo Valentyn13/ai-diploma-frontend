@@ -34,6 +34,8 @@ const BgPlayer: FC = () => {
       onError={error => {
         logger.log('error', JSON.stringify(error));
       }}
+      audioOnly
+      playInBackground
       repeat
     />
   );

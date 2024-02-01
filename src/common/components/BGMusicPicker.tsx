@@ -5,6 +5,7 @@ import { useBgTrackStore } from '@store/useBgTrackStore';
 import React, { useCallback } from 'react';
 import { FlatList, Text, View } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
+import { scale } from 'react-native-size-matters';
 
 import Volume from './Volume';
 import { CircleButton } from './buttons/CircleButton';
@@ -20,14 +21,17 @@ const Option = ({ label, onPress, emoji, isSelected, ...props }) => (
     }}
     onPress={onPress}>
     <Text
+      className="text-center mt-2 font-bold"
       style={{
         color: isSelected ? '#fff' : '#273051',
-        fontSize: 18,
-        fontWeight: '600',
+        fontSize: scale(14),
       }}>
       {label}
     </Text>
-    <Text style={{ color: isSelected ? '#D66366' : '#273051', fontSize: 22 }}>
+    <Text
+      style={{
+        fontSize: scale(20),
+      }}>
       {emoji}
     </Text>
   </TouchableOpacity>

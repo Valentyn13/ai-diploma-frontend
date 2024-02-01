@@ -1,6 +1,7 @@
 import Slider from '@react-native-community/slider';
 import React, { FC } from 'react';
 import { Text, View } from 'react-native';
+import { scale } from 'react-native-size-matters';
 
 interface Props {
   volume: number;
@@ -11,8 +12,20 @@ const Volume: FC<Props> = ({ volume, setVolume }) => {
   return (
     <View className="w-full flex items-center justify-center">
       <View className="relative w-2/3 flex items-center justify-center">
-        <Text className="absolute -right-8 text-sm font-light w-6">🔇</Text>
-        <Text className="absolute -left-8 text-sm font-bold w-6">🔊</Text>
+        <Text
+          style={{
+            fontSize: scale(18),
+          }}
+          className="absolute -right-8 w-6">
+          🔇
+        </Text>
+        <Text
+          style={{
+            fontSize: scale(18),
+          }}
+          className="absolute -left-8 w-6">
+          🔊
+        </Text>
         <Slider
           tapToSeek={true}
           inverted
