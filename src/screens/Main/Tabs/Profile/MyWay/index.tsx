@@ -2,9 +2,10 @@ import Divider from '@common/components/Divider';
 import { SubTitle } from '@common/components/Styled';
 import { CircleButton } from '@common/components/buttons/CircleButton';
 import { useNavigation } from '@react-navigation/native';
+import { getRandomElementsByDay } from '@utils/rand';
 import { stringToDate } from '@utils/string';
 import React, { FC, PropsWithChildren } from 'react';
-import { View } from 'react-native';
+import { Text, View } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import { useSelector } from 'react-redux';
 import styled from 'styled-components';
@@ -15,9 +16,32 @@ import Strikes from './Strikes';
 import UserMetrics from './UserMetrics';
 
 const Title = styled(SubTitle)`
-  font-size: 22px;
+  font-size: 24;
   font-weight: bold;
 `;
+
+const quoteData = [
+  'בפשטות של הרגע הזה, טמונה האמת של הקיום.',
+  'השלום אינו נמצא בעולם החיצוני, אלא בשקט הפנימי.',
+  'חבק את ההווה בקבלה, כי זהו הרגע היחיד שבאמת יש לנו.',
+  'הצמיחה היא המסע ממי שהיית למי שתבחר להיות.',
+  'מיינדפולנס היא אמנות ההיות נוכח לחלוטין, חי לחלוטין.',
+  'תנו לעבר ללכת, קבלו את מה שהוא, והאמינו במה שיהיה.',
+  'חיה כאילו תמות מחר, למד כאילו תחיה לנצח.',
+  'בכל רגע יש לקח ללמוד.',
+  'המורה החכם אינו כובל אותך להכנס למעון החכמה שלו, אלא מוביל אותך למפתן ההכרה שלך.',
+  'אמנות החיים היא לחיות ברגע הזה.',
+  'אדם חייב להיות מוכן לוותר על מי שהוא, כדי להפוך למי שהוא יכול להיות.',
+  'החוכמה של החיים מתגלה בקבלה של כל רגע כמו שהוא.',
+  'על אדם קודם להנחות את עצמו בדרך שלו. רק לאחר מכן יוכל להנחות אחרים.',
+  'היופי של החיים נמצא בפרטים הקטנים.',
+  'אהבה היא היכולת לראות את הטוב באחרים, גם כשהם לא רואים אותו בעצמם.',
+  'הצלחה אמיתית מגיעה כאשר אתה מצליח לחיות את חייך בדרך שלך.',
+  'כל נשימה היא הזדמנות לחדש את עצמנו.',
+  'לחיות ברגע הזה הוא לחיות בשלמות.',
+  'אינך יכול לבחור את האירועים בחייך אך כן לבחור את ההתייחסות שלך אליהם.',
+  'מציאת האושר בתוך הקשיים היא מפתח לחיים משמעותיים.',
+];
 
 const Card: FC<PropsWithChildren> = ({ children }) => (
   <View className="rounded-lg p-4 bg-[#273051]/10">{children}</View>
@@ -50,6 +74,9 @@ const MyWay = ({ navigation }) => {
           />
         </View>
         <View className="px-5 mt-16">
+          <Text className="mt-4 mb-6 text-center text-lg italic font-medium">
+            - "{getRandomElementsByDay<string>(quoteData, 1)[0]}"
+          </Text>
           <Title className="mb-5" t="הרגעים שלי" />
           <Card>
             <UserMetrics />
