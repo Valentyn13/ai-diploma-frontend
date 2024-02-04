@@ -152,7 +152,7 @@ const Feed: FC<FeedProps> = ({ navigation, copilot }) => {
               <LinearGradient colorList={colorList} angle={90} />
             </View>
 
-            <View className="h-[260px]" />
+            <View className="h-[250px]" />
 
             <CopilotStep
               text="כאן תוכלו למצוא מגוון עשיר של מדיטציות מותאמות אישית לצרכים שלכם"

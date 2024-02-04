@@ -92,7 +92,7 @@ const MeditationItem: React.FC<MeditationItemProps> = memo(
       <View
         style={{
           width: theme.dimens.winWidth / 2.4,
-          height: 220,
+          height: 230,
           maxWidth: theme.dimens.winWidth / 2 - 28,
         }}>
         <Pressable
@@ -137,8 +137,11 @@ const MeditationItem: React.FC<MeditationItemProps> = memo(
         </Pressable>
         <Pressable
           onPress={navigateToModal}
-          className="flex flex-col items-start justify-center py-1 px-2 h-12">
-          <Text className="text-black text-[15px] font-medium text-left tracking-tighter leading-6 w-full">
+          className="flex flex-col items-start justify-start py-1 px-2 h-16">
+          <Text
+            numberOfLines={2}
+            ellipsizeMode="tail"
+            className="text-black text-[15px] font-medium text-left tracking-tighter leading-[20px] w-full">
             {name}
           </Text>
           <View className="flex flex-row items-center">
