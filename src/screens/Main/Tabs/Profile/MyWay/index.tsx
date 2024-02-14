@@ -12,6 +12,7 @@ import styled from 'styled-components';
 
 import Badges from './Badges';
 import MyCollections from './MyCollections';
+import ProgressBar from './ProgressBar';
 import Strikes from './Strikes';
 import UserMetrics from './UserMetrics';
 
@@ -47,6 +48,10 @@ const Card: FC<PropsWithChildren> = ({ children }) => (
   <View className="rounded-lg p-4 bg-[#273051]/10">{children}</View>
 );
 
+const totalMinutesMeditated = 202000;
+const challengeTotal = 1000000;
+const progress = totalMinutesMeditated / challengeTotal;
+
 const MyWay = ({ navigation }) => {
   const { navigate } = useNavigation();
   const { meditationsPracticed } = useSelector(state => state.userProgress);
@@ -77,6 +82,17 @@ const MyWay = ({ navigation }) => {
           <Text className="mt-4 mb-6 text-center text-lg italic font-medium text-black">
             - "{getRandomElementsByDay<string>(quoteData, 1)[0]}"
           </Text>
+
+          <Title className="mb-5" t="אתגר מיליון דקות מדיטציה:" />
+          <Card>
+            <View className="flex-row justify-between mb-4">
+              <Text>{totalMinutesMeditated} דקות סך הכל</Text>
+              <Text>{Math.round(progress * 100)}%</Text>
+            </View>
+            <ProgressBar progress={Math.round(progress * 100)} />
+          </Card>
+          <Divider className="mb-6 mt-4" />
+
           <Title className="mb-5" t="הרגעים שלי" />
           <Card>
             <UserMetrics />
