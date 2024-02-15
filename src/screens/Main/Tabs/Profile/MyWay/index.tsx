@@ -4,7 +4,14 @@ import { CircleButton } from '@common/components/buttons/CircleButton';
 import { useNavigation } from '@react-navigation/native';
 import { getRandomElementsByDay } from '@utils/rand';
 import { stringToDate } from '@utils/string';
-import React, { FC, PropsWithChildren } from 'react';
+import axios from 'axios';
+import React, {
+  FC,
+  PropsWithChildren,
+  useEffect,
+  useMemo,
+  useState,
+} from 'react';
 import { Text, View } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import { useSelector } from 'react-redux';
@@ -48,14 +55,41 @@ const Card: FC<PropsWithChildren> = ({ children }) => (
   <View className="rounded-lg p-4 bg-[#273051]/10">{children}</View>
 );
 
-const totalMinutesMeditated = 202000;
-const challengeTotal = 1000000;
-const progress = totalMinutesMeditated / challengeTotal;
+const CHALLANGE_TOTAL = 1000000;
+
+const fetchChallengeProgress = async () => {
+  let practivedMinutes = 202000;
+
+  try {
+    const res = await axios.get('https://www.rega.co.il/api/users/total');
+    practivedMinutes = res.data.totalMinutes;
+  } catch (error) {
+    console.error('error fetching challenge progress', error);
+  }
+
+  return practivedMinutes;
+};
 
 const MyWay = ({ navigation }) => {
   const { navigate } = useNavigation();
   const { meditationsPracticed } = useSelector(state => state.userProgress);
   const dates = meditationsPracticed.map(m => stringToDate(m.timestamp));
+  const [totalMinutesMeditated, setTotalMinutesMeditated] = useState(212301);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const data = await fetchChallengeProgress();
+      console.log('data', data);
+      setTotalMinutesMeditated(data);
+    };
+
+    fetchData();
+  }, []);
+
+  const progress = useMemo(
+    () => totalMinutesMeditated / CHALLANGE_TOTAL,
+    [totalMinutesMeditated],
+  );
 
   return (
     <View className="flex-1 bg-[#fdedd6]">
@@ -86,7 +120,16 @@ const MyWay = ({ navigation }) => {
           <Title className="mb-5" t="אתגר מיליון דקות מדיטציה:" />
           <Card>
             <View className="flex-row justify-between mb-4">
-              <Text>{totalMinutesMeditated} דקות סך הכל</Text>
+              <Text>
+                {totalMinutesMeditated
+                  .toString()
+                  .replace(/\B(?=(\d{3})+(?!\d))/g, ',')}{' '}
+                דקות מתוך{' '}
+                {CHALLANGE_TOTAL.toString().replace(
+                  /\B(?=(\d{3})+(?!\d))/g,
+                  ',',
+                )}{' '}
+              </Text>
               <Text>{Math.round(progress * 100)}%</Text>
             </View>
             <ProgressBar progress={Math.round(progress * 100)} />
