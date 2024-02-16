@@ -10,7 +10,7 @@ interface Props {
 }
 
 const SearchBar: FC<Props> = ({ searchQuery, setSearchQuery }) => {
-  const ref = useRef(null);
+  const ref = useRef<TextInput>(null);
 
   return (
     <View className="relative py-2 px-2 rounded-full mt-8 flex-row items-center w-full mx-auto mb-4 border border-[#E0D3BC]">
@@ -37,9 +37,9 @@ const SearchBar: FC<Props> = ({ searchQuery, setSearchQuery }) => {
       />
       {searchQuery.length > 0 && (
         <TouchableOpacity
-          className="absolute right-0 mr-2 p-4"
+          className="absolute right-0"
+          style={{ padding: 16 }}
           onPress={() => {
-            ref.current?.blur();
             ref.current?.clear();
             setSearchQuery('');
           }}>
