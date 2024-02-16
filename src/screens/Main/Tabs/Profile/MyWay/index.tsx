@@ -56,12 +56,13 @@ const Card: FC<PropsWithChildren> = ({ children }) => (
 );
 
 const CHALLANGE_TOTAL = 1000000;
+const LISTEN_TIME_URL = 'https://www.rega.co.il/api/listens/total';
 
 const fetchChallengeProgress = async () => {
   let practivedMinutes = 202000;
 
   try {
-    const res = await axios.get('https://www.rega.co.il/api/users/total');
+    const res = await axios.get(LISTEN_TIME_URL);
     practivedMinutes = res.data.totalMinutes;
   } catch (error) {
     console.error('error fetching challenge progress', error);
@@ -79,7 +80,6 @@ const MyWay = ({ navigation }) => {
   useEffect(() => {
     const fetchData = async () => {
       const data = await fetchChallengeProgress();
-      console.log('data', data);
       setTotalMinutesMeditated(data);
     };
 
