@@ -1,62 +1,44 @@
-import React, { useCallback, useEffect, useState } from 'react';
-import { GiftedChat } from 'react-native-gifted-chat';
+import {
+  FIRST_MESSAGES,
+  mapIMessageToMessage,
+  mapMessageToIMessage,
+  removeEmojiesFromString,
+} from '@utils/chat';
+import React, { useCallback } from 'react';
+import { Text } from 'react-native';
+import {
+  Bubble,
+  GiftedChat,
+  IMessage,
+  InputToolbar,
+  Send,
+  SystemMessage,
+} from 'react-native-gifted-chat';
+import { useChat } from 'react-native-vercel-ai';
 
 export default function Example() {
-  const [messages, setMessages] = useState<any>([]);
+  const {
+    messages: chatMsgs,
+    append,
+    isLoading,
+  } = useChat({
+    api: 'https://rega.co.il/api/chat',
+  });
 
-  useEffect(() => {
-    setMessages([
-      {
-        _id: 1,
-        text: 'היי אני מיכאל, איך אני יכול לעזור לך?',
-        createdAt: new Date(),
-        user: {
-          _id: 2,
-          name: 'מיכאל',
-          avatar:
-            'https://doodleipsum.com/700/avatar-3?i=74943b7fc5a9da2affe8c2d8b8558812',
-        },
-        quickReplies: {
-          type: 'radio', // or 'checkbox',
-          keepIt: true,
-          values: [
-            {
-              title: 'מהם היתרונות של מדיטציה?',
-              value: 'benefits_of_meditation',
-            },
-            {
-              title: 'זקוקים להכוונה עם מדיטציה',
-              value: 'learn_to_meditate',
-            },
-            {
-              title: 'למה המוח שלי כל כך עמוס במהלך מדיטציה?',
-              value: 'busy_mind_during_meditation',
-            },
-          ],
-        },
-        image:
-          'https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExcmdybWwwbTNqMG5vaGwyemc3bTBxaTUzZGdtNnY1ZWM2bDhsbnJyYSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/icUEIrjnUuFCWDxFpU/giphy.gif',
-        sent: true,
-        received: true,
-        pending: true,
-      },
-    ]);
-  }, []);
-
-  const onSend = useCallback((messages = []) => {
-    setMessages(previousMessages =>
-      GiftedChat.append(previousMessages, messages),
-    );
-  }, []);
+  const onSend = useCallback(
+    (msgs: IMessage[] = []) => {
+      append(mapIMessageToMessage(msgs[0]));
+    },
+    [append],
+  );
 
   const handleQuickReply = replies => {
-    // Each reply is an object containing a 'title' and a 'value'
     const messagesToAdd = replies.map((reply, index) => ({
-      _id: messages.length + index + 1, // Assign new, unique ids to these messages
-      text: reply.title, // Use the title of the quickReply as the message text
+      _id: `${index}-${Date.now()}`,
+      text: removeEmojiesFromString(reply.title),
       createdAt: new Date(),
       user: {
-        _id: 1,
+        _id: 'USER',
       },
     }));
 
@@ -65,12 +47,84 @@ export default function Example() {
 
   return (
     <GiftedChat
-      messages={messages}
+      messagesContainerStyle={{
+        backgroundColor: '#FFF8EE',
+        paddingBottom: 16,
+      }}
+      renderLoading={() => <Text>Loading...</Text>}
+      inverted={false}
+      isTyping={isLoading}
+      scrollToBottom
+      messages={
+        chatMsgs.length ? chatMsgs.map(mapMessageToIMessage) : FIRST_MESSAGES
+      }
       onQuickReply={handleQuickReply}
       onSend={messages => onSend(messages)}
       placeholder="הכנס הודעה..."
       user={{
-        _id: 1,
+        _id: 'USER',
+      }}
+      renderSystemMessage={props => (
+        <SystemMessage
+          {...props}
+          textStyle={{
+            marginVertical: 10,
+            color: 'black',
+            textAlign: 'right',
+            direction: 'rtl',
+          }}
+        />
+      )}
+      renderSend={props => (
+        <Send
+          {...props}
+          label="שלח"
+          containerStyle={{ justifyContent: 'center' }}
+        />
+      )}
+      renderInputToolbar={props => (
+        <InputToolbar
+          {...props}
+          containerStyle={{
+            justifyContent: 'flex-end',
+            paddingTop: 8,
+          }}
+          // @ts-ignore
+          textInputStyle={{
+            textAlign: 'right',
+            direction: 'rtl',
+          }}
+        />
+      )}
+      renderBubble={props => {
+        return (
+          <Bubble
+            {...props}
+            textStyle={{
+              right: {
+                color: 'white',
+                direction: 'rtl',
+                textAlign: 'left',
+              },
+              left: {
+                direction: 'rtl',
+                textAlign: 'left',
+              },
+            }}
+            wrapperStyle={{
+              right: {
+                backgroundColor: '#007AFF',
+                marginVertical: 4,
+                direction: 'rtl',
+              },
+              left: {
+                backgroundColor: '#FFEFD7',
+                marginVertical: 4,
+                direction: 'rtl',
+              },
+            }}
+          />
+        );
       }}
     />
   );

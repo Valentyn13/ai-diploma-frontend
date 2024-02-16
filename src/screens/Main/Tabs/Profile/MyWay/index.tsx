@@ -113,7 +113,7 @@ const MyWay = ({ navigation }) => {
           />
         </View>
         <View className="px-5 mt-16">
-          <Text className="mt-4 mb-6 text-center text-lg italic font-medium text-black">
+          <Text className="mt-4 mb-20 text-center text-lg italic font-medium text-black">
             - "{getRandomElementsByDay<string>(quoteData, 1)[0]}"
           </Text>
 
