@@ -82,6 +82,8 @@ const images: Record<string, any> = {
   coursesOff: require('./coursesOff.png'),
   profileOn: require('./profileOn.png'),
   profileOff: require('./profileOff.png'),
+  chatOn: require('./chatOn.png'),
+  chatOff: require('./chatOff.png'),
   download: require('./download.png'),
   heart: require('./heart.png'),
   heartSelected: require('./heartSelected.png'),

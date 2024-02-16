@@ -39,10 +39,14 @@ export default {
   expExpert: 'עשיתי הרבה',
   male: 'זכר',
   female: 'נקבה',
+
+  // Tabs
   home: 'בית',
   courses: 'קורסים',
-  meditations: 'גלו עוד',
   profile: 'פרופיל',
+  meditations: 'גלו עוד',
+  chat: "צ'אט",
+
   categories: 'נושאים',
   recommended: 'מומלץ עבורך',
   ourCourses: 'הקורסים שלנו',
@@ -97,8 +101,6 @@ export default {
   subscribeNowText: 'קנה מנוי וקבל גישה לכל התכנים ללא ההגבלה!',
   meditation_title: 'האם התנסית פעם במדיטציה?',
 
-  // subscribe point
-
   point1:
     'גישה ל170+ מדיטציות מודרכות בעברית, תדרים מרגיעים, ותרגילי נשימה שנבנו על ידי מומחים',
   point2: 'שפרו את איכות השינה והפחיתו חרדות ומתחים',
@@ -112,6 +114,4 @@ export default {
   heading1: 'היי , ברוכים הבאים לרגע',
   heading2: 'אפליקציית  המיינדפולנס',
   heading3: 'הראשונה בעברית',
-
-  // background musics
 };
