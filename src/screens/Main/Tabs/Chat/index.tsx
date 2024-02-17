@@ -5,7 +5,6 @@ import {
   removeEmojiesFromString,
 } from '@utils/chat';
 import React, { useCallback } from 'react';
-import { Text } from 'react-native';
 import {
   Bubble,
   GiftedChat,
@@ -16,13 +15,15 @@ import {
 } from 'react-native-gifted-chat';
 import { useChat } from 'react-native-vercel-ai';
 
-export default function Example() {
+const API_URL = 'https://rega.co.il/api/chat';
+
+export default function Chat() {
   const {
     messages: chatMsgs,
     append,
     isLoading,
   } = useChat({
-    api: 'https://rega.co.il/api/chat',
+    api: API_URL,
   });
 
   const onSend = useCallback(
@@ -51,7 +52,6 @@ export default function Example() {
         backgroundColor: '#FFF8EE',
         paddingBottom: 16,
       }}
-      renderLoading={() => <Text>Loading...</Text>}
       inverted={false}
       isTyping={isLoading}
       scrollToBottom

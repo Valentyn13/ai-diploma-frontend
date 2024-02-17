@@ -4,15 +4,13 @@ import { Message } from 'react-native-vercel-ai';
 export const SYSTEM_USER = {
   _id: 'DR_MICHAEL',
   name: 'מיכאל',
-  avatar:
-    'https://doodleipsum.com/700/avatar-3?i=74943b7fc5a9da2affe8c2d8b8558812',
+  avatar: 'https://rega.co.il/images/michael.png',
 } as const;
 
 export const CLIENT_USER = {
   _id: 'USER',
   name: 'אני',
-  avatar:
-    'https://doodleipsum.com/700/avatar-3?i=74943b7fc5a9da2affe8c2d8b8558812',
+  avatar: 'https://rega.co.il/images/michael.png',
 } as const;
 
 export const FIRST_MESSAGES: IMessage[] = [
