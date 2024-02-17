@@ -92,6 +92,7 @@ export default function Chat() {
           textInputStyle={{
             textAlign: 'right',
             direction: 'rtl',
+            color: 'black',
           }}
         />
       )}
