@@ -17,7 +17,7 @@ export const FIRST_MESSAGES: IMessage[] = [
   // @ts-ignore
   {
     _id: 'intro_system',
-    system: true,
+    user: SYSTEM_USER,
     text: 'שלום! אני מיכאל, אני כאן כדי לעזור לך במסע 🧘',
   },
   // @ts-ignore

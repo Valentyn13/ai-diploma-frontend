@@ -11,7 +11,6 @@ import {
   IMessage,
   InputToolbar,
   Send,
-  SystemMessage,
 } from 'react-native-gifted-chat';
 import { useChat } from 'react-native-vercel-ai';
 
@@ -50,7 +49,7 @@ export default function Chat() {
     <GiftedChat
       messagesContainerStyle={{
         backgroundColor: '#FFF8EE',
-        paddingBottom: 16,
+        paddingVertical: 16,
       }}
       inverted={false}
       isTyping={isLoading}
@@ -64,17 +63,17 @@ export default function Chat() {
       user={{
         _id: 'USER',
       }}
-      renderSystemMessage={props => (
-        <SystemMessage
-          {...props}
-          textStyle={{
-            marginVertical: 10,
-            color: 'black',
-            textAlign: 'right',
-            direction: 'rtl',
-          }}
-        />
-      )}
+      quickReplyStyle={{
+        backgroundColor: '#007AFF',
+        borderRadius: 4,
+        width: 200,
+        margin: 4,
+      }}
+      quickReplyTextStyle={{
+        color: 'white',
+        textAlign: 'center',
+        direction: 'rtl',
+      }}
       renderSend={props => (
         <Send
           {...props}
