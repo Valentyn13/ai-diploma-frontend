@@ -39,9 +39,9 @@ const Splash: FC<SplashProps> = ({ navigation: { navigate, replace } }) => {
         } else if (isFirstTimeUser) {
           logEvent(AMPLITUDE_EVENTS.ONBOARDING_START);
           uploadEvents();
-          navigate('Onboarding');
+          replace('Onboarding');
         } else {
-          navigate('Auth');
+          replace('Auth');
         }
       },
       config.isDev ? 1000 : 3000,
