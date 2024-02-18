@@ -5,6 +5,7 @@ import {
   removeEmojiesFromString,
 } from '@utils/chat';
 import React, { useCallback } from 'react';
+import { View } from 'react-native';
 import {
   Bubble,
   GiftedChat,
@@ -12,13 +13,17 @@ import {
   InputToolbar,
   Send,
 } from 'react-native-gifted-chat';
+import Icon from 'react-native-vector-icons/Feather';
 import { useChat } from 'react-native-vercel-ai';
+
+import ChatHeader from './ChatHeader';
 
 const API_URL = 'https://rega.co.il/api/chat';
 
 export default function Chat() {
   const {
     messages: chatMsgs,
+    setMessages,
     append,
     isLoading,
   } = useChat({
@@ -45,87 +50,104 @@ export default function Chat() {
     onSend(messagesToAdd);
   };
 
+  // TODO: fix quick replies in SlackMessage
+  // const renderMessage = props => {
+  //   return <SlackMessage {...props} messageTextStyle={{}} />;
+  // };
+
   return (
-    <GiftedChat
-      messagesContainerStyle={{
-        backgroundColor: '#FFF8EE',
-        paddingVertical: 16,
-      }}
-      inverted={false}
-      isTyping={isLoading}
-      scrollToBottom
-      messages={
-        chatMsgs.length ? chatMsgs.map(mapMessageToIMessage) : FIRST_MESSAGES
-      }
-      onQuickReply={handleQuickReply}
-      onSend={messages => onSend(messages)}
-      placeholder="הכנס הודעה..."
-      user={{
-        _id: 'USER',
-      }}
-      quickReplyStyle={{
-        backgroundColor: '#007AFF',
-        borderRadius: 4,
-        width: 200,
-        margin: 4,
-      }}
-      quickReplyTextStyle={{
-        color: 'white',
-        textAlign: 'center',
-        direction: 'rtl',
-      }}
-      renderSend={props => (
-        <Send
-          {...props}
-          label="שלח"
-          containerStyle={{ justifyContent: 'center' }}
-        />
-      )}
-      renderInputToolbar={props => (
-        <InputToolbar
-          {...props}
-          containerStyle={{
-            justifyContent: 'flex-end',
-            paddingTop: 8,
-          }}
-          // @ts-ignore
-          textInputStyle={{
-            textAlign: 'right',
-            direction: 'rtl',
-            color: 'black',
-          }}
-        />
-      )}
-      renderBubble={props => {
-        return (
-          <Bubble
+    <View className="w-full h-full">
+      <ChatHeader
+        title="מיכאל"
+        avatarUri="https://rega.co.il/images/michael.png"
+        onNew={() => {
+          if (chatMsgs.length) {
+            setMessages([]);
+          }
+        }}
+      />
+
+      <GiftedChat
+        messagesContainerStyle={{
+          backgroundColor: '#FFF8EE',
+          // direction: 'ltr',
+          paddingVertical: 16,
+        }}
+        inverted={false}
+        isTyping={isLoading}
+        scrollToBottom
+        messages={
+          chatMsgs.length ? chatMsgs.map(mapMessageToIMessage) : FIRST_MESSAGES
+        }
+        onQuickReply={handleQuickReply}
+        onSend={messages => onSend(messages)}
+        placeholder="הכנס הודעה..."
+        user={{
+          _id: 'USER',
+        }}
+        quickReplyStyle={{
+          backgroundColor: '#007AFF',
+          borderRadius: 4,
+          width: 200,
+          margin: 4,
+        }}
+        quickReplyTextStyle={{
+          color: 'white',
+          textAlign: 'center',
+          direction: 'rtl',
+        }}
+        alwaysShowSend
+        renderSend={props => (
+          <Send {...props} containerStyle={{ justifyContent: 'center' }}>
+            <View className="rotate-[228deg] mr-4">
+              <Icon name="send" color="#007AFF" size={24} />
+            </View>
+          </Send>
+        )}
+        // TODO: fix quick replies in SlackMessage
+        // renderMessage={renderMessage}
+        renderInputToolbar={props => (
+          <InputToolbar
             {...props}
-            textStyle={{
-              right: {
-                color: 'white',
-                direction: 'rtl',
-                textAlign: 'left',
-              },
-              left: {
-                direction: 'rtl',
-                textAlign: 'left',
-              },
+            containerStyle={{
+              justifyContent: 'flex-end',
+              paddingBottom: 0,
             }}
-            wrapperStyle={{
-              right: {
-                backgroundColor: '#007AFF',
-                marginVertical: 4,
-                direction: 'rtl',
-              },
-              left: {
-                backgroundColor: '#FFEFD7',
-                marginVertical: 4,
-                direction: 'rtl',
-              },
+            textInputStyle={{
+              textAlign: 'right',
+              direction: 'rtl',
+              color: 'black',
+              lineHeight: 20,
             }}
           />
-        );
-      }}
-    />
+        )}
+        renderBubble={props => {
+          return (
+            <Bubble
+              {...props}
+              textStyle={{
+                right: {
+                  color: 'white',
+                  textAlign: 'left',
+                },
+                left: {
+                  textAlign: 'left',
+                },
+              }}
+              wrapperStyle={{
+                right: {
+                  backgroundColor: '#007AFF',
+                  marginVertical: 4,
+                },
+                left: {
+                  backgroundColor: '#FFEFD7',
+                  marginVertical: 4,
+                },
+              }}
+            />
+          );
+        }}
+      />
+    </View>
   );
 }
