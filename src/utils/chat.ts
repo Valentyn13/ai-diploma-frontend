@@ -18,7 +18,13 @@ export const FIRST_MESSAGES: IMessage[] = [
   {
     _id: 'intro_system',
     user: SYSTEM_USER,
-    text: 'שלום! אני מיכאל, אני כאן כדי לעזור לך במסע 🧘',
+    text: `היי 👋 אני מיכאל, כאן כדי לעזור לך.
+
+אני יודע שתחושות של לחץ וחרדה יכולות להיות קשות ומאתגרות. אני כאן כדי להקשיב לך, לתמוך בך ולספק לך כלים שיעזרו לך להרגיש טוב יותר.
+    
+יחד, נלמד טכניקות מיינדפולנס יעילות, נתמודד עם המחשבות והרגשות שלך ונמצא מדיטציות מותאמות אישית באפליקציה שיעזרו לך להירגע ולהרגיש יותר בשליטה. 🧘
+    
+איך את/ה מרגיש/ה היום?`,
   },
   // @ts-ignore
   {
@@ -28,24 +34,20 @@ export const FIRST_MESSAGES: IMessage[] = [
       type: 'radio',
       values: [
         {
-          title: 'אני רוצה להתחיל את המסע שלי! איך אני מתחיל/ה? 🚀',
+          title: 'אני רוצה המלצה למדיטציה 🧘',
           value: 'learn_to_meditate',
         },
         {
-          title: 'אשמח לדעת מהם היתרונות של מדיטציה ✨',
+          title: 'מהם היתרונות של מדיטציה ✨',
           value: 'benefits_of_meditation',
         },
         {
-          title: 'המוח שלי עסוק מדי במהלך מדיטציה - איך אני מתמודד/ת עם זה? 🧠',
+          title: 'המוח שלי עסוק מדי במהלך מדיטציה - איך מתמודדים עם זה? 🧠',
           value: 'busy_mind_during_meditation',
         },
         {
-          title: 'מחפש/ת אתגר מדיטציה חדש? בוא/י נעלה רמה! 🆙',
+          title: 'אני דואג בגלל המלחמה',
           value: 'advanced_meditation',
-        },
-        {
-          title: 'אני זקוק/ה לעזרה נוספת',
-          value: 'contact_expert',
         },
       ],
     },
@@ -53,7 +55,7 @@ export const FIRST_MESSAGES: IMessage[] = [
 ];
 
 export function removeEmojiesFromString(str: string) {
-  return str.replace(/🚀|✨|🧠|🆙/g, '');
+  return str.replace(/🚀|✨|🧘|🧠|🆙/g, '');
 }
 
 export const mapMessageToIMessage = (message: Message): IMessage => {
