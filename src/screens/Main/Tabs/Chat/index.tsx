@@ -74,11 +74,11 @@ export default function Chat() {
         messagesContainerStyle={{
           backgroundColor: '#FFF8EE',
           // direction: 'ltr',
-          paddingVertical: 16,
+          paddingVertical: 0,
         }}
+        scrollToBottom
         inverted={false}
         isTyping={isLoading}
-        scrollToBottom
         messages={
           chatMsgs.length ? chatMsgs.map(mapMessageToIMessage) : FIRST_MESSAGES
         }
