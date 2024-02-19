@@ -10,7 +10,6 @@ export const SYSTEM_USER = {
 export const CLIENT_USER = {
   _id: 'USER',
   name: 'אני',
-  avatar: 'https://rega.co.il/images/michael.png',
 } as const;
 
 export const FIRST_MESSAGES: IMessage[] = [
@@ -34,11 +33,11 @@ export const FIRST_MESSAGES: IMessage[] = [
       type: 'radio',
       values: [
         {
-          title: 'אני רוצה המלצה למדיטציה 🧘',
+          title: 'תוכל להמליץ לי על מדיטציה? 🧘',
           value: 'learn_to_meditate',
         },
         {
-          title: 'מהם היתרונות של מדיטציה ✨',
+          title: 'מהם היתרונות של מדיטציה? ✨',
           value: 'benefits_of_meditation',
         },
         {
@@ -46,7 +45,7 @@ export const FIRST_MESSAGES: IMessage[] = [
           value: 'busy_mind_during_meditation',
         },
         {
-          title: 'אני דואג בגלל המלחמה',
+          title: 'אני דואג בגלל המלחמה 😟',
           value: 'advanced_meditation',
         },
       ],
@@ -55,7 +54,7 @@ export const FIRST_MESSAGES: IMessage[] = [
 ];
 
 export function removeEmojiesFromString(str: string) {
-  return str.replace(/🚀|✨|🧘|🧠|🆙/g, '');
+  return str.replace(/🚀|✨|🧘|😟|🧠|🆙/g, '');
 }
 
 export const mapMessageToIMessage = (message: Message): IMessage => {
