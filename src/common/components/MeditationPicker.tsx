@@ -28,7 +28,7 @@ const FEELINGS = {
   stressed: { label: 'מתוסכל', emoji: '😓' },
   anxious: { label: 'חרד', emoji: '😰' },
   sad: { label: 'עצוב', emoji: '😢' },
-  unsure: { label: 'לא בטוח', emoji: '😕' },
+  unfocused: { label: 'חסר מיקוד', emoji: '😵‍💫' },
   angry: { label: 'כועס', emoji: '😡' },
 };
 

@@ -45,147 +45,15 @@ export const CATEGORY_COLOR = {
 } as const;
 
 export const MEDITATIONS_FEELING_LOCATION = [
-  { feeling: ['anxious'], location: ['study'], id: '5eca520c10fe0480d350c9a9' },
-  { feeling: ['stressed'], location: ['bed'], id: '5eca520c10fe0480d350c98d' },
   {
-    feeling: ['anxious'],
-    location: ['home', 'study', 'work', 'army'],
-    id: '602a6676410b770dd49e0d12',
-  },
-  {
-    feeling: ['angry', 'unsure'],
-    location: ['way'],
-    id: '5eca520c10fe0480d350c9a0',
-  },
-  {
-    feeling: ['unsure'],
-    location: ['study', 'work'],
-    id: '5eca520c10fe0480d350c9ab',
-  },
-  {
-    feeling: ['anxious', 'unsure', 'stressed'],
-    location: ['way', 'study', 'work', 'army'],
-    id: '5eca520c10fe0480d350c99d',
-  },
-  {
-    feeling: ['sad'],
-    location: ['home', 'study', 'bed', 'work', 'army'],
-    id: '5eca520c10fe0480d350c992',
-  },
-  {
-    feeling: ['unsure', 'stressed'],
-    location: ['study', 'work', 'army'],
-    id: '5eca520c10fe0480d350c997',
-  },
-  { feeling: ['anxious'], location: ['study'], id: '5eca520c10fe0480d350c9ae' },
-  {
-    feeling: ['anxious'],
-    location: ['home', 'study', 'work', 'army'],
-    id: '5eca520c10fe0480d350c9a2',
-  },
-  {
-    feeling: ['anxious', 'unsure', 'stressed'],
-    location: ['home', 'work'],
-    id: '61a8c296c9ff5226651bfcd8',
-  },
-  {
-    feeling: ['stressed', 'sad'],
-    location: ['home'],
-    id: '63a90bfe49d0f8f7db26dc21',
-  },
-  {
-    feeling: ['stressed'],
-    location: ['home', 'study', 'work', 'army'],
-    id: '6437c209c90514876f52622a',
-  },
-  {
-    feeling: ['anxious', 'angry', 'unsure'],
-    location: ['home', 'bed'],
-    id: '644fc3948b29c767b4e6b66f',
-  },
-  {
-    feeling: ['anxious', 'angry', 'unsure'],
-    location: ['home'],
-    id: '644fc4398b29c767b4e6b671',
-  },
-  {
-    feeling: ['sad'],
-    location: ['home', 'study', 'bed', 'work', 'army'],
-    id: '6466156b8fd24279bde32ed1',
-  },
-  {
-    feeling: ['sad'],
-    location: ['home', 'work', 'army'],
-    id: '6466169a8fd24279bde32ed2',
-  },
-  {
-    feeling: ['angry', 'unsure', 'sad'],
-    location: ['home', 'work'],
-    id: '6482034d0e66f2955d2ecbb9',
-  },
-  {
-    feeling: ['anxious', 'stressed', 'sad'],
+    feeling: ['anxious', 'angry', 'stressed', 'sad', 'calm'],
     location: ['bed'],
-    id: '649545120e66f2955d2ecbe9',
+    id: '5eca520c10fe0480d350c98e',
   },
   {
-    feeling: ['anxious'],
+    feeling: ['unfocused'],
     location: ['home', 'study', 'work', 'army'],
-    id: '64d2f01242357e4b9d18fe36',
-  },
-  {
-    feeling: ['anxious', 'unsure', 'stressed'],
-    location: ['home', 'work'],
-    id: '64daea785d57908b4359d27a',
-  },
-  {
-    feeling: ['anxious', 'angry', 'sad'],
-    location: ['home', 'work'],
-    id: '64f57470d1342603f4d29cf9',
-  },
-  {
-    feeling: ['anxious', 'angry'],
-    location: ['home', 'study', 'work', 'army'],
-    id: '65093d7d1d1970cfe5ebe388',
-  },
-  {
-    feeling: ['anxious', 'angry', 'unsure', 'stressed', 'sad', 'calm'],
-    location: ['way'],
-    id: '6537b3d1092f89755aeb901a',
-  },
-  {
-    feeling: ['anxious', 'angry'],
-    location: ['home', 'study', 'work', 'army'],
-    id: '654c74b8ba86f01d58165692',
-  },
-  {
-    feeling: ['anxious'],
-    location: ['home', 'study', 'work', 'army'],
-    id: '5eca520c10fe0480d350c994',
-  },
-  {
-    feeling: ['anxious', 'angry', 'unsure'],
-    location: ['way'],
-    id: '5eca520c10fe0480d350c99c',
-  },
-  { feeling: ['stressed'], location: ['bed'], id: '5eca520c10fe0480d350c98e' },
-  { feeling: ['anxious'], location: ['study'], id: '5eca520c10fe0480d350c995' },
-  { feeling: ['anxious'], location: ['army'], id: '5eca520c10fe0480d350c998' },
-  { feeling: ['stressed'], location: ['work'], id: '61a8becdc9ff5226651bfcc5' },
-  {
-    feeling: ['unsure', 'calm'],
-    location: ['home', 'work'],
-    id: '630b5093f77053953f6e6595',
-  },
-  {
-    feeling: ['anxious', 'angry', 'unsure', 'calm'],
-    location: ['home', 'bed'],
-    id: '639b110473b17c70f878a685',
-  },
-  {
-    feeling: ['angry', 'sad'],
-    location: ['home'],
-    id: '63aa61c65fbca84d76752332',
+    id: '63c4fe3ec1ab3549d358c3cf',
   },
   {
     feeling: ['anxious', 'angry'],
@@ -193,14 +61,19 @@ export const MEDITATIONS_FEELING_LOCATION = [
     id: '63c0efce2c4099bc0e36e44f',
   },
   {
-    feeling: ['anxious', 'angry'],
-    location: ['home', 'study', 'work', 'army'],
-    id: '64046109420a84635493a7fe',
+    feeling: ['unfocused', 'calm'],
+    location: ['home', 'work'],
+    id: '64bf65afe361a71983a5f3ad',
   },
   {
-    feeling: ['anxious', 'angry'],
+    feeling: ['unfocused', 'anxious', 'stressed'],
     location: ['home', 'work'],
-    id: '6437c1ddc90514876f526229',
+    id: '64daea785d57908b4359d27a',
+  },
+  {
+    feeling: ['unfocused', 'stressed', 'calm'],
+    location: ['bed'],
+    id: '63c0edd62c4099bc0e36e441',
   },
   {
     feeling: ['anxious'],
@@ -208,26 +81,84 @@ export const MEDITATIONS_FEELING_LOCATION = [
     id: '643c1650bb731339805e903f',
   },
   {
-    feeling: ['anxious', 'angry', 'unsure', 'stressed', 'calm'],
-    location: ['way'],
-    id: '647d9465a09dc890566da73e',
+    feeling: ['anxious', 'angry'],
+    location: ['home', 'study', 'work', 'army'],
+    id: '65093d7d1d1970cfe5ebe388',
   },
   {
-    feeling: ['unsure', 'calm'],
+    feeling: ['anxious'],
+    location: ['home', 'study', 'work', 'army'],
+    id: '64d2f01242357e4b9d18fe36',
+  },
+  {
+    feeling: ['anxious', 'angry'],
+    location: ['home', 'study', 'work', 'army'],
+    id: '654c74b8ba86f01d58165692',
+  },
+  {
+    feeling: ['anxious', 'angry'],
     location: ['home', 'work'],
-    id: '64bf65afe361a71983a5f3ad',
+    id: '6437c1ddc90514876f526229',
   },
   {
     feeling: ['angry'],
     location: ['home', 'study', 'bed', 'work', 'army'],
     id: '650bf86a1d1970cfe5ebe38d',
   },
-  { feeling: ['stressed'], location: ['bed'], id: '654c755bba86f01d58165694' },
-  { feeling: ['unsure'], location: ['study'], id: '5eca520c10fe0480d350c9a4' },
   {
-    feeling: ['unsure', 'stressed', 'calm'],
+    feeling: ['anxious', 'angry', 'calm'],
     location: ['bed'],
-    id: '63c0edd62c4099bc0e36e441',
+    id: '63c22ac74e4c5b11918e6091',
+  },
+  {
+    feeling: ['stressed'],
+    location: ['bed'],
+    id: '654c755bba86f01d58165694',
+  },
+  {
+    feeling: ['unfocused', 'calm'],
+    location: ['home', 'study', 'work'],
+    id: '6537b2be092f89755aeb9016',
+  },
+  {
+    feeling: ['anxious', 'angry', 'stressed'],
+    location: ['home', 'work'],
+    id: '638edb9e132405bcd302f6c1',
+  },
+  {
+    feeling: ['calm'],
+    location: ['home', 'work'],
+    id: '643fa94789ea3102dfe03b2e',
+  },
+  {
+    feeling: ['anxious', 'angry'],
+    location: ['home', 'work'],
+    id: '6471b01a538c7fe78164398a',
+  },
+  {
+    feeling: ['stressed'],
+    location: ['home', 'study', 'work', 'army'],
+    id: '6437c209c90514876f52622a',
+  },
+  {
+    feeling: ['unfocused', 'anxious', 'angry', 'stressed', 'sad', 'calm'],
+    location: ['way'],
+    id: '6537b3d1092f89755aeb901a',
+  },
+  {
+    feeling: ['unfocused', 'anxious', 'angry', 'stressed', 'sad', 'calm'],
+    location: ['home', 'study', 'work'],
+    id: '650bfc401d1970cfe5ebe393',
+  },
+  {
+    feeling: ['anxious', 'angry', 'sad'],
+    location: ['home', 'study', 'work', 'army'],
+    id: '64f57470d1342603f4d29cf9',
+  },
+  {
+    feeling: ['angry'],
+    location: ['home', 'study', 'work', 'army'],
+    id: '64fd6d0fc1bd701354997f99',
   },
   {
     feeling: ['anxious', 'angry', 'sad'],
@@ -235,31 +166,274 @@ export const MEDITATIONS_FEELING_LOCATION = [
     id: '657147d0042258f6bc2d20a9',
   },
   {
+    feeling: ['calm'],
+    location: ['bed'],
+    id: '648b02160e66f2955d2ecbcc',
+  },
+  {
+    feeling: ['unfocused', 'anxious', 'angry', 'stressed'],
+    location: ['home', 'study', 'work'],
+    id: '63c0ef0b2c4099bc0e36e448',
+  },
+  {
+    feeling: ['anxious'],
+    location: ['home', 'study', 'work', 'army'],
+    id: '5eca520c10fe0480d350c994',
+  },
+  {
+    feeling: ['unfocused', 'anxious', 'angry'],
+    location: ['home', 'bed'],
+    id: '644fc3948b29c767b4e6b66f',
+  },
+  {
+    feeling: ['unfocused', 'anxious', 'angry', 'stressed', 'calm'],
+    location: ['way'],
+    id: '655707abef4c61fb4c3d8091',
+  },
+  {
+    feeling: ['unfocused', 'anxious', 'angry'],
+    location: ['home'],
+    id: '644fc4398b29c767b4e6b671',
+  },
+  {
+    feeling: ['unfocused'],
+    location: ['home'],
+    id: '6565b79e253db951b9a34f44',
+  },
+  {
+    feeling: ['unfocused', 'anxious', 'angry', 'stressed', 'sad', 'calm'],
+    location: ['way'],
+    id: '6578019e8498ee36f5128ad6',
+  },
+  {
+    feeling: ['anxious', 'stressed', 'sad'],
+    location: ['bed'],
+    id: '649545120e66f2955d2ecbe9',
+  },
+  {
+    feeling: ['stressed'],
+    location: ['bed'],
+    id: '5eca520c10fe0480d350c98d',
+  },
+  {
+    feeling: ['stressed'],
+    location: ['bed'],
+    id: '5eca520c10fe0480d350c990',
+  },
+  {
+    feeling: ['angry', 'sad'],
+    location: ['home', 'study', 'work', 'army'],
+    id: '6444f9d689ea3102dfe03b3d',
+  },
+  {
+    feeling: ['stressed', 'sad'],
+    location: ['home'],
+    id: '63a90bfe49d0f8f7db26dc21',
+  },
+  {
+    feeling: ['anxious'],
+    location: ['army'],
+    id: '5eca520c10fe0480d350c998',
+  },
+  {
+    feeling: ['anxious', 'angry'],
+    location: ['home', 'study', 'work', 'army'],
+    id: '64046109420a84635493a7fe',
+  },
+  {
+    feeling: ['unfocused'],
+    location: ['study'],
+    id: '5eca520c10fe0480d350c9a4',
+  },
+  {
+    feeling: ['angry', 'sad'],
+    location: ['home'],
+    id: '63aa61c65fbca84d76752332',
+  },
+  {
+    feeling: ['unfocused', 'anxious'],
+    location: ['home', 'study', 'work', 'army'],
+    id: '6476e8a8289563e63c577f96',
+  },
+  {
+    feeling: ['anxious'],
+    location: ['home'],
+    id: '5eca520c10fe0480d350c993',
+  },
+  {
+    feeling: ['anxious', 'angry', 'stressed', 'sad'],
+    location: ['home'],
+    id: '6495427e0e66f2955d2ecbe4',
+  },
+  {
     feeling: ['stressed'],
     location: ['study'],
     id: '5eca520c10fe0480d350c9ac',
   },
   {
-    feeling: ['angry', 'unsure', 'stressed'],
+    feeling: ['unfocused'],
+    location: ['home', 'way', 'study', 'work', 'army'],
+    id: '63c22de34e4c5b11918e609a',
+  },
+  {
+    feeling: ['unfocused', 'calm'],
+    location: ['home', 'work'],
+    id: '630b5093f77053953f6e6595',
+  },
+  {
+    feeling: ['unfocused', 'stressed'],
+    location: ['study', 'work', 'army'],
+    id: '5eca520c10fe0480d350c997',
+  },
+  {
+    feeling: ['sad'],
+    location: ['home', 'study', 'bed', 'work', 'army'],
+    id: '5eca520c10fe0480d350c992',
+  },
+  {
+    feeling: ['unfocused'],
+    location: ['home', 'way', 'study', 'work', 'army'],
+    id: '648b00f40e66f2955d2ecbca',
+  },
+  {
+    feeling: ['unfocused', 'anxious', 'angry', 'stressed', 'calm'],
+    location: ['way'],
+    id: '647d9465a09dc890566da73e',
+  },
+  {
+    feeling: ['anxious'],
+    location: ['study'],
+    id: '649544730e66f2955d2ecbe8',
+  },
+  {
+    feeling: ['unfocused', 'angry', 'sad'],
+    location: ['home', 'work'],
+    id: '6482034d0e66f2955d2ecbb9',
+  },
+  {
+    feeling: ['anxious', 'sad'],
+    location: ['home', 'study', 'work', 'army'],
+    id: '648c0c220e66f2955d2ecbd1',
+  },
+  {
+    feeling: ['stressed'],
+    location: ['home'],
+    id: '647d94bba09dc890566da740',
+  },
+  {
+    feeling: ['anxious'],
+    location: ['home', 'study', 'work', 'army'],
+    id: '5eca520c10fe0480d350c9a2',
+  },
+  {
+    feeling: ['unfocused', 'angry'],
+    location: ['way'],
+    id: '5eca520c10fe0480d350c9a0',
+  },
+  {
+    feeling: ['unfocused', 'anxious', 'angry', 'stressed', 'sad', 'calm'],
+    location: ['way'],
+    id: '5eca520c10fe0480d350c99d',
+  },
+  {
+    feeling: ['unfocused', 'anxious', 'angry'],
+    location: ['way'],
+    id: '5eca520c10fe0480d350c99c',
+  },
+  {
+    feeling: ['unfocused'],
+    location: ['home'],
+    id: '6486c3290e66f2955d2ecbc1',
+  },
+  {
+    feeling: ['unfocused', 'angry', 'stressed'],
     location: ['way'],
     id: '5eca520c10fe0480d350c99e',
   },
-  { feeling: ['anxious'], location: ['home'], id: '5eca520c10fe0480d350c993' },
+  {
+    feeling: ['sad'],
+    location: ['home', 'study', 'bed', 'work', 'army'],
+    id: '6466156b8fd24279bde32ed1',
+  },
+  {
+    feeling: ['anxious'],
+    location: ['study'],
+    id: '5eca520c10fe0480d350c9a9',
+  },
+  {
+    feeling: ['anxious'],
+    location: ['study'],
+    id: '5eca520c10fe0480d350c995',
+  },
   {
     feeling: ['angry'],
     location: ['home', 'study', 'work', 'army'],
     id: '5eca520c10fe0480d350c9a1',
   },
-  { feeling: ['stressed'], location: ['home'], id: '647d94bba09dc890566da740' },
   {
-    feeling: ['angry'],
-    location: ['home', 'study', 'work', 'army'],
-    id: '64fd6d0fc1bd701354997f99',
+    feeling: ['sad'],
+    location: ['home', 'work', 'army'],
+    id: '6466169a8fd24279bde32ed2',
   },
   {
-    feeling: ['anxious', 'angry', 'unsure', 'stressed', 'calm'],
-    location: ['way'],
-    id: '655707abef4c61fb4c3d8091',
+    feeling: ['stressed'],
+    location: ['work'],
+    id: '61a8becdc9ff5226651bfcc5',
+  },
+  {
+    feeling: ['unfocused'],
+    location: ['study', 'work'],
+    id: '5eca520c10fe0480d350c9ab',
+  },
+  {
+    feeling: ['anxious'],
+    location: ['study'],
+    id: '5eca520c10fe0480d350c9ae',
+  },
+  {
+    feeling: ['unfocused', 'anxious', 'angry', 'calm'],
+    location: ['home', 'bed'],
+    id: '639b110473b17c70f878a685',
+  },
+  {
+    feeling: ['anxious', 'angry'],
+    location: ['home', 'study', 'work', 'army'],
+    id: '5ef2ff15f1a23752be006520',
+  },
+  {
+    feeling: ['unfocused'],
+    location: ['home'],
+    id: '639b12c773b17c70f878a68a',
+  },
+  {
+    feeling: ['unfocused'],
+    location: ['home', 'way', 'study', 'work', 'army'],
+    id: '639b135b73b17c70f878a68b',
+  },
+  {
+    feeling: ['angry'],
+    location: ['home', 'way', 'study', 'bed', 'work'],
+    id: '63c7ca0d6ea337b4c492bce9',
+  },
+  {
+    feeling: ['unfocused', 'anxious', 'angry', 'stressed', 'sad', 'calm'],
+    location: ['bed'],
+    id: '65a776325c87cdc3c8a4376a',
+  },
+  {
+    feeling: ['unfocused', 'anxious', 'angry', 'stressed', 'sad', 'calm'],
+    location: ['work'],
+    id: '65a4ca17d87fd8af807952c3',
+  },
+  {
+    feeling: ['anxious'],
+    location: ['home', 'way', 'study', 'bed', 'work', 'army'],
+    id: '65a38787d87fd8af807952c0',
+  },
+  {
+    feeling: ['unfocused', 'anxious', 'angry', 'stressed', 'sad', 'calm'],
+    location: ['bed'],
+    id: '65a385b3d87fd8af807952be',
   },
 ] as const;
 
