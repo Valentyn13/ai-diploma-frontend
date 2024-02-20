@@ -7681,6 +7681,11 @@ react-native-copilot@^3.2.1:
     "@changesets/cli" "^2.26.0"
     mitt "^3.0.0"
 
+react-native-crypto-js@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/react-native-crypto-js/-/react-native-crypto-js-1.0.0.tgz#e677e022e147f41b35614416c92d655f87e2450a"
+  integrity sha512-FNbLuG/HAdapQoybeZSoes1PWdOj0w242gb+e1R0hicf3Gyj/Mf8M9NaED2AnXVOX01b2FXomwUiw1xP1K+8sA==
+
 react-native-dash@^0.0.11:
   version "0.0.11"
   resolved "https://registry.yarnpkg.com/react-native-dash/-/react-native-dash-0.0.11.tgz#cf1b0108e4660217cf0300b872231a5cadb9c4a8"

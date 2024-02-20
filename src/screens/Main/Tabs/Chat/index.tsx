@@ -6,8 +6,9 @@ import {
   mapMessageToIMessage,
   removeEmojiesFromString,
 } from '@utils/chat';
-import React, { useCallback } from 'react';
+import React, { useCallback, useState } from 'react';
 import { View } from 'react-native';
+import CryptoJS from 'react-native-crypto-js';
 import {
   Bubble,
   GiftedChat,
@@ -17,14 +18,19 @@ import {
 } from 'react-native-gifted-chat';
 import Icon from 'react-native-vector-icons/Feather';
 import { useChat } from 'react-native-vercel-ai';
+import { useSelector } from 'react-redux';
 
 import ChatHeader from './ChatHeader';
 
 const API_URL = 'https://chat.rega.co.il/api/chat';
 
+const generateUUID = () => CryptoJS.lib.WordArray.random(128 / 8).toString();
+
 export default function Chat() {
+  const { id: userId } = useSelector(state => state.userDetails);
   const { hasPremium } = usePurchases();
   const navigation = useNavigation();
+  const [sessionId, setSessionId] = useState(generateUUID());
 
   const {
     messages: chatMsgs,
@@ -33,6 +39,10 @@ export default function Chat() {
     isLoading,
   } = useChat({
     api: API_URL,
+    body: {
+      userId,
+      sessionId,
+    },
     headers: {
       'content-type': 'application/json',
     },
@@ -78,6 +88,7 @@ export default function Chat() {
         avatarUri="https://rega.co.il/images/michael.png"
         onNew={() => {
           if (chatMsgs.length) {
+            setSessionId(generateUUID());
             setMessages([]);
           }
         }}
