@@ -6,7 +6,7 @@ import {
   mapMessageToIMessage,
   removeEmojiesFromString,
 } from '@utils/chat';
-import React, { useCallback, useState } from 'react';
+import React, { useState } from 'react';
 import { View } from 'react-native';
 import CryptoJS from 'react-native-crypto-js';
 import {
@@ -48,20 +48,17 @@ export default function Chat() {
     },
   });
 
-  const onSend = useCallback(
-    (msgs: IMessage[] = []) => {
-      if (!hasPremium) {
-        // @ts-ignore
-        navigation.navigate('Main', {
-          screen: 'Subscribe',
-        });
-        return;
-      }
+  const onSend = (msgs: IMessage[] = []) => {
+    if (!hasPremium) {
+      // @ts-ignore
+      navigation.navigate('Main', {
+        screen: 'Subscribe',
+      });
+      return;
+    }
 
-      append(mapIMessageToMessage(msgs[0]));
-    },
-    [append, hasPremium, navigation],
-  );
+    append(mapIMessageToMessage(msgs[0]));
+  };
 
   const handleQuickReply = replies => {
     const messagesToAdd = replies.map((reply, index) => ({
