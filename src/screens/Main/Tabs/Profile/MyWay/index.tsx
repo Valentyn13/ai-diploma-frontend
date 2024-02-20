@@ -120,7 +120,7 @@ const MyWay = ({ navigation }) => {
           <Title className="mb-5" t="אתגר מיליון דקות מדיטציה:" />
           <Card>
             <View className="flex-row justify-between mb-4">
-              <Text>
+              <Text className="text-black">
                 {totalMinutesMeditated
                   .toString()
                   .replace(/\B(?=(\d{3})+(?!\d))/g, ',')}{' '}
