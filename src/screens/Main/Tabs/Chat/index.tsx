@@ -18,7 +18,7 @@ import { useChat } from 'react-native-vercel-ai';
 
 import ChatHeader from './ChatHeader';
 
-const API_URL = 'https://therapist-chat.vercel.app/api/chat';
+const API_URL = 'https://chat.rega.co.il/api/chat';
 
 export default function Chat() {
   const {
