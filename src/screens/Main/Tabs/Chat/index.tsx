@@ -1,3 +1,5 @@
+import { usePurchases } from '@common/context/PurchaseContext';
+import { useNavigation } from '@react-navigation/native';
 import {
   FIRST_MESSAGES,
   mapIMessageToMessage,
@@ -21,6 +23,9 @@ import ChatHeader from './ChatHeader';
 const API_URL = 'https://chat.rega.co.il/api/chat';
 
 export default function Chat() {
+  const { hasPremium } = usePurchases();
+  const navigation = useNavigation();
+
   const {
     messages: chatMsgs,
     setMessages,
@@ -35,9 +40,17 @@ export default function Chat() {
 
   const onSend = useCallback(
     (msgs: IMessage[] = []) => {
+      if (!hasPremium) {
+        // @ts-ignore
+        navigation.navigate('Main', {
+          screen: 'Subscribe',
+        });
+        return;
+      }
+
       append(mapIMessageToMessage(msgs[0]));
     },
-    [append],
+    [append, hasPremium, navigation],
   );
 
   const handleQuickReply = replies => {

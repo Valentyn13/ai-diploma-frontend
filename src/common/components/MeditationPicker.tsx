@@ -1,4 +1,5 @@
 import { MEDITATIONS_FEELING_LOCATION } from '@common/constants';
+import { usePurchases } from '@common/context/PurchaseContext';
 import {
   BottomSheetBackdrop,
   BottomSheetFlatList,
@@ -199,8 +200,7 @@ const WhereYouAt: FC<{ onNext: (l: Place) => void }> = ({ onNext }) => {
 
 const MeditationPicker = () => {
   const userDetails = useSelector(state => state.userDetails);
-  // const { hasPremium } = usePurchases();
-  const hasPremium = true;
+  const { hasPremium } = usePurchases();
   const meditations = useSelector(allMeditations);
   const navigation = useNavigation();
   const { isOpen, setIsOpen } = useSheetStore(state => state);
