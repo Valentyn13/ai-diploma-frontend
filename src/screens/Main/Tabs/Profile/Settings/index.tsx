@@ -41,7 +41,7 @@ const Settings = ({ navigation }) => {
   const { name, email, isNotification, notificationTime, id } = useSelector(
     state => state.userDetails,
   );
-  const { DeleteUserData, cancelSubsciption } = useDeleteData();
+  const { DeleteUserData, cancelSubscription } = useDeleteData();
   const { saveNotification, cancelNotification } = useUpdateProfile();
 
   const [isNotificationLocal, setIsNotificationLocal] = React.useState(false);
@@ -166,39 +166,36 @@ const Settings = ({ navigation }) => {
   };
 
   const cancelSubscriptionPrompt = () => {
-    if (Platform.OS === 'android') {
-      Linking.openURL(
-        'https://play.google.com/store/account/subscriptions',
-      ).catch(err => {
-        Alert.alert(
-          'לא ניתן לפתוח את האפליקציה',
-          'אנא צרו קשר עם התמיכה במייל hello@rega.co.il, תודה',
-        );
-      });
-
-      return;
-    }
-
     Alert.prompt(
       'ביטול מנוי',
-      'הכנס את כתובת האימייל שלך ואת הסיבה לביטול המנוי',
+      'אנא הזינו את הסיבה לביטול המנוי, על מנת שנוכל לשפר את השירות',
       [
         {
           text: 'ביטול',
-          onPress: () => {},
+          onPress: () => console.log('Cancelled'),
           style: 'cancel',
-          isPreferred: true,
         },
         {
-          text: 'שלח',
-          onPress: () => {
-            dispatch(cancelSubsciption(data));
+          text: 'אישור',
+          onPress: reason => {
+            cancelSubscription(reason);
+            const url =
+              Platform.OS === 'android'
+                ? 'https://play.google.com/store/account/subscriptions'
+                : 'https://apps.apple.com/account/subscriptions';
+
+            Linking.openURL(url).catch(err => {
+              Alert.alert(
+                'Unable to open the app',
+                'Please contact support via email at hello@rega.co.il, thank you',
+              );
+            });
           },
           style: 'destructive',
         },
       ],
       'plain-text',
-      'אני רוצה לבטל את הרישום כי...',
+      'אני רוצה לבטל את הרישום כי ',
     );
   };
 

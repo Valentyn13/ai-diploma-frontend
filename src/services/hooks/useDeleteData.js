@@ -34,14 +34,13 @@ export default () => {
     shouldDispatch: () => false,
   });
 
-  const cancelSubsciption = data => {
-    // console.log('XXXXXX', data);
+  const cancelSubscription = reason => {
     const { fetch } = sendCancelSubscription;
-    fetch({ data });
+    fetch({ data: { reason } });
   };
 
   return {
     DeleteUserData,
-    cancelSubsciption,
+    cancelSubscription,
   };
 };
