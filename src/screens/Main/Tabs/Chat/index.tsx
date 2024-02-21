@@ -7,7 +7,7 @@ import {
   removeEmojiesFromString,
 } from '@utils/chat';
 import React, { useState } from 'react';
-import { View } from 'react-native';
+import { Pressable, View } from 'react-native';
 import CryptoJS from 'react-native-crypto-js';
 import {
   Bubble,
@@ -49,14 +49,6 @@ export default function Chat() {
   });
 
   const onSend = (msgs: IMessage[] = []) => {
-    if (!hasPremium) {
-      // @ts-ignore
-      navigation.navigate('Main', {
-        screen: 'Subscribe',
-      });
-      return;
-    }
-
     append(mapIMessageToMessage(msgs[0]));
   };
 
@@ -80,6 +72,19 @@ export default function Chat() {
 
   return (
     <View className="w-full h-full">
+      {/* workaround to trigger paywall - onSend function isn't updated on re-renders */}
+      {!hasPremium && (
+        <Pressable
+          className="absolute top-0 left-0 w-full h-full z-10"
+          onPress={() => {
+            // @ts-ignore
+            navigation.navigate('Main', {
+              screen: 'Subscribe',
+            });
+            return;
+          }}
+        />
+      )}
       <ChatHeader
         title="מיכאל"
         avatarUri="https://rega.co.il/images/michael.png"
