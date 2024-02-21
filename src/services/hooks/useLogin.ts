@@ -1,6 +1,7 @@
 import { captureMessage } from '@sentry/react-native';
 import api from '@services/api';
 import { login, setLoder } from '@store/actions';
+import { useLoginStore } from '@store/useLoginStore';
 import { applelogin } from '@utils/apple';
 import { fbLogin } from '@utils/facebook';
 import { googleSignIn } from '@utils/google';
@@ -13,9 +14,15 @@ import { getFcmToken } from '../../helper/pushNotifications';
 import useAxios from './useAxios';
 
 export default () => {
+  const { setIsLoading } = useLoginStore(state => state);
   const dispatch = useDispatch();
   const userDetails = useSelector(state => state.userDetails);
   const preferences = useSelector(state => state.userPreferences);
+
+  const handleError = () => {
+    Alert.alert('שגיאה בהתחברות', 'אנא נסה שנית דרך ערוץ אחר');
+    setIsLoading(false);
+  };
 
   const emailLogin = useAxios({
     api: api.login,
@@ -84,6 +91,7 @@ export default () => {
       });
     } catch (error) {
       logger.error(error);
+      handleError();
     }
   };
 
@@ -104,26 +112,33 @@ export default () => {
       });
     } catch (error) {
       logger.error(error);
+      handleError();
     }
   };
 
   const loginWithApple = async () => {
     const fcmToken = await getFcmToken();
-    const res = await applelogin();
-    const { fetch } = appleLoginApi;
 
-    const { sex } = userDetails;
-    const { selectedCategories } = preferences;
+    try {
+      const res = await applelogin();
+      const { fetch } = appleLoginApi;
 
-    fetch({
-      access_token: res.identityToken,
-      sex,
-      categories: selectedCategories,
-      email: res.email,
-      sub: res.sub,
-      name: res.givenName,
-      fcmToken,
-    });
+      const { sex } = userDetails;
+      const { selectedCategories } = preferences;
+
+      fetch({
+        access_token: res.identityToken,
+        sex,
+        categories: selectedCategories,
+        email: res.email,
+        sub: res.sub,
+        name: res.givenName,
+        fcmToken,
+      });
+    } catch (error) {
+      logger.error(error);
+      handleError();
+    }
   };
 
   const signUp = (email, password, name, fcmToken) => {
@@ -195,7 +210,6 @@ export default () => {
   );
 
   // email login
-
   const {
     completed: emailLoginCompleted,
     data: emailLoginData,
@@ -209,12 +223,14 @@ export default () => {
       } else {
         captureMessage('Missing Email Login Data');
       }
-    } else if (emailError) {
-      Alert.alert(emailError);
     }
-  }, [emailLoginData, emailLoginCompleted, dispatchLogin, emailError]);
+  }, [emailLoginData, emailLoginCompleted, dispatchLogin]);
 
-  const { completed: fbLoginCompleted, data: fbLoginData } = facebookLoginApi;
+  const {
+    completed: fbLoginCompleted,
+    data: fbLoginData,
+    error: fbError,
+  } = facebookLoginApi;
 
   useEffect(() => {
     if (fbLoginCompleted) {
@@ -226,8 +242,11 @@ export default () => {
     }
   }, [fbLoginCompleted, fbLoginData, dispatchLogin]);
 
-  const { completed: googleLoginCompleted, data: googleLoginData } =
-    googleLoginApi;
+  const {
+    completed: googleLoginCompleted,
+    data: googleLoginData,
+    error: googleError,
+  } = googleLoginApi;
 
   useEffect(() => {
     if (googleLoginCompleted) {
@@ -240,8 +259,11 @@ export default () => {
   }, [dispatchLogin, googleLoginCompleted, googleLoginData]);
 
   // appleLoin
-  const { completed: appleLoginCompleted, data: appleLoginData } =
-    appleLoginApi;
+  const {
+    completed: appleLoginCompleted,
+    data: appleLoginData,
+    error: appleError,
+  } = appleLoginApi;
 
   useEffect(() => {
     if (appleLoginCompleted) {
@@ -252,9 +274,12 @@ export default () => {
       }
     }
   }, [appleLoginCompleted, appleLoginData, dispatchLogin]);
-  // register
 
-  const { completed: registerCompleted, data: registerData, error } = register;
+  const {
+    completed: registerCompleted,
+    data: registerData,
+    error: registerError,
+  } = register;
 
   useEffect(() => {
     if (registerCompleted) {
@@ -263,10 +288,22 @@ export default () => {
       } else {
         captureMessage('Missing Regsiter Data');
       }
-    } else if (error) {
-      Alert.alert(error);
     }
-  }, [registerCompleted, registerData, dispatchLogin, error]);
+  }, [registerCompleted, registerData, dispatchLogin]);
+
+  useEffect(() => {
+    if (emailError || fbError || googleError || appleError || registerError) {
+      handleError();
+    }
+  }, [
+    emailError,
+    fbError,
+    googleError,
+    appleError,
+    registerError,
+    setIsLoading,
+    handleError,
+  ]);
 
   return {
     loginWithEmail,

@@ -7,9 +7,10 @@ import { RootStackParamList } from '@screens/RootNavigator';
 import useAppData from '@services/hooks/useAppData';
 import useLogin from '@services/hooks/useLogin';
 import { firstCourseSelector } from '@store/selectors';
+import { useLoginStore } from '@store/useLoginStore';
 import alert from '@utils/alert';
 import logger from '@utils/logger';
-import React, { FC, useEffect, useState } from 'react';
+import React, { FC, useEffect } from 'react';
 import { ActivityIndicator, Text, View } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { scale } from 'react-native-size-matters';
@@ -28,7 +29,7 @@ type PreLoginProps = NativeStackScreenProps<
 // >;
 
 const PreLogin: FC<PreLoginProps> = ({ navigation: { navigate } }) => {
-  const [isLoading, setIsLoading] = useState(false);
+  const { isLoading, setIsLoading } = useLoginStore(state => state);
   const { loginWithApple, loginWithFacebook, loginWithGoogle } = useLogin();
   const { getAppData } = useAppData();
   const accessToken = useSelector<any, string>(
