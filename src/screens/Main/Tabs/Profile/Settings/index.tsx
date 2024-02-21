@@ -3,6 +3,7 @@ import { BoldTitle } from '@common/components/Styled';
 import { CircleButton } from '@common/components/buttons/CircleButton';
 import theme from '@common/theme';
 import colors from '@common/theme/colors';
+import Clipboard from '@react-native-clipboard/clipboard';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import rudderClient, {
   RUDDER_LOG_LEVEL,
@@ -37,7 +38,7 @@ const Settings = ({ navigation }) => {
   const [showTime, setShowTime] = React.useState(false);
 
   const dispatch = useDispatch();
-  const { name, email, isNotification, notificationTime } = useSelector(
+  const { name, email, isNotification, notificationTime, id } = useSelector(
     state => state.userDetails,
   );
   const { DeleteUserData, cancelSubsciption } = useDeleteData();
@@ -276,8 +277,17 @@ const Settings = ({ navigation }) => {
       ),
     },
     {
-      title: 'צור קשר',
+      title: 'פנו אלינו',
       onPress: onContactUs,
+      onLongPress: () => {
+        const data = { id, name, email, appVersion: DeviceInfo.getVersion() };
+        Clipboard.setString(JSON.stringify(data));
+
+        Alert.alert(
+          'הנתונים הועתקו',
+          'הנתונים הועתקו, אנא הדביקו אותם בשיחה עם התמיכה',
+        );
+      },
       icon: 'instagram',
     },
     {
@@ -326,9 +336,12 @@ const Settings = ({ navigation }) => {
         showsVerticalScrollIndicator={false}
         data={list}
         keyExtractor={item => item.title}
-        renderItem={({ item: { onPress, title, icon, left = null } }) => (
+        renderItem={({
+          item: { onPress, title, icon, left = null, onLongPress },
+        }) => (
           <TouchableOpacity
             onPress={onPress}
+            onLongPress={onLongPress}
             className="flex flex-row items-center py-4 px-5 border-b border-[#513F73]/10">
             <View className="flex flex-row items-center justify-between flex-1">
               <View className="flex flex-row items-center">
