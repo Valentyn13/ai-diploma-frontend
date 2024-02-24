@@ -281,11 +281,6 @@ export const MEDITATIONS_FEELING_LOCATION = [
     id: '630b5093f77053953f6e6595',
   },
   {
-    feeling: ['unfocused', 'stressed'],
-    location: ['study', 'work', 'army'],
-    id: '5eca520c10fe0480d350c997',
-  },
-  {
     feeling: ['sad'],
     location: ['home', 'study', 'bed', 'work', 'army'],
     id: '5eca520c10fe0480d350c992',
@@ -467,7 +462,6 @@ export const COLLECTIONS_TIME_OF_DAY = [
     id: 'afternoon',
     title: 'לאחר שיא היום',
     trackIds: [
-      '5eca520c10fe0480d350c997',
       '6537b2be092f89755aeb9016',
       '63c0efce2c4099bc0e36e44f',
       '644fc3948b29c767b4e6b66f',
@@ -558,7 +552,6 @@ export const COLLECTIONS = [
     id: 'self-development',
     title: 'פיתוח עצמי',
     trackIds: [
-      '5eca520c10fe0480d350c997',
       '63aa61c65fbca84d76752332',
       '63c22de34e4c5b11918e609a',
       '63c0f1412c4099bc0e36e467',

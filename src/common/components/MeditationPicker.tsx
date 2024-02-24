@@ -208,7 +208,7 @@ const MeditationPicker = () => {
   const [showWhereYouAt, setShowWhereYouAt] = useState(false);
   const [selectedFeeling, setSelectedFeeling] = useState<Feeling | null>(null);
 
-  const snapPoints = useMemo(() => ['20%', 360], []);
+  const snapPoints = useMemo(() => ['20%', 380], []);
 
   useEffect(() => {
     if (bottomSheetRef.current) {
