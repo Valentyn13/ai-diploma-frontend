@@ -139,7 +139,7 @@ const MyWay = ({ navigation }) => {
           <Title className="mb-5" t="הרגעים שלי" />
           <Card>
             <UserMetrics />
-            <View className="my-3" />
+            <Divider className="b-[#160F29] border-opacity-30 w-1/2 self-center" />
             <Badges />
           </Card>
           <Divider className="mb-6 mt-4" />

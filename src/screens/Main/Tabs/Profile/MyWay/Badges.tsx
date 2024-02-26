@@ -1,13 +1,41 @@
-import { Icon } from '@common/components/Styled';
 import i18n from '@services/localization/i18n';
 import React from 'react';
 import { Text, View } from 'react-native';
+import Svg, { G, Mask, Path } from 'react-native-svg';
 import { useSelector } from 'react-redux';
 
+const SvgComponent = props => (
+  <Svg
+    xmlns="http://www.w3.org/2000/svg"
+    width={29}
+    height={39}
+    fill="none"
+    {...props}>
+    <Mask
+      id="a"
+      width={29}
+      height={39}
+      x={0}
+      y={0}
+      maskUnits="userSpaceOnUse"
+      style={{
+        maskType: 'luminance',
+      }}>
+      <Path fill="#fff" d="M0 0h28.8v38.63H0V0Z" />
+    </Mask>
+    <G mask="url(#a)">
+      <Path
+        fill="#513F73"
+        d="M17.708 13.636a.285.285 0 0 0-.078.232l.646 3.74c.04.208-.186.37-.381.27l-3.386-1.77a.266.266 0 0 0-.241 0l-3.386 1.77a.262.262 0 0 1-.382-.27l.646-3.74a.261.261 0 0 0-.078-.232l-2.74-2.65c-.155-.147-.07-.41.149-.44l3.782-.549a.26.26 0 0 0 .195-.139l1.69-3.4a.26.26 0 0 1 .466 0l1.69 3.4a.243.243 0 0 0 .194.139l3.783.549c.21.03.296.293.148.44l-2.717 2.65Zm-.14 11.087c-1.043.278-2.04 1.228-3.176 1.228-1.136 0-2.125-.95-3.176-1.228-1.082-.286-2.42.03-3.362-.51-.965-.549-1.347-1.862-2.125-2.635-.778-.772-2.102-1.159-2.654-2.11-.553-.934-.226-2.262-.522-3.337-.272-1.043-1.23-2.032-1.23-3.16 0-1.127.958-2.109 1.23-3.151.296-1.074-.031-2.403.522-3.346.552-.95 1.876-1.336 2.654-2.11.778-.771 1.168-2.085 2.125-2.634.942-.548 2.28-.223 3.362-.51C12.267.95 13.264 0 14.4 0c1.136 0 2.125.95 3.176 1.22 1.082.287 2.42-.03 3.37.51.957.557 1.347 1.863 2.125 2.635.778.773 2.102 1.159 2.654 2.109.553.943.226 2.264.514 3.346.28 1.035 1.23 2.016 1.23 3.152 0 1.127-.957 2.109-1.23 3.152-.288 1.074.031 2.402-.514 3.337-.56.95-1.876 1.337-2.654 2.11-.778.772-1.168 2.085-2.133 2.634-.95.548-2.288.232-3.37.518Zm-3.168-3.2c4.756 0 8.617-3.823 8.617-8.551 0-4.729-3.861-8.545-8.617-8.545S5.783 8.25 5.783 12.972c0 4.72 3.853 8.552 8.617 8.552Zm-3.518 4.443c-.296-.077-.693-.092-1.121-.1-.802-.023-1.712-.054-2.553-.533-.849-.487-1.331-1.26-1.751-1.94a7.046 7.046 0 0 0-.28-.432L0 35.384l5.885-3.005 2.031 6.25 4.896-11.751a11.946 11.946 0 0 1-.942-.463c-.365-.194-.708-.379-.988-.449Zm12.734-3.013c-.093.14-.18.279-.273.433-.428.68-.91 1.46-1.759 1.947-.833.479-1.743.51-2.545.533-.428.016-.825.023-1.129.108-.272.07-.607.255-.973.448-.287.155-.599.317-.941.464l4.888 11.743 2.031-6.25 5.885 3.005-5.184-12.43Z"
+      />
+    </G>
+  </Svg>
+);
+
 const Badge = ({ badge: { badge } = {} }) => (
-  <View className="w-[33%] flex items-center mb-4">
-    <View className="flex items-center justify-center w-16 h-16 rounded-full bg-[#513F73]">
-      <Icon name={badge} size={40} color="#fff" />
+  <View className="w-1/3 flex items-center mb-4">
+    <View className="flex items-center justify-center w-16 h-16">
+      <SvgComponent className="w-16 h-16" />
     </View>
     <Text className="text-xs text-black text-center mt-2 w-20">
       {i18n.t(badge)}
@@ -19,7 +47,7 @@ const Badges = () => {
   const { badgesAchieved } = useSelector(state => state.userProgress);
 
   return (
-    <View className="flex flex-row flex-wrap justify-between items-center space-y-4">
+    <View className="flex flex-row flex-wrap items-center space-y-4">
       {badgesAchieved.map(badge => (
         <Badge key={badge.badge} badge={badge} />
       ))}
