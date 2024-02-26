@@ -113,11 +113,16 @@ const MyWay = ({ navigation }) => {
           />
         </View>
         <View className="px-5 mt-16">
-          <Text className="mt-4 mb-20 text-center text-lg italic font-medium text-black">
+          <Text className="mt-4 mb-16 text-center text-lg italic font-medium text-black">
             - "{getRandomElementsByDay<string>(quoteData, 1)[0]}"
           </Text>
 
-          <Title className="mb-5" t="אתגר מיליון דקות מדיטציה:" />
+          <Title className="mb-4" t="אתגר מיליון דקות מדיטציה:" />
+          <Text className="text-center text-black mb-5">
+            כל דקת מדיטציה שאתם עושים נספרת לעבר מטרה משותפת - להגיע למיליון
+            דקות של מדיטציה! זו הזדמנות נהדרת להיות חלק ממשהו גדול יותר תוך כדי
+            חיזוק המודעות והרוגע הפנימי שלכם.
+          </Text>
           <Card>
             <View className="flex-row justify-between mb-4">
               <Text className="text-black">
