@@ -142,7 +142,7 @@ const TabNavigator = () => {
         initialRouteName="Home"
         screenOptions={{
           tabBarStyle: {
-            height: 68,
+            height: 64,
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
@@ -167,7 +167,6 @@ const TabNavigator = () => {
                 fontSize: 12,
                 letterSpacing: -0.24,
                 textAlign: 'center',
-                marginBottom: 4,
               },
             }}
           />
