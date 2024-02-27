@@ -1,13 +1,11 @@
 import image from '@common/assets/images';
-import AppButton from '@common/components/AppButton';
 import AppText from '@common/components/AppText';
-import { Title } from '@common/components/Styled';
 import WithFadeIn from '@common/components/transitions/WithFadeIn';
 import WithSlideInX from '@common/components/transitions/WithSlideInX';
 import WithSlideInY from '@common/components/transitions/WithSlideInY';
 import { AMPLITUDE_EVENTS, useAmplitude } from '@services/hooks/useAmplitude';
 import React, { useEffect } from 'react';
-import { Dimensions, Image, Platform, View } from 'react-native';
+import { Image, Platform, View } from 'react-native';
 import { scale } from 'react-native-size-matters';
 import styled from 'styled-components';
 
@@ -20,22 +18,7 @@ export const BgImage = styled.ImageBackground.attrs(({ name, isFirst }) => ({
   justify-content: flex-end;
 `;
 
-const IntroTitle = styled(Title)`
-  margin-top: 30px;
-  margin-left: 60px;
-  margin-right: 60px;
-  margin-bottom: 60px;
-`;
-
-const ButtonContainer = styled.View`
-  padding-left: 20px;
-  padding-right: 20px;
-  flex: 0.5;
-  align-self: stretch;
-`;
-
-const IntroStudy = ({ navigation: { navigate } }) => {
-  const { width } = Dimensions.get('screen');
+const IntroStudy = () => {
   const { logEvent, uploadEvents } = useAmplitude();
 
   useEffect(() => {
@@ -82,27 +65,16 @@ const IntroStudy = ({ navigation: { navigate } }) => {
         </WithFadeIn>
       </WithSlideInY>
       <Image
-        style={{ position: 'absolute', bottom: 0, width }}
-        source={image('ellipse')}
-      />
-      <Image
         style={{
           position: 'absolute',
           width: scale(300),
           resizeMode: 'contain',
           height: scale(280),
           bottom: scale(100),
+          alignSelf: 'center',
         }}
         source={image('bg_2')}
       />
-      <View
-        className="w-full"
-        style={{ position: 'absolute', bottom: scale(40) }}>
-        <AppButton
-          onPress={() => navigate('Onboarding', { screen: 'IntroRelax' })}>
-          {'המשך'}
-        </AppButton>
-      </View>
     </View>
   );
 };

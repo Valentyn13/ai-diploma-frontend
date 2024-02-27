@@ -136,10 +136,9 @@ const images: Record<string, any> = {
   army: require('./army_bg.png'),
   sleep: require('./sleep_bg.png'),
 
-  // new
-  bg_1: require('./new/bg_1.png'),
   bg_2: require('./new/bg_2.png'),
   bg_3: require('./new/bg_3.png'),
+  michael: require('./new/michael.png'),
   ellipse: require('./new/ellipse.png'),
   plant: require('./new/plant.png'),
   gender_bg: require('./new/gender_bg.png'),

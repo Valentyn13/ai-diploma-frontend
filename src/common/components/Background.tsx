@@ -27,11 +27,12 @@ const getRandomColor = seed => {
     .padStart(2, '0')}${b.toString(16).padStart(2, '0')}`;
 };
 
-const Background = ({ seed: seedString = '0' }) => {
+const Background = ({ seed: seedString = '0', customColors }) => {
   const { width, height } = useWindowDimensions();
 
   const [colors, setColors] = useState(() => {
     return (
+      customColors ||
       EXERCISES.find(exercise => exercise.id === seedString)?.colors || [
         getRandomColor(stringToSeed(seedString)),
         getRandomColor(stringToSeed(seedString) + 1),
@@ -40,14 +41,16 @@ const Background = ({ seed: seedString = '0' }) => {
   });
 
   useEffect(() => {
-    const seed = stringToSeed(seedString);
-    setColors(
-      EXERCISES.find(exercise => exercise.id === seedString)?.colors || [
-        getRandomColor(seed),
-        getRandomColor(seed + 1),
-      ],
-    );
-  }, [seedString]);
+    if (!customColors) {
+      const seed = stringToSeed(seedString);
+      setColors(
+        EXERCISES.find(exercise => exercise.id === seedString)?.colors || [
+          getRandomColor(seed),
+          getRandomColor(seed + 1),
+        ],
+      );
+    }
+  }, [seedString, customColors]);
 
   return (
     <View className="absolute flex-1 h-full w-full">

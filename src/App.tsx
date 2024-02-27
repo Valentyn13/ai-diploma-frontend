@@ -8,7 +8,7 @@ import { BottomSheetModalProvider } from '@gorhom/bottom-sheet';
 import * as Sentry from '@sentry/react-native';
 import useSentry from '@services/hooks/useSentry';
 import React, { useEffect } from 'react';
-import { LogBox, StatusBar, StyleSheet, View } from 'react-native';
+import { StatusBar, StyleSheet, View } from 'react-native';
 import { CopilotProvider } from 'react-native-copilot';
 import { Settings } from 'react-native-fbsdk-next';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
@@ -33,8 +33,6 @@ const styles = StyleSheet.create({
     backgroundColor: colors.bgColor,
   },
 });
-
-LogBox.ignoreLogs([]);
 
 const App: React.FC = () => {
   useSentry();
