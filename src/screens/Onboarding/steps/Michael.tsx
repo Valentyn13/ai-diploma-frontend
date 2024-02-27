@@ -95,7 +95,7 @@ const ChooseSex = () => {
               <Text className="text-xs text-left">{`בן הזוג שלי נפרד ממני היום, אני לא מצליחה לתפקד :(`}</Text>
             </View>
             <View className="w-10/12 bg-white rounded-3xl mt-2 opacity-80 p-4">
-              <Text className="text-xs text-left">{`בן הזוג שלי נפרד ממני היום, אני לא מצליחה לתפקד :(`}</Text>
+              <Text className="text-xs text-left">{`אני ממש מצטער לשמוע על הפרידה, זה באמת קשה לעבור דבר כזה. חשוב שתדעי שזה בסדר גמור שאת מרגישה ככה, זה חלק מהתהליך. הדבר הכי טוב לעכשיו`}</Text>
             </View>
           </View>
         </View>

@@ -117,12 +117,8 @@ const MyWay = ({ navigation }) => {
             - "{getRandomElementsByDay<string>(quoteData, 1)[0]}"
           </Text>
 
-          <Title className="mb-4" t="אתגר מיליון דקות מדיטציה:" />
-          <Text className="text-center text-black mb-5">
-            כל דקת מדיטציה שאתם עושים נספרת לעבר מטרה משותפת - להגיע למיליון
-            דקות של מדיטציה! זו הזדמנות נהדרת להיות חלק ממשהו גדול יותר תוך כדי
-            חיזוק המודעות והרוגע הפנימי שלכם.
-          </Text>
+          <Title className="mb-4" t="אתגר #מיליוןדקות של מדיטציה" />
+
           <Card>
             <View className="flex-row justify-between mb-4">
               <Text className="text-black">
@@ -138,6 +134,9 @@ const MyWay = ({ navigation }) => {
               <Text>{Math.round(progress * 100)}%</Text>
             </View>
             <ProgressBar progress={Math.round(progress * 100)} />
+            <Text className="text-left text-xs text-[#160F29] opacity-70 mt-2">
+              סה״כ דקות מדיטציה של כלל משתמשי האפליקציה.
+            </Text>
           </Card>
           <Divider className="mb-6 mt-4" />
 
