@@ -53,6 +53,7 @@ const theme = {
 
     // new colors
     selected: '#D66366',
+    inactive: '#8A8A8A',
   },
   dimens,
   fonts,

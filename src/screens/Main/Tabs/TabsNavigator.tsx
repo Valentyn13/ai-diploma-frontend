@@ -97,29 +97,25 @@ const tabScreen = (name: string) => ({
 
     return (
       <Animated.View
+        className="mt-2"
         style={{
           transform: [{ scale: focused ? 1.2 : 1 }],
         }}>
         <Icon
-          style={{
-            width: 23,
-            height: 23,
-          }}
-          color={focused ? '#D66366' : '#8A8A8A'}
+          className="w-6 h-6"
+          color={focused ? theme.colors.selected : theme.colors.inactive}
         />
       </Animated.View>
     );
   },
   tabBarLabel: ({ focused }: { focused: boolean }) => (
     <Text
+      className="text-xs text-center mb-2"
       style={{
-        color: focused ? '#D66366' : '#8A8A8A',
-        fontSize: 14,
+        color: focused ? theme.colors.selected : theme.colors.inactive,
         textAlign: 'center',
-        marginBottom: 8,
-        fontFamily: theme.fonts?.regular,
-      }}
-      className={`text-[${focused ? '#D66366' : '#8A8A8A'}}]`}>
+        fontFamily: theme.fonts.regular,
+      }}>
       {i18n.t(`${name.toLowerCase()}`)}
     </Text>
   ),
@@ -162,11 +158,6 @@ const TabNavigator = () => {
               },
               ...tabScreen(key.toLowerCase()),
               headerShown: false,
-              tabBarLabelStyle: {
-                fontSize: 12,
-                letterSpacing: -0.24,
-                textAlign: 'center',
-              },
             }}
           />
         ))}
