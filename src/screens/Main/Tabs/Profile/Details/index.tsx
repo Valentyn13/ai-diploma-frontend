@@ -6,7 +6,7 @@ import Button from '@common/components/Button';
 import { Title } from '@common/components/Styled';
 import Meditate from '@common/components/animation/Meditate';
 import { CircleButton } from '@common/components/buttons/CircleButton';
-import colors from '@common/theme/colors';
+import theme from '@common/theme';
 import useUpdateProfile from '@services/hooks/useUpdateProfile';
 import React, { FC, useEffect, useState } from 'react';
 import {
@@ -130,7 +130,7 @@ const Details: FC<DetailsProps> = ({ navigation }) => {
             style={{
               flex: 1,
               borderWidth: 2,
-              backgroundColor: colors.bgColor,
+              backgroundColor: theme.colors.bgColor,
             }}>
             <Title
               t="עריכת פרופיל"
@@ -242,7 +242,7 @@ const Details: FC<DetailsProps> = ({ navigation }) => {
             style={{
               flex: 1,
               borderWidth: 2,
-              backgroundColor: colors.bgColor,
+              backgroundColor: theme.colors.bgColor,
             }}>
             <Title
               t="שינוי סיסמא"

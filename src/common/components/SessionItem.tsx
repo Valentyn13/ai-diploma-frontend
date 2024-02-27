@@ -32,14 +32,6 @@ const SessionItem: React.FC<SessionItemProps> = memo(
       });
     }, [navigate, amplitudeInstance, id]);
 
-    // const navigateToModal = useCallback(() => {
-    //   amplitudeInstance.logEvent('MEDITATION_MODAL_CLICKED');
-    //   logEvent('MEDITATION_MODAL_CLICKED', { id, categoryName });
-    //   amplitudeInstance.uploadEvents();
-    //   // @ts-ignore TODO: fix this
-    //   navigate('SessionModal', { id });
-    // }, [amplitudeInstance, categoryName, id, navigate]);
-
     return (
       <Pressable
         onPress={navigateToPlayer}

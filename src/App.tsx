@@ -3,7 +3,6 @@ import { PurchaseProvider } from '@common/context/PurchaseContext';
 import { TrackPlayerProvider } from '@common/context/TrackPlayerContext';
 import StoreUpdate from '@common/storeUpdate';
 import theme from '@common/theme';
-import colors from '@common/theme/colors';
 import { BottomSheetModalProvider } from '@gorhom/bottom-sheet';
 import * as Sentry from '@sentry/react-native';
 import useSentry from '@services/hooks/useSentry';
@@ -30,7 +29,8 @@ const styles = StyleSheet.create({
   rootContainer: {
     flex: 1,
     alignSelf: 'stretch',
-    backgroundColor: colors.bgColor,
+    color: theme.colors.textColor,
+    backgroundColor: theme.colors.bgColor,
   },
 });
 

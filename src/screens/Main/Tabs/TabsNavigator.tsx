@@ -1,6 +1,5 @@
 import MeditationPicker from '@common/components/MeditationPicker';
 import theme from '@common/theme';
-import colors from '@common/theme/colors';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import i18n from '@services/localization/i18n';
 import React from 'react';
@@ -136,7 +135,7 @@ const TabNavigator = () => {
       <StatusBar
         hidden={false}
         barStyle="dark-content"
-        backgroundColor={colors.bgColor}
+        backgroundColor={theme.colors.bgColor}
       />
       <Tab.Navigator
         initialRouteName="Home"

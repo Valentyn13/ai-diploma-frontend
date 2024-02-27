@@ -2,7 +2,6 @@
 import { BoldTitle } from '@common/components/Styled';
 import { CircleButton } from '@common/components/buttons/CircleButton';
 import theme from '@common/theme';
-import colors from '@common/theme/colors';
 import Clipboard from '@react-native-clipboard/clipboard';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import rudderClient, {
@@ -390,7 +389,7 @@ const Settings = ({ navigation }) => {
               display="spinner"
               is24Hour={false}
               onChange={onChange}
-              textColor={colors.textColor}
+              textColor={theme.colors.textColor}
             />
             <View className="items-center flex flex-row justify-around">
               <TouchableOpacity
