@@ -53,6 +53,7 @@ const theme = {
 
     // new colors
     light: '#FFF8EE',
+    primary: '#273051',
     selected: '#D66366',
     inactive: '#8A8A8A',
   },

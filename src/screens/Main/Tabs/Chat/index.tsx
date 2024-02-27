@@ -7,8 +7,8 @@ import {
   mapMessageToIMessage,
   removeEmojiesFromString,
 } from '@utils/chat';
-import React, { useState } from 'react';
-import { Pressable, View } from 'react-native';
+import React, { useRef, useState } from 'react';
+import { FlatList, Pressable, View } from 'react-native';
 import CryptoJS from 'react-native-crypto-js';
 import {
   Bubble,
@@ -28,6 +28,7 @@ const API_URL = 'https://chat.rega.co.il/api/chat';
 const generateUUID = () => CryptoJS.lib.WordArray.random(128 / 8).toString();
 
 export default function Chat() {
+  const ref = useRef<FlatList<IMessage>>(null);
   const { id: userId } = useSelector(state => state.userDetails);
   const { hasPremium } = usePurchases();
   const navigation = useNavigation();
@@ -51,6 +52,7 @@ export default function Chat() {
 
   const onSend = (msgs: IMessage[] = []) => {
     append(mapIMessageToMessage(msgs[0]));
+    ref.current?.scrollToEnd({ animated: true });
   };
 
   const handleQuickReply = replies => {
@@ -98,6 +100,7 @@ export default function Chat() {
       />
 
       <GiftedChat
+        messageContainerRef={ref}
         messagesContainerStyle={{
           backgroundColor: theme.colors.light,
           paddingVertical: 0,
@@ -115,7 +118,7 @@ export default function Chat() {
           _id: 'USER',
         }}
         quickReplyStyle={{
-          backgroundColor: '#273051',
+          backgroundColor: theme.colors.primary,
           width: 224,
           maxWidth: 224,
         }}
@@ -128,7 +131,7 @@ export default function Chat() {
         renderSend={props => (
           <Send {...props} containerStyle={{ justifyContent: 'center' }}>
             <View className="rotate-[228deg] mr-4">
-              <Icon name="send" color="#007AFF" size={24} />
+              <Icon name="send" color={theme.colors.primary} size={24} />
             </View>
           </Send>
         )}
@@ -141,6 +144,7 @@ export default function Chat() {
               justifyContent: 'flex-end',
               paddingBottom: 0,
             }}
+            // @ts-ignore
             textInputStyle={{
               textAlign: 'right',
               direction: 'rtl',
@@ -164,7 +168,7 @@ export default function Chat() {
               }}
               wrapperStyle={{
                 right: {
-                  backgroundColor: '#007AFF',
+                  backgroundColor: theme.colors.primary,
                   marginVertical: 4,
                 },
                 left: {
