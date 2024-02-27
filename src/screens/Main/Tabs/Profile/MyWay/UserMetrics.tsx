@@ -1,4 +1,5 @@
-import { fonts } from '@common/theme';
+import Gradient from '@common/components/Gradient';
+import theme from '@common/theme';
 import i18n from '@services/localization/i18n';
 import React, { FC } from 'react';
 import { Text, View } from 'react-native';
@@ -7,21 +8,32 @@ import { useSelector } from 'react-redux';
 
 const ICONS = {
   minutes: ({ ...props }) => (
-    <Svg viewBox="0 0 22 22" fill="none" {...props}>
+    <Svg viewBox="0 0 18 18" fill="none" {...props}>
       <Path
-        d="M11 0C8.82441 0 6.69767 0.645139 4.88873 1.85383C3.07979 3.06253 1.66989 4.78049 0.83733 6.79048C0.00476617 8.80047 -0.213071 11.0122 0.211367 13.146C0.635804 15.2798 1.68345 17.2398 3.22183 18.7782C4.76021 20.3166 6.72022 21.3642 8.85401 21.7886C10.9878 22.2131 13.1995 21.9952 15.2095 21.1627C17.2195 20.3301 18.9375 18.9202 20.1462 17.1113C21.3549 15.3023 22 13.1756 22 11C22 8.08262 20.8411 5.28473 18.7782 3.22183C16.7153 1.15893 13.9174 0 11 0ZM15 12H11C10.7348 12 10.4804 11.8946 10.2929 11.7071C10.1054 11.5196 10 11.2652 10 11V5C10 4.73478 10.1054 4.48043 10.2929 4.29289C10.4804 4.10536 10.7348 4 11 4C11.2652 4 11.5196 4.10536 11.7071 4.29289C11.8946 4.48043 12 4.73478 12 5V10H15C15.2652 10 15.5196 10.1054 15.7071 10.2929C15.8946 10.4804 16 10.7348 16 11C16 11.2652 15.8946 11.5196 15.7071 11.7071C15.5196 11.8946 15.2652 12 15 12Z"
-        fill="#160F29"
+        fill="#000"
+        d="M9 17.283C4.433 17.283.717 13.567.717 9 .717 4.433 4.433.717 9 .717c4.567 0 8.283 3.716 8.283 8.283 0 4.567-3.716 8.283-8.283 8.283Zm8.293-11.786a8.971 8.971 0 0 0-1.93-2.86A8.97 8.97 0 0 0 9 0a8.97 8.97 0 0 0-6.364 2.636A8.966 8.966 0 0 0 0 9a8.966 8.966 0 0 0 2.636 6.364A8.971 8.971 0 0 0 9 18a8.971 8.971 0 0 0 6.364-2.636A8.971 8.971 0 0 0 18 9a8.943 8.943 0 0 0-.707-3.503Z"
+      />
+      <Path
+        fill="#000"
+        d="M13.314 12.038 9.359 8.83V4.573a.359.359 0 0 0-.718 0V9c0 .108.05.21.133.278l4.088 3.317a.357.357 0 0 0 .504-.053.358.358 0 0 0-.052-.504Z"
       />
     </Svg>
   ),
   sessions: ({ ...props }) => (
-    <Svg viewBox="0 0 22 22" fill="none" {...props}>
+    <Svg viewBox="0 0 21 24" fill="none" {...props}>
       <Path
-        d="M11 0C4.92448 0 0 4.92448 0 11C0 17.0755 4.92448 22 11 22C17.0755 22 22 17.0755 22 11C22 4.92448 17.0755 0 11 0ZM14.08 14.8201C14.08 14.9528 14.0448 15.0831 13.9781 15.1977C13.9113 15.3124 13.8155 15.4074 13.7001 15.473C13.5848 15.5386 13.4542 15.5725 13.3215 15.5713C13.1889 15.5701 13.0589 15.5337 12.9448 15.466L6.52696 11.6459C6.41519 11.5793 6.32265 11.4848 6.25838 11.3716C6.19411 11.2585 6.16033 11.1306 6.16033 11.0004C6.16033 10.8703 6.19411 10.7424 6.25838 10.6293C6.32265 10.5161 6.41519 10.4216 6.52696 10.355L12.9448 6.53488C13.0588 6.46689 13.1887 6.43034 13.3214 6.42893C13.4541 6.42753 13.5848 6.46133 13.7002 6.52689C13.8156 6.59245 13.9115 6.68743 13.9782 6.80215C14.045 6.91686 14.0801 7.04721 14.08 7.17992V14.8201Z"
-        fill="#160F29"
+        fill="#000"
+        fillRule="evenodd"
+        d="M18.046 18.577v-7.236c0-2.49-2.008-4.518-4.475-4.518h-.44c.567-.658.911-1.516.911-2.454v-.624C14.042 1.68 12.378 0 10.333 0 8.29 0 6.625 1.68 6.625 3.745v.624c0 .938.344 1.796.91 2.454h-.618c-2.467 0-4.473 2.027-4.473 4.518v7.246A2.706 2.706 0 0 0 0 21.287C0 22.784 1.205 24 2.686 24H17.98c1.48 0 2.686-1.217 2.686-2.712 0-1.474-1.17-2.676-2.621-2.71ZM7.904 4.37v-.624c0-1.353 1.09-2.454 2.43-2.454s2.43 1.101 2.43 2.454v.624c0 1.353-1.09 2.454-2.43 2.454s-2.43-1.1-2.43-2.454Zm-4.182 6.972c0-1.779 1.433-3.226 3.195-3.226h6.654c1.762 0 3.196 1.447 3.196 3.226v7.234h-1.28v-6.631a.642.642 0 0 0-.639-.646.642.642 0 0 0-.64.646v6.631H6.28v-6.631a.642.642 0 0 0-.64-.646.642.642 0 0 0-.639.646v6.631H3.722v-7.234ZM8.543 22.71H2.686a1.416 1.416 0 0 1-1.407-1.421c0-.784.631-1.421 1.407-1.421h7.249a2.33 2.33 0 0 0-.24 1.033v.775A1.03 1.03 0 0 1 8.67 22.71h-.128Zm9.438 0h-7.249c.154-.312.24-.663.24-1.034V20.9c0-.57.46-1.033 1.024-1.033h5.985c.776 0 1.407.637 1.407 1.42 0 .784-.631 1.422-1.407 1.422Z"
+        clipRule="evenodd"
       />
     </Svg>
   ),
+};
+
+const GRADIENTS = {
+  minutes: ['#BFE9FF', '#6190E8'],
+  sessions: ['#FFB799', '#A7BFE8'],
 };
 
 type MetricBoxProps = {
@@ -35,20 +47,22 @@ const MetricBox: FC<MetricBoxProps> = ({ id, value, title, ...props }) => {
 
   return (
     <View
-      className="flex flex-1 text-center justify-center items-center text-white rounded-lg"
+      className="flex flex-1 text-center justify-center items-center text-white rounded-lg overflow-hidden"
       {...props}>
+      <Gradient colors={GRADIENTS[id]} />
       <MetricIcon
         style={{
+          marginTop: 16,
           height: 22,
           width: 22,
         }}
       />
       <Text
-        style={{ fontFamily: fonts?.regular }}
-        className="text-xl text-black text-left mt-2">
+        style={{ fontFamily: theme.fonts.regular }}
+        className="text-lg text-black text-left mt-2">
         {title}
       </Text>
-      <Text className="text-5xl font-bold text-black text-left mt-4">
+      <Text className="text-4xl font-bold text-black text-left my-4">
         {value}
       </Text>
     </View>
@@ -61,7 +75,7 @@ const UserMetrics = () => {
   );
 
   return (
-    <View className="flex flex-row flex-wrap content-center items-center gap-4 overflow-hidden pt-10 px-4">
+    <View className="flex flex-row flex-wrap content-center items-center gap-4 overflow-hidden pt-6 px-2">
       <MetricBox
         value={Math.round(minutesPracticed)}
         title={i18n.t('minutesSessions')}

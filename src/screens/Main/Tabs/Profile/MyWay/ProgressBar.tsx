@@ -1,3 +1,4 @@
+import Gradient from '@common/components/Gradient';
 import React, { FC } from 'react';
 import { View } from 'react-native';
 
@@ -16,8 +17,10 @@ const ProgressBar: FC<{ progress: number }> = ({ progress }) => (
         width: `${progress}%`,
         backgroundColor: '#FFB291',
         borderRadius: 10,
-      }}
-    />
+        overflow: 'hidden',
+      }}>
+      <Gradient colors={['#FFB799', '#A7BFE8', '#6190E8']} />
+    </View>
   </View>
 );
 

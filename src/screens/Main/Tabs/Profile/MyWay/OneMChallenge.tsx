@@ -22,11 +22,11 @@ const OneMChallenge: FC<{ totalMinutesPracticed: number }> = ({
   return (
     <View>
       <Title className="mb-4" t="אתגר #מיליוןדקות של מדיטציה" />
-      <Text className="text-center text-black mb-5">
+      {/* <Text className="text-center text-black mb-5">
         כל דקת מדיטציה שאתם עושים נספרת לעבר מטרה משותפת - להגיע למיליון דקות של
         מדיטציה! זו הזדמנות נהדרת להיות חלק ממשהו גדול יותר תוך כדי חיזוק
         המודעות והרוגע הפנימי שלכם.
-      </Text>
+      </Text> */}
       <View className="rounded-lg p-4 bg-[#273051]/10">
         <View className="flex-row justify-between mb-4">
           <Text className="text-black">

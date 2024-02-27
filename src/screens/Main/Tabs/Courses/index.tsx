@@ -45,7 +45,7 @@ const CourseItem = ({ item, index, onPress }) => {
         <View>
           <Text
             style={{
-              fontFamily: theme.fonts?.bold,
+              fontFamily: theme.fonts.bold,
             }}
             className="text-2xl font-bold text-left text-black tracking-wide">
             {item.title}

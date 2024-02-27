@@ -2,17 +2,10 @@ import Divider from '@common/components/Divider';
 import { SubTitle } from '@common/components/Styled';
 import { CircleButton } from '@common/components/buttons/CircleButton';
 import { useNavigation } from '@react-navigation/native';
-import { getRandomElementsByDay } from '@utils/rand';
 import { stringToDate } from '@utils/string';
 import axios from 'axios';
-import React, {
-  FC,
-  PropsWithChildren,
-  useEffect,
-  useMemo,
-  useState,
-} from 'react';
-import { Text, View } from 'react-native';
+import React, { FC, PropsWithChildren, useEffect, useState } from 'react';
+import { View } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import { useSelector } from 'react-redux';
 import styled from 'styled-components';
@@ -20,6 +13,7 @@ import styled from 'styled-components';
 import Badges from './Badges';
 import MyCollections from './MyCollections';
 import OneMChallenge from './OneMChallenge';
+import Quote from './Quote';
 import Strikes from './Strikes';
 import UserMetrics from './UserMetrics';
 
@@ -28,34 +22,10 @@ const Title = styled(SubTitle)`
   font-weight: bold;
 `;
 
-const quoteData = [
-  'בפשטות של הרגע הזה, טמונה האמת של הקיום.',
-  'השלום אינו נמצא בעולם החיצוני, אלא בשקט הפנימי.',
-  'חבק את ההווה בקבלה, כי זהו הרגע היחיד שבאמת יש לנו.',
-  'הצמיחה היא המסע ממי שהיית למי שתבחר להיות.',
-  'מיינדפולנס היא אמנות ההיות נוכח לחלוטין, חי לחלוטין.',
-  'תנו לעבר ללכת, קבלו את מה שהוא, והאמינו במה שיהיה.',
-  'חיה כאילו תמות מחר, למד כאילו תחיה לנצח.',
-  'בכל רגע יש לקח ללמוד.',
-  'המורה החכם אינו כובל אותך להכנס למעון החכמה שלו, אלא מוביל אותך למפתן ההכרה שלך.',
-  'אמנות החיים היא לחיות ברגע הזה.',
-  'אדם חייב להיות מוכן לוותר על מי שהוא, כדי להפוך למי שהוא יכול להיות.',
-  'החוכמה של החיים מתגלה בקבלה של כל רגע כמו שהוא.',
-  'על אדם קודם להנחות את עצמו בדרך שלו. רק לאחר מכן יוכל להנחות אחרים.',
-  'היופי של החיים נמצא בפרטים הקטנים.',
-  'אהבה היא היכולת לראות את הטוב באחרים, גם כשהם לא רואים אותו בעצמם.',
-  'הצלחה אמיתית מגיעה כאשר אתה מצליח לחיות את חייך בדרך שלך.',
-  'כל נשימה היא הזדמנות לחדש את עצמנו.',
-  'לחיות ברגע הזה הוא לחיות בשלמות.',
-  'אינך יכול לבחור את האירועים בחייך אך כן לבחור את ההתייחסות שלך אליהם.',
-  'מציאת האושר בתוך הקשיים היא מפתח לחיים משמעותיים.',
-];
-
 const Card: FC<PropsWithChildren> = ({ children }) => (
   <View className="rounded-lg p-4 bg-[#273051]/10">{children}</View>
 );
 
-const CHALLANGE_TOTAL = 1000000;
 const LISTEN_TIME_URL = 'https://www.rega.co.il/api/listens/total';
 
 const fetchChallengeProgress = async () => {
@@ -71,7 +41,7 @@ const fetchChallengeProgress = async () => {
   return practivedMinutes;
 };
 
-const MyWay = ({ navigation }) => {
+const MyWay = () => {
   const { navigate } = useNavigation();
   const { meditationsPracticed } = useSelector(state => state.userProgress);
   const dates = meditationsPracticed.map(m => stringToDate(m.timestamp));
@@ -85,11 +55,6 @@ const MyWay = ({ navigation }) => {
 
     fetchData();
   }, []);
-
-  const progress = useMemo(
-    () => totalMinutesPracticed / CHALLANGE_TOTAL,
-    [totalMinutesPracticed],
-  );
 
   return (
     <View className="flex-1 bg-[#fdedd6]">
@@ -113,10 +78,8 @@ const MyWay = ({ navigation }) => {
           />
         </View>
         <View className="px-5 mt-16">
-          <Text className="mt-4 mb-16 text-center text-lg italic font-medium text-black">
-            - "{getRandomElementsByDay<string>(quoteData, 1)[0]}"
-          </Text>
-
+          <Quote />
+          <View className="mt-16" />
           <OneMChallenge totalMinutesPracticed={totalMinutesPracticed} />
           <Divider className="mb-6 mt-4" />
 
