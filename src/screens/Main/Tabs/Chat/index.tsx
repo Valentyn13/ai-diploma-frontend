@@ -89,7 +89,7 @@ export default function Chat() {
         />
       )}
       <ChatHeader
-        title="מיכאל ✨"
+        title="מיכאל"
         avatarUri="https://rega.co.il/images/michael.png"
         onNew={() => {
           if (chatMsgs.length) {
