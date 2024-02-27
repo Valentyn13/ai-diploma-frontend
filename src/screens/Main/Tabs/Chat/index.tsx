@@ -1,4 +1,5 @@
 import { usePurchases } from '@common/context/PurchaseContext';
+import theme from '@common/theme';
 import { useNavigation } from '@react-navigation/native';
 import {
   FIRST_MESSAGES,
@@ -98,8 +99,7 @@ export default function Chat() {
 
       <GiftedChat
         messagesContainerStyle={{
-          backgroundColor: '#FFF8EE',
-          // direction: 'ltr',
+          backgroundColor: theme.colors.light,
           paddingVertical: 0,
         }}
         scrollToBottom
@@ -115,14 +115,13 @@ export default function Chat() {
           _id: 'USER',
         }}
         quickReplyStyle={{
-          backgroundColor: '#007AFF',
-          borderRadius: 4,
-          width: 200,
-          margin: 4,
+          backgroundColor: '#273051',
+          width: 224,
+          maxWidth: 224,
         }}
         quickReplyTextStyle={{
           color: 'white',
-          textAlign: 'center',
+          textAlign: 'left',
           direction: 'rtl',
         }}
         alwaysShowSend

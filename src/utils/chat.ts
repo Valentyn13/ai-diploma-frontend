@@ -36,16 +36,16 @@ export const FIRST_MESSAGES: IMessage[] = [
           value: 'learn_to_meditate',
         },
         {
+          title: 'אני דואג בגלל המלחמה 😟',
+          value: 'advanced_meditation',
+        },
+        {
           title: 'מהם היתרונות של מדיטציה? ✨',
           value: 'benefits_of_meditation',
         },
         {
-          title: 'המוח שלי עסוק מדי במהלך מדיטציה - איך מתמודדים עם זה? 🧠',
+          title: 'המוח שלי עמוס במהלך מדיטציה',
           value: 'busy_mind_during_meditation',
-        },
-        {
-          title: 'אני דואג בגלל המלחמה 😟',
-          value: 'advanced_meditation',
         },
       ],
     },
