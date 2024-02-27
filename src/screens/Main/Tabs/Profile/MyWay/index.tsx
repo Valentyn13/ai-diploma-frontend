@@ -19,7 +19,7 @@ import styled from 'styled-components';
 
 import Badges from './Badges';
 import MyCollections from './MyCollections';
-import ProgressBar from './ProgressBar';
+import OneMChallenge from './OneMChallenge';
 import Strikes from './Strikes';
 import UserMetrics from './UserMetrics';
 
@@ -75,7 +75,7 @@ const MyWay = ({ navigation }) => {
   const { navigate } = useNavigation();
   const { meditationsPracticed } = useSelector(state => state.userProgress);
   const dates = meditationsPracticed.map(m => stringToDate(m.timestamp));
-  const [totalMinutesMeditated, setTotalMinutesMeditated] = useState(212301);
+  const [totalMinutesPracticed, setTotalMinutesMeditated] = useState(212301);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -87,8 +87,8 @@ const MyWay = ({ navigation }) => {
   }, []);
 
   const progress = useMemo(
-    () => totalMinutesMeditated / CHALLANGE_TOTAL,
-    [totalMinutesMeditated],
+    () => totalMinutesPracticed / CHALLANGE_TOTAL,
+    [totalMinutesPracticed],
   );
 
   return (
@@ -117,27 +117,7 @@ const MyWay = ({ navigation }) => {
             - "{getRandomElementsByDay<string>(quoteData, 1)[0]}"
           </Text>
 
-          <Title className="mb-4" t="אתגר #מיליוןדקות של מדיטציה" />
-
-          <Card>
-            <View className="flex-row justify-between mb-4">
-              <Text className="text-black">
-                {totalMinutesMeditated
-                  .toString()
-                  .replace(/\B(?=(\d{3})+(?!\d))/g, ',')}{' '}
-                דקות מתוך{' '}
-                {CHALLANGE_TOTAL.toString().replace(
-                  /\B(?=(\d{3})+(?!\d))/g,
-                  ',',
-                )}{' '}
-              </Text>
-              <Text>{Math.round(progress * 100)}%</Text>
-            </View>
-            <ProgressBar progress={Math.round(progress * 100)} />
-            <Text className="text-left text-xs text-[#160F29] opacity-70 mt-2">
-              סה״כ דקות מדיטציה של כלל משתמשי האפליקציה.
-            </Text>
-          </Card>
+          <OneMChallenge totalMinutesPracticed={totalMinutesPracticed} />
           <Divider className="mb-6 mt-4" />
 
           <Title className="mb-5" t="הרגעים שלי" />

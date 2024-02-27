@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { FC } from 'react';
 import { View } from 'react-native';
 
-const ProgressBar = ({ progress }) => (
+const ProgressBar: FC<{ progress: number }> = ({ progress }) => (
   <View
     style={{
       flexDirection: 'row',
