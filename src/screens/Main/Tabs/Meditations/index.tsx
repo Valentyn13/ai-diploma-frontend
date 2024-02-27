@@ -5,7 +5,7 @@ import SessionsGrid from '@common/components/SessionsGrid';
 import { ListTitle } from '@common/components/Styled';
 import Meditate from '@common/components/animation/Meditate';
 import NotFound from '@common/components/animation/NotFound';
-import { colors } from '@common/theme';
+import theme from '@common/theme';
 import { useNavigation } from '@react-navigation/native';
 import { useDebouncedState } from '@services/hooks/useDebouncedState';
 import useDiscovery from '@services/hooks/useDiscovery';
@@ -51,7 +51,7 @@ const Meditations = () => {
     <ScrollView
       showsVerticalScrollIndicator={false}
       style={{
-        backgroundColor: colors.bgColor,
+        backgroundColor: theme.colors.bgColor,
         display: 'flex',
         flex: 1,
       }}>

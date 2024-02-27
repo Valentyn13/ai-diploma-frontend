@@ -1,4 +1,4 @@
-import { colors } from '@common/theme';
+import theme from '@common/theme';
 import { default as React } from 'react';
 import { View } from 'react-native';
 import Animated, {
@@ -52,7 +52,7 @@ const PaginationItem: React.FC<{
         style={[
           {
             borderRadius: 50,
-            backgroundColor: colors.selected,
+            backgroundColor: theme.colors.selected,
             flex: 1,
           },
           animStyle,

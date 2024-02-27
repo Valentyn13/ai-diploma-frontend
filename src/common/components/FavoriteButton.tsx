@@ -1,4 +1,4 @@
-import { colors } from '@common/theme';
+import theme from '@common/theme';
 import {
   addFavoriteMeditation,
   removeFavoriteMeditation,
@@ -31,7 +31,7 @@ const FavoriteButton: FC<FavoriteButtonProps> = ({ id, isDark = false }) => {
   return (
     <TouchableIcon
       name={isFavorite ? 'heartSelected' : 'heart'}
-      color={isDark ? colors.textColor : colors.whiteColor}
+      color={isDark ? theme.colors.textColor : theme.colors.whiteColor}
       onPress={toggleFavorite}
     />
   );

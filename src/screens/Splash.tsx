@@ -5,7 +5,7 @@ import WithRotate from '@common/components/transitions/WithRotate';
 import WithScale from '@common/components/transitions/WithScale';
 import WithTranslateY from '@common/components/transitions/WithTranslateY';
 import config from '@common/config';
-import { fonts } from '@common/theme';
+import theme from '@common/theme';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { AMPLITUDE_EVENTS, useAmplitude } from '@services/hooks/useAmplitude';
 import useAppData from '@services/hooks/useAppData';
@@ -87,7 +87,7 @@ const Splash: FC<SplashProps> = ({ navigation: { navigate, replace } }) => {
           <WithScale scaleValue={0.9} duration={550}>
             <Text
               style={{
-                fontFamily: fonts!.regular,
+                fontFamily: theme.fonts.regular,
               }}
               className="mt-2 text-center text-2xl text-gray-800">
               רגע

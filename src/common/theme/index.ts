@@ -16,7 +16,7 @@ const fonts = Platform.select({
     bold: iosFont('-bold'),
     black: iosFont('-black'),
   },
-});
+})!;
 
 const { width: winWidth, height: winHeight } = Dimensions.get('window');
 
