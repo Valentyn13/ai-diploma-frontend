@@ -4,13 +4,14 @@ import { CircleButton } from '@common/components/buttons/CircleButton';
 import { useNavigation } from '@react-navigation/native';
 import { stringToDate } from '@utils/string';
 import axios from 'axios';
-import React, { FC, PropsWithChildren, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { View } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import { useSelector } from 'react-redux';
 import styled from 'styled-components';
 
 import Badges from './Badges';
+import Card from './Card';
 import MyCollections from './MyCollections';
 import OneMChallenge from './OneMChallenge';
 import Quote from './Quote';
@@ -21,10 +22,6 @@ const Title = styled(SubTitle)`
   font-size: 24;
   font-weight: bold;
 `;
-
-const Card: FC<PropsWithChildren> = ({ children }) => (
-  <View className="rounded-lg p-4 bg-[#273051]/10">{children}</View>
-);
 
 const LISTEN_TIME_URL = 'https://www.rega.co.il/api/listens/total';
 

@@ -4,6 +4,8 @@ import React, { FC, useMemo } from 'react';
 import { Text, View } from 'react-native';
 import styled from 'styled-components';
 
+import Card from './Card';
+
 const CHALLANGE_TOTAL = 1000000;
 
 const Title = styled(SubTitle)`
@@ -27,7 +29,7 @@ const OneMChallenge: FC<{ totalMinutesPracticed: number }> = ({
         מדיטציה! זו הזדמנות נהדרת להיות חלק ממשהו גדול יותר תוך כדי חיזוק
         המודעות והרוגע הפנימי שלכם.
       </Text> */}
-      <View className="rounded-lg p-4 bg-[#273051]/10">
+      <Card>
         <View className="flex-row justify-between mb-4">
           <Text className="text-black">
             {totalMinutesPracticed
@@ -42,7 +44,7 @@ const OneMChallenge: FC<{ totalMinutesPracticed: number }> = ({
         <Text className="text-left text-xs text-[#160F29] opacity-70 mt-2">
           סה״כ דקות מדיטציה של כלל משתמשי האפליקציה.
         </Text>
-      </View>
+      </Card>
     </View>
   );
 };
