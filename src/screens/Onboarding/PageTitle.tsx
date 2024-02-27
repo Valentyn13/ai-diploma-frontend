@@ -9,15 +9,15 @@ const PageTitle: FC<{
 }> = ({ title, subTitle }) => (
   <>
     <Wobble seed={title} />
-    <View className="absolute top-5 px-4">
+    <View className="absolute top-6 px-4">
       <Text
         style={{
-          fontFamily: theme.fonts?.light,
+          fontFamily: theme.fonts.bold,
         }}
         className="text-center text-2xl font-bold text-black">
         {title}
       </Text>
-      <Text className="text-center font-normal text-black mt-2">
+      <Text className="text-center text-md font-normal text-black mt-3">
         {subTitle}
       </Text>
     </View>

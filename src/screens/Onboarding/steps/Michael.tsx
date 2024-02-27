@@ -74,7 +74,7 @@ const ChooseSex = () => {
       <PageTitle title="הכירו את מיכאל" subTitle="מטפל AI הראשון בישראל" />
 
       <View className="flex-1 mt-36 px-5">
-        <Text className="text-center leading-4">
+        <Text className="text-center leading-4 text-black">
           מבוסס על מודל הAI המתקדם ביותר בעברית. מיכאל שונה מכל צ'אטבוט שנתקלתם
           בו - הוא אומן על אלפי שיחות טיפול שנוהלו על ידי מטפלים, ואנשי מקצוע.
         </Text>
@@ -85,17 +85,17 @@ const ChooseSex = () => {
         <View className="relative flex-1 -z-20">
           <View className="top-0 right-0 absolute w-10/12 flex flex-col">
             <View className="bg-white rounded-3xl w-10/12 mt-10 opacity-80 p-4 mr-auto">
-              <Text className="text-xs text-left">{`היי 👋 אני מיכאל, כאן כדי לעזור לך.
+              <Text className="text-xs text-left text-black">{`היי 👋 אני מיכאל, כאן כדי לעזור לך.
 
 אני יודע שלחץ וחרדה יכולים להיות קשים, אך אני כאן לתמוך בך- נלמד טכניקות מיינדפולנס, נתמודד עם מחשבות ורגשות ונמצא מדיטציות מותאמות אישית לעזור לך להרגע ולהרגיש בשליטה.
 
 איך את/ה מרגיש/ה היום?`}</Text>
             </View>
             <View className="w-10/12 bg-white rounded-3xl mt-2 opacity-80 p-4 ml-auto">
-              <Text className="text-xs text-left">{`בן הזוג שלי נפרד ממני היום, אני לא מצליחה לתפקד :(`}</Text>
+              <Text className="text-xs text-left text-black">{`בן הזוג שלי נפרד ממני היום, אני לא מצליחה לתפקד :(`}</Text>
             </View>
             <View className="w-10/12 bg-white rounded-3xl mt-2 opacity-80 p-4">
-              <Text className="text-xs text-left">{`אני ממש מצטער לשמוע על הפרידה, זה באמת קשה לעבור דבר כזה. חשוב שתדעי שזה בסדר גמור שאת מרגישה ככה, זה חלק מהתהליך. הדבר הכי טוב לעכשיו זה להתמקד בך ובצרכיך. תנסי לשים פוקוס על עצמך ועל דברים שעושים לך טוב...`}</Text>
+              <Text className="text-xs text-left text-black">{`אני ממש מצטער לשמוע על הפרידה, זה באמת קשה לעבור דבר כזה. חשוב שתדעי שזה בסדר גמור שאת מרגישה ככה, זה חלק מהתהליך. הדבר הכי טוב לעכשיו זה להתמקד בך ובצרכיך. תנסי לשים פוקוס על עצמך ועל דברים שעושים לך טוב...`}</Text>
             </View>
           </View>
         </View>

@@ -1,13 +1,15 @@
 import { usePurchases } from '@common/context/PurchaseContext';
 import theme from '@common/theme';
 import { useNavigation } from '@react-navigation/native';
+import useSessions from '@services/hooks/useSessions';
 import {
   FIRST_MESSAGES,
+  SYSTEM_USER,
   mapIMessageToMessage,
   mapMessageToIMessage,
   removeEmojiesFromString,
 } from '@utils/chat';
-import React, { useRef, useState } from 'react';
+import React, { useCallback, useMemo, useRef, useState } from 'react';
 import { FlatList, Pressable, View } from 'react-native';
 import CryptoJS from 'react-native-crypto-js';
 import {
@@ -15,6 +17,7 @@ import {
   GiftedChat,
   IMessage,
   InputToolbar,
+  Reply,
   Send,
 } from 'react-native-gifted-chat';
 import Icon from 'react-native-vector-icons/Feather';
@@ -30,6 +33,7 @@ const generateUUID = () => CryptoJS.lib.WordArray.random(128 / 8).toString();
 export default function Chat() {
   const ref = useRef<FlatList<IMessage>>(null);
   const { id: userId } = useSelector(state => state.userDetails);
+  const { sessions } = useSessions();
   const { hasPremium } = usePurchases();
   const navigation = useNavigation();
   const [sessionId, setSessionId] = useState(generateUUID());
@@ -55,7 +59,15 @@ export default function Chat() {
     ref.current?.scrollToEnd({ animated: true });
   };
 
-  const handleQuickReply = replies => {
+  const handleQuickReply = (replies: Reply[]) => {
+    const item = sessions.find(({ id }) => id === replies[0].value);
+
+    if (item) {
+      // @ts-ignore
+      navigation.navigate('MeditationPlayer', { item });
+      return;
+    }
+
     const messagesToAdd = replies.map((reply, index) => ({
       _id: `${index}-${Date.now()}`,
       text: removeEmojiesFromString(reply.title),
@@ -72,6 +84,43 @@ export default function Chat() {
   // const renderMessage = props => {
   //   return <SlackMessage {...props} messageTextStyle={{}} />;
   // };
+
+  const extractSessionIds = useCallback(
+    (text: string) =>
+      sessions
+        .filter(session => text.includes(`"${session.name}"`))
+        .map(session => session.id),
+    [sessions],
+  );
+
+  const messages = useMemo(() => {
+    if (!chatMsgs.length) {
+      return FIRST_MESSAGES;
+    }
+
+    const msgs = chatMsgs.map(mapMessageToIMessage);
+    const lastMsg = msgs[msgs.length - 1];
+
+    if (lastMsg.user._id === SYSTEM_USER._id) {
+      const ids = extractSessionIds(lastMsg.text);
+      const values = sessions
+        .filter(session => ids.includes(session.id))
+        .map(({ name, id: value }) => ({
+          title: `▶️ נגן את "${name}"`,
+          value,
+        }));
+
+      msgs[msgs.length - 1] = {
+        ...lastMsg,
+        quickReplies: {
+          type: 'radio',
+          values,
+        },
+      };
+    }
+
+    return msgs;
+  }, [chatMsgs, extractSessionIds, sessions]);
 
   return (
     <View className="w-full h-full">
@@ -108,9 +157,7 @@ export default function Chat() {
         scrollToBottom
         inverted={false}
         isTyping={isLoading}
-        messages={
-          chatMsgs.length ? chatMsgs.map(mapMessageToIMessage) : FIRST_MESSAGES
-        }
+        messages={messages}
         onQuickReply={handleQuickReply}
         onSend={messages => onSend(messages)}
         placeholder="הכנס הודעה..."
@@ -135,8 +182,6 @@ export default function Chat() {
             </View>
           </Send>
         )}
-        // TODO: fix quick replies in SlackMessage
-        // renderMessage={renderMessage}
         renderInputToolbar={props => (
           <InputToolbar
             {...props}
@@ -179,6 +224,8 @@ export default function Chat() {
             />
           );
         }}
+        // TODO: fix quick replies in SlackMessage
+        // renderMessage={renderMessage}
       />
     </View>
   );

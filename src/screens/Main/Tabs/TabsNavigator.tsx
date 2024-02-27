@@ -110,7 +110,7 @@ const tabScreen = (name: string) => ({
   },
   tabBarLabel: ({ focused }: { focused: boolean }) => (
     <Text
-      className="text-xs text-center mb-2"
+      className="text-sm text-center mb-2"
       style={{
         color: focused ? theme.colors.selected : theme.colors.inactive,
         textAlign: 'center',
