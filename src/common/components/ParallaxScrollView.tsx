@@ -1,5 +1,5 @@
 import React, { FC, PropsWithChildren } from 'react';
-import { Image, StyleSheet } from 'react-native';
+import { Image, StyleSheet, View } from 'react-native';
 import Animated, {
   interpolate,
   useAnimatedScrollHandler,
@@ -7,59 +7,92 @@ import Animated, {
   useSharedValue,
 } from 'react-native-reanimated';
 
-const HEADER_HEIGHT = 300;
-
-const ParallaxScrollView: FC<PropsWithChildren & { image: string }> = ({
+const ParallaxScrollView: FC<
+  PropsWithChildren & {
+    image: string;
+    backgroundColor?: string;
+    contentBackgroundColor?: string;
+    parallaxHeaderHeight?: number;
+    renderForeground?: () => JSX.Element;
+    renderStickyHeader?: () => JSX.Element;
+  }
+> = ({
   children,
   image,
+  backgroundColor = '#fdedd6',
+  contentBackgroundColor = '#fdedd6',
+  parallaxHeaderHeight = 200,
+  renderForeground = () => null,
+  renderStickyHeader = () => null,
 }) => {
   const scrollY = useSharedValue(0);
-
   const scrollHandler = useAnimatedScrollHandler(event => {
     scrollY.value = event.contentOffset.y;
   });
 
   const headerStyle = useAnimatedStyle(() => {
-    const scale = interpolate(scrollY.value, [-HEADER_HEIGHT, 0], [2, 1]);
+    const scale = interpolate(
+      scrollY.value,
+      [-parallaxHeaderHeight, 0],
+      [2, 1],
+    );
     const translateY = interpolate(
       scrollY.value,
-      [-HEADER_HEIGHT, 0, HEADER_HEIGHT],
-      [-HEADER_HEIGHT / 2, 0, HEADER_HEIGHT * 0.75],
+      [-parallaxHeaderHeight, 0, parallaxHeaderHeight],
+      [-parallaxHeaderHeight / 2, 0, parallaxHeaderHeight * 0.75],
     );
     return {
+      height: parallaxHeaderHeight,
       transform: [{ scale }, { translateY }],
     };
   });
 
-  return (
-    <Animated.ScrollView
-      showsVerticalScrollIndicator={false}
-      style={styles.container}
-      onScroll={scrollHandler}
-      scrollEventThrottle={16}>
-      <Animated.View style={[styles.header, headerStyle]}>
-        <Image style={styles.image} source={{ uri: image }} />
-      </Animated.View>
+  const foregroundStyle = useAnimatedStyle(() => {
+    const opacity = interpolate(
+      scrollY.value,
+      [0, parallaxHeaderHeight],
+      [1, 0],
+    );
+    return { opacity };
+  });
 
-      {children}
-    </Animated.ScrollView>
+  return (
+    <View
+      style={[styles.container, { backgroundColor: contentBackgroundColor }]}>
+      <Animated.ScrollView
+        showsVerticalScrollIndicator={false}
+        onScroll={scrollHandler}
+        scrollEventThrottle={16}
+        style={{ flex: 1 }}>
+        <Animated.View
+          style={[headerStyle, styles.header, { backgroundColor }]}>
+          <Image
+            source={{ uri: image }}
+            style={StyleSheet.absoluteFill}
+            resizeMode="cover"
+          />
+          <Animated.View style={[StyleSheet.absoluteFill, foregroundStyle]}>
+            {renderForeground()}
+          </Animated.View>
+        </Animated.View>
+        <View style={{ marginTop: parallaxHeaderHeight }}>{children}</View>
+      </Animated.ScrollView>
+      {renderStickyHeader()}
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: '#fdedd6',
     flex: 1,
   },
   header: {
-    height: HEADER_HEIGHT,
     width: '100%',
     overflow: 'hidden',
-  },
-  image: {
-    height: '100%',
-    width: '100%',
-    resizeMode: 'cover',
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
   },
 });
 

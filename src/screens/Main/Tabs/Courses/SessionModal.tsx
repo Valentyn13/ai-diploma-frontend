@@ -106,11 +106,11 @@ const SessionModal = ({ navigation }) => {
               }
               className="flex-row items-center justify-center space-x-2">
               <Image
-                source={{ uri: instructor.image }}
+                source={{ uri: instructor?.image }}
                 className="bg-black/50 rounded-full w-7 h-7"
               />
               <Text className="text-lg font-medium text-black text-left">
-                {instructor.name}
+                {instructor?.name}
               </Text>
             </Pressable>
           </View>

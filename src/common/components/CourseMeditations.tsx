@@ -25,7 +25,7 @@ const CourseMeditations: FC<CourseMeditationsProps> = ({
 
   const onPress = useCallback(
     (item: Meditation) => {
-      if (!hasPremium && !isCategoryLocked) {
+      if (!hasPremium && isCategoryLocked) {
         navigate('Subscribe');
       } else {
         navigate('MeditationPlayer', { item });

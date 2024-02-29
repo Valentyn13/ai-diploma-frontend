@@ -1,9 +1,57 @@
 import { Canvas, LinearGradient, Rect, vec } from '@shopify/react-native-skia';
-import React, { FC, useState } from 'react';
+import React, { FC, useEffect, useState } from 'react';
 import { LayoutChangeEvent, View } from 'react-native';
 
-const Gradient: FC<{ colors: string[] }> = ({ colors }) => {
+const stringToSeed = str => {
+  let hash = 0;
+  for (let i = 0; i < str.length; i++) {
+    hash = (Math.imul(31, hash) + str.charCodeAt(i)) | 0;
+  }
+  return hash;
+};
+
+const getRandomColor = seed => {
+  let localSeed = seed;
+  const random = () => {
+    localSeed = (localSeed * 16807) % 2147483647;
+    return (localSeed - 1) / 2147483646;
+  };
+
+  const minValue = 180;
+
+  const r = Math.floor(random() * (256 - minValue) + minValue);
+  const g = Math.floor(random() * (256 - minValue) + minValue);
+  const b = Math.floor(random() * (256 - minValue) + minValue);
+
+  // Construct and return the hex color string.
+  return `#${r.toString(16).padStart(2, '0')}${g
+    .toString(16)
+    .padStart(2, '0')}${b.toString(16).padStart(2, '0')}`;
+};
+
+const Gradient: FC<{ seed?: string; colors?: string[] }> = ({
+  colors,
+  seed: seedProp,
+}) => {
   const [size, setSize] = useState({ width: 0, height: 0 });
+  const [computedColors, setComputedColors] = useState<string[]>([]);
+
+  useEffect(() => {
+    if (!colors) {
+      const seed = stringToSeed(seedProp || `defaultSeed${Date.now()}`);
+      const defaultColors = [
+        getRandomColor(seed),
+        getRandomColor(
+          stringToSeed(
+            seedProp ? `defaultSeed${seedProp}` : `defaultSeed${Date.now()}`,
+          ),
+        ),
+      ];
+      setComputedColors(defaultColors);
+    } else {
+      setComputedColors(colors);
+    }
+  }, [colors, seedProp]);
 
   const onLayout = (event: LayoutChangeEvent) => {
     const { width, height } = event.nativeEvent.layout;
@@ -25,7 +73,7 @@ const Gradient: FC<{ colors: string[] }> = ({ colors }) => {
           <LinearGradient
             start={vec(0, 0)}
             end={vec(size.width, size.height)}
-            colors={colors}
+            colors={computedColors}
           />
         </Rect>
       </Canvas>
