@@ -61,16 +61,19 @@ const SessionModal = ({ navigation }) => {
 
   return (
     <SafeAreaView className="flex-1 bg-[#fdedd6]">
-      <ParallaxScrollView image={image}>
-        <View className="absolute top-5 left-5">
-          <CircleButton
-            size={40}
-            icon="chevron-down"
-            onPress={goBack}
-            backgroundColor="#00000060"
-            color="white"
-          />
-        </View>
+      <ParallaxScrollView
+        image={image}
+        renderStickyHeader={() => (
+          <View className="absolute top-5 left-5">
+            <CircleButton
+              size={40}
+              icon="chevron-down"
+              onPress={goBack}
+              backgroundColor="#00000060"
+              color="white"
+            />
+          </View>
+        )}>
         <View className="relative mt-8 mx-5">
           <View className="absolute -top-16 right-0">
             <TouchableOpacity
