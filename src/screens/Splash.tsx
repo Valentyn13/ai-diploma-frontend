@@ -4,7 +4,6 @@ import WithFadeIn from '@common/components/transitions/WithFadeIn';
 import WithRotate from '@common/components/transitions/WithRotate';
 import WithScale from '@common/components/transitions/WithScale';
 import WithTranslateY from '@common/components/transitions/WithTranslateY';
-import config from '@common/config';
 import theme from '@common/theme';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { AMPLITUDE_EVENTS, useAmplitude } from '@services/hooks/useAmplitude';
@@ -32,38 +31,28 @@ const Splash: FC<SplashProps> = ({ navigation: { navigate, replace } }) => {
   );
 
   useEffect(() => {
-    const timer = setTimeout(
-      () => {
-        if (accessToken) {
-          getAppData();
-        } else if (isFirstTimeUser) {
-          logEvent(AMPLITUDE_EVENTS.ONBOARDING_START);
-          uploadEvents();
-          replace('Onboarding');
-        } else {
-          replace('Auth');
-        }
-      },
-      config.isDev ? 1000 : 3000,
-    );
-
-    return () => clearTimeout(timer);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [accessToken, getAppData, isFirstTimeUser, navigate]);
+    // Immediately proceed with the logic without waiting.
+    if (accessToken) {
+      getAppData();
+    } else if (isFirstTimeUser) {
+      logEvent(AMPLITUDE_EVENTS.ONBOARDING_START);
+      uploadEvents();
+      replace('Onboarding');
+    } else {
+      replace('Auth');
+    }
+  }, [accessToken, isFirstTimeUser]);
 
   useEffect(() => {
     if (isLoaded && animationFinished) {
       replace('Main');
     }
-  }, [isLoaded, animationFinished, replace]);
+    // Ensures this effect only reruns when `isLoaded` or `animationFinished` changes.
+  }, [isLoaded, animationFinished]);
 
   useEffect(() => {
-    const simulateAnimationEnd = async () => {
-      await new Promise(resolve => setTimeout(resolve, 3000));
-      setAnimationFinished(true);
-    };
-
-    simulateAnimationEnd();
+    // Simulate the end of an animation immediately without waiting for 3 seconds.
+    setAnimationFinished(true);
   }, []);
 
   return (
