@@ -25,10 +25,10 @@ const Indicator: FC = () => (
       position: 'absolute',
       top: -4,
       right: -4,
-      backgroundColor: '#D66366',
+      backgroundColor: '#F62C36',
       borderRadius: 10,
-      width: 16,
-      height: 16,
+      width: 12,
+      height: 12,
     }}
   />
 );
