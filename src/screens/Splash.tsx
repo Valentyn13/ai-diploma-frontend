@@ -9,7 +9,7 @@ import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { AMPLITUDE_EVENTS, useAmplitude } from '@services/hooks/useAmplitude';
 import useAppData from '@services/hooks/useAppData';
 import { useIntro } from '@services/hooks/useIntro';
-import React, { FC, useEffect, useState } from 'react';
+import React, { FC, useEffect } from 'react';
 import { Text } from 'react-native';
 import { useSelector } from 'react-redux';
 
@@ -22,7 +22,6 @@ type SplashProps = NativeStackScreenProps<RootStackParamList, 'Splash'>;
 const Splash: FC<SplashProps> = ({ navigation: { navigate, replace } }) => {
   const { isFirstTimeUser } = useIntro();
   const { getAppData } = useAppData();
-  const [animationFinished, setAnimationFinished] = useState(false);
   const { logEvent, uploadEvents } = useAmplitude();
 
   const isLoaded = useSelector((state: RootState) => state.appData.loaded);
@@ -31,7 +30,6 @@ const Splash: FC<SplashProps> = ({ navigation: { navigate, replace } }) => {
   );
 
   useEffect(() => {
-    // Immediately proceed with the logic without waiting.
     if (accessToken) {
       getAppData();
     } else if (isFirstTimeUser) {
@@ -44,16 +42,10 @@ const Splash: FC<SplashProps> = ({ navigation: { navigate, replace } }) => {
   }, [accessToken, isFirstTimeUser]);
 
   useEffect(() => {
-    if (isLoaded && animationFinished) {
+    if (isLoaded) {
       replace('Main');
     }
-    // Ensures this effect only reruns when `isLoaded` or `animationFinished` changes.
-  }, [isLoaded, animationFinished]);
-
-  useEffect(() => {
-    // Simulate the end of an animation immediately without waiting for 3 seconds.
-    setAnimationFinished(true);
-  }, []);
+  }, [isLoaded]);
 
   return (
     <Container>
