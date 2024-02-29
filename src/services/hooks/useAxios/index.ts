@@ -8,9 +8,10 @@ import logger from '@utils/logger';
 import { getToken, storeToken } from '@utils/tokenHolder';
 import axios from 'axios';
 import { useCallback, useEffect, useMemo, useReducer } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 
 import usePrevious from '../usePrevious';
+import { useUser } from '../useUser';
 import { actions, initialResponse, responseReducer } from './reducers';
 
 const defaultParams = {};
@@ -101,7 +102,7 @@ export default ({
   showError = true,
 }) => {
   const [results, dispatch] = useReducer(responseReducer, initialResponse);
-  const userDetails = useSelector(state => state.userDetails);
+  const { user } = useUser();
   const dispatchAction = useDispatch();
 
   const fetch = useCallback(
@@ -128,7 +129,7 @@ export default ({
         const { data, status } = await httpRequest(
           requestApi,
           apiParams,
-          userDetails.id,
+          user.id,
         );
 
         const { token } = data;
@@ -150,19 +151,15 @@ export default ({
           const message = extractError(error);
           if (message === 'jwt expired') {
             const { accessToken, refreshToken } = await refreshAccessToken(
-              userDetails.id,
-              userDetails.email,
-              userDetails.refreshToken,
+              user.id,
+              user.email,
+              user.refreshToken,
             );
 
             if (accessToken && refreshToken) {
               storeToken(accessToken);
               dispatchAction(setAccessToken({ accessToken, refreshToken }));
-              const res = requestAfterRefresh(
-                requestApi,
-                apiParams,
-                userDetails.id,
-              );
+              const res = requestAfterRefresh(requestApi, apiParams, user.id);
               if (res.err) {
                 dispatch({ type: actions.fail, payload: res.err });
               }
@@ -210,9 +207,9 @@ export default ({
       params,
       requestApi,
       showError,
-      userDetails.email,
-      userDetails.id,
-      userDetails.refreshToken,
+      user.email,
+      user.id,
+      user.refreshToken,
     ],
   );
 

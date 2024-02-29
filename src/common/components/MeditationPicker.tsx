@@ -8,6 +8,7 @@ import {
   TouchableOpacity,
 } from '@gorhom/bottom-sheet';
 import { useNavigation } from '@react-navigation/native';
+import { useUser } from '@services/hooks/useUser';
 import { allMeditations } from '@store/selectors';
 import { useSheetStore } from '@store/useSheetStore';
 import React, {
@@ -199,7 +200,9 @@ const WhereYouAt: FC<{ onNext: (l: Place) => void }> = ({ onNext }) => {
 };
 
 const MeditationPicker = () => {
-  const userDetails = useSelector(state => state.userDetails);
+  const {
+    user: { sex },
+  } = useUser();
   const { hasPremium } = usePurchases();
   const meditations = useSelector(allMeditations);
   const navigation = useNavigation();
@@ -336,7 +339,7 @@ const MeditationPicker = () => {
           {showWhereYouAt ? (
             <WhereYouAt onNext={onFinish} />
           ) : (
-            <HowUFeel onNext={handleNext} isMale={userDetails.sex === 'M'} />
+            <HowUFeel onNext={handleNext} isMale={sex === 'M'} />
           )}
         </BottomSheetView>
       </BottomSheetView>

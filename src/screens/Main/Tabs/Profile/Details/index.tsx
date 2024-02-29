@@ -8,6 +8,7 @@ import Meditate from '@common/components/animation/Meditate';
 import { CircleButton } from '@common/components/buttons/CircleButton';
 import theme from '@common/theme';
 import useUpdateProfile from '@services/hooks/useUpdateProfile';
+import { useUser } from '@services/hooks/useUser';
 import React, { FC, useEffect, useState } from 'react';
 import {
   ActivityIndicator,
@@ -19,7 +20,6 @@ import {
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { scale } from 'react-native-size-matters';
-import { useSelector } from 'react-redux';
 import styled from 'styled-components/native';
 
 const Label = styled(Title)`
@@ -45,9 +45,9 @@ const Row: React.FC<RowProps> = ({ label, value, keyValue }) => (
 interface DetailsProps {}
 
 const Details: FC<DetailsProps> = ({ navigation }) => {
-  const { name, email, sex, updateloader } = useSelector(
-    (state: any) => state.userDetails,
-  );
+  const {
+    user: { name, email, sex, updateloader },
+  } = useUser();
   const [toggleModal, setToggleModal] = useState<boolean>(false);
   const [passwordModal, setPasswordModal] = useState<boolean>(false);
 

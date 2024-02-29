@@ -14,6 +14,7 @@ import useAppData from '@services/hooks/useAppData';
 import useAppState from '@services/hooks/useAppState';
 import useFeed from '@services/hooks/useFeed';
 import { useOnboarding } from '@services/hooks/useOnboarding';
+import { useUser } from '@services/hooks/useUser';
 import { useSheetStore } from '@store/useSheetStore';
 import { getBGImageByTime } from '@utils/time';
 import React, { FC, useCallback, useEffect, useRef, useState } from 'react';
@@ -27,7 +28,6 @@ import {
 } from 'react-native';
 import { CopilotStep, useCopilot, walkthroughable } from 'react-native-copilot';
 import { LinearGradient } from 'react-native-gradients';
-import { useSelector } from 'react-redux';
 import styled from 'styled-components/native';
 import { Meditation } from 'types/Meditation';
 
@@ -50,7 +50,9 @@ const BGS = {
 
 const Feed: FC<FeedProps> = ({ navigation, copilot }) => {
   const { getAppData } = useAppData();
-  const { sex } = useSelector((state: any) => state.userDetails);
+  const {
+    user: { sex },
+  } = useUser();
   const [byTimeCollection, latestCollection, ...collections]: Collection[] =
     useFeed();
 

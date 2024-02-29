@@ -10,6 +10,7 @@ import rudderClient, {
 import { useAmplitude } from '@services/hooks/useAmplitude';
 import useDeleteData from '@services/hooks/useDeleteData';
 import useUpdateProfile from '@services/hooks/useUpdateProfile';
+import { useUser } from '@services/hooks/useUser';
 import { logout } from '@store/actions';
 import { logEvent } from '@utils/analytics';
 import { fbLogout } from '@utils/facebook';
@@ -30,16 +31,16 @@ import {
 import DeviceInfo from 'react-native-device-info';
 import Modal from 'react-native-modal';
 import Icon from 'react-native-vector-icons/FontAwesome6';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 
 const Settings = ({ navigation }) => {
   const [showModal, setShowModal] = React.useState(false);
   const [showTime, setShowTime] = React.useState(false);
 
   const dispatch = useDispatch();
-  const { name, email, isNotification, notificationTime, id } = useSelector(
-    state => state.userDetails,
-  );
+  const {
+    user: { name, email, isNotification, notificationTime, id },
+  } = useUser();
   const { DeleteUserData, cancelSubscription } = useDeleteData();
   const { saveNotification, cancelNotification } = useUpdateProfile();
 

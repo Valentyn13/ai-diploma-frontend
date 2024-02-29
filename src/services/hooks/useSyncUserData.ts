@@ -3,11 +3,12 @@ import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 
 import useAxios from './useAxios';
+import { useUser } from './useUser';
 import useUserData from './useUserData';
 
 export default () => {
   const appDataloaded = useSelector(state => state.appData.loaded);
-  const userDetails = useSelector(state => state.userDetails);
+  const { user } = useUser();
   const userProgress = useSelector(state => state.userProgress);
   const userPreferences = useSelector(state => state.userPreferences);
 
@@ -24,19 +25,13 @@ export default () => {
   });
 
   useEffect(() => {
-    if (appDataloaded && userDetails.id) {
+    if (appDataloaded && user.id) {
       syncUserProgress(userProgress);
     }
-  }, [
-    appDataloaded,
-    syncUserProgress,
-    userDetails,
-    userDetails.id,
-    userProgress,
-  ]);
+  }, [appDataloaded, syncUserProgress, user, user.id, userProgress]);
 
   useEffect(() => {
-    if (appDataloaded && userDetails.id) {
+    if (appDataloaded && user.id) {
       const { selectedCategories, favoriteMeditations, experience } =
         userPreferences;
       syncUserPreferences({
@@ -45,11 +40,11 @@ export default () => {
         experience,
       });
     }
-  }, [appDataloaded, syncUserPreferences, userDetails.id, userPreferences]);
+  }, [appDataloaded, syncUserPreferences, user.id, userPreferences]);
 
   useEffect(() => {
-    if (appDataloaded && userDetails.id) {
+    if (appDataloaded && user.id) {
       getUserData();
     }
-  }, [appDataloaded, getUserData, userDetails.id]);
+  }, [appDataloaded, getUserData, user.id]);
 };

@@ -1,5 +1,6 @@
 import { PurchasesPackage } from '@revenuecat/purchases-typescript-internal';
 import { useAmplitude } from '@services/hooks/useAmplitude';
+import { useUser } from '@services/hooks/useUser';
 import logger from '@utils/logger';
 import React, {
   PropsWithChildren,
@@ -13,7 +14,6 @@ import Purchases, {
   LOG_LEVEL,
   MakePurchaseResult,
 } from 'react-native-purchases';
-import { useSelector } from 'react-redux';
 
 interface PurchaseContextProps {
   plans: Record<string, PurchasesPackage>;
@@ -48,10 +48,9 @@ export const PurchaseProvider: React.FC<PropsWithChildren> = ({ children }) => {
   const [purchasing, setPurchasing] = useState(false);
   const [identify, setIdentify] = useState(false);
   const amplitudeInstance = useAmplitude();
-  const { id, email } = useSelector(
-    (state: { userDetails: { id: string; email: string } }) =>
-      state.userDetails,
-  );
+  const {
+    user: { id, email },
+  } = useUser();
 
   const getOfferings = useCallback(async () => {
     try {

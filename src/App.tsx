@@ -1,4 +1,3 @@
-import { LDProvider } from '@common/context/LDContext';
 import { PurchaseProvider } from '@common/context/PurchaseContext';
 import { TrackPlayerProvider } from '@common/context/TrackPlayerContext';
 import StoreUpdate from '@common/storeUpdate';
@@ -46,36 +45,34 @@ const App: React.FC = () => {
       <Provider store={store}>
         <PurchaseProvider>
           <BottomSheetModalProvider>
-            <LDProvider>
-              <PersistGate loading={null} persistor={persistor}>
-                <StatusBar hidden />
-                <ThemeProvider theme={theme}>
-                  <StoreUpdate>
-                    <TrackPlayerProvider>
-                      <CopilotProvider
-                        backdropColor="rgba(0, 0, 0, 0.7)"
-                        overlay="svg"
-                        arrowColor="#513F73"
-                        labels={{
-                          skip: 'דלג',
-                          previous: 'חזור',
-                          next: 'הבא',
-                          finish: 'סיום',
-                        }}
-                        tooltipStyle={{
-                          borderRadius: 8,
-                          padding: 8,
-                          backgroundColor: '#513F73',
-                        }}>
-                        <View style={styles.rootContainer}>
-                          <RootNavigator />
-                        </View>
-                      </CopilotProvider>
-                    </TrackPlayerProvider>
-                  </StoreUpdate>
-                </ThemeProvider>
-              </PersistGate>
-            </LDProvider>
+            <PersistGate loading={null} persistor={persistor}>
+              <StatusBar hidden />
+              <ThemeProvider theme={theme}>
+                <StoreUpdate>
+                  <TrackPlayerProvider>
+                    <CopilotProvider
+                      backdropColor="rgba(0, 0, 0, 0.7)"
+                      overlay="svg"
+                      arrowColor="#513F73"
+                      labels={{
+                        skip: 'דלג',
+                        previous: 'חזור',
+                        next: 'הבא',
+                        finish: 'סיום',
+                      }}
+                      tooltipStyle={{
+                        borderRadius: 8,
+                        padding: 8,
+                        backgroundColor: '#513F73',
+                      }}>
+                      <View style={styles.rootContainer}>
+                        <RootNavigator />
+                      </View>
+                    </CopilotProvider>
+                  </TrackPlayerProvider>
+                </StoreUpdate>
+              </ThemeProvider>
+            </PersistGate>
           </BottomSheetModalProvider>
         </PurchaseProvider>
       </Provider>

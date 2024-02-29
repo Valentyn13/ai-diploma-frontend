@@ -7,7 +7,6 @@ import useAxios from './useAxios';
 
 export default () => {
   const dispatch = useDispatch();
-  // const userDetails = useSelector(state => state.userDetails);
 
   const updateProfileApi = useAxios({
     api: api.updateProfile,

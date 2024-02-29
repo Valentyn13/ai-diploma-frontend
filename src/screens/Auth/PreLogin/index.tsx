@@ -6,6 +6,7 @@ import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { RootStackParamList } from '@screens/RootNavigator';
 import useAppData from '@services/hooks/useAppData';
 import useLogin from '@services/hooks/useLogin';
+import { useUser } from '@services/hooks/useUser';
 import { firstCourseSelector } from '@store/selectors';
 import { useLoginStore } from '@store/useLoginStore';
 import alert from '@utils/alert';
@@ -32,9 +33,9 @@ const PreLogin: FC<PreLoginProps> = ({ navigation: { navigate } }) => {
   const { isLoading, setIsLoading } = useLoginStore(state => state);
   const { loginWithApple, loginWithFacebook, loginWithGoogle } = useLogin();
   const { getAppData } = useAppData();
-  const accessToken = useSelector<any, string>(
-    state => state.userDetails.accessToken,
-  );
+  const {
+    user: { accessToken },
+  } = useUser();
   const appDataLoaded = useSelector<any, boolean>(
     state => state.appData.loaded,
   );

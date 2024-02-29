@@ -7,6 +7,7 @@ import { useNavigation } from '@react-navigation/native';
 import { useAmplitude } from '@services/hooks/useAmplitude';
 import useAppData from '@services/hooks/useAppData';
 import useLogin from '@services/hooks/useLogin';
+import { useUser } from '@services/hooks/useUser';
 import { logEvent } from '@utils/analytics';
 import React, { FC, useEffect, useState } from 'react';
 import { ActivityIndicator, Text, TextInput, View } from 'react-native';
@@ -25,8 +26,7 @@ const Login: FC = () => {
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
   const [loader, setLoader] = useState<boolean>(false);
-
-  const userDetails = useSelector((state: RootState) => state.userDetails);
+  const { user } = useUser();
   const appDataloaded = useSelector((state: RootState) => state.appData.loaded);
   const amplitudeInstance = useAmplitude();
 
@@ -39,27 +39,27 @@ const Login: FC = () => {
 
   const initCrashlytics = async () => {
     await Promise.all([
-      crashlytics().setUserId(userDetails.id),
+      crashlytics().setUserId(user.id),
       crashlytics().setAttributes({
         email,
-        username: userDetails.email,
+        username: user.email,
       }),
       logEvent('LOGIN', {
-        userName: userDetails.name,
-        email: userDetails.email,
+        userName: user.name,
+        email: user.email,
       }),
     ]);
   };
 
   useEffect(() => {
-    if (userDetails.accessToken) {
-      amplitudeInstance.setUserId(userDetails.id);
-      amplitudeInstance.logEvent('LOGIN', { userID: userDetails.id });
+    if (user.accessToken) {
+      amplitudeInstance.setUserId(user.id);
+      amplitudeInstance.logEvent('LOGIN', { userID: user.id });
       amplitudeInstance.uploadEvents();
       getAppData();
       initCrashlytics();
     }
-  }, [userDetails.accessToken, getAppData]);
+  }, [user.accessToken, getAppData]);
 
   useEffect(() => {
     if (appDataloaded) {
@@ -68,8 +68,8 @@ const Login: FC = () => {
   }, [appDataloaded, navigation]);
 
   useEffect(() => {
-    setLoader(userDetails.loader);
-  }, [userDetails.loader]);
+    setLoader(user.loader);
+  }, [user.loader]);
 
   return (
     <SafeAreaView className="flex-1 bg-[#fdedd6] p-4">
@@ -136,13 +136,6 @@ const Login: FC = () => {
 export default Login;
 
 interface RootState {
-  userDetails: {
-    accessToken: string;
-    id: string;
-    loader: boolean;
-    email: string;
-    name: string;
-  };
   appData: {
     loaded: boolean;
   };

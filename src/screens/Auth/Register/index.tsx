@@ -7,6 +7,7 @@ import CheckBox from '@react-native-community/checkbox';
 import { useAmplitude } from '@services/hooks/useAmplitude';
 import useAppData from '@services/hooks/useAppData';
 import useLogin from '@services/hooks/useLogin';
+import { useUser } from '@services/hooks/useUser';
 import { logEvent } from '@utils/analytics';
 import React, { useEffect, useState } from 'react';
 import {
@@ -60,11 +61,8 @@ const Register = ({ navigation }) => {
     }
   };
   const {
-    accessToken,
-    id,
-    loder,
-    email: useremail,
-  } = useSelector(state => state.userDetails);
+    user: { accessToken, id, loder, email: useremail },
+  } = useUser();
   const appDataloaded = useSelector(state => state.appData.loaded);
   const amplitudeInstance = useAmplitude();
 

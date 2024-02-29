@@ -12,11 +12,12 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import { getFcmToken } from '../../helper/pushNotifications';
 import useAxios from './useAxios';
+import { useUser } from './useUser';
 
 export default () => {
   const { setIsLoading } = useLoginStore(state => state);
   const dispatch = useDispatch();
-  const userDetails = useSelector(state => state.userDetails);
+  const { user } = useUser();
   const preferences = useSelector(state => state.userPreferences);
 
   const handleError = () => {
@@ -77,7 +78,7 @@ export default () => {
       const res = await googleSignIn();
 
       const { fetch } = googleLoginApi;
-      const { sex } = userDetails;
+      const { sex } = user;
       const { selectedCategories } = preferences;
 
       await fetch({
@@ -101,7 +102,7 @@ export default () => {
     try {
       const accessToken = await fbLogin();
       const { fetch } = facebookLoginApi;
-      const { sex } = userDetails;
+      const { sex } = user;
       const { selectedCategories } = preferences;
 
       fetch({
@@ -123,7 +124,7 @@ export default () => {
       const res = await applelogin();
       const { fetch } = appleLoginApi;
 
-      const { sex } = userDetails;
+      const { sex } = user;
       const { selectedCategories } = preferences;
 
       fetch({
@@ -144,7 +145,7 @@ export default () => {
   const signUp = (email, password, name, fcmToken) => {
     dispatch(setLoder());
     const { fetch } = register;
-    const { sex } = userDetails;
+    const { sex } = user;
     const { selectedCategories } = preferences;
 
     fetch({

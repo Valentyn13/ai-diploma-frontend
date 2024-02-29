@@ -9,6 +9,7 @@ import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { AMPLITUDE_EVENTS, useAmplitude } from '@services/hooks/useAmplitude';
 import useAppData from '@services/hooks/useAppData';
 import { useIntro } from '@services/hooks/useIntro';
+import { useUser } from '@services/hooks/useUser';
 import React, { FC, useEffect } from 'react';
 import { Text } from 'react-native';
 import { useSelector } from 'react-redux';
@@ -25,9 +26,9 @@ const Splash: FC<SplashProps> = ({ navigation: { replace } }) => {
   const { logEvent, uploadEvents } = useAmplitude();
 
   const isLoaded = useSelector((state: RootState) => state.appData.loaded);
-  const accessToken = useSelector(
-    (state: RootState) => state.userDetails.accessToken,
-  );
+  const {
+    user: { accessToken },
+  } = useUser();
 
   useEffect(() => {
     if (accessToken) {

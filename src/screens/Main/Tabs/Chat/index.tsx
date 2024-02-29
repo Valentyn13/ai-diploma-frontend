@@ -2,6 +2,7 @@ import { usePurchases } from '@common/context/PurchaseContext';
 import theme from '@common/theme';
 import { useNavigation } from '@react-navigation/native';
 import useSessions from '@services/hooks/useSessions';
+import { useUser } from '@services/hooks/useUser';
 import {
   FIRST_MESSAGES,
   SYSTEM_USER,
@@ -22,7 +23,6 @@ import {
 } from 'react-native-gifted-chat';
 import Icon from 'react-native-vector-icons/Feather';
 import { useChat } from 'react-native-vercel-ai';
-import { useSelector } from 'react-redux';
 
 import ChatHeader from './ChatHeader';
 
@@ -32,7 +32,9 @@ const generateUUID = () => CryptoJS.lib.WordArray.random(128 / 8).toString();
 
 export default function Chat() {
   const ref = useRef<FlatList<IMessage>>(null);
-  const { id: userId } = useSelector(state => state.userDetails);
+  const {
+    user: { id: userId },
+  } = useUser();
   const { sessions } = useSessions();
   const { hasPremium } = usePurchases();
   const navigation = useNavigation();

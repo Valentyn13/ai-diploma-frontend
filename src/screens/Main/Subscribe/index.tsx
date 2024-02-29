@@ -9,6 +9,7 @@ import rudderClient, {
 } from '@rudderstack/rudder-sdk-react-native';
 import * as Sentry from '@sentry/react-native';
 import { useAmplitude } from '@services/hooks/useAmplitude';
+import { useUser } from '@services/hooks/useUser';
 import i18n from '@services/localization/i18n';
 import { logEvent } from '@utils/analytics';
 import get from '@utils/get';
@@ -25,7 +26,6 @@ import {
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import Icon2 from 'react-native-vector-icons/Feather';
-import { useSelector } from 'react-redux';
 
 import subscribe2Bg from '../../../common/assets/images/sub-bg.jpg';
 
@@ -87,9 +87,10 @@ const Subscribe: FC = ({ navigation }) => {
   const route = useRoute();
   const { goBack } = useNavigation();
   const { plans, makePurchase, purchasing } = usePurchases();
-  const { email, name: userName } = useSelector(
-    (state: any) => state.userDetails,
-  );
+  const {
+    user: { email, name: userName },
+  } = useUser();
+
   const availablePackages = get(plans, 'availablePackages', []);
 
   const amplitudeInstance = useAmplitude();
