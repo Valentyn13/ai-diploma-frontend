@@ -19,7 +19,7 @@ type RootState = any;
 
 type SplashProps = NativeStackScreenProps<RootStackParamList, 'Splash'>;
 
-const Splash: FC<SplashProps> = ({ navigation: { navigate, replace } }) => {
+const Splash: FC<SplashProps> = ({ navigation: { replace } }) => {
   const { isFirstTimeUser } = useIntro();
   const { getAppData } = useAppData();
   const { logEvent, uploadEvents } = useAmplitude();
