@@ -12,7 +12,6 @@ import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { RootStackParamList } from '@screens/RootNavigator';
 import useAppData from '@services/hooks/useAppData';
 import useAppState from '@services/hooks/useAppState';
-import useArticleData from '@services/hooks/useArticleData';
 import useFeed from '@services/hooks/useFeed';
 import { useOnboarding } from '@services/hooks/useOnboarding';
 import { useSheetStore } from '@store/useSheetStore';
@@ -51,7 +50,6 @@ const BGS = {
 
 const Feed: FC<FeedProps> = ({ navigation, copilot }) => {
   const { getAppData } = useAppData();
-  const { getArticleData } = useArticleData();
   const { sex } = useSelector((state: any) => state.userDetails);
   const [byTimeCollection, latestCollection, ...collections]: Collection[] =
     useFeed();
@@ -60,16 +58,11 @@ const Feed: FC<FeedProps> = ({ navigation, copilot }) => {
 
   const onForeground = useCallback(() => {
     getAppData();
-    getArticleData();
-  }, [getAppData, getArticleData]);
+  }, [getAppData]);
 
   useAppState({
     onForeground,
   });
-
-  useEffect(() => {
-    getArticleData();
-  }, [getArticleData]);
 
   const onShowAll = (title: string, groupedMeditations: any) => {
     // @ts-ignore
