@@ -1,4 +1,4 @@
-import MeditationItem from '@common/components/MeditationItem';
+import SessionCard from '@common/components/SessionCard';
 import theme from '@common/theme';
 import React, { FC, useMemo } from 'react';
 import { FlatList, ListRenderItem } from 'react-native';
@@ -21,7 +21,7 @@ const HorizontalList: FC<HorizontalListProps> = ({
   data,
   renderUsing = null,
 }) => {
-  const Child = renderUsing || MeditationItem;
+  const Child = renderUsing || SessionCard;
 
   const renderItem: ListRenderItem<any> = ({ item, index }) => {
     return <Child item={item} index={index} />;
@@ -34,7 +34,7 @@ const HorizontalList: FC<HorizontalListProps> = ({
 
   return (
     <FlatList
-      contentContainerStyle={{ paddingHorizontal: 20, gap: 16 }}
+      contentContainerStyle={{ paddingHorizontal: 20, paddingTop: 4, gap: 16 }}
       horizontal={true}
       showsHorizontalScrollIndicator={false}
       data={data}

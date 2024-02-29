@@ -1,15 +1,20 @@
 import { allMeditations } from '@store/selectors';
-import { useEffect, useState } from 'react';
+import { isRecent } from '@utils/session';
+import { useMemo } from 'react';
 import { useSelector } from 'react-redux';
-import { Meditation } from 'types/Meditation';
+import { EnrichedSession, Meditation } from 'types/Meditation';
 
 const useSessions = () => {
-  const allSessions = useSelector(allMeditations);
-  const [sessions, setSessions] = useState<Meditation[]>(allSessions);
+  const allSessions = useSelector(allMeditations) as Meditation[];
 
-  useEffect(() => {
-    setSessions(allSessions);
-  }, [allSessions]);
+  const sessions = useMemo(
+    () =>
+      allSessions.map(session => ({
+        ...session,
+        isNew: isRecent(session),
+      })) as EnrichedSession[],
+    [allSessions],
+  );
 
   return { sessions };
 };

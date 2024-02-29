@@ -6,30 +6,34 @@ import { useNavigation } from '@react-navigation/native';
 import { useAmplitude } from '@services/hooks/useAmplitude';
 import { meditationInstructor } from '@store/selectors';
 import { logEvent } from '@utils/analytics';
+import { isRecent } from '@utils/session';
 import meditationTime from '@utils/time';
-import React, { memo, useCallback } from 'react';
+import React, { FC, memo, useCallback } from 'react';
 import { ImageBackground, Pressable, Text, View } from 'react-native';
 import IconFontAwesome from 'react-native-vector-icons/FontAwesome6';
 import { useSelector } from 'react-redux';
+import { EnrichedSession } from 'types/Meditation';
 
 interface MeditationItemProps {
-  item: {
-    id: string;
-    name: string;
-    url?: string;
-    duration: number;
-    categoryName: string;
-    animation?: string;
-    thumbnail?: string;
-    isCategoryLocked: boolean;
-    categoryTitle: string;
-    image?: string;
-    description?: string;
-  };
+  item: EnrichedSession;
   index: number;
 }
 
-const MeditationItem: React.FC<MeditationItemProps> = memo(
+const Indicator: FC = () => (
+  <View
+    style={{
+      position: 'absolute',
+      top: -4,
+      right: -4,
+      backgroundColor: '#D66366',
+      borderRadius: 10,
+      width: 16,
+      height: 16,
+    }}
+  />
+);
+
+const SessionCard: FC<MeditationItemProps> = memo(
   ({
     item: {
       id,
@@ -42,6 +46,8 @@ const MeditationItem: React.FC<MeditationItemProps> = memo(
       isCategoryLocked,
       categoryTitle,
       image,
+      createdAt,
+      isNew,
     },
     index,
   }) => {
@@ -151,9 +157,10 @@ const MeditationItem: React.FC<MeditationItemProps> = memo(
             </Text>
           </View>
         </Pressable>
+        {isRecent({ createdAt }) && <Indicator />}
       </View>
     );
   },
 );
 
-export default MeditationItem;
+export default SessionCard;

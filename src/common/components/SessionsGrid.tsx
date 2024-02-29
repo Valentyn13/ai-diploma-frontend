@@ -2,14 +2,14 @@ import React, { FC, useCallback } from 'react';
 import { FlatList } from 'react-native';
 import { Meditation } from 'types/Meditation';
 
-import MeditationItem from './MeditationItem';
+import SessionCard from './SessionCard';
 
 const SessionsGrid: FC<{ meditations: Meditation[]; title?: string }> = ({
   meditations,
 }) => {
   const renderMeditationItem = useCallback(
     ({ item, index }) => (
-      <MeditationItem key={item.id} item={item} index={index} />
+      <SessionCard key={item.id} item={item} index={index} />
     ),
     [],
   );

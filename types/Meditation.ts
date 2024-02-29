@@ -5,6 +5,7 @@ export interface Meditation {
   createdAt: Date;
   duration: number;
   id: string;
+  animation: string;
   isCategoryLocked: boolean;
   name: string;
   thumbnail: string;
@@ -12,3 +13,8 @@ export interface Meditation {
   image?: string;
   description?: string;
 }
+
+export type EnrichedSession = Meditation & {
+  // extend
+  isNew?: boolean;
+};
