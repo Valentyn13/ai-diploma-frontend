@@ -23,7 +23,6 @@ const getRandomColor = seed => {
   const g = Math.floor(random() * (256 - minValue) + minValue);
   const b = Math.floor(random() * (256 - minValue) + minValue);
 
-  // Construct and return the hex color string.
   return `#${r.toString(16).padStart(2, '0')}${g
     .toString(16)
     .padStart(2, '0')}${b.toString(16).padStart(2, '0')}`;

@@ -2,14 +2,22 @@ import ParallaxScrollView from '@common/components/ParallaxScrollView';
 import { CircleButton } from '@common/components/buttons/CircleButton';
 import theme from '@common/theme';
 import { useNavigation, useRoute } from '@react-navigation/native';
-import React from 'react';
+import React, { FC } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 import Gradient from './Gradient';
 import SessionsGrid from './SessionsGrid';
 
-const Header = ({ title }) => <Text style={styles.headerTitle}>{title}</Text>;
+const Header: FC<{ title: string; subTitle?: string }> = ({
+  title,
+  subTitle,
+}) => (
+  <View className="flex flex-col items-center">
+    <Text style={styles.headerTitle}>{title}</Text>
+    {subTitle && <Text className="text-black mt-2">{subTitle}</Text>}
+  </View>
+);
 
 const MAX_MEDITATIONS = 40;
 
@@ -28,7 +36,7 @@ const GroupedMeditations = () => {
         renderForeground={() => (
           <View style={styles.foreground}>
             <Gradient seed={title} />
-            <Header title={title} />
+            <Header title={title} subTitle={`${meditations.length} סשנים`} />
           </View>
         )}
         renderStickyHeader={() => (
@@ -56,12 +64,12 @@ const styles = StyleSheet.create({
     backgroundColor: '#fdedd6',
   },
   headerTitle: {
-    fontSize: 24,
+    fontSize: 32,
     fontWeight: 'bold',
     textAlign: 'center',
     color: 'black',
-    fontFamily: theme.fonts.regular,
-    lineHeight: 32, // Increased line spacing
+    fontFamily: theme.fonts.bold,
+    lineHeight: 32,
   },
   foreground: {
     flex: 1,
