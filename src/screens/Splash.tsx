@@ -9,8 +9,7 @@ import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { AMPLITUDE_EVENTS, useAmplitude } from '@services/hooks/useAmplitude';
 import useAppData from '@services/hooks/useAppData';
 import { useIntro } from '@services/hooks/useIntro';
-import { useUser } from '@services/hooks/useUser';
-import React, { FC, useEffect } from 'react';
+import React, { FC, useEffect, useState } from 'react';
 import { Text } from 'react-native';
 import { useSelector } from 'react-redux';
 
@@ -21,32 +20,45 @@ type RootState = any;
 type SplashProps = NativeStackScreenProps<RootStackParamList, 'Splash'>;
 
 const Splash: FC<SplashProps> = ({ navigation: { replace } }) => {
+  const [splashScreenTimePassed, setSplashScreenTimePassed] = useState(false);
+
   const { isFirstTimeUser } = useIntro();
   const { getAppData } = useAppData();
   const { logEvent, uploadEvents } = useAmplitude();
 
   const isLoaded = useSelector((state: RootState) => state.appData.loaded);
-  const {
-    user: { accessToken },
-  } = useUser();
+  const accessToken = useSelector(
+    (state: RootState) => state.userDetails.accessToken,
+  );
+
+  // Set a timeout to change splashScreenTimePassed state after 2 seconds
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setSplashScreenTimePassed(true);
+    }, 2000); // 2 seconds delay
+
+    return () => clearTimeout(timer); // Clear timer on component unmount
+  }, []);
 
   useEffect(() => {
-    if (accessToken) {
+    if (accessToken && splashScreenTimePassed) {
       getAppData();
-    } else if (isFirstTimeUser) {
+    } else if (isFirstTimeUser && splashScreenTimePassed) {
       logEvent(AMPLITUDE_EVENTS.ONBOARDING_START);
       uploadEvents();
       replace('Onboarding');
-    } else {
+    } else if (splashScreenTimePassed) {
       replace('Auth');
     }
-  }, [accessToken, isFirstTimeUser]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [accessToken, isFirstTimeUser, splashScreenTimePassed]);
 
   useEffect(() => {
-    if (isLoaded) {
+    if (isLoaded && splashScreenTimePassed) {
       replace('Main');
     }
-  }, [isLoaded]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isLoaded, splashScreenTimePassed]);
 
   return (
     <Container>
