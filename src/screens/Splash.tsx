@@ -1,3 +1,4 @@
+import Gradient from '@common/components/Gradient';
 import { Container, Icon } from '@common/components/Styled';
 import WithPulse from '@common/components/transitions/WIthPulse';
 import WithFadeIn from '@common/components/transitions/WithFadeIn';
@@ -68,13 +69,14 @@ const Splash: FC<SplashProps> = ({ navigation: { navigate, replace } }) => {
 
   return (
     <Container>
+      <Gradient colors={['#6190E8', '#A395D1', '#FFEFD7']} />
       <WithFadeIn delay={0} duration={500}>
         <WithPulse scaleMin={0.9} scaleMax={1.1} duration={2000}>
           <WithTranslateY value={-50} duration={700} delay={1000}>
             <WithRotate degrees={10} duration={600}>
               <WithScale scaleValue={0.9} duration={550}>
                 <WithRotate degrees={-20} duration={600}>
-                  <Icon name="logo" size={100} />
+                  <Icon color="white" name="logo" size={100} />
                 </WithRotate>
               </WithScale>
             </WithRotate>
@@ -89,7 +91,7 @@ const Splash: FC<SplashProps> = ({ navigation: { navigate, replace } }) => {
               style={{
                 fontFamily: theme.fonts.regular,
               }}
-              className="mt-2 text-center text-2xl text-gray-800">
+              className="mt-2 text-center text-2xl text-white">
               רגע
             </Text>
           </WithScale>
