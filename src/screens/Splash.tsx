@@ -4,6 +4,7 @@ import WithFadeIn from '@common/components/transitions/WithFadeIn';
 import WithRotate from '@common/components/transitions/WithRotate';
 import WithScale from '@common/components/transitions/WithScale';
 import WithTranslateY from '@common/components/transitions/WithTranslateY';
+import config from '@common/config';
 import theme from '@common/theme';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { AMPLITUDE_EVENTS, useAmplitude } from '@services/hooks/useAmplitude';
@@ -19,11 +20,10 @@ type RootState = any;
 
 type SplashProps = NativeStackScreenProps<RootStackParamList, 'Splash'>;
 
-const Splash: FC<SplashProps> = ({ navigation: { replace } }) => {
-  const [splashScreenTimePassed, setSplashScreenTimePassed] = useState(false);
-
+const Splash: FC<SplashProps> = ({ navigation: { navigate, replace } }) => {
   const { isFirstTimeUser } = useIntro();
   const { getAppData } = useAppData();
+  const [animationFinished, setAnimationFinished] = useState(false);
   const { logEvent, uploadEvents } = useAmplitude();
 
   const isLoaded = useSelector((state: RootState) => state.appData.loaded);
@@ -31,34 +31,40 @@ const Splash: FC<SplashProps> = ({ navigation: { replace } }) => {
     (state: RootState) => state.userDetails.accessToken,
   );
 
-  // Set a timeout to change splashScreenTimePassed state after 2 seconds
   useEffect(() => {
-    const timer = setTimeout(() => {
-      setSplashScreenTimePassed(true);
-    }, 2000); // 2 seconds delay
+    const timer = setTimeout(
+      () => {
+        if (accessToken) {
+          getAppData();
+        } else if (isFirstTimeUser) {
+          logEvent(AMPLITUDE_EVENTS.ONBOARDING_START);
+          uploadEvents();
+          replace('Onboarding');
+        } else {
+          replace('Auth');
+        }
+      },
+      config.isDev ? 1000 : 3000,
+    );
 
-    return () => clearTimeout(timer); // Clear timer on component unmount
-  }, []);
-
-  useEffect(() => {
-    if (accessToken && splashScreenTimePassed) {
-      getAppData();
-    } else if (isFirstTimeUser && splashScreenTimePassed) {
-      logEvent(AMPLITUDE_EVENTS.ONBOARDING_START);
-      uploadEvents();
-      replace('Onboarding');
-    } else if (splashScreenTimePassed) {
-      replace('Auth');
-    }
+    return () => clearTimeout(timer);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [accessToken, isFirstTimeUser, splashScreenTimePassed]);
+  }, [accessToken, getAppData, isFirstTimeUser, navigate]);
 
   useEffect(() => {
-    if (isLoaded && splashScreenTimePassed) {
+    if (isLoaded && animationFinished) {
       replace('Main');
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isLoaded, splashScreenTimePassed]);
+  }, [isLoaded, animationFinished, replace]);
+
+  useEffect(() => {
+    const simulateAnimationEnd = async () => {
+      await new Promise(resolve => setTimeout(resolve, 3000));
+      setAnimationFinished(true);
+    };
+
+    simulateAnimationEnd();
+  }, []);
 
   return (
     <Container>
