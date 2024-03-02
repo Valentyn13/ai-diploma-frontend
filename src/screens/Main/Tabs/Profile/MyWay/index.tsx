@@ -40,7 +40,10 @@ const fetchChallengeProgress = async () => {
 
 const MyWay = () => {
   const { navigate } = useNavigation();
-  const { meditationsPracticed } = useSelector(state => state.userProgress);
+  const { meditationsPracticed, minutesPracticed } = useSelector(
+    state => state.userProgress,
+  );
+
   const dates = meditationsPracticed.map(m => stringToDate(m.timestamp));
   const [totalMinutesPracticed, setTotalMinutesMeditated] = useState(212301);
 
@@ -77,7 +80,10 @@ const MyWay = () => {
         <View className="px-5 mt-16">
           <Quote />
           <View className="mt-16" />
-          <OneMChallenge totalMinutesPracticed={totalMinutesPracticed} />
+          <OneMChallenge
+            userMinutes={minutesPracticed}
+            totalMinutesPracticed={totalMinutesPracticed}
+          />
           <Divider className="mb-6 mt-4" />
 
           <Title className="mb-5" t="הרגעים שלי" />

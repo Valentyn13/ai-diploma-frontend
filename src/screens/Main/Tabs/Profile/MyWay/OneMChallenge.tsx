@@ -13,22 +13,23 @@ const Title = styled(SubTitle)`
   font-weight: bold;
 `;
 
-const OneMChallenge: FC<{ totalMinutesPracticed: number }> = ({
-  totalMinutesPracticed,
-}) => {
-  const progress = useMemo(
+const OneMChallenge: FC<{
+  totalMinutesPracticed: number;
+  userMinutes: number;
+}> = ({ totalMinutesPracticed, userMinutes }) => {
+  const totalProgress = useMemo(
     () => totalMinutesPracticed / CHALLANGE_TOTAL,
     [totalMinutesPracticed],
+  );
+
+  const userContribution = useMemo(
+    () => userMinutes / totalMinutesPracticed,
+    [userMinutes, totalMinutesPracticed],
   );
 
   return (
     <View>
       <Title className="mb-4" t="אתגר #מיליוןדקות של מדיטציה" />
-      {/* <Text className="text-center text-black mb-5">
-        כל דקת מדיטציה שאתם עושים נספרת לעבר מטרה משותפת - להגיע למיליון דקות של
-        מדיטציה! זו הזדמנות נהדרת להיות חלק ממשהו גדול יותר תוך כדי חיזוק
-        המודעות והרוגע הפנימי שלכם.
-      </Text> */}
       <Card>
         <View className="flex-row justify-between mb-4">
           <Text className="text-black">
@@ -38,11 +39,12 @@ const OneMChallenge: FC<{ totalMinutesPracticed: number }> = ({
             דקות מתוך{' '}
             {CHALLANGE_TOTAL.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}{' '}
           </Text>
-          <Text>{Math.round(progress * 100)}%</Text>
+          <Text>{Math.round(totalProgress * 100)}%</Text>
         </View>
-        <ProgressBar progress={Math.round(progress * 100)} />
+        <ProgressBar progress={Math.round(totalProgress * 100)} />
         <Text className="text-left text-xs text-[#160F29] opacity-70 mt-2">
-          סה״כ דקות מדיטציה של כלל משתמשי האפליקציה.
+          התרומה שלך עומדת על {(userContribution * 100).toFixed(2)}% מהסך הכולל
+          של דקות מדיטציה של כל המשתמשים
         </Text>
       </Card>
     </View>
