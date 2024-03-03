@@ -53,7 +53,9 @@ export function getCollectionIdByTime() {
   const now = new Date();
   const hours = now.getHours();
 
-  if (hours < 12) {
+  if (hours < 5) {
+    return 'night';
+  } else if (hours < 12) {
     return 'morning';
   } else if (hours === 12) {
     return 'noon';
