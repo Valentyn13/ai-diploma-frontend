@@ -5,6 +5,7 @@ import { useNavigation, useRoute } from '@react-navigation/native';
 import React, { FC } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { Meditation } from 'types/Meditation';
 
 import Gradient from './Gradient';
 import SessionsGrid from './SessionsGrid';
@@ -21,22 +22,32 @@ const Header: FC<{ title: string; subTitle?: string }> = ({
 
 const MAX_MEDITATIONS = 40;
 
-const GroupedMeditations = () => {
+interface CollectionRouteParams {
+  title: string;
+  sessions: Meditation[];
+}
+
+const Collection = () => {
   const route = useRoute();
-  const { title, meditations } = route.params || { title: '', meditations: [] };
+  const { title, sessions }: CollectionRouteParams =
+    (route.params as CollectionRouteParams) || {
+      title: '',
+      sessions: [],
+    };
+
   const { goBack } = useNavigation();
 
   return (
     <SafeAreaView edges={['top', 'right', 'left']} style={styles.safeAreaView}>
       <ParallaxScrollView
-        image={meditations[0]?.thumbnail}
+        image={sessions[0]?.thumbnail}
         backgroundColor="#fdedd6"
         contentBackgroundColor="#fdedd6"
         parallaxHeaderHeight={250}
         renderForeground={() => (
           <View style={styles.foreground}>
             <Gradient seed={title} />
-            <Header title={title} subTitle={`${meditations.length} סשנים`} />
+            <Header title={title} subTitle={`${sessions.length} סשנים`} />
           </View>
         )}
         renderStickyHeader={() => (
@@ -51,7 +62,7 @@ const GroupedMeditations = () => {
           </View>
         )}>
         <View style={styles.sessionsContainer}>
-          <SessionsGrid meditations={meditations.slice(0, MAX_MEDITATIONS)} />
+          <SessionsGrid meditations={sessions.slice(0, MAX_MEDITATIONS)} />
         </View>
       </ParallaxScrollView>
     </SafeAreaView>
@@ -90,4 +101,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default GroupedMeditations;
+export default Collection;

@@ -66,11 +66,11 @@ const Feed: FC<FeedProps> = ({ navigation, copilot }) => {
     onForeground,
   });
 
-  const onShowAll = (title: string, groupedMeditations: any) => {
+  const onShowAll = (title: string, sessions: Meditation[]) => {
     // @ts-ignore
     navigation.navigate('Main', {
-      screen: 'GroupedMeditations',
-      params: { title, meditations: groupedMeditations },
+      screen: 'Collection',
+      params: { title, sessions },
     });
   };
 

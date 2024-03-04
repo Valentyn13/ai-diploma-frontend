@@ -35,13 +35,11 @@ const HorizontalCollection: FC<Props> = ({
   <View>
     <View className="flex flex-row items-center justify-between w-full mb-5 pl-5 pr-3">
       <ListTitle t={title} />
-      {items.length > limit && (
-        <Pressable onPress={() => onShowAll()} className="p-2">
-          <Text className="text-[13px] leading-4 text-neutral-700">
-            {i18n.t('showAll')}
-          </Text>
-        </Pressable>
-      )}
+      <Pressable onPress={() => onShowAll()} className="p-2">
+        <Text className="text-[13px] leading-4 text-neutral-700">
+          {i18n.t('showAll')}
+        </Text>
+      </Pressable>
     </View>
     {items.length === 0 && (
       <View className="flex flex-row items-center justify-center w-full h-32">

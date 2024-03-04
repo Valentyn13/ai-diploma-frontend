@@ -31,11 +31,11 @@ const Meditations = () => {
     setIsLoading(false);
   }, [searchQuery]);
 
-  const onShowAll = (title: string, meditations: any[]) => {
+  const onShowAll = (title: string, sessions: Meditation[]) => {
     // @ts-ignore
     navigate('Main', {
-      screen: 'GroupedMeditations',
-      params: { title, meditations },
+      screen: 'Collection',
+      params: { title, sessions },
     });
   };
 

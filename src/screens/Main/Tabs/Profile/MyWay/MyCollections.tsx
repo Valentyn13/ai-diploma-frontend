@@ -21,14 +21,14 @@ const MyCollections = () => {
   const uniqueHistory = useMemo(() => {
     const ids = history.map(({ id }) => id);
     const uniqueIds = [...new Set(ids.slice().reverse())];
-    return uniqueIds.map(id => history.find(m => m.id === id));
+    return uniqueIds.map(id => history.find(m => m.id === id)!);
   }, [history]);
 
-  const onShowAll = (title: string, meditations: Meditation[]) => {
+  const onShowAll = (title: string, sessions: Meditation[]) => {
     // @ts-ignore
     navigate('Main', {
-      screen: 'GroupedMeditations',
-      params: { title, meditations },
+      screen: 'Collection',
+      params: { title, sessions },
     });
   };
 

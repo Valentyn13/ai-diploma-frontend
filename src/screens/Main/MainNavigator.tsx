@@ -1,7 +1,8 @@
 import BGMusicPicker from '@common/components/BGMusicPicker';
-import GroupedMeditations from '@common/components/GroupedMeditations';
+import Collection from '@common/components/Collection';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import React from 'react';
+import { Meditation } from 'types/Meditation';
 
 import ExercisesPlayer from './ExercisesPlayer';
 import Exercises from './ExercisesPlayer/Exercises';
@@ -18,7 +19,7 @@ import WebView from './WebView';
 export type MainStackParamList = {
   Tabs: undefined;
   MeditationPlayer: { item: any };
-  GroupedMeditations: { title: any; meditations: any[] };
+  Collection: { title: any; sessions: Meditation[] };
   Subscribe: undefined;
   WebView: { url: string; title: string };
   BGMusicPicker: undefined;
@@ -73,8 +74,8 @@ export default () => {
           options={{ headerShown: false, presentation: 'modal' }}
         />
         <MainStack.Screen
-          name="GroupedMeditations"
-          component={GroupedMeditations}
+          name="Collection"
+          component={Collection}
           options={{ headerShown: false }}
         />
         <MainStack.Screen
