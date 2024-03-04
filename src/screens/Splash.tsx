@@ -1,5 +1,5 @@
 import Gradient from '@common/components/Gradient';
-import { Container, Icon } from '@common/components/Styled';
+import { Icon } from '@common/components/Styled';
 import WithPulse from '@common/components/transitions/WIthPulse';
 import WithFadeIn from '@common/components/transitions/WithFadeIn';
 import WithRotate from '@common/components/transitions/WithRotate';
@@ -12,7 +12,7 @@ import { AMPLITUDE_EVENTS, useAmplitude } from '@services/hooks/useAmplitude';
 import useAppData from '@services/hooks/useAppData';
 import { useIntro } from '@services/hooks/useIntro';
 import React, { FC, useEffect, useState } from 'react';
-import { Text } from 'react-native';
+import { Text, View } from 'react-native';
 import { useSelector } from 'react-redux';
 
 import { RootStackParamList } from './RootNavigator';
@@ -68,7 +68,7 @@ const Splash: FC<SplashProps> = ({ navigation: { navigate, replace } }) => {
   }, []);
 
   return (
-    <Container>
+    <View className="flex-1 items-center justify-center">
       <Gradient colors={['#6190E8', '#A395D1', '#FFEFD7']} />
       <WithFadeIn delay={0} duration={500}>
         <WithPulse scaleMin={0.9} scaleMax={1.1} duration={2000}>
@@ -97,7 +97,7 @@ const Splash: FC<SplashProps> = ({ navigation: { navigate, replace } }) => {
           </WithScale>
         </WithTranslateY>
       </WithFadeIn>
-    </Container>
+    </View>
   );
 };
 
