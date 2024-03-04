@@ -53,10 +53,10 @@ const Collection = () => {
         renderStickyHeader={() => (
           <View style={styles.stickyHeader}>
             <CircleButton
-              backgroundColor="#00000080" // Slightly more opaque for better visibility
+              backgroundColor="#00000060"
               color="#fff"
               onPress={goBack}
-              size={50} // Larger touch area
+              size={40}
               icon="chevron-right"
             />
           </View>
