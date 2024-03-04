@@ -1,8 +1,8 @@
-import Collection from '@common/components/Collection';
 import CoursesCarousel from '@common/components/CoursesCarousel';
 import Divider from '@common/components/Divider';
 import DynamicComposition from '@common/components/DynamicComposition';
 import Feeling from '@common/components/Feeling';
+import HorizontalCollection from '@common/components/HorizontalCollection';
 import Logo from '@common/components/Logo';
 import { SubTitle } from '@common/components/Styled';
 import Welcome from '@common/components/animation/Welcome';
@@ -160,7 +160,7 @@ const Feed: FC<FeedProps> = ({ navigation, copilot }) => {
                   paddingTop: 60,
                 }}
                 className="flex-1">
-                <Collection
+                <HorizontalCollection
                   key="by-time"
                   title={byTimeCollection.title}
                   items={byTimeCollection.items}
@@ -176,7 +176,7 @@ const Feed: FC<FeedProps> = ({ navigation, copilot }) => {
 
           <View className="bg-[#FCE8CD]">
             <View className="flex-1">
-              <Collection
+              <HorizontalCollection
                 shuffle={false}
                 key={latestCollection.id}
                 title={latestCollection.title}
@@ -209,7 +209,7 @@ const Feed: FC<FeedProps> = ({ navigation, copilot }) => {
 
               {collections.map(({ id, title, items }) => (
                 <View className="flex-1">
-                  <Collection
+                  <HorizontalCollection
                     shuffle={id !== 'top-rated' && id !== 'latest-release'}
                     key={id}
                     title={title}

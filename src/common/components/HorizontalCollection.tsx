@@ -24,7 +24,7 @@ interface Props {
   }>;
 }
 
-const Collection: FC<Props> = ({
+const HorizontalCollection: FC<Props> = ({
   items,
   onShowAll,
   title,
@@ -55,4 +55,4 @@ const Collection: FC<Props> = ({
   </View>
 );
 
-export default Collection;
+export default HorizontalCollection;

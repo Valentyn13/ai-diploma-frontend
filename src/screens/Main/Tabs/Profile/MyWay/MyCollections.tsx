@@ -1,5 +1,5 @@
-import Collection from '@common/components/Collection';
 import Divider from '@common/components/Divider';
+import HorizontalCollection from '@common/components/HorizontalCollection';
 import { useNavigation } from '@react-navigation/native';
 import i18n from '@services/localization/i18n';
 import {
@@ -34,7 +34,7 @@ const MyCollections = () => {
 
   return (
     <View>
-      <Collection
+      <HorizontalCollection
         shuffle={false}
         title={i18n.t('favorites')}
         items={favMeditations.slice().reverse()}
@@ -44,7 +44,7 @@ const MyCollections = () => {
       />
       <Divider className="my-6" />
 
-      <Collection
+      <HorizontalCollection
         shuffle={false}
         title={i18n.t('history')}
         items={uniqueHistory}

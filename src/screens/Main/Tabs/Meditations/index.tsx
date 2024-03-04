@@ -1,6 +1,6 @@
 import CategoriesSelection from '@common/components/CategoriesSelection';
-import Collection from '@common/components/Collection';
 import Divider from '@common/components/Divider';
+import HorizontalCollection from '@common/components/HorizontalCollection';
 import SessionsGrid from '@common/components/SessionsGrid';
 import { ListTitle } from '@common/components/Styled';
 import Meditate from '@common/components/animation/Meditate';
@@ -108,7 +108,7 @@ const Meditations = () => {
         filteredCategories.length > 0 && (
           <View>
             <View>
-              <Collection
+              <HorizontalCollection
                 items={firstCollection.items}
                 title={firstCollection.title}
                 onShowAll={() =>
@@ -134,7 +134,7 @@ const Meditations = () => {
             </View>
             {shuffleArray(collections).map(category => (
               <View key={category.id}>
-                <Collection
+                <HorizontalCollection
                   items={category.items}
                   title={category.title}
                   onShowAll={() => onShowAll(category.title, category.items)}
