@@ -4,6 +4,7 @@ import DynamicComposition from '@common/components/DynamicComposition';
 import Feeling from '@common/components/Feeling';
 import HorizontalCollection from '@common/components/HorizontalCollection';
 import Logo from '@common/components/Logo';
+import Personalized from '@common/components/Personalized';
 import { SubTitle } from '@common/components/Styled';
 import Welcome from '@common/components/animation/Welcome';
 import BgSelector from '@common/components/buttons/BgSelector';
@@ -78,8 +79,8 @@ const Feed: FC<FeedProps> = ({ navigation, copilot }) => {
 
   const colorList = [
     { offset: '0%', color: '#FCE8CD', opacity: '1' },
-    { offset: '50%', color: '#FCE8CD', opacity: '1' },
-    { offset: '65%', color: '#FCE8CD', opacity: '0.1' },
+    { offset: '80%', color: '#FCE8CD', opacity: '1' },
+    { offset: '90%', color: '#FCE8CD', opacity: '0.1' },
     { offset: '100%', color: '#000', opacity: '0' },
   ];
 
@@ -149,6 +150,10 @@ const Feed: FC<FeedProps> = ({ navigation, copilot }) => {
 
             <View className="h-[250px]" />
 
+            <Personalized />
+
+            <Divider className="my-6" />
+
             <CopilotStep
               text="כאן תוכלו למצוא מגוון עשיר של מדיטציות מותאמות אישית לצרכים שלכם"
               order={1}
@@ -156,8 +161,7 @@ const Feed: FC<FeedProps> = ({ navigation, copilot }) => {
               <CopilotView
                 copilot={copilot}
                 style={{
-                  marginTop: 100,
-                  paddingTop: 60,
+                  backgroundColor: '#FCE8CD',
                 }}
                 className="flex-1">
                 <HorizontalCollection
