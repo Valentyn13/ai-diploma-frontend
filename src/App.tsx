@@ -1,4 +1,4 @@
-import { isDev } from '@common/config';
+import config from '@common/config';
 import { PurchaseProvider } from '@common/context/PurchaseContext';
 import { TrackPlayerProvider } from '@common/context/TrackPlayerContext';
 import StoreUpdate from '@common/storeUpdate';
@@ -81,4 +81,4 @@ const App: React.FC = () => {
   );
 };
 
-export default isDev ? App : Sentry.wrap(App);
+export default config.isDev ? App : Sentry.wrap(App);
