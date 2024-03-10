@@ -37,6 +37,7 @@ const ParallaxScroll: FC<PropsWithChildren> = ({ children }) => {
         />
       </Animated.View>
       <Animated.ScrollView
+        showsVerticalScrollIndicator={false}
         onScroll={scrollHandler}
         scrollEventThrottle={16}
         contentContainerStyle={styles.scrollViewContent}>
