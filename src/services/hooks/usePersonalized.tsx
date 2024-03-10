@@ -5,16 +5,16 @@ import useSessions from './useSessions';
 import { useUser } from './useUser';
 
 // meds
-//   .filter(({ id, personalizd }) => !!id && personalizd.length)
-//   .map(({ id, name, personalizd, duration }) => ({
+//   .filter(({ id, personalized }) => !!id && personalized.length)
+//   .map(({ id, name, personalized, duration }) => ({
 //     id,
 //     name,
-//     personalizd,
+//     personalized,
 //     duration,
 //   }))
-//   .map(({ personalizd, ...item }) => ({
+//   .map(({ personalized, ...item }) => ({
 //     ...item,
-//     personalized: personalizd.split(', '),
+//     personalized: personalized.split(', '),
 //   }));
 
 const MAPPING: {
@@ -33,19 +33,33 @@ const MAPPING: {
     id: '63c0efce2c4099bc0e36e44f',
     name: 'רגיעה',
     duration: 628,
-    personalized: ['להוריד פאניקה', 'למצוא שלווה פנימית', 'לשחרר לחצים'],
+    personalized: [
+      'הפחתת חרדה',
+      'הפחתת עצבים',
+      'וויסות רגשות',
+      'להוריד פאניקה',
+      'למצוא שלווה פנימית',
+      'לשחרר לחצים',
+      'עזרה בלהירדם',
+      'פשוט לתרגל',
+    ],
   },
   {
     id: '64bf65afe361a71983a5f3ad',
     name: 'תחילת היום',
     duration: 420,
-    personalized: ['פשוט לתרגל'],
+    personalized: ['פשוט לתרגל', 'תחילת יום'],
   },
   {
     id: '64daea785d57908b4359d27a',
     name: 'שחרור היום',
     duration: 438,
-    personalized: ['לשחרר לחצים', 'פשוט לתרגל'],
+    personalized: [
+      'הפחתת עצבים',
+      'למצוא שלווה פנימית',
+      'לשחרר לחצים',
+      'פשוט לתרגל',
+    ],
   },
   {
     id: '63c0edd62c4099bc0e36e441',
@@ -54,22 +68,56 @@ const MAPPING: {
     personalized: ['עזרה בלהירדם'],
   },
   {
+    id: '643c1650bb731339805e903f',
+    name: 'מחשבות טורדניות',
+    duration: 900,
+    personalized: [
+      'הפחתת חרדה',
+      'הפחתת עצבים',
+      'וויסות רגשות',
+      'להוריד פאניקה',
+      'לשחרר לחצים',
+    ],
+  },
+  {
     id: '65093d7d1d1970cfe5ebe388',
     name: 'רגיעה עמוקה',
     duration: 600,
-    personalized: ['להוריד פאניקה', 'למצוא שלווה פנימית', 'לשחרר לחצים'],
+    personalized: [
+      'הפחתת חרדה',
+      'הפחתת עצבים',
+      'להוריד פאניקה',
+      'למצוא שלווה פנימית',
+      'לשחרר לחצים',
+    ],
+  },
+  {
+    id: '63c50030c1ab3549d358c3d4',
+    name: 'התמודדות עם מתח וחרדה',
+    duration: 796,
+    personalized: ['הפחתת חרדה', 'לשחרר לחצים'],
   },
   {
     id: '64d2f01242357e4b9d18fe36',
     name: 'שחרור לחצים',
     duration: 630,
-    personalized: ['להוריד פאניקה', 'לשחרר לחצים'],
+    personalized: [
+      'הפחתת חרדה',
+      'להוריד פאניקה',
+      'למצוא שלווה פנימית',
+      'לשחרר לחצים',
+    ],
   },
   {
     id: '654c74b8ba86f01d58165692',
     name: 'הפגת חרדות ולחצים',
     duration: 810,
-    personalized: ['להוריד פאניקה', 'לשחרר לחצים'],
+    personalized: [
+      'הפחתת חרדה',
+      'להוריד פאניקה',
+      'למצוא שלווה פנימית',
+      'לשחרר לחצים',
+    ],
   },
   {
     id: '6437c1ddc90514876f526229',
@@ -81,7 +129,12 @@ const MAPPING: {
     id: '650bf86a1d1970cfe5ebe38d',
     name: 'וויסות מערכת העצבים',
     duration: 600,
-    personalized: ['וויסות רגשות'],
+    personalized: [
+      'הפחתת עצבים',
+      'וויסות רגשות',
+      'להוריד פאניקה',
+      'לשחרר לחצים',
+    ],
   },
   {
     id: '654c755bba86f01d58165694',
@@ -93,13 +146,29 @@ const MAPPING: {
     id: '6486c18d0e66f2955d2ecbc0',
     name: 'פתיחת יום',
     duration: 780,
-    personalized: ['פשוט לתרגל'],
+    personalized: ['פשוט לתרגל', 'תחילת יום'],
   },
   {
     id: '6537b2be092f89755aeb9016',
     name: 'נוכחות',
     duration: 780,
-    personalized: ['לתפוס פוקוס', 'פשוט לתרגל'],
+    personalized: [
+      'הפחתת חרדה',
+      'הפחתת עצבים',
+      'וויסות רגשות',
+      'להוריד פאניקה',
+      'למצוא שלווה פנימית',
+      'לשחרר לחצים',
+      'לתפוס פוקוס',
+      'פשוט לתרגל',
+      'תחילת יום',
+    ],
+  },
+  {
+    id: '643c1600bb731339805e903e',
+    name: 'דימיון מודרך',
+    duration: 550,
+    personalized: ['הפחתת חרדה', 'למצוא שלווה פנימית', 'לשחרר לחצים'],
   },
   {
     id: '638edb9e132405bcd302f6c1',
@@ -124,6 +193,7 @@ const MAPPING: {
     name: 'דימיון מודרך לרוגע',
     duration: 720,
     personalized: [
+      'הפחתת חרדה',
       'הפחתת עצבים',
       'להוריד פאניקה',
       'למצוא שלווה פנימית',
@@ -153,6 +223,30 @@ const MAPPING: {
     name: 'שחרור כעסים',
     duration: 600,
     personalized: ['הפחתת עצבים'],
+  },
+  {
+    id: '657147d0042258f6bc2d20a9',
+    name: 'שחרור מחשבות רעות',
+    duration: 560,
+    personalized: [
+      'הפחתת חרדה',
+      'הפחתת עצבים',
+      'להוריד פאניקה',
+      'למצוא שלווה פנימית',
+      'לשחרר לחצים',
+    ],
+  },
+  {
+    id: '648b02160e66f2955d2ecbcc',
+    name: 'מוזיקה להירדמות',
+    duration: 1800,
+    personalized: ['עזרה בלהירדם'],
+  },
+  {
+    id: '64b8d419b8394af97a9c0c04',
+    name: 'מוזיקת תדרים לריכוז',
+    duration: 3600,
+    personalized: ['לתפוס פוקוס'],
   },
   {
     id: '6556ed29ef4c61fb4c3d8090',
@@ -188,7 +282,16 @@ const MAPPING: {
     id: '655707abef4c61fb4c3d8091',
     name: 'רגע של מיינדפולנס',
     duration: 300,
-    personalized: ['פשוט לתרגל'],
+    personalized: [
+      'הפחתת חרדה',
+      'הפחתת עצבים',
+      'להוריד פאניקה',
+      'למצוא שלווה פנימית',
+      'לשחרר לחצים',
+      'לתפוס פוקוס',
+      'פשוט לתרגל',
+      'תחילת יום',
+    ],
   },
   {
     id: '6581265e887bd0b4c6e5f7a8',
@@ -212,7 +315,19 @@ const MAPPING: {
     id: '6565b79e253db951b9a34f44',
     name: 'מדיטציית נוכחות למתקדמים',
     duration: 600,
-    personalized: ['פשוט לתרגל'],
+    personalized: ['לתפוס פוקוס', 'פשוט לתרגל'],
+  },
+  {
+    id: '649545120e66f2955d2ecbe9',
+    name: 'מחשבות לפני שינה',
+    duration: 766,
+    personalized: ['עזרה בלהירדם'],
+  },
+  {
+    id: '5eca520c10fe0480d350c98d',
+    name: 'מחשבות',
+    duration: 766,
+    personalized: ['עזרה בלהירדם'],
   },
   {
     id: '5eca520c10fe0480d350c990',
@@ -254,19 +369,19 @@ const MAPPING: {
     id: '64954c1c0e66f2955d2ecbed',
     name: 'מיינדפולנס',
     duration: 540,
-    personalized: ['הפחתת חרדה', 'לשחרר לחצים', 'פשוט לתרגל', 'תחילת יום'],
+    personalized: [
+      'הפחתת חרדה',
+      'למצוא שלווה פנימית',
+      'לשחרר לחצים',
+      'פשוט לתרגל',
+      'תחילת יום',
+    ],
   },
   {
     id: '648ff7420e66f2955d2ecbd5',
     name: 'הוכרת תודה',
     duration: 624,
     personalized: ['הכרת תודה'],
-  },
-  {
-    id: '64046109420a84635493a7fe',
-    name: 'מתח',
-    duration: 360,
-    personalized: ['לשחרר לחצים'],
   },
   {
     id: '63aa61c65fbca84d76752332',
@@ -279,6 +394,21 @@ const MAPPING: {
     name: 'אהבה עצמית',
     duration: 690,
     personalized: ['לפתח חמלה עצמית'],
+  },
+  {
+    id: '6476e8a8289563e63c577f96',
+    name: 'נשימה מרובעת',
+    duration: 60,
+    personalized: [
+      'הפחתת חרדה',
+      'הפחתת עצבים',
+      'וויסות רגשות',
+      'להוריד פאניקה',
+      'למצוא שלווה פנימית',
+      'לשחרר לחצים',
+      'לתפוס פוקוס',
+      'פשוט לתרגל',
+    ],
   },
   {
     id: '5eca520c10fe0480d350c993',
@@ -298,6 +428,7 @@ const MAPPING: {
     duration: 720,
     personalized: [
       'הפחתת חרדה',
+      'הפחתת עצבים',
       'להוריד פאניקה',
       'למצוא שלווה פנימית',
       'לשחרר לחצים',
@@ -328,10 +459,39 @@ const MAPPING: {
     personalized: ['תחילת יום'],
   },
   {
+    id: '6476f6c4289563e63c577f97',
+    name: 'נשימה מעגלית',
+    duration: 60,
+    personalized: [
+      'הפחתת חרדה',
+      'הפחתת עצבים',
+      'וויסות רגשות',
+      'להוריד פאניקה',
+      'למצוא שלווה פנימית',
+      'לשחרר לחצים',
+      'לתפוס פוקוס',
+      'פשוט לתרגל',
+    ],
+  },
+  {
     id: '64b393d9be04cd664e5f81a3',
     name: 'מדיטציה לסליחה',
     duration: 720,
     personalized: ['למצוא שלווה פנימית', 'לפתח חמלה עצמית'],
+  },
+  {
+    id: '6476f6f3289563e63c577f98',
+    name: 'טכניקת נשימה 4-7-8',
+    duration: 60,
+    personalized: [
+      'הפחתת חרדה',
+      'הפחתת עצבים',
+      'וויסות רגשות',
+      'להוריד פאניקה',
+      'למצוא שלווה פנימית',
+      'לשחרר לחצים',
+      'פשוט לתרגל',
+    ],
   },
   {
     id: '649543530e66f2955d2ecbe6',
@@ -341,7 +501,7 @@ const MAPPING: {
   },
   {
     id: '649546820e66f2955d2ecbea',
-    name: 'סטרס',
+    name: 'מדיטציה לסטרס',
     duration: 360,
     personalized: ['לשחרר לחצים'],
   },
@@ -359,7 +519,7 @@ const MAPPING: {
   },
   {
     id: '63b3fee0e6e4abaf47376678',
-    name: 'הוקרת תודה',
+    name: 'הכרת תודה',
     duration: 690,
     personalized: ['הכרת תודה'],
   },
@@ -398,6 +558,12 @@ const MAPPING: {
     name: 'חמלה וקבלה עצמית',
     duration: 420,
     personalized: ['לפתח חמלה עצמית'],
+  },
+  {
+    id: '647d94bba09dc890566da740',
+    name: 'תרגול לסוף היום',
+    duration: 500,
+    personalized: ['למצוא שלווה פנימית', 'לשחרר לחצים'],
   },
   {
     id: '6305de394895116c4c65e0d5',
@@ -472,6 +638,18 @@ const MAPPING: {
     personalized: ['לתפוס פוקוס'],
   },
   {
+    id: '65a4ca17d87fd8af807952c3',
+    name: 'תדרים לזמן עבודה',
+    duration: 3520,
+    personalized: ['לתפוס פוקוס'],
+  },
+  {
+    id: '65a38787d87fd8af807952c0',
+    name: 'תדרי אלפא להפחתת חרדה',
+    duration: 3520,
+    personalized: ['הפחתת חרדה'],
+  },
+  {
     id: '659a1371c5b8e4f335e3ef8f',
     name: 'מדיטציה לרגיעה',
     duration: 790,
@@ -493,11 +671,16 @@ const MAPPING: {
     id: '65dc263a150fa63e232be0e2',
     name: 'שליטה בתשומת הלב',
     duration: 420,
-    personalized: ['לתפוס פוקוס'],
+    personalized: [
+      'למצוא שלווה פנימית',
+      'לתפוס פוקוס',
+      'פשוט לתרגל',
+      'תחילת יום',
+    ],
   },
 ];
 
-const timeSlots = [1, 5, 10, 20, 30, 45, 60];
+const timeSlots = [1, 7, 13, 60];
 
 function getRangeInSeconds(index: number) {
   if (index < 0 || index >= timeSlots.length) {
@@ -514,6 +697,8 @@ function getRangeInSeconds(index: number) {
 export const usePersonalized = () => {
   const { user } = useUser();
   const { sessions } = useSessions();
+
+  const isExist = (id: string) => sessions.some(s => s.id === id);
 
   const getTitle = () => {
     const periodTime = getPeriodOfDay();
@@ -569,12 +754,14 @@ export const usePersonalized = () => {
   ) => {
     const [start, end] = getRangeInSeconds(step)!;
 
-    return MAPPING.filter(
+    const filteredSessions = MAPPING.filter(
       s =>
         s.personalized.includes(personalized) &&
-        s.duration >= start &&
+        s.duration > start &&
         s.duration <= end,
-    ).map(({ id }) => id);
+    );
+
+    return filteredSessions.map(({ id }) => id).filter(isExist);
   };
 
   return { getSessionIdsByStateAndTime, pickSession, getTitle, getSubtitle };

@@ -14,7 +14,7 @@ import Clouds from './Clouds';
 import { Button } from './buttons/Button';
 import Badge from './common/Badge';
 
-const badges: PersonalizedState[] = [
+const states: PersonalizedState[] = [
   { key: 'sleepAid', label: 'עזרה בלהירדם', emoji: '🌙', color: '#0d47a1' },
   { key: 'stressRelease', label: 'לשחרר לחצים', emoji: '🍃', color: '#00695c' },
   { key: 'focus', label: 'לתפוס פוקוס', emoji: '🎯', color: '#bf360c' },
@@ -59,10 +59,10 @@ const badges: PersonalizedState[] = [
   { key: 'justPractice', label: 'פשוט לתרגל', emoji: '🔄', color: '#37474f' },
 ] as const;
 
-export type PersonalizedLabel = (typeof badges)[number]['label'];
-export type TimeSlot = 5 | 10 | 20 | 30 | 45 | 60;
+export type PersonalizedLabel = (typeof states)[number]['label'];
+export type TimeSlot = 7 | 13 | 60;
 
-const timeSlots: (TimeSlot | 1)[] = [1, 5, 10, 20, 30, 45, 60];
+const timeSlots: (TimeSlot | 1)[] = [1, 7, 13, 60];
 
 const sliderSize = 220;
 const strokeWidth = 4;
@@ -72,29 +72,25 @@ const Personalized = () => {
   const { navigate } = useNavigation();
   const { getSessionIdsByStateAndTime, pickSession, getTitle, getSubtitle } =
     usePersonalized();
-  const [selectedBadge, setSelectedBadge] = useState<string>(badges[0].key);
+  const [selectedBadge, setSelectedBadge] = useState<string>(states[0].key);
   const { user } = useUser();
   const [step, setStep] = useState(1);
 
   const handleSliderChange = (newStep: number) => setStep(newStep);
+  const selected = states.find(b => b.key === selectedBadge)!;
 
   const currentSteps = [
-    ...timeSlots
-      .slice(0, timeSlots.length - 1)
-      .filter(
-        (_, i) =>
-          !!getSessionIdsByStateAndTime(
-            badges.find(b => b.key === selectedBadge)!.label,
-            i + 1,
-          ).length,
-      ),
+    1,
+    ...timeSlots.slice(1, timeSlots.length).filter((_, i) => {
+      return !!getSessionIdsByStateAndTime(selected.label, i + 1).length;
+    }),
   ];
 
   function getRangeString(index: number) {
     if (index === 0) {
-      return '1-5';
+      return '1-7';
     } else if (index === currentSteps.length) {
-      return '45-60';
+      return '60+';
     } else {
       const start = currentSteps[index - 1];
       const end = currentSteps[index];
@@ -136,7 +132,7 @@ const Personalized = () => {
           horizontal
           showsHorizontalScrollIndicator={false}
           contentContainerStyle={styles.badgeScrollContainer}>
-          {badges.map(badge => (
+          {states.map(badge => (
             <Badge
               emoji={badge.emoji}
               key={badge.key}
@@ -149,7 +145,7 @@ const Personalized = () => {
         <CircularSlider
           sliderColor={
             selectedBadge
-              ? badges.find(b => b.key === selectedBadge)?.color
+              ? states.find(b => b.key === selectedBadge)?.color
               : '#1E2340'
           }
           steps={currentSteps.length - 1}
@@ -175,7 +171,7 @@ const Personalized = () => {
           title=" התאם לי מדיטציה ✨"
           onPress={() => {
             const session = pickSession(
-              badges.find(b => b.key === selectedBadge)!.label,
+              states.find(b => b.key === selectedBadge)!.label,
               step,
             );
 
