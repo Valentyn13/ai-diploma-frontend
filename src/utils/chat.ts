@@ -31,21 +31,20 @@ export const FIRST_MESSAGES: IMessage[] = [
       type: 'radio',
       values: [
         {
-          title: 'אני בדאגות בגלל המלחמה 😟',
-          value: 'advanced_meditation',
+          title: 'למה קשה לי להירדם בלילה? 🥱',
+          value: 'sleeping_problems',
         },
-
         {
           title: 'אני רוצה המלצה למדיטציה 🧘',
           value: 'learn_to_meditate',
         },
         {
-          title: 'מהם היתרונות של מדיטציה? ✨',
-          value: 'benefits_of_meditation',
+          title: 'איך לשחרר מחשבה שלילית? 🤔',
+          value: 'negative_thoughts',
         },
         {
-          title: 'המוח שלי עמוס במהלך מדיטציה',
-          value: 'busy_mind_during_meditation',
+          title: 'אני רוצה לשתף משהו 😳',
+          value: 'share_feelings',
         },
       ],
     },
@@ -53,7 +52,7 @@ export const FIRST_MESSAGES: IMessage[] = [
 ];
 
 export function removeEmojiesFromString(str: string) {
-  return str.replace(/🚀|✨|🧘|😟|🧠|🆙/g, '');
+  return str.replace(/🧘|🤔|😳|🥱|/g, '');
 }
 
 export const mapMessageToIMessage = (message: Message): IMessage => {
