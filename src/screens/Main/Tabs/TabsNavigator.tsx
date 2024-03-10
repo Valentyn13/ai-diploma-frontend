@@ -6,7 +6,7 @@ import React from 'react';
 import { StatusBar, Text } from 'react-native';
 import Animated from 'react-native-reanimated';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import Svg, { ClipPath, Defs, G, Path, SvgProps } from 'react-native-svg';
+import Svg, { Path, SvgProps } from 'react-native-svg';
 
 import Chat from './Chat';
 import Courses from './Courses';
@@ -15,7 +15,7 @@ import Meditations from './Meditations';
 import Profile from './Profile';
 
 const Tab = createBottomTabNavigator();
-const TABS = { Home, Meditations, Courses, Chat, Profile };
+const TABS = { Home, Meditations, Chat, Courses, Profile };
 
 const HomeIcon = (props: SvgProps) => (
   <Svg fill="none" {...props}>
@@ -50,7 +50,7 @@ const CoursesIcon = props => (
   </Svg>
 );
 
-const ChatIcon = (props: SvgProps) => (
+const ProfileIcon = (props: SvgProps) => (
   <Svg xmlns="http://www.w3.org/2000/svg" fill="none" {...props}>
     <Path
       fill={props.color}
@@ -61,33 +61,25 @@ const ChatIcon = (props: SvgProps) => (
   </Svg>
 );
 
-const ProfileIcon = props => (
-  <Svg xmlns="http://www.w3.org/2000/svg" fill="none" {...props}>
-    <G
-      stroke={props.color}
-      strokeLinecap="round"
-      strokeWidth={2}
-      clipPath="url(#a)">
-      <Path d="M16.292 3.199A9.583 9.583 0 0 0 1.917 11.5c0 1.533.36 2.982 1 4.267.17.341.226.732.128 1.1l-.571 2.134c-.248.926.6 1.773 1.525 1.525l2.134-.57a1.565 1.565 0 0 1 1.1.127c1.285.64 2.734 1 4.267 1a9.583 9.583 0 0 0 8.301-14.375" />
-      <Path
-        strokeLinejoin="round"
-        d="M7.667 11.5h.008m3.816 0h.009m3.825 0h.008"
-      />
-    </G>
-    <Defs>
-      <ClipPath id="a">
-        <Path fill="#fff" d="M0 0h23v23H0z" />
-      </ClipPath>
-    </Defs>
+const ChatIcon = props => (
+  <Svg
+    xmlns="http://www.w3.org/2000/svg"
+    viewBox="0 0 51 61"
+    fill="none"
+    {...props}>
+    <Path
+      fill={props.color}
+      d="M24.722 12.58C21.833 9.69 19.856 4.642 18.875.051c-.983 4.592-2.958 9.64-5.847 12.53C10.138 15.468 5.09 17.445.5 18.43c4.592.98 9.639 2.957 12.527 5.846 2.89 2.89 4.866 7.936 5.85 12.528.98-4.593 2.957-9.64 5.845-12.53 2.889-2.888 7.937-4.864 12.527-5.848-4.591-.98-9.638-2.958-12.528-5.847ZM43.486 35.717c-1.724-1.725-2.908-4.742-3.494-7.484-.587 2.742-1.766 5.759-3.492 7.485-1.727 1.724-4.742 2.906-7.484 3.493 2.743.587 5.758 1.768 7.484 3.494 1.726 1.725 2.907 4.741 3.494 7.484.586-2.744 1.767-5.759 3.493-7.485 1.725-1.725 4.741-2.907 7.483-3.495-2.742-.586-5.758-1.767-7.484-3.492ZM12.886 41.619c-.493 2.302-1.483 4.835-2.932 6.284-1.449 1.448-3.98 2.44-6.283 2.933 2.302.494 4.834 1.483 6.283 2.933 1.449 1.448 2.44 3.98 2.934 6.283.492-2.304 1.483-4.835 2.932-6.284 1.448-1.449 3.98-2.44 6.282-2.934-2.302-.492-4.834-1.483-6.283-2.932-1.448-1.448-2.44-3.98-2.933-6.283Z"
+    />
   </Svg>
 );
 
 const ICONS = {
   home: HomeIcon,
   meditations: MeditationsIcon,
+  chat: ChatIcon,
   courses: CoursesIcon,
-  chat: ProfileIcon,
-  profile: ChatIcon,
+  profile: ProfileIcon,
 };
 
 const tabScreen = (name: string) => ({
@@ -97,7 +89,7 @@ const tabScreen = (name: string) => ({
 
     return (
       <Animated.View
-        className="mt-2"
+        className="mt-1"
         style={{
           transform: [{ scale: focused ? 1.2 : 1 }],
         }}>

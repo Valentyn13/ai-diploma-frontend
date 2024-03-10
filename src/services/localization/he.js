@@ -45,7 +45,7 @@ export default {
   courses: 'קורסים',
   profile: 'פרופיל',
   meditations: 'גלו עוד',
-  chat: "צ'אט",
+  chat: 'ליווי',
 
   categories: 'נושאים',
   recommended: 'מומלץ עבורך',

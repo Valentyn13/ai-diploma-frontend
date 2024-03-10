@@ -167,12 +167,18 @@ export default function Chat() {
           _id: 'USER',
         }}
         quickReplyStyle={{
-          backgroundColor: theme.colors.primary,
+          backgroundColor: 'transparent',
+          borderColor: '#D0D0D0',
+          borderBottomWidth: 2,
+          borderTopColor: '#D0D0D0',
+          borderBottomColor: '#D0D0D0',
+          borderLeftColor: '#D0D0D0',
+          borderRightColor: '#D0D0D0',
           width: 224,
           maxWidth: 224,
         }}
         quickReplyTextStyle={{
-          color: 'white',
+          color: '#0C0C0C',
           textAlign: 'left',
           direction: 'rtl',
         }}
