@@ -8,12 +8,13 @@ import { useUser } from '@services/hooks/useUser';
 import React, { useState } from 'react';
 import { ScrollView, StyleSheet, Text, View } from 'react-native';
 
+import { PersonalizedState } from '../../../types/PersonalizedState';
 import CircularSlider from './CircularSlider';
 import Clouds from './Clouds';
 import { Button } from './buttons/Button';
 import Badge from './common/Badge';
 
-const badges = [
+const badges: PersonalizedState[] = [
   { key: 'sleepAid', label: 'עזרה בלהירדם', emoji: '🌙', color: '#0d47a1' },
   { key: 'stressRelease', label: 'לשחרר לחצים', emoji: '🍃', color: '#00695c' },
   { key: 'focus', label: 'לתפוס פוקוס', emoji: '🎯', color: '#bf360c' },
