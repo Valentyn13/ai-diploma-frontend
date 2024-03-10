@@ -3,6 +3,18 @@ import React, { FC, PropsWithChildren, useEffect, useState } from 'react';
 import { PanResponder, StyleSheet, View } from 'react-native';
 import Svg, { Circle, G } from 'react-native-svg';
 
+const calculateIndicatorPositions = (steps, radius, size) => {
+  const positions = [];
+  for (let step = 0; step < steps; step++) {
+    const angle = (360 / steps) * step - 90; // Adjusting by 90 degrees to start from the top
+    const angleRadians = (Math.PI / 180) * angle;
+    const x = size / 2 + radius * Math.cos(angleRadians);
+    const y = size / 2 + radius * Math.sin(angleRadians);
+    positions.push({ x, y });
+  }
+  return positions;
+};
+
 const CircularSlider: FC<
   PropsWithChildren & {
     initStep?: number;
@@ -102,6 +114,8 @@ const CircularSlider: FC<
   const endCircleX = size / 2 + radius * Math.cos(endAngleRadians);
   const endCircleY = size / 2 + radius * Math.sin(endAngleRadians);
 
+  const indicatorPositions = calculateIndicatorPositions(steps, radius, size);
+
   return (
     <View style={styles.container}>
       <View style={{ width: size, height: size }} className="absolute">
@@ -153,6 +167,15 @@ const CircularSlider: FC<
             strokeWidth={2}
           />
         </G>
+        {indicatorPositions.map((pos, index) => (
+          <Circle
+            key={index}
+            cx={pos.x}
+            cy={pos.y}
+            r={indicatorRadius / 2.5}
+            fill={sliderColor}
+          />
+        ))}
       </Svg>
     </View>
   );

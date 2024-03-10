@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { Dimensions } from 'react-native';
 import Svg, {
   ClipPath,
   Defs,
@@ -14,8 +13,8 @@ const Clouds = props => (
   <Svg
     viewBox="0 0 390 252"
     xmlns="http://www.w3.org/2000/svg"
-    width={Dimensions.get('window').width}
-    height={254}
+    width="100%"
+    height="100%"
     fill="none"
     {...props}>
     <G clipPath="url(#a)">
@@ -219,4 +218,5 @@ const Clouds = props => (
     </Defs>
   </Svg>
 );
+
 export default Clouds;

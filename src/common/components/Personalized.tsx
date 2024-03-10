@@ -129,7 +129,9 @@ const Personalized = () => {
         </CircularSlider>
       </View>
 
-      <Clouds className="absolute -bottom-9 right-0 w-full h-[252px]" />
+      <View className="absolute -bottom-20 w-full h-[340px]">
+        <Clouds />
+      </View>
 
       <View className="self-center mt-12">
         <Button
@@ -171,7 +173,7 @@ const Personalized = () => {
               }
 
               setIsLoading(false);
-            }, 2500);
+            }, 1000);
           }}
         />
       </View>
