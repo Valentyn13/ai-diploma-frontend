@@ -19,7 +19,7 @@ const ProgressBar: FC<{ progress: number }> = ({ progress }) => (
         borderRadius: 10,
         overflow: 'hidden',
       }}>
-      <Gradient colors={['#FFB799', '#A7BFE8', '#6190E8']} />
+      <Gradient colors={['#FFB799', '#A7BFE8', '#6190E8']} angle={45} />
     </View>
   </View>
 );

@@ -119,14 +119,6 @@ const SessionCard: FC<MeditationItemProps> = memo(
                 ? `${MEDITATIONS_IMAGES_URL}${image}`
                 : getCategoryImg(categoryName, index, thumbnail),
             }}>
-            <View
-              style={{
-                // @ts-ignore
-                backgroundColor: CATEGORY_COLOR[categoryName] || '#0B2761',
-              }}
-              className="absolute top-2 right-2 rounded-full px-2 py-1">
-              <Text className="text-white text-xs">{categoryTitle}</Text>
-            </View>
             {!hasPremium && isCategoryLocked ? (
               <View className="bg-black/50 rounded-full p-1 w-6 h-6 flex justify-center items-center absolute bottom-2 left-2">
                 <IconFontAwesome name="lock" size={12} color="#fff" />

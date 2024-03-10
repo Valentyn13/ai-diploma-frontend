@@ -46,7 +46,7 @@ const Collection = () => {
         parallaxHeaderHeight={250}
         renderForeground={() => (
           <View style={styles.foreground}>
-            <Gradient seed={title} />
+            <Gradient seed={title} angle={45} />
             <Header title={title} subTitle={`${sessions.length} סשנים`} />
           </View>
         )}

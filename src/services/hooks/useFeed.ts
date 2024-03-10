@@ -11,7 +11,7 @@ import {
   toptMeditationSelector,
 } from '@store/selectors';
 import { getRandomElements, shuffleArray } from '@utils/rand';
-import { getCollectionIdByTime } from '@utils/time';
+import { getPeriodOfDay } from '@utils/time';
 import { useCallback, useMemo } from 'react';
 import { useSelector } from 'react-redux';
 import { Meditation } from 'types/Meditation';
@@ -36,7 +36,7 @@ const useFeed = (): Collection[] => {
   const firstCollections: Collection[] = useMemo(
     () => [
       ...COLLECTIONS_TIME_OF_DAY.filter(
-        ({ id }) => id === getCollectionIdByTime(),
+        ({ id }) => id === getPeriodOfDay(),
       ).map(({ title, id, trackIds }) => ({
         id,
         title,

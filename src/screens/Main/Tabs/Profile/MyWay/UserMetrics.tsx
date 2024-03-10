@@ -49,7 +49,7 @@ const MetricBox: FC<MetricBoxProps> = ({ id, value, title, ...props }) => {
     <View
       className="flex flex-1 text-center justify-center items-center text-white rounded-lg overflow-hidden"
       {...props}>
-      <Gradient colors={GRADIENTS[id]} />
+      <Gradient colors={GRADIENTS[id]} angle={45} />
       <MetricIcon
         style={{
           marginTop: 16,

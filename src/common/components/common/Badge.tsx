@@ -1,30 +1,68 @@
 import React, { FC } from 'react';
-import { Text, TouchableOpacity, View } from 'react-native';
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
 interface BadgeProps {
   label: string;
-  emoji: string;
   isSelected: boolean;
   onPress?: () => void;
+  emoji: string;
 }
 
 const Badge: FC<BadgeProps> = ({
   label,
-  emoji,
   isSelected = false,
   onPress = () => {},
+  emoji,
 }) => {
-  const containerStyle = isSelected ? 'bg-blue-500' : 'bg-[#F7F7F7]';
+  const badgeStyles = isSelected
+    ? styles.selectedBadge
+    : styles.unselectedBadge;
+
+  const textStyles = isSelected ? styles.selectedText : styles.unselectedText;
 
   return (
-    <TouchableOpacity onPress={onPress}>
-      <View
-        className={`flex-row items-center ${containerStyle} rounded-full px-2 py-1 mr-2.5 elevation-3`}>
-        <Text className="text-lg mr-1">{label}</Text>
-        <Text className="text-lg">{emoji}</Text>
+    <TouchableOpacity onPress={onPress} style={styles.touchArea}>
+      <View style={[styles.badge, badgeStyles]}>
+        <Text style={[styles.text, textStyles]}>{label}</Text>
+        <Text style={[styles.text, textStyles]} className="ml-1">
+          {emoji}
+        </Text>
       </View>
     </TouchableOpacity>
   );
 };
+
+const styles = StyleSheet.create({
+  touchArea: {
+    marginHorizontal: 5,
+    borderRadius: 20,
+    padding: 0,
+  },
+  badge: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingHorizontal: 12,
+    paddingVertical: 12,
+    borderRadius: 20,
+    elevation: 2,
+  },
+  selectedBadge: {
+    backgroundColor: '#fff',
+  },
+  unselectedBadge: {
+    backgroundColor: '#FFFFFF60',
+  },
+  text: {
+    fontSize: 16,
+    fontWeight: '600',
+  },
+  selectedText: {
+    color: '#273051',
+  },
+  unselectedText: {
+    color: '#454545',
+  },
+});
 
 export default Badge;

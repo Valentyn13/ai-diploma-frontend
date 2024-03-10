@@ -18,7 +18,6 @@ const getRandomColor = seed => {
   };
 
   const minValue = 180;
-
   const r = Math.floor(random() * (256 - minValue) + minValue);
   const g = Math.floor(random() * (256 - minValue) + minValue);
   const b = Math.floor(random() * (256 - minValue) + minValue);
@@ -28,9 +27,10 @@ const getRandomColor = seed => {
     .padStart(2, '0')}${b.toString(16).padStart(2, '0')}`;
 };
 
-const Gradient: FC<{ seed?: string; colors?: string[] }> = ({
+const Gradient: FC<{ seed?: string; colors?: string[]; angle?: number }> = ({
   colors,
   seed: seedProp,
+  angle = 0, // Default angle is 0 degrees
 }) => {
   const [size, setSize] = useState({ width: 0, height: 0 });
   const [computedColors, setComputedColors] = useState<string[]>([]);
@@ -57,6 +57,17 @@ const Gradient: FC<{ seed?: string; colors?: string[] }> = ({
     setSize({ width, height });
   };
 
+  // Convert angle to radians for calculation
+  const angleRadians = (angle * Math.PI) / 180;
+  // Calculate vector based on angle
+  const dx = Math.cos(angleRadians);
+  const dy = Math.sin(angleRadians);
+  // Determine start and end points
+  const startX = (size.width / 2) * (1 - dx);
+  const startY = (size.height / 2) * (1 - dy);
+  const endX = (size.width / 2) * (1 + dx);
+  const endY = (size.height / 2) * (1 + dy);
+
   return (
     <View
       style={{
@@ -70,8 +81,8 @@ const Gradient: FC<{ seed?: string; colors?: string[] }> = ({
       <Canvas style={{ flex: 1 }}>
         <Rect x={0} y={0} width={size.width} height={size.height}>
           <LinearGradient
-            start={vec(0, 0)}
-            end={vec(size.width, size.height)}
+            start={vec(startX, startY)}
+            end={vec(endX, endY)}
             colors={computedColors}
           />
         </Rect>

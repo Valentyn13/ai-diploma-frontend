@@ -40,7 +40,7 @@ export function getGreeting() {
 }
 
 export function getBGImageByTime() {
-  const id = getCollectionIdByTime();
+  const id = getPeriodOfDay();
 
   if (id === 'morning' || id === 'noon' || id === 'afternoon') {
     return 'sunrise';
@@ -49,7 +49,7 @@ export function getBGImageByTime() {
   }
 }
 
-export function getCollectionIdByTime() {
+export function getPeriodOfDay() {
   const now = new Date();
   const hours = now.getHours();
 
@@ -57,7 +57,7 @@ export function getCollectionIdByTime() {
     return 'night';
   } else if (hours < 12) {
     return 'morning';
-  } else if (hours === 12) {
+  } else if (hours < 14) {
     return 'noon';
   } else if (hours < 17) {
     return 'afternoon';
