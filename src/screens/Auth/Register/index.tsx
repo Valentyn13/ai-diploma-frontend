@@ -37,16 +37,16 @@ const Register = ({ navigation }) => {
 
   const onContinue = async () => {
     if (!toggleCheckBox) {
-      Alert.alert('please select checkbox');
+      Alert.alert('אנא אשר את תנאי השימוש ומדיניות הפרטיות');
       return;
     } else if (!name) {
-      Alert.alert('please enter name');
+      Alert.alert('אנא הכנס שם');
       return;
     } else if (!email) {
-      Alert.alert('please enter email');
+      Alert.alert('אנא הכנס אימייל');
       return;
     } else if (!password) {
-      Alert.alert('please enter password');
+      Alert.alert('אנא הכנס סיסמא');
       return;
     } else if (password !== verifyPassword) {
       Alert.alert('סיסמאות לא תואמות');
@@ -67,23 +67,22 @@ const Register = ({ navigation }) => {
   const amplitudeInstance = useAmplitude();
 
   useEffect(() => {
-    if ((accessToken, id)) {
-      amplitudeInstance.setUserId(id);
-      amplitudeInstance.logEvent('SIGNUP', { userID: id });
-      getAppData();
-
-      AppEventsLogger.logEvent(
-        AppEventsLogger.AppEvents.CompletedRegistration,
-        {
-          [AppEventsLogger.AppEventParams.RegistrationMethod]: 'email',
-        },
-      );
-      logEvent('register', {
-        userName: name,
-        email: useremail,
-      });
+    if (!accessToken || !id) {
+      return;
     }
-  }, [accessToken, getAppData]);
+
+    amplitudeInstance.setUserId(id);
+    amplitudeInstance.logEvent('SIGNUP', { userID: id });
+    getAppData();
+
+    AppEventsLogger.logEvent(AppEventsLogger.AppEvents.CompletedRegistration, {
+      [AppEventsLogger.AppEventParams.RegistrationMethod]: 'email',
+    });
+    logEvent('register', {
+      userName: name,
+      email: useremail,
+    });
+  }, [accessToken, id, getAppData]);
 
   useEffect(() => {
     if (appDataloaded) {
