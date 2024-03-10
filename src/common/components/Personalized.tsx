@@ -1,4 +1,5 @@
 import BgSelector from '@common/components/buttons/BgSelector';
+import { TIME_SLOTS } from '@common/constants';
 import { usePurchases } from '@common/context/PurchaseContext';
 import theme from '@common/theme';
 import { BlurView } from '@react-native-community/blur';
@@ -8,61 +9,10 @@ import { useUser } from '@services/hooks/useUser';
 import React, { useState } from 'react';
 import { ScrollView, StyleSheet, Text, View } from 'react-native';
 
-import { PersonalizedState } from '../../../types/PersonalizedState';
 import CircularSlider from './CircularSlider';
 import Clouds from './Clouds';
 import { Button } from './buttons/Button';
 import Badge from './common/Badge';
-
-const states: PersonalizedState[] = [
-  { key: 'sleepAid', label: 'עזרה בלהירדם', emoji: '🌙', color: '#0d47a1' },
-  { key: 'stressRelease', label: 'לשחרר לחצים', emoji: '🍃', color: '#00695c' },
-  { key: 'focus', label: 'לתפוס פוקוס', emoji: '🎯', color: '#bf360c' },
-  {
-    key: 'panicReduction',
-    label: 'להוריד פאניקה',
-    emoji: '🧘‍♂️',
-    color: '#004d40',
-  },
-  {
-    key: 'innerPeace',
-    label: 'למצוא שלווה פנימית',
-    emoji: '☮️',
-    color: '#1a237e',
-  },
-  {
-    key: 'selfCompassion',
-    label: 'לפתח חמלה עצמית',
-    emoji: '❤️',
-    color: '#880e4f',
-  },
-  {
-    key: 'emotionRegulation',
-    label: 'וויסות רגשות',
-    emoji: '🌡️',
-    color: '#b71c1c',
-  },
-  {
-    key: 'sadnessReduction',
-    label: 'הפחתת עצבים',
-    emoji: '😌',
-    color: '#263238',
-  },
-  { key: 'gratitude', label: 'הכרת תודה', emoji: '🙏', color: '#3e2723' },
-  { key: 'dayStart', label: 'תחילת יום', emoji: '🌅', color: '#1b5e20' },
-  {
-    key: 'anxietyReduction',
-    label: 'הפחתת חרדה',
-    emoji: '🍵',
-    color: '#004d40',
-  },
-  { key: 'justPractice', label: 'פשוט לתרגל', emoji: '🔄', color: '#37474f' },
-] as const;
-
-export type PersonalizedLabel = (typeof states)[number]['label'];
-export type TimeSlot = 7 | 13 | 60;
-
-const timeSlots: (TimeSlot | 1)[] = [1, 7, 13, 60];
 
 const sliderSize = 220;
 const strokeWidth = 4;
@@ -70,8 +20,15 @@ const strokeWidth = 4;
 const Personalized = () => {
   const { hasPremium } = usePurchases();
   const { navigate } = useNavigation();
-  const { getSessionIdsByStateAndTime, pickSession, getTitle, getSubtitle } =
-    usePersonalized();
+  const {
+    getSessionIdsByStateAndTime,
+    pickSession,
+    getTitle,
+    getSubtitle,
+    getOrderedStatesByTime,
+  } = usePersonalized();
+  const states = getOrderedStatesByTime();
+
   const [selectedBadge, setSelectedBadge] = useState<string>(states[0].key);
   const { user } = useUser();
   const [step, setStep] = useState(1);
@@ -81,7 +38,7 @@ const Personalized = () => {
 
   const currentSteps = [
     1,
-    ...timeSlots.slice(1, timeSlots.length).filter((_, i) => {
+    ...TIME_SLOTS.slice(1, TIME_SLOTS.length).filter((_, i) => {
       return !!getSessionIdsByStateAndTime(selected.label, i + 1).length;
     }),
   ];

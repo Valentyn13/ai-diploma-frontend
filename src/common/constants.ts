@@ -1,5 +1,7 @@
 import { Focus, Sleep, Stress } from '@common/assets/illustrations';
 
+import { PersonalizedState } from '../../types/Personalized';
+
 export const SHOULD_SHOW_REMINDER_POPUP_STATUS_NOT_INITIALIED =
   'SHOULD_SHOW_REMINDER_POPUP_STATUS_NOT_INITIALIED';
 export const SHOULD_SHOW_REMINDER_POPUP_STATUS_TURNED_ON =
@@ -698,3 +700,50 @@ export const EXERCISES = [
 ];
 
 export type IExercise = (typeof EXERCISES)[number];
+
+export const PERSONALIZED_STATES: PersonalizedState[] = [
+  { key: 'sleepAid', label: 'עזרה בלהירדם', emoji: '🌙', color: '#0d47a1' },
+  { key: 'stressRelease', label: 'לשחרר לחצים', emoji: '🍃', color: '#00695c' },
+  { key: 'focus', label: 'לתפוס פוקוס', emoji: '🎯', color: '#bf360c' },
+  {
+    key: 'panicReduction',
+    label: 'להוריד פאניקה',
+    emoji: '🧘‍♂️',
+    color: '#004d40',
+  },
+  {
+    key: 'innerPeace',
+    label: 'למצוא שלווה פנימית',
+    emoji: '☮️',
+    color: '#1a237e',
+  },
+  {
+    key: 'selfCompassion',
+    label: 'לפתח חמלה עצמית',
+    emoji: '❤️',
+    color: '#880e4f',
+  },
+  {
+    key: 'emotionRegulation',
+    label: 'וויסות רגשות',
+    emoji: '🌡️',
+    color: '#b71c1c',
+  },
+  {
+    key: 'sadnessReduction',
+    label: 'הפחתת עצבים',
+    emoji: '😌',
+    color: '#263238',
+  },
+  { key: 'gratitude', label: 'הכרת תודה', emoji: '🙏', color: '#3e2723' },
+  { key: 'dayStart', label: 'תחילת יום', emoji: '🌅', color: '#1b5e20' },
+  {
+    key: 'anxietyReduction',
+    label: 'הפחתת חרדה',
+    emoji: '🍵',
+    color: '#004d40',
+  },
+  { key: 'justPractice', label: 'פשוט לתרגל', emoji: '🔄', color: '#37474f' },
+] as const;
+
+export const TIME_SLOTS = [1, 7, 13, 60];

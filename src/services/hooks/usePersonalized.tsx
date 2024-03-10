@@ -1,5 +1,6 @@
-import { PersonalizedLabel } from '@common/components/Personalized';
+import { PERSONALIZED_STATES, TIME_SLOTS } from '@common/constants';
 import { getPeriodOfDay } from '@utils/time';
+import { PersonalizedLabel } from 'types/Personalized';
 
 import useSessions from './useSessions';
 import { useUser } from './useUser';
@@ -16,6 +17,14 @@ import { useUser } from './useUser';
 //     ...item,
 //     personalized: personalized.split(', '),
 //   }));
+
+const shuffleArray = array => {
+  for (let i = array.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [array[i], array[j]] = [array[j], array[i]]; // Swap elements
+  }
+  return array;
+};
 
 const MAPPING: {
   id: string;
@@ -680,16 +689,14 @@ const MAPPING: {
   },
 ];
 
-const timeSlots = [1, 7, 13, 60];
-
 function getRangeInSeconds(index: number) {
-  if (index < 0 || index >= timeSlots.length) {
+  if (index < 0 || index >= TIME_SLOTS.length) {
     console.error('Index out of bounds');
     return null;
   }
 
-  const start = index === 0 ? 0 : timeSlots[index - 1] * 60;
-  const end = timeSlots[index] * 60;
+  const start = index === 0 ? 0 : TIME_SLOTS[index - 1] * 60;
+  const end = TIME_SLOTS[index] * 60;
 
   return [start, end];
 }
@@ -740,6 +747,44 @@ export const usePersonalized = () => {
     }
   };
 
+  const getOrderedStatesByTime = () => {
+    const periodTime = getPeriodOfDay();
+
+    const priorityMappings = {
+      morning: ['dayStart', 'focus', 'gratitude'],
+      noon: ['stressRelease', 'focus', 'anxietyReduction'],
+      afternoon: ['stressRelease', 'focus', 'anxietyReduction'],
+      evening: ['stressRelease', 'focus', 'anxietyReduction'],
+      night: ['sleepAid', 'stressRelease', 'panicReduction'],
+    };
+
+    const priorityKeys = priorityMappings[periodTime] || [];
+
+    const orderedAndRandomStates = PERSONALIZED_STATES.sort((a, b) => {
+      const aPriority = priorityKeys.indexOf(a.key);
+      const bPriority = priorityKeys.indexOf(b.key);
+
+      if (aPriority !== -1 && bPriority !== -1) return aPriority - bPriority;
+
+      if (aPriority !== -1) return -1;
+      if (bPriority !== -1) return 1;
+
+      return 0;
+    });
+
+    const firstNonPriorityIndex = orderedAndRandomStates.findIndex(
+      (state, index) => priorityKeys.indexOf(state.key) === -1,
+    );
+
+    const shuffledPart = shuffleArray(
+      orderedAndRandomStates.slice(firstNonPriorityIndex),
+    );
+
+    return orderedAndRandomStates
+      .slice(0, firstNonPriorityIndex)
+      .concat(shuffledPart);
+  };
+
   const pickSession = (personalized: PersonalizedLabel, step: number) => {
     const filteredSessions = getSessionIdsByStateAndTime(personalized, step);
     const randomSessionId =
@@ -764,5 +809,11 @@ export const usePersonalized = () => {
     return filteredSessions.map(({ id }) => id).filter(isExist);
   };
 
-  return { getSessionIdsByStateAndTime, pickSession, getTitle, getSubtitle };
+  return {
+    getSessionIdsByStateAndTime,
+    pickSession,
+    getTitle,
+    getSubtitle,
+    getOrderedStatesByTime,
+  };
 };
