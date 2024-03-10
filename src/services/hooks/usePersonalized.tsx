@@ -1,4 +1,5 @@
 import { PERSONALIZED_STATES, TIME_SLOTS } from '@common/constants';
+import { shuffleArray } from '@utils/rand';
 import { getPeriodOfDay } from '@utils/time';
 import { PersonalizedLabel } from 'types/Personalized';
 
@@ -17,14 +18,6 @@ import { useUser } from './useUser';
 //     ...item,
 //     personalized: personalized.split(', '),
 //   }));
-
-const shuffleArray = array => {
-  for (let i = array.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [array[i], array[j]] = [array[j], array[i]]; // Swap elements
-  }
-  return array;
-};
 
 const MAPPING: {
   id: string;
@@ -773,7 +766,7 @@ export const usePersonalized = () => {
     });
 
     const firstNonPriorityIndex = orderedAndRandomStates.findIndex(
-      (state, index) => priorityKeys.indexOf(state.key) === -1,
+      state => priorityKeys.indexOf(state.key) === -1,
     );
 
     const shuffledPart = shuffleArray(
