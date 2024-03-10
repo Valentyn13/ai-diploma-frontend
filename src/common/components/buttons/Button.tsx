@@ -9,12 +9,12 @@ import {
 } from 'react-native';
 
 interface ButtonProps {
-  title: string;
+  title: React.ReactNode;
   onPress: (event: GestureResponderEvent) => void;
   style?: ViewStyle;
   disabled?: boolean;
   variant?: 'primary' | 'secondary' | 'accent' | 'neutral';
-  bgColor?: string; // Added bgColor prop
+  bgColor?: string;
 }
 
 export const Button: React.FC<ButtonProps> = ({
@@ -23,7 +23,7 @@ export const Button: React.FC<ButtonProps> = ({
   style,
   disabled = false,
   variant = 'primary',
-  bgColor, // Destructured bgColor prop
+  bgColor,
 }) => {
   const [scaleValue] = useState(new Animated.Value(1));
 
@@ -47,7 +47,6 @@ export const Button: React.FC<ButtonProps> = ({
     transform: [{ scale: scaleValue }],
   };
 
-  // Conditionally apply bgColor if provided, otherwise fall back to variant and default styles
   const buttonStyle = bgColor
     ? { ...styles.button, backgroundColor: bgColor, borderColor: bgColor }
     : [styles.button, styles[variant]];
@@ -60,9 +59,13 @@ export const Button: React.FC<ButtonProps> = ({
         onPressIn={handlePressIn}
         onPressOut={handlePressOut}
         style={[buttonStyle, style, disabled && styles.disabled]}>
-        <Text style={[styles.text, disabled && styles.disabledText]}>
-          {title}
-        </Text>
+        {typeof title === 'string' ? (
+          <Text style={[styles.text, disabled && styles.disabledText]}>
+            {title}
+          </Text>
+        ) : (
+          title
+        )}
       </TouchableOpacity>
     </Animated.View>
   );
@@ -70,8 +73,8 @@ export const Button: React.FC<ButtonProps> = ({
 
 const styles = StyleSheet.create({
   button: {
-    paddingVertical: 8,
-    paddingHorizontal: 20,
+    paddingVertical: 6,
+    paddingHorizontal: 12,
     borderRadius: 50,
     borderWidth: 1,
   },
