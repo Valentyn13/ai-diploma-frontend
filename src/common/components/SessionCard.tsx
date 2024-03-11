@@ -8,7 +8,7 @@ import { meditationInstructor } from '@store/selectors';
 import { logEvent } from '@utils/analytics';
 import { isRecent } from '@utils/session';
 import meditationTime from '@utils/time';
-import React, { FC, memo, useCallback } from 'react';
+import React, { FC, memo, useCallback, useMemo } from 'react';
 import { ImageBackground, Pressable, Text, View } from 'react-native';
 import IconFontAwesome from 'react-native-vector-icons/FontAwesome6';
 import { useSelector } from 'react-redux';
@@ -44,10 +44,8 @@ const SessionCard: FC<MeditationItemProps> = memo(
       animation,
       thumbnail,
       isCategoryLocked,
-      categoryTitle,
       image,
       createdAt,
-      isNew,
     },
     index,
   }) => {
@@ -56,6 +54,7 @@ const SessionCard: FC<MeditationItemProps> = memo(
     const instructor = useSelector(state => meditationInstructor(state, id));
 
     const { hasPremium } = usePurchases();
+    const isNew = useMemo(() => isRecent({ createdAt }), [createdAt]);
 
     const navigateToPlayer = useCallback(() => {
       if (!hasPremium && isCategoryLocked) {
@@ -64,8 +63,8 @@ const SessionCard: FC<MeditationItemProps> = memo(
       } else {
         amplitudeInstance.logEvent('MEDITATION_CLICKED');
         amplitudeInstance.logEvent('MEDITATION_PLAY');
-        logEvent('MEDITATION_CLICKED', { categoryName });
-        logEvent('MEDITATION_PLAY', { categoryName });
+        logEvent('MEDITATION_CLICKED', { id, name });
+        logEvent('MEDITATION_PLAY', { id, name });
         amplitudeInstance.uploadEvents();
         // @ts-ignore TODO: fix this
         navigate('MeditationPlayer', {
@@ -87,12 +86,12 @@ const SessionCard: FC<MeditationItemProps> = memo(
     ]);
 
     const navigateToModal = useCallback(() => {
-      amplitudeInstance.logEvent('MEDITATION_MODAL_CLICKED');
-      logEvent('MEDITATION_MODAL_CLICKED', { id, categoryName });
+      amplitudeInstance.logEvent('MEDITATION_MODAL_CLICKED', { id, name });
+      logEvent('MEDITATION_MODAL_CLICKED', { id, name });
       amplitudeInstance.uploadEvents();
       // @ts-ignore TODO: fix this
       navigate('SessionModal', { id });
-    }, [amplitudeInstance, categoryName, id, navigate]);
+    }, [amplitudeInstance, id, name, navigate]);
 
     return (
       <View
@@ -149,7 +148,7 @@ const SessionCard: FC<MeditationItemProps> = memo(
             </Text>
           </View>
         </Pressable>
-        {isRecent({ createdAt }) && <Indicator />}
+        {isNew && <Indicator />}
       </View>
     );
   },

@@ -4,8 +4,10 @@ import { usePurchases } from '@common/context/PurchaseContext';
 import theme from '@common/theme';
 import { BlurView } from '@react-native-community/blur';
 import { useNavigation } from '@react-navigation/native';
+import { useAmplitude } from '@services/hooks/useAmplitude';
 import { usePersonalized } from '@services/hooks/usePersonalized';
 import { useUser } from '@services/hooks/useUser';
+import { logEvent } from '@utils/analytics';
 import React, { useState } from 'react';
 import {
   ActivityIndicator,
@@ -24,7 +26,23 @@ import Badge from './common/Badge';
 const sliderSize = 220;
 const strokeWidth = 4;
 
+function getRangeString(index: number, steps: number[]) {
+  if (index === 0) {
+    return '1-7';
+  } else if (index === steps.length) {
+    return '60+';
+  } else {
+    const start = steps[index - 1];
+    const end = steps[index];
+    const formattedStart = start < 10 && end > 9 ? ` ${start}` : `${start}`;
+    const formattedEnd = end;
+    return `${formattedStart}-${formattedEnd}`;
+  }
+}
+
 const Personalized = () => {
+  const amplitudeInstance = useAmplitude();
+  const [isLoading, setIsLoading] = useState(false);
   const { hasPremium } = usePurchases();
   const { navigate } = useNavigation();
   const {
@@ -40,7 +58,6 @@ const Personalized = () => {
   const { user } = useUser();
   const [step, setStep] = useState(1);
 
-  const handleSliderChange = (newStep: number) => setStep(newStep);
   const selected = states.find(b => b.key === selectedBadge)!;
 
   const currentSteps = [
@@ -50,21 +67,45 @@ const Personalized = () => {
     }),
   ];
 
-  function getRangeString(index: number) {
-    if (index === 0) {
-      return '1-7';
-    } else if (index === currentSteps.length) {
-      return '60+';
-    } else {
-      const start = currentSteps[index - 1];
-      const end = currentSteps[index];
-      const formattedStart = start < 10 && end > 9 ? ` ${start}` : `${start}`;
-      const formattedEnd = end;
-      return `${formattedStart}-${formattedEnd}`;
-    }
-  }
+  const handleSliderChange = (newStep: number) => {
+    amplitudeInstance.logEvent('PERSONALIZED_TIME_CHANGED', {
+      time: getRangeString(newStep, currentSteps),
+    });
+    logEvent('PERSONALIZED_TIME_CHANGED', {
+      time: getRangeString(newStep, currentSteps),
+    });
+    amplitudeInstance.uploadEvents();
 
-  const [isLoading, setIsLoading] = useState(false);
+    setStep(newStep);
+  };
+
+  const onPlay = () => {
+    setIsLoading(true);
+
+    const props = {
+      badge: selectedBadge,
+      time: getRangeString(step, currentSteps),
+    };
+
+    amplitudeInstance.logEvent('PERSONALIZED_PLAY', props);
+    logEvent('PERSONALIZED_PLAY', props);
+    amplitudeInstance.uploadEvents();
+
+    setTimeout(() => {
+      const session = pickSession(
+        states.find(b => b.key === selectedBadge)!.label,
+        step,
+      );
+
+      if (!hasPremium && session.isCategoryLocked) {
+        navigate('Subscribe');
+      } else {
+        navigate('MeditationPlayer', { item: session });
+      }
+
+      setIsLoading(false);
+    }, 1000);
+  };
 
   return (
     <View style={styles.scrollView}>
@@ -83,10 +124,14 @@ const Personalized = () => {
           blurType="light"
           blurAmount={3}>
           <View>
-            <Text className="text-left" style={styles.title}>
+            <Text
+              style={{
+                fontFamily: theme.fonts.bold,
+              }}
+              className="text-left text-[#2F2F2F] font-bold text-3xl">
               {getTitle()} {user.name ?? ''}
             </Text>
-            <Text className="text-left text-[#4F4F4F] font-regular text-base">
+            <Text className="text-left text-[#4F4F4F] font-normal text-base">
               {getSubtitle()}
             </Text>
           </View>
@@ -104,7 +149,15 @@ const Personalized = () => {
               key={badge.key}
               label={badge.label}
               isSelected={selectedBadge === badge.key}
-              onPress={() => setSelectedBadge(badge.key)}
+              onPress={() => {
+                amplitudeInstance.logEvent('PERSONALIZED_BADGE_CLICKED', {
+                  badge: badge.key,
+                });
+                logEvent('PERSONALIZED_BADGE_CLICKED', { badge: badge.key });
+                amplitudeInstance.uploadEvents();
+
+                setSelectedBadge(badge.key);
+              }}
             />
           ))}
         </ScrollView>
@@ -123,7 +176,7 @@ const Personalized = () => {
             style={{
               fontSize: 48,
             }}>
-            {getRangeString(step)}
+            {getRangeString(step, currentSteps)}
           </Text>
           <Text className="text-2xl font-light">דקות</Text>
         </CircularSlider>
@@ -157,24 +210,7 @@ const Personalized = () => {
               )}
             </View>
           }
-          onPress={() => {
-            setIsLoading(true);
-
-            setTimeout(() => {
-              const session = pickSession(
-                states.find(b => b.key === selectedBadge)!.label,
-                step,
-              );
-
-              if (!hasPremium && session.isCategoryLocked) {
-                navigate('Subscribe');
-              } else {
-                navigate('MeditationPlayer', { item: session });
-              }
-
-              setIsLoading(false);
-            }, 1000);
-          }}
+          onPress={onPlay}
         />
       </View>
     </View>
@@ -213,7 +249,6 @@ const styles = StyleSheet.create({
     fontSize: 36,
     fontWeight: 'bold',
     marginBottom: 4,
-    fontFamily: theme.fonts.bold,
   },
 });
 
