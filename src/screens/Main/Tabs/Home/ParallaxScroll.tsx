@@ -35,6 +35,7 @@ const ParallaxScroll: FC<PropsWithChildren> = ({ children }) => {
           resizeMode="cover"
           style={StyleSheet.absoluteFillObject}
         />
+        <View className="absolute top-0 left-0 w-full h-full bg-[#F1F1F1] opacity-20" />
       </Animated.View>
       <Animated.ScrollView
         showsVerticalScrollIndicator={false}
