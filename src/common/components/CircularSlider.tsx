@@ -147,17 +147,19 @@ const CircularSlider: FC<
             strokeWidth={strokeWidth}
             fill="none"
           />
-          <Circle
-            cx={size / 2}
-            cy={size / 2}
-            r={radius}
-            stroke={sliderColor}
-            strokeWidth={strokeWidth}
-            strokeDasharray={circumference}
-            strokeDashoffset={strokeDashoffset}
-            strokeLinecap="round"
-            fill="none"
-          />
+          {!!steps && (
+            <Circle
+              cx={size / 2}
+              cy={size / 2}
+              r={radius}
+              stroke={sliderColor}
+              strokeWidth={strokeWidth}
+              strokeDasharray={circumference}
+              strokeDashoffset={strokeDashoffset}
+              strokeLinecap="round"
+              fill="none"
+            />
+          )}
           <Circle
             cx={endCircleX}
             cy={endCircleY}
