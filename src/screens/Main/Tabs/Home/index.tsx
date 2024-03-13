@@ -17,9 +17,9 @@ import useFeed from '@services/hooks/useFeed';
 import { useOnboarding } from '@services/hooks/useOnboarding';
 import { useUser } from '@services/hooks/useUser';
 import { useSheetStore } from '@store/useSheetStore';
-import React, { FC, useCallback, useEffect, useRef, useState } from 'react';
-import { Button, Modal, ScrollView, Text, View } from 'react-native';
-import { CopilotStep, useCopilot, walkthroughable } from 'react-native-copilot';
+import React, { FC, useCallback, useEffect, useState } from 'react';
+import { Button, Modal, Text, View } from 'react-native';
+import { CopilotStep, walkthroughable } from 'react-native-copilot';
 import styled from 'styled-components/native';
 import { Meditation } from 'types/Meditation';
 
@@ -64,28 +64,21 @@ const Feed: FC<FeedProps> = ({ navigation, copilot }) => {
 
   const setIsOpen = useSheetStore((state: any) => state.setIsOpen);
 
-  const colorList = [
-    { offset: '0%', color: '#FCE8CD', opacity: '1' },
-    { offset: '80%', color: '#FCE8CD', opacity: '1' },
-    { offset: '90%', color: '#FCE8CD', opacity: '0.1' },
-    { offset: '100%', color: '#000', opacity: '0' },
-  ];
-
   interface Collection {
     id: string;
     title: string;
     items: Meditation[];
   }
 
-  const { start, copilotEvents } = useCopilot();
-  const onStop = useCallback(() => updateIsOldUser(), [updateIsOldUser]);
+  // const { start, copilotEvents } = useCopilot();
+  // const onStop = useCallback(() => updateIsOldUser(), [updateIsOldUser]);
 
-  useEffect(() => {
-    copilotEvents.on('stop', onStop);
-    return () => {
-      copilotEvents.off('stop', onStop);
-    };
-  }, [copilotEvents, onStop]);
+  // useEffect(() => {
+  //   copilotEvents.on('stop', onStop);
+  //   return () => {
+  //     copilotEvents.off('stop', onStop);
+  //   };
+  // }, [copilotEvents, onStop]);
 
   const [showModal, setShowModal] = useState(false);
 
@@ -99,7 +92,7 @@ const Feed: FC<FeedProps> = ({ navigation, copilot }) => {
     };
   }, []);
 
-  const scrollRef = useRef<ScrollView>(null);
+  // const scrollRef = useRef<ScrollView>(null);
 
   return (
     <>
@@ -253,7 +246,7 @@ const Feed: FC<FeedProps> = ({ navigation, copilot }) => {
           <WelcomeMessage
             onPress={() => {
               setShowModal(false);
-              start('first', scrollRef.current);
+              updateIsOldUser();
             }}
           />
         </View>
