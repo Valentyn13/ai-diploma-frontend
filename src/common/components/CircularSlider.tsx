@@ -92,7 +92,7 @@ const CircularSlider: FC<
     },
   });
 
-  const indicatorRadius = 20;
+  const indicatorRadius = 16;
 
   const isTouchOnStroke = (
     touchX: number,
