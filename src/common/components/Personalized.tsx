@@ -2,12 +2,12 @@ import BgSelector from '@common/components/buttons/BgSelector';
 import { TIME_SLOTS } from '@common/constants';
 import { usePurchases } from '@common/context/PurchaseContext';
 import theme from '@common/theme';
-import { BlurView } from '@react-native-community/blur';
 import { useNavigation } from '@react-navigation/native';
 import { useAmplitude } from '@services/hooks/useAmplitude';
 import { usePersonalized } from '@services/hooks/usePersonalized';
 import { useUser } from '@services/hooks/useUser';
 import { logEvent } from '@utils/analytics';
+import { getBGImageByTime } from '@utils/time';
 import React, { useState } from 'react';
 import {
   ActivityIndicator,
@@ -20,6 +20,7 @@ import Svg, { Path } from 'react-native-svg';
 
 import CircularSlider from './CircularSlider';
 import Clouds from './Clouds';
+import Gradient from './Gradient';
 import { Button } from './buttons/Button';
 import Badge from './common/Badge';
 
@@ -39,6 +40,11 @@ function getRangeString(index: number, steps: number[]) {
     return `${formattedStart}-${formattedEnd}`;
   }
 }
+
+const GRADIENTS = {
+  sunrise: ['#D5E7E0', '#e1e3d854'],
+  sunset: ['#7A91B4', '#88b6d526'],
+};
 
 const Personalized = () => {
   const amplitudeInstance = useAmplitude();
@@ -109,34 +115,23 @@ const Personalized = () => {
 
   return (
     <View style={styles.scrollView}>
-      <View className="h-[96px] border-b border-[#D0D0D030]">
-        <BlurView
-          style={{
-            position: 'relative',
-            width: '100%',
-            height: '100%',
-            display: 'flex',
-            alignItems: 'center',
-            flexDirection: 'row',
-            justifyContent: 'space-between',
-            padding: 16,
-          }}
-          blurType="light"
-          blurAmount={3}>
-          <View>
-            <Text
-              style={{
-                fontFamily: theme.fonts.bold,
-              }}
-              className="text-left text-[#2F2F2F] font-bold text-3xl">
-              {getTitle()} {user.name ?? ''}
-            </Text>
-            <Text className="text-left text-[#4F4F4F] font-normal text-base">
-              {getSubtitle()}
-            </Text>
-          </View>
+      <View className="h-[96px] border-b border-[#D0D0D030] flex-row justify-between items-center relative">
+        <Gradient colors={GRADIENTS[getBGImageByTime()]} angle={90} />
+        <View className="p-4">
+          <Text
+            style={{
+              fontFamily: theme.fonts.bold,
+            }}
+            className="text-left text-[#2F2F2F] font-bold text-3xl">
+            {getTitle()} {user.name ?? ''}
+          </Text>
+          <Text className="text-left text-[#4F4F4F] font-normal text-base">
+            {getSubtitle()}
+          </Text>
+        </View>
+        <View className="p-4">
           <BgSelector />
-        </BlurView>
+        </View>
       </View>
       <View style={styles.sliderContainer}>
         <ScrollView
@@ -173,12 +168,13 @@ const Personalized = () => {
           strokeWidth={strokeWidth}
           onStepChange={handleSliderChange}>
           <Text
+            className="text-white"
             style={{
               fontSize: 48,
             }}>
             {getRangeString(step, currentSteps)}
           </Text>
-          <Text className="text-2xl font-light">דקות</Text>
+          <Text className="text-2xl font-light text-white">דקות</Text>
         </CircularSlider>
       </View>
 

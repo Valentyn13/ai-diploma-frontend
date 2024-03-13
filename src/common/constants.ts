@@ -480,6 +480,7 @@ export const COLLECTIONS_TIME_OF_DAY = [
       '649543530e66f2955d2ecbe6',
       '649546820e66f2955d2ecbea',
       '6471b01a538c7fe78164398a',
+      '638edb9e132405bcd302f6c1',
     ],
   },
   {

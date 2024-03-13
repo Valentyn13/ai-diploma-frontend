@@ -45,7 +45,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: 12,
     paddingVertical: 12,
     borderRadius: 20,
-    elevation: 2,
   },
   selectedBadge: {
     backgroundColor: '#fff',

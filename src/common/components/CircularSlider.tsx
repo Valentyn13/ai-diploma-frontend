@@ -1,6 +1,6 @@
 import { BlurView } from '@react-native-community/blur';
 import React, { FC, PropsWithChildren, useEffect, useState } from 'react';
-import { PanResponder, StyleSheet, View } from 'react-native';
+import { PanResponder, Platform, StyleSheet, View } from 'react-native';
 import Svg, { Circle, G } from 'react-native-svg';
 
 const calculateIndicatorPositions = (steps, radius, size) => {
@@ -92,14 +92,13 @@ const CircularSlider: FC<
     },
   });
 
-  const indicatorRadius = 12;
+  const indicatorRadius = 20;
 
   const isTouchOnStroke = (
     touchX: number,
     touchY: number,
     padding = indicatorRadius * 2,
   ) => {
-    // padding default value set to 5 pixels
     const x = touchX - size / 2;
     const y = touchY - size / 2;
     const distanceFromCenter = Math.sqrt(x * x + y * y);
@@ -118,27 +117,26 @@ const CircularSlider: FC<
 
   return (
     <View style={styles.container}>
-      <View style={{ width: size, height: size }} className="absolute">
+      {Platform.OS === 'ios' && (
         <BlurView
           style={{
+            position: 'absolute',
             width: size,
             height: size,
             borderRadius: size / 2,
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
           }}
           blurType="light"
-          blurAmount={10}>
-          {children}
-        </BlurView>
-      </View>
+          blurAmount={4}
+        />
+      )}
+
       <Svg
         width={size + 30}
         height={size + 30}
         viewBox={`${-15} ${-15} ${size + 30} ${size + 30}`}
         {...panResponder.panHandlers}>
         <G rotation="270" origin={`${size / 2}, ${size / 2}`}>
+          <Circle cx={size / 2} cy={size / 2} r={radius} fillOpacity={0.2} />
           <Circle
             cx={size / 2}
             cy={size / 2}
@@ -179,6 +177,11 @@ const CircularSlider: FC<
           />
         ))}
       </Svg>
+      <View
+        style={{ width: size / 2, height: size / 2 }}
+        className="absolute rounded-full flex items-center justify-center">
+        {children}
+      </View>
     </View>
   );
 };
