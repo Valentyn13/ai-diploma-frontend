@@ -296,6 +296,7 @@ export default () => {
     if (emailError || fbError || googleError || appleError || registerError) {
       handleError();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
     emailError,
     fbError,
@@ -303,7 +304,6 @@ export default () => {
     appleError,
     registerError,
     setIsLoading,
-    handleError,
   ]);
 
   return {
