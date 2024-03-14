@@ -24,12 +24,12 @@ import Gradient from './Gradient';
 import { Button } from './buttons/Button';
 import Badge from './common/Badge';
 
-const sliderSize = 220;
-const strokeWidth = 4;
+const sliderSize = 200;
+const strokeWidth = 3;
 
 function getRangeString(index: number, steps: number[]) {
   if (index === 0) {
-    return '1-7';
+    return '1-10';
   } else if (index === steps.length) {
     return '60+';
   } else {
@@ -170,7 +170,7 @@ const Personalized = () => {
           <Text
             className="text-white"
             style={{
-              fontSize: 48,
+              fontSize: 46,
             }}>
             {getRangeString(step, currentSteps)}
           </Text>

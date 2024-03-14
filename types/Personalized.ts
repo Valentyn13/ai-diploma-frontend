@@ -9,4 +9,4 @@ export interface PersonalizedState {
 
 export type PersonalizedLabel = (typeof PERSONALIZED_STATES)[number]['label'];
 export type PersonalizedKey = (typeof PERSONALIZED_STATES)[number]['key'];
-export type TimeSlot = 7 | 13 | 60;
+export type TimeSlot = 10 | 20 | 60;

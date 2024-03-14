@@ -747,4 +747,4 @@ export const PERSONALIZED_STATES: PersonalizedState[] = [
   { key: 'justPractice', label: 'פשוט לתרגל', emoji: '🔄', color: '#37474f' },
 ] as const;
 
-export const TIME_SLOTS = [1, 7, 13, 60];
+export const TIME_SLOTS = [1, 10, 20, 60];

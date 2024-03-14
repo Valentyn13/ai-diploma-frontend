@@ -178,7 +178,7 @@ const CircularSlider: FC<
         ))}
       </Svg>
       <View
-        style={{ width: size / 2, height: size / 2 }}
+        style={{ width: size / 1.5, height: size / 1.5 }}
         className="absolute rounded-full flex items-center justify-center">
         {children}
       </View>
