@@ -4,11 +4,13 @@ import { CircleButton } from '@common/components/buttons/CircleButton';
 import { usePurchases } from '@common/context/PurchaseContext';
 import { useRoute } from '@react-navigation/native';
 import { useAmplitude } from '@services/hooks/useAmplitude';
+import { useFlag } from '@services/hooks/useFlag';
 import useTrigger from '@services/hooks/useTrigger';
 import useUpdateMeditation from '@services/hooks/useUpdateMeditation';
 import { meditationStarted, minutesPracticed } from '@store/actions';
 import { meditationInstructor } from '@store/selectors';
 import { useBgTrackStore } from '@store/useBgTrackStore';
+import { useMichaelStore } from '@store/useMichaelStore';
 import logger from '@utils/logger';
 import { getVideoName } from '@utils/video';
 import React, {
@@ -67,6 +69,7 @@ const VideoPlayer = styled(Video).attrs(() => ({
 `;
 
 const MeditationPlayer: FC = ({ navigation }) => {
+  const { isOpen, setIsOpen } = useMichaelStore(state => state);
   const [loading, setLoading] = useState(true);
   const [cachedVideoUri, setCachedVideoUri] = useState<string>();
   const route = useRoute();
@@ -91,6 +94,12 @@ const MeditationPlayer: FC = ({ navigation }) => {
     'sessionCountKey',
     3,
   );
+
+  const value = useFlag<number>('push_to_michael', 4);
+
+  useEffect(() => {
+    console.log('>>>>>>>>>>>>>>>>>>>>./', value);
+  }, [value]);
 
   useEffect(() => {
     if (state === State.Ready) {
@@ -163,6 +172,7 @@ const MeditationPlayer: FC = ({ navigation }) => {
       });
     } else {
       goBack();
+      setIsOpen(true);
       if (!hasPremium) {
         triggerPaywallEvery3Plays();
       }

@@ -6,8 +6,8 @@ import { Meditation } from 'types/Meditation';
 
 import ExercisesPlayer from './ExercisesPlayer';
 import Exercises from './ExercisesPlayer/Exercises';
-import MeditationPlayer from './MeditationPlayer';
-import BgPlayer from './MeditationPlayer/BgPlayer';
+import MeditationPlayer from './SessionPlayer';
+import BgPlayer from './SessionPlayer/BgPlayer';
 import Subscribe from './Subscribe';
 import Tabs from './Tabs';
 import Course from './Tabs/Courses/Course';
