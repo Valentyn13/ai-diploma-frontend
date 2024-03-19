@@ -1,4 +1,5 @@
 import MeditationPicker from '@common/components/MeditationPicker';
+import MichaelAsk from '@common/components/MichaelAsk';
 import theme from '@common/theme';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import i18n from '@services/localization/i18n';
@@ -155,6 +156,7 @@ const TabNavigator = () => {
         ))}
       </Tab.Navigator>
       <MeditationPicker />
+      <MichaelAsk />
     </SafeAreaView>
   );
 };

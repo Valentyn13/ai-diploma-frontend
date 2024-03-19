@@ -18,3 +18,8 @@ export type EnrichedSession = Meditation & {
   // extend
   isNew?: boolean;
 };
+
+export type PracticedMeditation = {
+  id: string;
+  timestamp: string;
+};

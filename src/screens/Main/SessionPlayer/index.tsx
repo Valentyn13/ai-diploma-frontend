@@ -1,7 +1,6 @@
 import { getCategoryImgName } from '@common/assets/images';
 import FavoriteButton from '@common/components/FavoriteButton';
 import { CircleButton } from '@common/components/buttons/CircleButton';
-import { usePurchases } from '@common/context/PurchaseContext';
 import { useRoute } from '@react-navigation/native';
 import { useAmplitude } from '@services/hooks/useAmplitude';
 import { useFlag } from '@services/hooks/useFlag';
@@ -69,7 +68,7 @@ const VideoPlayer = styled(Video).attrs(() => ({
 `;
 
 const MeditationPlayer: FC = ({ navigation }) => {
-  const { isOpen, setIsOpen } = useMichaelStore(state => state);
+  const { setIsOpen } = useMichaelStore(state => state);
   const [loading, setLoading] = useState(true);
   const [cachedVideoUri, setCachedVideoUri] = useState<string>();
   const route = useRoute();
@@ -82,24 +81,14 @@ const MeditationPlayer: FC = ({ navigation }) => {
   const controlsOpacity = useSharedValue(1);
   const { state } = usePlaybackState();
   const { playing } = useIsPlaying();
-  const { hasPremium } = usePurchases();
+  const value = useFlag<number>('push_to_michael', 5);
 
-  const triggerPaywall = useCallback(() => {
-    // @ts-ignore
-    navigate('Subscribe');
-  }, []);
-
-  const triggerPaywallEvery3Plays = useTrigger(
-    triggerPaywall,
-    'sessionCountKey',
-    3,
+  const triggerMichael = useTrigger(
+    // () => setIsOpen(true),
+    () => {},
+    'push_to_michael',
+    value,
   );
-
-  const value = useFlag<number>('push_to_michael', 4);
-
-  useEffect(() => {
-    console.log('>>>>>>>>>>>>>>>>>>>>./', value);
-  }, [value]);
 
   useEffect(() => {
     if (state === State.Ready) {
@@ -172,10 +161,7 @@ const MeditationPlayer: FC = ({ navigation }) => {
       });
     } else {
       goBack();
-      setIsOpen(true);
-      if (!hasPremium) {
-        triggerPaywallEvery3Plays();
-      }
+      triggerMichael();
     }
   };
 

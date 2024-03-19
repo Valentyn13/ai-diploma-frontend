@@ -8,7 +8,7 @@ import { usePersonalized } from '@services/hooks/usePersonalized';
 import { useUser } from '@services/hooks/useUser';
 import { logEvent } from '@utils/analytics';
 import { getBGImageByTime } from '@utils/time';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   ActivityIndicator,
   ScrollView,
@@ -65,6 +65,10 @@ const Personalized = () => {
   const [step, setStep] = useState(1);
 
   const selected = states.find(b => b.key === selectedBadge)!;
+
+  useEffect(() => {
+    setStep(1);
+  }, [selectedBadge]);
 
   const currentSteps = [
     1,
