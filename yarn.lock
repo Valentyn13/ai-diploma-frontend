@@ -4804,6 +4804,11 @@ find-yarn-workspace-root@^2.0.0:
   dependencies:
     micromatch "^4.0.2"
 
+flagsmith@^3.23.2:
+  version "3.23.2"
+  resolved "https://registry.yarnpkg.com/flagsmith/-/flagsmith-3.23.2.tgz#e3237ee17686e264be1777c657a541a31eab250b"
+  integrity sha512-+fHBvbiaMQ9BjvU2/z5ti0Z4+SBLMoT3XjBWHM1s4mxu2zp/VcULBsZa+qeKkY421sy8WRjfd3+p3nCs6O1ZPA==
+
 flat-cache@^3.0.4:
   version "3.2.0"
   resolved "https://registry.yarnpkg.com/flat-cache/-/flat-cache-3.2.0.tgz#2c0c2d5040c99b1632771a9d105725c0115363ee"
