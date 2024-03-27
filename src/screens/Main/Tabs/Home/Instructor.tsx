@@ -1,4 +1,4 @@
-import ParallaxScrollView from '@common/components/ParallaxScrollView';
+\import ParallaxScrollView from '@common/components/ParallaxScrollView';
 import SessionsGrid from '@common/components/SessionsGrid';
 import { CircleButton } from '@common/components/buttons/CircleButton';
 import { useNavigation, useRoute } from '@react-navigation/native';
@@ -50,6 +50,26 @@ const Instructor = () => {
                     <CircleButton
                       size={40}
                       icon="instagram"
+                      onPress={() => {
+                        const data = {
+                          ...instructor,
+                          social_link_press: true,
+                        };
+                        updateIstructorTractionData(data);
+                        const url = instructor.SocialIconLink;
+                        Linking.canOpenURL(url);
+                        Linking.openURL(url);
+                      }}
+                      backgroundColor="#00000060"
+                    />
+                  </View>
+                )}
+
+                {instructor.social && instructor.social['spotify'] && (
+                  <View className="mr-1">
+                    <CircleButton
+                      size={40}
+                      icon="spotify"
                       onPress={() => {
                         const data = {
                           ...instructor,
