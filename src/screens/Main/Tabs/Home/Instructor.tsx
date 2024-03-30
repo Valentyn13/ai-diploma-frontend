@@ -1,4 +1,4 @@
-\import ParallaxScrollView from '@common/components/ParallaxScrollView';
+import ParallaxScrollView from '@common/components/ParallaxScrollView';
 import SessionsGrid from '@common/components/SessionsGrid';
 import { CircleButton } from '@common/components/buttons/CircleButton';
 import { useNavigation, useRoute } from '@react-navigation/native';
