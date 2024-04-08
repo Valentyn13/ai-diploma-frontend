@@ -43,7 +43,6 @@
     "axios": "^1.6.2",
     "babel-plugin-inline-import": "^3.0.0",
     "dayjs": "^1.11.10",
-    "flagsmith": "^3.23.2",
     "i18next": "^23.7.8",
     "jwt-decode": "^3.1.2",
     "lottie-react-native": "^6.4.1",
