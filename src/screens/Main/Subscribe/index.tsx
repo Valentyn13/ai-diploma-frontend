@@ -24,6 +24,7 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
+import { AppEventsLogger } from 'react-native-fbsdk-next';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import Icon2 from 'react-native-vector-icons/Feather';
 
@@ -134,15 +135,19 @@ const Subscribe: FC = ({ navigation }) => {
         revenueType: plan.packageType,
       });
 
-      try {
-        await rudderClient.track('Subscribe', {
-          price: plan.product.price,
-          productId: plan.product.identifier,
-          revenueType: plan.packageType,
-        });
-      } catch (e) {
-        console.log(e);
-      }
+      AppEventsLogger.logPurchase(plan.product.price, 'ILS', {
+        productId: plan.product.identifier,
+      });
+
+      AppEventsLogger.logEvent(AppEventsLogger.AppEvents.StartTrial, {
+        productId: plan.product.identifier,
+      });
+
+      await rudderClient.track('Subscribe', {
+        price: plan.product.price,
+        productId: plan.product.identifier,
+        revenueType: plan.packageType,
+      });
 
       logEvent('Subscribe', {
         userName,
