@@ -1,3 +1,5 @@
+type SessionType = 'meditation' | 'music';
+
 export interface Meditation {
   categoryName: string;
   categoryTitle: string;
@@ -12,7 +14,7 @@ export interface Meditation {
   url: string;
   image?: string;
   description?: string;
-  type: string;
+  type: SessionType;
 }
 
 export type EnrichedSession = Meditation & {
