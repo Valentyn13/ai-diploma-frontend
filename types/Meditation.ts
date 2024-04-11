@@ -14,7 +14,7 @@ export interface Meditation {
   url: string;
   image?: string;
   description?: string;
-  type: SessionType;
+  type?: SessionType;
 }
 
 export type EnrichedSession = Meditation & {
