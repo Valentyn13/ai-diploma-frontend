@@ -12,7 +12,7 @@ import {
   View,
 } from 'react-native';
 import { useSelector } from 'react-redux';
-import { Meditation } from 'types/Meditation';
+import { Session } from 'types/Meditation';
 
 interface CoursesProps {
   navigation: any;
@@ -22,7 +22,7 @@ type Course = {
   id: string;
   info: string;
   isCategoryLocked: boolean;
-  meditations: Meditation[];
+  meditations: Session[];
   name: string;
   subTitle: string;
   title: string;

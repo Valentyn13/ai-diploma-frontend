@@ -2,10 +2,10 @@ import { allMeditations } from '@store/selectors';
 import { isRecent } from '@utils/session';
 import { useMemo } from 'react';
 import { useSelector } from 'react-redux';
-import { EnrichedSession, Meditation } from 'types/Meditation';
+import { EnrichedSession, Session } from 'types/Meditation';
 
 const useSessions = () => {
-  const allSessions = useSelector(allMeditations) as Meditation[];
+  const allSessions = useSelector(allMeditations) as Session[];
 
   const sessions = useMemo(
     () =>

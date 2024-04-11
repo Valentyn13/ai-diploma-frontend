@@ -3,10 +3,10 @@ import meditationTime from '@utils/time';
 import React, { memo } from 'react';
 import { Text, View } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
-import { Meditation } from 'types/Meditation';
+import { Session } from 'types/Meditation';
 
 interface CourseRowItemProps {
-  item: Meditation;
+  item: Session;
   onPress: () => void;
   index: number;
   isListened: boolean;

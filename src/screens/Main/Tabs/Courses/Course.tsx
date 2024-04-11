@@ -9,7 +9,7 @@ import React, { useMemo } from 'react';
 import { Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useSelector } from 'react-redux';
-import { Meditation } from 'types/Meditation';
+import { Session } from 'types/Meditation';
 
 const Course = () => {
   const { hasPremium } = usePurchases();
@@ -18,7 +18,7 @@ const Course = () => {
 
   const { id, image } = route.params || ({} as any);
   const allCourses = useSelector(coursesSelector) as any[];
-  const history = useSelector(practiceHistorySelector) as Meditation[];
+  const history = useSelector(practiceHistorySelector) as Session[];
 
   const historyIds = useMemo(
     () => history.map(({ id: medId }) => medId),

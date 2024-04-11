@@ -14,19 +14,19 @@ import { getRandomElements, shuffleArray } from '@utils/rand';
 import { getPeriodOfDay } from '@utils/time';
 import { useCallback, useMemo } from 'react';
 import { useSelector } from 'react-redux';
-import { Meditation } from 'types/Meditation';
+import { Session } from 'types/Meditation';
 
 interface Collection {
   id: string;
   title: string;
-  items: Meditation[];
+  items: Session[];
 }
 
 const useFeed = (): Collection[] => {
-  const meditations = useSelector(homeMeditationsSelector) as Meditation[];
-  const latest = useSelector(latestMeditationSelector) as Meditation[];
-  const topRated = useSelector(toptMeditationSelector) as Meditation[];
-  const allMeditations = useSelector(allMeditationsSelector) as Meditation[];
+  const meditations = useSelector(homeMeditationsSelector) as Session[];
+  const latest = useSelector(latestMeditationSelector) as Session[];
+  const topRated = useSelector(toptMeditationSelector) as Session[];
+  const allMeditations = useSelector(allMeditationsSelector) as Session[];
 
   const idToItem = useCallback(
     (id: string) => allMeditations.find(m => m.id === id)!,

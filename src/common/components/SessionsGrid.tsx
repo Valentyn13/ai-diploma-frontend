@@ -1,10 +1,10 @@
 import React, { FC, useCallback } from 'react';
 import { FlatList } from 'react-native';
-import { Meditation } from 'types/Meditation';
+import { Session } from 'types/Meditation';
 
 import SessionCard from './SessionCard';
 
-const SessionsGrid: FC<{ meditations: Meditation[]; title?: string }> = ({
+const SessionsGrid: FC<{ meditations: Session[]; title?: string }> = ({
   meditations,
 }) => {
   const renderMeditationItem = useCallback(

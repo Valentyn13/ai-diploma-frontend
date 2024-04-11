@@ -2,18 +2,18 @@ import { useNavigation } from '@react-navigation/native';
 import captureMessage from '@utils/captureMessage';
 import React, { FC, useCallback } from 'react';
 import { FlatList, ListRenderItemInfo } from 'react-native';
-import { Meditation } from 'types/Meditation';
+import { Session } from 'types/Meditation';
 
 import CourseRowItem from './CourseRowItem';
 
 interface CourseMeditationsProps {
-  items: Meditation[];
+  items: Session[];
   isCategoryLocked: boolean;
   hasPremium: boolean;
   history: string[];
 }
 
-interface RenderItemProps extends ListRenderItemInfo<Meditation> {}
+interface RenderItemProps extends ListRenderItemInfo<Session> {}
 
 const CourseMeditations: FC<CourseMeditationsProps> = ({
   history,
@@ -24,7 +24,7 @@ const CourseMeditations: FC<CourseMeditationsProps> = ({
   const { navigate } = useNavigation();
 
   const onPress = useCallback(
-    (item: Meditation) => {
+    (item: Session) => {
       if (!hasPremium && isCategoryLocked) {
         navigate('Subscribe');
       } else {
@@ -53,7 +53,7 @@ const CourseMeditations: FC<CourseMeditationsProps> = ({
       scrollEnabled={false}
       data={items}
       renderItem={renderItem}
-      keyExtractor={({ id }: Meditation) => id}
+      keyExtractor={({ id }: Session) => id}
       onScrollToIndexFailed={info => {
         captureMessage(
           `scrollToIndex failed in CourseMeditation. index=${info.index}`,

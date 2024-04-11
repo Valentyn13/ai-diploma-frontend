@@ -1,10 +1,10 @@
-import { Meditation } from './Meditation';
+import { Session } from './Meditation';
 
 export interface Category {
   id: string;
   title: string;
   info?: string | null;
   height?: string;
-  meditations: Meditation[];
+  meditations: Session[];
   order: number;
 }

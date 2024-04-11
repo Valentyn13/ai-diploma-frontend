@@ -1,6 +1,6 @@
 type SessionType = 'meditation' | 'music';
 
-export interface Meditation {
+export interface Session {
   categoryName: string;
   categoryTitle: string;
   count: number;
@@ -17,7 +17,7 @@ export interface Meditation {
   type?: SessionType;
 }
 
-export type EnrichedSession = Meditation & {
+export type EnrichedSession = Session & {
   // extend
   isNew?: boolean;
 };

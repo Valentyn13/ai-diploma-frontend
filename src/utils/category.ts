@@ -1,11 +1,11 @@
 import { Category } from 'types/Category';
-import { Meditation } from 'types/Meditation';
+import { Session } from 'types/Meditation';
 
-const queryInMeditation = (meditation: Meditation, query: string) => {
+const queryInMeditation = (meditation: Session, query: string) => {
   return meditation.name.toLowerCase().includes(query.toLowerCase());
 };
 
-function searchInMeditations(meditations: Meditation[], query: string) {
+function searchInMeditations(meditations: Session[], query: string) {
   return meditations.filter(meditation => {
     return queryInMeditation(meditation, query);
   });

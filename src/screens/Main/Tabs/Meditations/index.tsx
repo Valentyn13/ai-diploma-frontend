@@ -16,7 +16,7 @@ import React, { useEffect, useMemo, useState } from 'react';
 import { ActivityIndicator, ScrollView, Text, View } from 'react-native';
 import { useSelector } from 'react-redux';
 import { Category } from 'types/Category';
-import { Meditation } from 'types/Meditation';
+import { Session } from 'types/Meditation';
 
 import SearchBar from './SearchBar';
 
@@ -31,7 +31,7 @@ const Meditations = () => {
     setIsLoading(false);
   }, [searchQuery]);
 
-  const onShowAll = (title: string, sessions: Meditation[]) => {
+  const onShowAll = (title: string, sessions: Session[]) => {
     // @ts-ignore
     navigate('Main', {
       screen: 'Collection',
@@ -151,7 +151,7 @@ const Meditations = () => {
             meditations={shuffleArray(
               filteredCategories.reduce(
                 (acc, curr) => [...acc, ...curr.meditations],
-                [] as Meditation[],
+                [] as Session[],
               ),
             )}
           />

@@ -20,14 +20,14 @@ import {
 } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome6';
 import { useSelector } from 'react-redux';
-import { Meditation } from 'types/Meditation';
+import { Session } from 'types/Meditation';
 
 const SessionModal = ({ navigation }) => {
   const route = useRoute();
   const { hasPremium } = usePurchases();
   const { goBack } = useNavigation();
   const { id } = route.params || ({} as any);
-  const allMeditations = useSelector(allMeditationsSelector) as Meditation[];
+  const allMeditations = useSelector(allMeditationsSelector) as Session[];
   const instructor = useSelector(state => meditationInstructor(state, id));
 
   const meditation = useMemo(

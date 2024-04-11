@@ -4,19 +4,19 @@ import { allMeditations as allMeditationsSelector } from '@store/selectors';
 import { getRandomElements } from '@utils/rand';
 import { useCallback, useMemo } from 'react';
 import { useSelector } from 'react-redux';
-import { Meditation } from 'types/Meditation';
+import { Session } from 'types/Meditation';
 
 import useFeed from './useFeed';
 
 interface Collection {
   id: string;
   title: string;
-  items: Meditation[];
+  items: Session[];
 }
 
 const useDiscovery = (): Collection[] => {
   const feedCollections = useFeed();
-  const allMeditations = useSelector(allMeditationsSelector) as Meditation[];
+  const allMeditations = useSelector(allMeditationsSelector) as Session[];
 
   const idToItem = useCallback(
     (id: string) => allMeditations.find(m => m.id === id)!,
@@ -37,7 +37,7 @@ const useDiscovery = (): Collection[] => {
 
   const fixedCollections: Collection[] = useMemo(() => {
     const existingIds = dynamicCollections
-      .reduce((acc, c) => [...acc, ...c.items], [] as Meditation[])
+      .reduce((acc, c) => [...acc, ...c.items], [] as Session[])
       .map(m => m.id);
 
     const meditations = allMeditations.filter(m => !existingIds.includes(m.id));

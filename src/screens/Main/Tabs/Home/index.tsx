@@ -21,7 +21,7 @@ import React, { FC, useCallback, useEffect, useState } from 'react';
 import { Button, Modal, Text, View } from 'react-native';
 import { CopilotStep, walkthroughable } from 'react-native-copilot';
 import styled from 'styled-components/native';
-import { Meditation } from 'types/Meditation';
+import { Session } from 'types/Meditation';
 
 import InstructorList from './InstructorList';
 import ParallaxScroll from './ParallaxScroll';
@@ -54,7 +54,7 @@ const Feed: FC<FeedProps> = ({ navigation, copilot }) => {
     onForeground,
   });
 
-  const onShowAll = (title: string, sessions: Meditation[]) => {
+  const onShowAll = (title: string, sessions: Session[]) => {
     // @ts-ignore
     navigation.navigate('Main', {
       screen: 'Collection',
@@ -67,7 +67,7 @@ const Feed: FC<FeedProps> = ({ navigation, copilot }) => {
   interface Collection {
     id: string;
     title: string;
-    items: Meditation[];
+    items: Session[];
   }
 
   // const { start, copilotEvents } = useCopilot();

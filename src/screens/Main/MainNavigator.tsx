@@ -2,7 +2,7 @@ import BGMusicPicker from '@common/components/BGMusicPicker';
 import Collection from '@common/components/Collection';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import React from 'react';
-import { Meditation } from 'types/Meditation';
+import { Session } from 'types/Meditation';
 
 import ExercisesPlayer from './ExercisesPlayer';
 import Exercises from './ExercisesPlayer/Exercises';
@@ -19,7 +19,7 @@ import WebView from './WebView';
 export type MainStackParamList = {
   Tabs: undefined;
   MeditationPlayer: { item: any };
-  Collection: { title: any; sessions: Meditation[] };
+  Collection: { title: any; sessions: Session[] };
   Subscribe: undefined;
   WebView: { url: string; title: string };
   BGMusicPicker: undefined;

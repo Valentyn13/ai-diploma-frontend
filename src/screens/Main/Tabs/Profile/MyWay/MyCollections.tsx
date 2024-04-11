@@ -9,14 +9,12 @@ import {
 import React, { useMemo } from 'react';
 import { View } from 'react-native';
 import { useSelector } from 'react-redux';
-import { Meditation } from 'types/Meditation';
+import { Session } from 'types/Meditation';
 
 const MyCollections = () => {
   const { navigate } = useNavigation();
-  const favMeditations = useSelector(
-    favoriteMeditationsSelector,
-  ) as Meditation[];
-  const history = useSelector(practiceHistorySelector) as Meditation[];
+  const favMeditations = useSelector(favoriteMeditationsSelector) as Session[];
+  const history = useSelector(practiceHistorySelector) as Session[];
 
   const uniqueHistory = useMemo(() => {
     const ids = history.map(({ id }) => id);
@@ -24,7 +22,7 @@ const MyCollections = () => {
     return uniqueIds.map(id => history.find(m => m.id === id)!);
   }, [history]);
 
-  const onShowAll = (title: string, sessions: Meditation[]) => {
+  const onShowAll = (title: string, sessions: Session[]) => {
     // @ts-ignore
     navigate('Main', {
       screen: 'Collection',

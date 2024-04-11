@@ -5,7 +5,7 @@ import { useNavigation, useRoute } from '@react-navigation/native';
 import React, { FC } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { Meditation } from 'types/Meditation';
+import { Session } from 'types/Meditation';
 
 import Gradient from './Gradient';
 import SessionsGrid from './SessionsGrid';
@@ -24,7 +24,7 @@ const MAX_MEDITATIONS = 40;
 
 interface CollectionRouteParams {
   title: string;
-  sessions: Meditation[];
+  sessions: Session[];
 }
 
 const Collection = () => {
