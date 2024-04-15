@@ -395,6 +395,7 @@ const MeditationPlayer: FC = ({ navigation }) => {
         />
 
         <AudioPlayer
+          onFinish={onClose}
           id={id}
           url={url.replace(OLD_ASSETS_URL, ASSETS_URL)}
           title={name}

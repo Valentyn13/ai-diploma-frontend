@@ -1,5 +1,5 @@
 import React, { FC, useEffect } from 'react';
-import TrackPlayer from 'react-native-track-player';
+import TrackPlayer, { Event } from 'react-native-track-player';
 
 interface Props {
   id: string;
@@ -7,9 +7,21 @@ interface Props {
   title: string;
   artist: string;
   artwork: string;
+  onFinish: () => void;
 }
 
-const AudioPlayer: FC<Props> = ({ id, url, title, artist, artwork }) => {
+const AudioPlayer: FC<Props> = ({
+  id,
+  url,
+  title,
+  artist,
+  artwork,
+  onFinish,
+}) => {
+  useEffect(() => {
+    TrackPlayer.addEventListener(Event.PlaybackQueueEnded, onFinish);
+  });
+
   useEffect(() => {
     const addTrack = async () => {
       await TrackPlayer.add({
@@ -21,11 +33,6 @@ const AudioPlayer: FC<Props> = ({ id, url, title, artist, artwork }) => {
       });
 
       TrackPlayer.play();
-
-      // @ts-ignore
-      TrackPlayer.addEventListener('playback-queue-ended', () => {
-        TrackPlayer.seekTo(0);
-      });
     };
 
     addTrack();
