@@ -20,7 +20,9 @@ const AudioPlayer: FC<Props> = ({
 }) => {
   useEffect(() => {
     TrackPlayer.addEventListener(Event.PlaybackQueueEnded, onFinish);
-  });
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   useEffect(() => {
     const addTrack = async () => {

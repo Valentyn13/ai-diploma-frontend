@@ -1,3 +1,4 @@
+import { captureException } from '@sentry/react-native';
 import React, {
   ReactNode,
   createContext,
@@ -5,10 +6,13 @@ import React, {
   useEffect,
   useState,
 } from 'react';
+import { Alert } from 'react-native';
 import TrackPlayer, {
   AppKilledPlaybackBehavior,
   Capability,
+  Event,
   Track,
+  useTrackPlayerEvents,
 } from 'react-native-track-player';
 
 // Define the context shape
@@ -26,10 +30,53 @@ interface TrackPlayerProviderProps {
   children: ReactNode;
 }
 
+const useTrackPlayerEventsHandler = () => {
+  useTrackPlayerEvents(
+    [
+      Event.RemotePlay,
+      Event.RemotePause,
+      Event.RemoteStop,
+      Event.RemoteJumpForward,
+      Event.RemoteJumpBackward,
+      Event.PlaybackError,
+      Event.PlaybackActiveTrackChanged,
+    ],
+    async event => {
+      switch (event.type) {
+        case Event.RemotePlay:
+          TrackPlayer.play();
+          break;
+        case Event.RemotePause:
+          TrackPlayer.pause();
+          break;
+        case Event.RemoteStop:
+          TrackPlayer.stop();
+          break;
+        case Event.RemoteJumpForward:
+          const positionForward = await TrackPlayer.getProgress();
+          TrackPlayer.seekTo(positionForward.position + event.interval);
+          break;
+        case Event.RemoteJumpBackward:
+          const positionBackward = await TrackPlayer.getProgress();
+          TrackPlayer.seekTo(positionBackward.position - event.interval);
+          break;
+        case Event.PlaybackError:
+          captureException(event);
+          Alert.alert('בעיה בניגון התרגול הנבחר', 'אנא נסו שנית');
+          break;
+
+        default:
+          break;
+      }
+    },
+  );
+};
+
 export const TrackPlayerProvider: React.FC<TrackPlayerProviderProps> = ({
   children,
 }) => {
   const [isTrackPlayerInitialized, setTrackPlayerInitialized] = useState(false);
+  useTrackPlayerEventsHandler();
 
   const initTrackPlayer = async () => {
     await TrackPlayer.setupPlayer();
