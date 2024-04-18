@@ -242,7 +242,7 @@ const Subscribe: FC = ({ navigation }) => {
                                 ? 'font-bold'
                                 : 'font-medium'
                             }`}>
-                            ₪159.90
+                            ₪187.90
                             {'  '}
                           </Text>
                           <Text
@@ -251,13 +251,13 @@ const Subscribe: FC = ({ navigation }) => {
                                 ? 'font-bold'
                                 : 'font-medium'
                             }`}>
-                            ₪239.90
+                            ₪358.90
                           </Text>
                         </Text>
                       }
                     />
                     <PackageItem
-                      monthPrice={19.9}
+                      monthPrice={29.9}
                       selected={selectedPlan === 'monthly'}
                       onPress={() => setSelectedPlan('monthly')}
                       title="מנוי חודשי"
@@ -282,7 +282,7 @@ const Subscribe: FC = ({ navigation }) => {
                     נסו את האפליקציה במשך 7 ימים בחינם!{' '}
                     <Text
                       className={`${Platform.OS === 'ios' ? 'font-bold' : ''}`}>
-                      לאחר תקופה זו יתבצע חיוב אוטומטי בסך 159.90 שח עבור שנת
+                      לאחר תקופה זו יתבצע חיוב אוטומטי בסך 187.90 שח עבור שנת
                       שימוש באפליקציה.
                     </Text>{' '}
                     ניתן לבטל את המנוי בכל רגע וללא עלות.
