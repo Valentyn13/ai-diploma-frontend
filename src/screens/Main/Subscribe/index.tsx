@@ -233,7 +233,7 @@ const Subscribe: FC = ({ navigation }) => {
                       selected={selectedPlan === 'annual'}
                       onPress={() => setSelectedPlan('annual')}
                       title="מנוי שנתי"
-                      monthPrice={13.32}
+                      monthPrice={15.6}
                       subTitle={
                         <Text className="text-white text-center text-sm">
                           <Text
