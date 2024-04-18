@@ -56,6 +56,11 @@ export default function Chat() {
     },
   });
 
+  const shouldShowPaywall = useMemo(
+    () => !hasPremium && chatMsgs.length > 0,
+    [chatMsgs.length, hasPremium],
+  );
+
   const onSend = (msgs: IMessage[] = []) => {
     append(mapIMessageToMessage(msgs[0]));
     ref.current?.scrollToEnd({ animated: true });
@@ -127,7 +132,7 @@ export default function Chat() {
   return (
     <View className="w-full h-full">
       {/* workaround to trigger paywall - onSend function isn't updated on re-renders */}
-      {!hasPremium && (
+      {shouldShowPaywall && (
         <Pressable
           className="absolute top-0 left-0 w-full h-full z-10"
           onPress={() => {
