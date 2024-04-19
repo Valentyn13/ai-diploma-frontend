@@ -24,7 +24,14 @@ const HorizontalList: FC<HorizontalListProps> = ({
   const Child = renderUsing || SessionCard;
 
   const renderItem: ListRenderItem<any> = ({ item, index }) => {
-    return <Child item={item} index={index} />;
+    return (
+      <Child
+        item={item}
+        index={index}
+        height={264}
+        width={theme.dimens.winWidth / 1.8}
+      />
+    );
   };
 
   const uniqueRandomKey = useMemo(

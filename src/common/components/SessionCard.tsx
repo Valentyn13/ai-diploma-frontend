@@ -16,6 +16,8 @@ import { EnrichedSession } from 'types/Meditation';
 
 interface MeditationItemProps {
   item: EnrichedSession;
+  width?: number;
+  height?: number;
   index: number;
 }
 
@@ -47,6 +49,8 @@ const SessionCard: FC<MeditationItemProps> = memo(
       image,
       createdAt,
     },
+    width = theme.dimens.winWidth / 2 - 28,
+    height = 230,
     index,
   }) => {
     const { navigate } = useNavigation();
@@ -96,9 +100,8 @@ const SessionCard: FC<MeditationItemProps> = memo(
     return (
       <View
         style={{
-          width: theme.dimens.winWidth / 2.4,
-          height: 230,
-          maxWidth: theme.dimens.winWidth / 2 - 28,
+          width,
+          height,
         }}>
         <Pressable
           onPress={navigateToPlayer}
