@@ -171,7 +171,12 @@ const Subscribe: FC = ({ navigation }) => {
   // ]);
 
   const bullets = useMemo(
-    () => [i18n.t('point1'), i18n.t('point2'), i18n.t('point3')],
+    () => [
+      i18n.t('point1'),
+      i18n.t('point2'),
+      i18n.t('point3'),
+      i18n.t('point4'),
+    ],
     [],
   );
 
@@ -217,9 +222,8 @@ const Subscribe: FC = ({ navigation }) => {
 
             <View className="mt-10 self-center w-8/12">
               <Text className="text-white text-center text-lg">
-                קחו רגע לעצמכם - בשביל פחות מ
-                <Text className="font-bold">4 שקלים בשבוע</Text>, האפליקציה שלכם
-                לשנה!
+                בשביל פחות מ<Text className="font-bold">4 שקלים בשבוע</Text>,
+                האפליקציה שלכם לשנה!
               </Text>
             </View>
             <View className="relative flex-1">
@@ -270,7 +274,7 @@ const Subscribe: FC = ({ navigation }) => {
                   className="bg-[#1E2340] rounded-3xl p-3 w-full">
                   <Text className="text-white text-center text-lg">
                     {isFirstTime
-                      ? 'הירשמו ונסו שבוע חינם'
+                      ? 'הירשמו ונסו 7 ימים חינם'
                       : i18n.t('subscribeBtn1')}
                   </Text>
                 </TouchableOpacity>

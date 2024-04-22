@@ -9,9 +9,16 @@ const SubscriptionPoint = ({ text }: { text: string }) => (
     style={{
       alignSelf: 'center',
       flexDirection: 'row',
-      alignItems: 'center',
+      alignItems: 'flex-start',
     }}>
-    <Icon name="check-circle" size={scale(16)} color="white" />
+    <Icon
+      style={{
+        marginTop: 6,
+      }}
+      name="check-circle"
+      size={scale(16)}
+      color="white"
+    />
     <View
       style={{
         flex: 1,
@@ -20,7 +27,7 @@ const SubscriptionPoint = ({ text }: { text: string }) => (
       }}>
       <Text
         style={{
-          fontSize: scale(16),
+          fontSize: scale(14),
           lineHeight: scale(24),
         }}
         className="text-white text-left">
