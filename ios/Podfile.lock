@@ -763,6 +763,8 @@ PODS:
   - RNGoogleSignin (11.0.0):
     - GoogleSignIn (~> 7.0)
     - React-Core
+  - RNPermissions (4.1.5):
+    - React-Core
   - RNPurchases (7.5.0):
     - PurchasesHybridCommon (= 8.1.0)
     - React-Core
@@ -907,6 +909,7 @@ DEPENDENCIES:
   - "RNFBMessaging (from `../node_modules/@react-native-firebase/messaging`)"
   - RNGestureHandler (from `../node_modules/react-native-gesture-handler`)
   - "RNGoogleSignin (from `../node_modules/@react-native-google-signin/google-signin`)"
+  - RNPermissions (from `../node_modules/react-native-permissions`)
   - RNPurchases (from `../node_modules/react-native-purchases`)
   - RNReanimated (from `../node_modules/react-native-reanimated`)
   - "RNRudderSdk (from `../node_modules/@rudderstack/rudder-sdk-react-native`)"
@@ -1107,6 +1110,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-gesture-handler"
   RNGoogleSignin:
     :path: "../node_modules/@react-native-google-signin/google-signin"
+  RNPermissions:
+    :path: "../node_modules/react-native-permissions"
   RNPurchases:
     :path: "../node_modules/react-native-purchases"
   RNReanimated:
@@ -1234,6 +1239,7 @@ SPEC CHECKSUMS:
   RNFBMessaging: 9d734bb8f1f19b3fbd0549f9ab2895b45b43203e
   RNGestureHandler: 32a01c29ecc9bb0b5bf7bc0a33547f61b4dc2741
   RNGoogleSignin: fc408799f1990a12497a32f64280c0fe353ffcc1
+  RNPermissions: 294531ede5a64d1528463e88fffef05675842042
   RNPurchases: db521e873f538a9ced7b4622f9346912823b8896
   RNReanimated: fdbaa9c964bbab7fac50c90862b6cc5f041679b9
   RNRudderSdk: 3113e10525cef12079c91b68ac755875cf5f042b
