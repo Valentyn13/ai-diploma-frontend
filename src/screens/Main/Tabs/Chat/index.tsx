@@ -56,15 +56,15 @@ export default function Chat() {
     },
   });
 
-  const shouldShowPaywall = useMemo(
-    () => !hasPremium && chatMsgs.length > 0,
-    [chatMsgs.length, hasPremium],
-  );
-
   const onSend = (msgs: IMessage[] = []) => {
     append(mapIMessageToMessage(msgs[0]));
     ref.current?.scrollToEnd({ animated: true });
   };
+
+  const shouldShowPaywall = useMemo(
+    () => !hasPremium && chatMsgs.length > 0,
+    [chatMsgs.length, hasPremium],
+  );
 
   const handleQuickReply = (replies: Reply[]) => {
     const item = sessions.find(({ id }) => id === replies[0].value);
