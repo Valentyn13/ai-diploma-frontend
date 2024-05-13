@@ -15,7 +15,7 @@ const ListTitle = styled(SubTitle)`
 
 interface Props {
   items: any[];
-  onShowAll: () => void;
+  onShowAll?: () => void;
   title: string;
   limit?: number;
   shuffle?: boolean;
@@ -26,7 +26,7 @@ interface Props {
 
 const HorizontalCollection: FC<Props> = ({
   items,
-  onShowAll,
+  onShowAll = null,
   title,
   limit = 5,
   shuffle = true,
@@ -35,11 +35,13 @@ const HorizontalCollection: FC<Props> = ({
   <View>
     <View className="flex flex-row items-center justify-between w-full mb-5 pl-5 pr-3">
       <ListTitle t={title} />
-      <Pressable onPress={() => onShowAll()} className="p-2">
-        <Text className="text-[13px] leading-4 text-neutral-700">
-          {i18n.t('showAll')}
-        </Text>
-      </Pressable>
+      {onShowAll && (
+        <Pressable onPress={() => onShowAll()} className="p-2">
+          <Text className="text-[13px] leading-4 text-neutral-700">
+            {i18n.t('showAll')}
+          </Text>
+        </Pressable>
+      )}
     </View>
     {items.length === 0 && (
       <View className="flex flex-row items-center justify-center w-full h-32">
