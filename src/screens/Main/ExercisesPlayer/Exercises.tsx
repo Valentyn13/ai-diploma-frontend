@@ -38,7 +38,7 @@ export function usePagerScrollHandler(handlers: any, dependencies?: any) {
 
 const Container = ({
   children,
-  exercise: { title, description, illustration: Illustration },
+  exercise: { name, description, illustration: Illustration },
   ...props
 }: any) => {
   return (
@@ -47,7 +47,7 @@ const Container = ({
         <View className="absolute w-full items-center -top-36">
           <Illustration width="50%" height={100} />
         </View>
-        <Text className="text-white text-3xl font-bold mb-4">{title}</Text>
+        <Text className="text-white text-3xl font-bold mb-4">{name}</Text>
         <Text className="text-white text-lg font-light text-center">
           {description}
         </Text>
