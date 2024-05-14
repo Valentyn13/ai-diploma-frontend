@@ -62,7 +62,7 @@ export default function Chat() {
   };
 
   const shouldShowPaywall = useMemo(
-    () => !hasPremium && chatMsgs.length > 0,
+    () => !hasPremium && chatMsgs.length > 2,
     [chatMsgs.length, hasPremium],
   );
 
