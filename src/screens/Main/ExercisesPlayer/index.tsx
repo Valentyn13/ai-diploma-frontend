@@ -1,4 +1,5 @@
 import Background from '@common/components/Background';
+import BgSelector from '@common/components/buttons/BgSelector';
 import { CircleButton } from '@common/components/buttons/CircleButton';
 import { EXERCISES } from '@common/constants';
 import useTimer from '@services/hooks/useTimer';
@@ -36,16 +37,15 @@ const ExercisesPlayer = ({ route, navigation }) => {
       }}>
       <Background seed={exercise.id} />
       <SafeAreaView className="w-full flex-1 z-10">
-        <View className="flex-1">
-          <View className="absolute left-5 top-5">
-            <CircleButton
-              backgroundColor="#00000060"
-              color="#fff"
-              onPress={navigation.goBack}
-              size={40}
-              icon="x"
-            />
-          </View>
+        <View className="flex flex-row justify-between p-4">
+          <CircleButton
+            backgroundColor="#00000060"
+            color="#fff"
+            onPress={navigation.goBack}
+            size={40}
+            icon="x"
+          />
+          <BgSelector />
         </View>
       </SafeAreaView>
       <View className="absolute flex-1 w-full h-full flex items-center justify-center">
