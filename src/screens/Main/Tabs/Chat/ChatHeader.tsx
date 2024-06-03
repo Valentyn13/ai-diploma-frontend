@@ -1,5 +1,5 @@
 import { CircleButton } from '@common/components/buttons/CircleButton';
-import React from 'react';
+import React, { FC } from 'react';
 import { Image, Text, View } from 'react-native';
 import Svg, { Path } from 'react-native-svg';
 
@@ -16,7 +16,11 @@ const GlitterIcon = props => (
   </Svg>
 );
 
-const ChatHeader = ({ title, avatarUri, onNew }) => {
+const ChatHeader: FC<{
+  title: string;
+  avatarUri: string;
+  onNew: () => void;
+}> = ({ title, avatarUri, onNew }) => {
   return (
     <View className="bg-[#FFF8EE] w-full flex-row justify-between items-center p-2 border-b border-gray-300">
       <View className="flex-row items-center">
