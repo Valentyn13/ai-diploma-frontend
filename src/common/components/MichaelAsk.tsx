@@ -5,7 +5,6 @@ import {
   BottomSheetView,
   TouchableOpacity,
 } from '@gorhom/bottom-sheet';
-import { useNavigation } from '@react-navigation/native';
 import { useUser } from '@services/hooks/useUser';
 import { useMichaelStore } from '@store/useMichaelStore';
 import { isCreatedThisWeek } from '@utils/session';
@@ -202,7 +201,6 @@ const MichaelAsk = () => {
     user: { name },
   } = useUser();
   const { meditationsPracticed } = useSelector(state => state.userProgress);
-  const navigation = useNavigation();
   const { isOpen, setIsOpen } = useMichaelStore(state => state);
   const bottomSheetRef = useRef<BottomSheetModal>(null);
   const [selectedFeeling, setSelectedFeeling] = useState<Feeling | null>(null);
