@@ -1,6 +1,7 @@
 /* eslint-disable handle-callback-err */
 import { BoldTitle } from '@common/components/Styled';
 import { CircleButton } from '@common/components/buttons/CircleButton';
+import { usePurchases } from '@common/context/PurchaseContext';
 import theme from '@common/theme';
 import Clipboard from '@react-native-clipboard/clipboard';
 import DateTimePicker from '@react-native-community/datetimepicker';
@@ -35,6 +36,7 @@ import { useDispatch } from 'react-redux';
 
 const Settings = ({ navigation }) => {
   const [showModal, setShowModal] = React.useState(false);
+  const { hasPremium } = usePurchases();
   const [showTime, setShowTime] = React.useState(false);
 
   const dispatch = useDispatch();
@@ -277,7 +279,14 @@ const Settings = ({ navigation }) => {
       title: 'פנו אלינו',
       onPress: onContactUs,
       onLongPress: () => {
-        const data = { id, name, email, appVersion: DeviceInfo.getVersion() };
+        const data = {
+          id,
+          name,
+          email,
+          hasPremium,
+          appVersion: DeviceInfo.getVersion(),
+          platform: Platform.OS,
+        };
         Clipboard.setString(JSON.stringify(data));
 
         Alert.alert(
