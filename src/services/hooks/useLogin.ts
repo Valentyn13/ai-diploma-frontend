@@ -86,8 +86,8 @@ export default () => {
         name: res.user.givenName,
         email: res.user.email,
         sub: res.user.id,
-        sex,
-        categories: selectedCategories,
+        sex: sex || 'M',
+        categories: selectedCategories || [],
         fcmToken,
       });
     } catch (error) {
@@ -107,8 +107,8 @@ export default () => {
 
       fetch({
         access_token: accessToken,
-        sex,
-        categories: selectedCategories,
+        sex: sex || 'M',
+        categories: selectedCategories || [],
         fcmToken,
       });
     } catch (error) {
@@ -129,8 +129,8 @@ export default () => {
 
       fetch({
         access_token: res.identityToken,
-        sex,
-        categories: selectedCategories,
+        sex: sex || 'M',
+        categories: selectedCategories || [],
         email: res.email,
         sub: res.sub,
         name: res.givenName,
