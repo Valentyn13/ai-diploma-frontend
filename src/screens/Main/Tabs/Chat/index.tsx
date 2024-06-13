@@ -3,6 +3,7 @@ import GlitterIcon from '@common/components/common/Glitter';
 import { DrawerContent, createDrawerNavigator } from '@react-navigation/drawer';
 import useChats from '@services/hooks/useChats';
 import { useUser } from '@services/hooks/useUser';
+import { getReadableTimeDifference } from '@utils/time';
 import React, { FC, useState } from 'react';
 import { Image, Text, TouchableOpacity, View } from 'react-native';
 import CryptoJS from 'react-native-crypto-js';
@@ -60,7 +61,7 @@ export default function ChatDrawer() {
   return (
     <Drawer.Navigator
       drawerContent={props => <DrawerContent {...props} />}
-      initialRouteName={newChat.messages[0]?.content || 'שיחה חדשה'}
+      initialRouteName={'שיחה חדשה' + newChat.id}
       screenOptions={({ navigation }) => ({
         // eslint-disable-next-line react/no-unstable-nested-components
         header: () => (
@@ -86,17 +87,54 @@ export default function ChatDrawer() {
       })}>
       <Drawer.Screen
         key={newChat.id}
-        name={'שיחה חדשה' + newChat.id}
+        name={newChat.id}
         initialParams={{
           id: newChat.id,
+        }}
+        options={{
+          drawerLabel: () => (
+            <Text className="text-black text-left font-bold text-md">
+              שיחה חדשה
+            </Text>
+          ),
+          drawerItemStyle: {
+            borderBottomWidth: 1,
+            borderBottomColor: '#00000020',
+            marginVertical: 0,
+            paddingVertical: 2,
+            marginHorizontal: 0,
+          },
         }}
         // @ts-ignore
         component={Chat}
       />
       {chats.map(chat => (
         <Drawer.Screen
+          options={{
+            drawerStyle: {
+              backgroundColor: '#FFF8EE',
+            },
+            drawerLabel: () => (
+              <View className="flex-row items-end">
+                <Text className="text-black text-left font-normal text-md">
+                  {chat.messages[0].content.slice(0, 22)}
+                  {chat.messages[0].content.length > 22 ? '...' : ''}
+                </Text>
+                <Text className="text-black font-light text-xs ml-auto">
+                  {getReadableTimeDifference(chat.messages[0].timestamp)}
+                </Text>
+              </View>
+            ),
+            drawerItemStyle: {
+              borderBottomWidth: 1,
+              borderBottomColor: '#00000020',
+              marginVertical: 0,
+              paddingVertical: 2,
+              marginHorizontal: 0,
+            },
+          }}
           key={chat.id}
-          name={`${chat.messages[0].content}-${chat.messages[0].timestamp}`}
+          name={`${chat.messages[0].content}-${chat.id}`}
           // @ts-ignore
           component={Chat}
           initialParams={{

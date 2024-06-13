@@ -33,7 +33,6 @@ export default function Chat({
 }: {
   route: { params: { id: string; onNewMessage: (m: Message) => void } };
 }) {
-  console.log('paramsssss', params.id);
   const ref = useRef<FlatList<IMessage>>(null);
   const {
     user: { id: userId },
