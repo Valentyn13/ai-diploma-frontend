@@ -3,7 +3,7 @@ import { Session } from 'types/Chat';
 const CHATS_URL = 'https://rega.co.il/api/chats';
 
 export const fetchChats = async (userId: string) => {
-  const response = await fetch(`${CHATS_URL}?userId=${userId}`);
+  const response = await fetch(`${CHATS_URL}?userId=${userId}&limit=50`);
   const data = await response.json();
 
   return data.chats as Session[];
