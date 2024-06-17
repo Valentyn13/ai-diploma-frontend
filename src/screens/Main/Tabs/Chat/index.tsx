@@ -96,8 +96,8 @@ export default function ChatDrawer() {
             drawerLabel: () => (
               <View className="flex-row items-end">
                 <Text className="text-black text-left font-normal text-md">
-                  {chat.messages[0].content.slice(0, 22)}
-                  {chat.messages[0].content.length > 22 ? '...' : ''}
+                  {chat.messages[0].content.slice(0, 21)}
+                  {chat.messages[0].content.length > 21 ? '...' : ''}
                 </Text>
                 <Text className="text-black font-light text-xs ml-auto">
                   {getReadableTimeDifference(chat.messages[0].timestamp)}

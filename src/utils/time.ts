@@ -104,11 +104,11 @@ export function getReadableTimeDifference(pastDateStr: string): string {
   } else if (hours < 24) {
     return hours === 1 ? 'לפני שעה' : `לפני ${hours} שעות`;
   } else if (days < 7) {
-    return days === 1 ? 'לפני יממה' : `לפני ${days} ימים`;
+    return days === 1 || days === 0 ? 'אתמול' : `לפני ${days} ימים`;
   } else if (weeks < 4) {
-    return weeks === 1 ? 'לפני שבוע' : `לפני ${weeks} שבועות`;
+    return weeks === 1 || weeks === 0 ? 'לפני שבוע' : `לפני ${weeks} שבועות`;
   } else if (months < 12) {
-    return months === 1 ? 'לפני חודש' : `לפני ${months} חודשים`;
+    return months === 1 || months === 0 ? 'לפני חודש' : `לפני ${months} חודשים`;
   } else {
     return years === 1 ? 'לפני שנה' : `לפני ${years} שנים`;
   }
