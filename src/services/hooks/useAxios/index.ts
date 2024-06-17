@@ -94,6 +94,8 @@ const requestAfterRefresh = async (requestApi, apiParams, id) => {
   }
 };
 
+export let jwtToken = '';
+
 export default ({
   api: requestApi,
   params = defaultParams,
@@ -114,6 +116,7 @@ export default ({
       if (setAuthToken) {
         const token = await getToken();
         if (token) {
+          jwtToken = token;
           setAuthHeader(token);
         } else {
           console.log('no token');

@@ -1,9 +1,9 @@
+import { chatApi } from '@common/config';
+import { jwtToken } from '@services/hooks/useAxios/index';
 import { useEffect, useState } from 'react';
 import { Session } from 'types/Chat';
 
-const CHATS_URL = 'https://rega.co.il/api/chats';
-
-const useChatSession = (chatId: string) => {
+const useChatSession = (chatId: string, isNew: boolean) => {
   const [chat, setChat] = useState<Session>({
     id: '',
     userId: '',
@@ -16,7 +16,12 @@ const useChatSession = (chatId: string) => {
     const fetchChat = async () => {
       try {
         setLoading(true);
-        const response = await fetch(`${CHATS_URL}/${chatId}`);
+        const response = await fetch(`${chatApi}/${chatId}`, {
+          headers: {
+            Authorization: `Bearer ${jwtToken}`,
+            'content-type': 'application/json',
+          },
+        });
         if (!response.ok) {
           throw new Error('Failed to fetch chat');
         }
@@ -29,10 +34,12 @@ const useChatSession = (chatId: string) => {
       }
     };
 
-    if (chatId) {
+    if (chatId && !isNew) {
       fetchChat();
+    } else {
+      setChat({ id: chatId, userId: '', messages: [] });
     }
-  }, [chatId]);
+  }, [chatId, isNew]);
 
   return { chat, loading, error };
 };

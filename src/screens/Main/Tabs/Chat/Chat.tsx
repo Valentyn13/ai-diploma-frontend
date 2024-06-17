@@ -23,7 +23,7 @@ import {
   Send,
 } from 'react-native-gifted-chat';
 import Icon from 'react-native-vector-icons/Feather';
-import { Message, useChat } from 'react-native-vercel-ai';
+import { useChat } from 'react-native-vercel-ai';
 
 const generateUUID = () => CryptoJS.lib.WordArray.random(128 / 8).toString();
 const API_URL = 'https://chat.rega.co.il/api/chat';
@@ -31,7 +31,7 @@ const API_URL = 'https://chat.rega.co.il/api/chat';
 export default function Chat({
   route: { params },
 }: {
-  route: { params: { id: string; onNewMessage: (m: Message) => void } };
+  route: { params: { id: string; isNew: boolean } };
 }) {
   const ref = useRef<FlatList<IMessage>>(null);
   const {
@@ -40,7 +40,7 @@ export default function Chat({
   const { sessions } = useSessions();
   const { hasPremium } = usePurchases();
   const navigation = useNavigation();
-  const { chat } = useChatSession(params.id);
+  const { chat } = useChatSession(params.id, params?.isNew);
 
   const {
     messages: chatMsgs,
@@ -64,9 +64,6 @@ export default function Chat({
 
   const onSend = (msgs: IMessage[] = []) => {
     const msg = mapIMessageToMessage(msgs[0]);
-    // if (!chatMsgs.length && params.onNewMessage) {
-    //   params.onNewMessage(msg);
-    // }
     append(msg);
     ref.current?.scrollToEnd({ animated: true });
   };

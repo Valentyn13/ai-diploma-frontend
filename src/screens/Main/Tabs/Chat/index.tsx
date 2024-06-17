@@ -68,6 +68,7 @@ export default function ChatDrawer() {
         name={newChat.id}
         initialParams={{
           id: newChat.id,
+          isNew: true,
         }}
         options={{
           drawerLabel: () => (
