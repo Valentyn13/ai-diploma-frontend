@@ -13,7 +13,9 @@ const ChatHeader: FC<{
   return (
     <View className="bg-[#FFF8EE] w-full flex-row justify-between items-center p-2 border-b border-gray-300">
       <View className="flex-row items-center">
-        <TouchableOpacity onPress={() => navigation.toggleDrawer()}>
+        <TouchableOpacity
+          className="p-2"
+          onPress={() => navigation.toggleDrawer()}>
           <Icon name="menu" size={30} />
         </TouchableOpacity>
         <View className="flex-row items-center ml-2">
