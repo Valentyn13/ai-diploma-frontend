@@ -22,6 +22,7 @@ import {
   Reply,
   Send,
 } from 'react-native-gifted-chat';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import Icon from 'react-native-vector-icons/Feather';
 import { useChat } from 'react-native-vercel-ai';
 
@@ -131,6 +132,8 @@ export default function Chat({
     return msgs;
   }, [chatMsgs, extractSessionIds, sessions]);
 
+  const insets = useSafeAreaInsets();
+
   return (
     <View className="w-full h-full">
       {/* workaround to trigger paywall - onSend function isn't updated on re-renders */}
@@ -148,11 +151,14 @@ export default function Chat({
       )}
 
       <GiftedChat
+        disableComposer={isLoading}
+        bottomOffset={insets.bottom + 64}
         messageContainerRef={ref}
         messagesContainerStyle={{
           backgroundColor: theme.colors.light,
           paddingVertical: 0,
         }}
+        renderUsernameOnMessage={true}
         scrollToBottom
         inverted={false}
         isTyping={isLoading}
