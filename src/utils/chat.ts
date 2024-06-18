@@ -52,7 +52,7 @@ export const FIRST_MESSAGES: IMessage[] = [
 ];
 
 export function removeEmojiesFromString(str: string) {
-  return str.replace(/🧘|🤔|😳|🥱|/g, '');
+  return str.slice(0, str.length - 3);
 }
 
 export const mapMessageToIMessage = (message: Message): IMessage => {
