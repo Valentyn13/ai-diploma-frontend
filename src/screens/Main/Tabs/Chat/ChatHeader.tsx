@@ -16,7 +16,7 @@ const ChatHeader: FC<{
         <TouchableOpacity
           className="p-2"
           onPress={() => navigation.toggleDrawer()}>
-          <Icon name="menu" size={30} />
+          <Icon color="#000" name="menu" size={30} />
         </TouchableOpacity>
         <View className="flex-row items-center ml-2">
           <Image source={{ uri: avatarUri }} className="w-8 h-8 rounded-full" />
