@@ -94,22 +94,45 @@ export function getReadableTimeDifference(pastDateStr: string): string {
   const hours = Math.floor(minutes / 60);
   const days = Math.floor(hours / 24);
   const weeks = Math.floor(days / 7);
-  const months = Math.floor(days / 30);
-  const years = Math.floor(days / 365);
+  const months =
+    now.getMonth() -
+    pastDate.getMonth() +
+    12 * (now.getFullYear() - pastDate.getFullYear());
+  const years = now.getFullYear() - pastDate.getFullYear();
 
   if (seconds < 60) {
     return seconds === 1 ? 'לפני שנייה' : `לפני ${seconds} שניות`;
   } else if (minutes < 60) {
     return minutes === 1 ? 'לפני דקה' : `לפני ${minutes} דקות`;
   } else if (hours < 24) {
-    return hours === 1 ? 'לפני שעה' : `לפני ${hours} שעות`;
+    return hours === 1
+      ? 'לפני שעה'
+      : hours === 2
+      ? 'לפני שעתיים'
+      : `לפני ${hours} שעות`;
   } else if (days < 7) {
-    return days === 1 || days === 0 ? 'אתמול' : `לפני ${days} ימים`;
+    return days === 1
+      ? 'אתמול'
+      : days === 2
+      ? 'לפני יומיים'
+      : `לפני ${days} ימים`;
   } else if (weeks < 4) {
-    return weeks === 1 || weeks === 0 ? 'לפני שבוע' : `לפני ${weeks} שבועות`;
+    return weeks === 1
+      ? 'לפני שבוע'
+      : weeks === 2
+      ? 'לפני שבועיים'
+      : `לפני ${weeks} שבועות`;
   } else if (months < 12) {
-    return months === 1 || months === 0 ? 'לפני חודש' : `לפני ${months} חודשים`;
+    return months === 1
+      ? 'לפני חודש'
+      : months === 2
+      ? 'לפני חודשיים'
+      : `לפני ${months} חודשים`;
   } else {
-    return years === 1 ? 'לפני שנה' : `לפני ${years} שנים`;
+    return years === 1
+      ? 'לפני שנה'
+      : years === 2
+      ? 'לפני שנתיים'
+      : `לפני ${years} שנים`;
   }
 }

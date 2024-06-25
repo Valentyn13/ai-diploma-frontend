@@ -11,12 +11,23 @@ const useChats = () => {
   const [error, setError] = useState(null);
 
   const fetchData = useCallback(async () => {
+    if (!user.id) {
+      setChats([]);
+      return;
+    }
+
     try {
       setLoading(true);
       const data = await fetchChats(user.id);
+
+      if (!data) {
+        throw new Error('No data');
+      }
+
       setChats(data);
       setLoading(false);
     } catch (err) {
+      setChats([]);
       setError(err);
       setLoading(false);
     }

@@ -12,7 +12,7 @@ import {
   removeEmojiesFromString,
 } from '@utils/chat';
 import React, { useCallback, useEffect, useMemo, useRef } from 'react';
-import { FlatList, Pressable, View } from 'react-native';
+import { FlatList, Platform, Pressable, View } from 'react-native';
 import CryptoJS from 'react-native-crypto-js';
 import {
   Bubble,
@@ -152,7 +152,7 @@ export default function Chat({
 
       <GiftedChat
         disableComposer={isLoading}
-        bottomOffset={insets.bottom + 64}
+        bottomOffset={Platform.OS === 'ios' ? insets.bottom + 64 : 0}
         messageContainerRef={ref}
         messagesContainerStyle={{
           backgroundColor: theme.colors.light,
