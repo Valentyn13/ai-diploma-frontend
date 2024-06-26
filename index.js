@@ -4,6 +4,8 @@ import { AppRegistry } from 'react-native';
 import TrackPlayer from 'react-native-track-player';
 
 import App from './App';
+import './ComponentConfig.js';
+import './FoundationConfig.js';
 import { name as appName } from './app.json';
 import { PlaybackService } from './service';
 
