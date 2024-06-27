@@ -24,13 +24,13 @@ import {
   Linking,
   Platform,
   SafeAreaView,
-  Switch,
   Text,
   TouchableOpacity,
   View,
 } from 'react-native';
 import DeviceInfo from 'react-native-device-info';
 import Modal from 'react-native-modal';
+import { Switch } from 'react-native-ui-lib';
 import Icon from 'react-native-vector-icons/FontAwesome6';
 import { useDispatch } from 'react-redux';
 
@@ -265,12 +265,11 @@ const Settings = ({ navigation }) => {
             </Text>
           )}
           <Switch
-            trackColor={{
-              true: '#513F73',
-            }}
-            thumbColor="#fff"
-            onValueChange={onToggleSwitch}
             value={isNotificationLocal}
+            onValueChange={onToggleSwitch}
+            onColor={theme.colors.primary}
+            thumbColor={theme.colors.textColor}
+            style={{ transform: [{ scaleX: 1.2 }, { scaleY: 1.2 }] }}
           />
         </View>
       ),
