@@ -1,4 +1,11 @@
-import { Focus, Sleep, Stress } from '@common/assets/illustrations';
+import {
+  Energy,
+  Focus,
+  Panic,
+  Relax,
+  Sleep,
+  Stress,
+} from '@common/assets/illustrations';
 
 import { PersonalizedState } from '../../types/Personalized';
 
@@ -735,11 +742,10 @@ export const KEY_PLAYED_FIRST = 'firstPlay';
 
 export const EXERCISES = [
   {
-    name: 'חרדה',
+    name: 'חרדה 😰',
     id: 'anxiety',
     description:
       'טכניקת הנשימה 4-4-4-4 כוללת שאיפה למשך 4 שניות, עצירת נשימה למשך 4 שניות, נשיפה למשך 4 שניות והמתנה למשך 4 שניות לפני החזרה על המחזור. השיטה מרגיעה את המוח ומשרירי הגוף ועוזרת להירדם במהירות ובאיכות',
-
     sequences: [
       { seconds: 4, type: 'שאיפה' },
       { seconds: 4, type: 'החזיקו' },
@@ -750,7 +756,7 @@ export const EXERCISES = [
     colors: ['#B0C4DE', '#4B0082'],
   },
   {
-    name: 'סטרס',
+    name: 'סטרס 😖',
     id: 'stress',
     description:
       'טכניקת הנשימה הסרעפתית האיטית והעמוקה כוללת שאיפה איטית דרך האף למשך 5 שניות, עצירת נשימה למשך 2 שניות ונשיפה איטית דרך הפה למשך 6 שניות. הטכניקה מפעילה את תגובת ההרגעה של הגוף ובכך מפחיתה לחץ.',
@@ -763,9 +769,8 @@ export const EXERCISES = [
     illustration: Stress,
   },
   {
-    name: 'פוקוס',
+    name: 'פוקוס 🎯',
     id: 'focus',
-
     description:
       'טכניקת הנשימה 4-7-8 יעילה להירדמות מהירה: שאיפה ל-4 שניות, עצירת נשימה ל-7 שניות, ונשיפה איטית ל-8 שניות. הטכניקה משפרת ריכוז וביצועים במצבי לחץ.',
     sequences: [
@@ -775,6 +780,44 @@ export const EXERCISES = [
     ],
     colors: ['#328d37', '#32a8d2'],
     illustration: Focus,
+  },
+  {
+    name: 'פאניקה 😨',
+    id: 'panic',
+    description:
+      'טכניקת הנשימה 4-8 כוללת שאיפה למשך 4 שניות ונשיפה למשך 8 שניות. תרגיל נשימה זה מאריך את הנשיפה ומסייע בהפחתת חרדה ומתח על ידי הפעלת מערכת העצבים הפאראסימפתטית, המקדמת הרפיה.',
+    sequences: [
+      { seconds: 4, type: 'שאיפה' },
+      { seconds: 8, type: 'נשיפה' },
+    ],
+    colors: ['#FF4500', '#8B0000'],
+    illustration: Panic,
+  },
+  {
+    name: 'אנרגיה ⚡',
+    id: 'energy',
+    description:
+      'טכניקת הנשימה 4-4-4 כוללת שאיפה עמוקה למשך 4 שניות, עצירת נשימה למשך 4 שניות ונשיפה בכוח למשך 4 שניות. תרגיל נשימה זה מסייע בהגברת הערנות ורמות האנרגיה, תוך שיפור זרימת הדם.',
+    sequences: [
+      { seconds: 4, type: 'שאיפה' },
+      { seconds: 4, type: 'החזיקו' },
+      { seconds: 4, type: 'נשיפה' },
+    ],
+    colors: ['#00FF7F', '#32CD32'],
+    illustration: Energy,
+  },
+  {
+    name: 'הרגעה 😌',
+    id: 'relax',
+    description:
+      'טכניקת הנשימה 4-4-6 כוללת שאיפה למשך 4 שניות, עצירת נשימה למשך 4 שניות ונשיפה למשך 6 שניות. תרגיל נשימה זה מרגיע את הנפש והגוף ומקדם תחושה כללית של רוגע והרפיה.',
+    sequences: [
+      { seconds: 4, type: 'שאיפה' },
+      { seconds: 4, type: 'החזיקו' },
+      { seconds: 6, type: 'נשיפה' },
+    ],
+    colors: ['#4682B4', '#B0E0E6'],
+    illustration: Relax,
   },
 ];
 

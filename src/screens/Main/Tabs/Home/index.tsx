@@ -185,6 +185,8 @@ const Feed: FC<FeedProps> = ({ navigation, copilot }) => {
 
                   <View className="flex-1">
                     <HorizontalCollection
+                      shuffle={false}
+                      limit={6}
                       title="תרגולי נשימה"
                       items={EXERCISES.map(({ id, name, colors }) => ({
                         id,
