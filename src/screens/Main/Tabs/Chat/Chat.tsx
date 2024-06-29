@@ -158,7 +158,7 @@ export default function Chat({
   }
 
   return (
-    <View className="w-full h-full">
+    <View className="w-full h-full bg-[#FFF7EA]">
       {/* workaround to trigger paywall - onSend function isn't updated on re-renders */}
       {shouldShowPaywall && (
         <Pressable
