@@ -7,7 +7,7 @@ import { Text, View } from 'react-native';
 import CryptoJS from 'react-native-crypto-js';
 import { Session } from 'types/Chat';
 
-import Chat from './Chat';
+import ChatContainer from './ChatContainer';
 import ChatHeader from './ChatHeader';
 
 const generateUUID = () =>
@@ -85,7 +85,7 @@ export default function ChatDrawer() {
           },
         }}
         // @ts-ignore
-        component={Chat}
+        component={ChatContainer}
       />
       {chats.map(chat => (
         <Drawer.Screen
@@ -116,7 +116,7 @@ export default function ChatDrawer() {
           key={chat.id}
           name={`${chat.messages[0].content}-${chat.id}`}
           // @ts-ignore
-          component={Chat}
+          component={ChatContainer}
           initialParams={{
             id: chat.id,
           }}
