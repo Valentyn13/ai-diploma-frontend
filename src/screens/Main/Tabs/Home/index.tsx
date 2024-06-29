@@ -11,6 +11,7 @@ import { SubTitle } from '@common/components/Styled';
 import Welcome from '@common/components/animation/Welcome';
 import ShowAll from '@common/components/buttons/ShowAll';
 import { EXERCISES } from '@common/constants';
+import { usePurchases } from '@common/context/PurchaseContext';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { RootStackParamList } from '@screens/RootNavigator';
 import useAppData from '@services/hooks/useAppData';
@@ -39,6 +40,7 @@ type FeedProps = NativeStackScreenProps<RootStackParamList, 'Main'>;
 const CopilotView = walkthroughable(View);
 
 const Feed: FC<FeedProps> = ({ navigation, copilot }) => {
+  const { hasPremium } = usePurchases();
   const { getAppData } = useAppData();
   const {
     user: { sex },
@@ -123,6 +125,7 @@ const Feed: FC<FeedProps> = ({ navigation, copilot }) => {
                   }}
                   className="flex-1">
                   <HorizontalCollection
+                    prioritizeFree={!hasPremium}
                     key="by-time"
                     title={byTimeCollection.title}
                     items={byTimeCollection.items}
@@ -138,6 +141,7 @@ const Feed: FC<FeedProps> = ({ navigation, copilot }) => {
               <View className="bg-[#FCE8CD]">
                 <View className="flex-1">
                   <HorizontalCollection
+                    prioritizeFree={!hasPremium}
                     shuffle={false}
                     key={latestCollection.id}
                     title={latestCollection.title}
@@ -171,6 +175,7 @@ const Feed: FC<FeedProps> = ({ navigation, copilot }) => {
                   {collections.map(({ id, title, items }) => (
                     <View className="flex-1">
                       <HorizontalCollection
+                        prioritizeFree={!hasPremium}
                         shuffle={id !== 'top-rated' && id !== 'latest-release'}
                         key={id}
                         title={title}
@@ -185,6 +190,7 @@ const Feed: FC<FeedProps> = ({ navigation, copilot }) => {
 
                   <View className="flex-1">
                     <HorizontalCollection
+                      prioritizeFree={!hasPremium}
                       shuffle={false}
                       limit={6}
                       title="תרגולי נשימה"

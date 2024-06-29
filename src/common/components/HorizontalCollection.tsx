@@ -2,7 +2,7 @@ import HorizontalList from '@common/components/HorizontalList';
 import { SubTitle } from '@common/components/Styled';
 import i18n from '@services/localization/i18n';
 import { shuffleArray } from '@utils/rand';
-import React, { ElementType, FC } from 'react';
+import React, { ElementType, FC, useMemo } from 'react';
 import { Pressable, Text, View } from 'react-native';
 import styled from 'styled-components/native';
 
@@ -22,6 +22,7 @@ interface Props {
   renderItem?: ElementType<{
     item: { id: string; name: string; colors: string[] };
   }>;
+  prioritizeFree?: boolean;
 }
 
 const HorizontalCollection: FC<Props> = ({
@@ -31,28 +32,50 @@ const HorizontalCollection: FC<Props> = ({
   limit = 5,
   shuffle = true,
   renderItem,
-}) => (
-  <View>
-    <View className="flex flex-row items-center justify-between w-full mb-5 pl-5 pr-3">
-      <ListTitle t={title} />
-      {onShowAll && (
-        <Pressable onPress={() => onShowAll()} className="p-2">
-          <Text className="text-[13px] leading-4 text-neutral-700">
-            {i18n.t('showAll')}
-          </Text>
-        </Pressable>
-      )}
-    </View>
-    {items.length === 0 && (
-      <View className="flex flex-row items-center justify-center w-full h-32">
-        <Text className="text-neutral-500">{i18n.t('noSessions')}</Text>
+  prioritizeFree = false,
+}) => {
+  const data = useMemo(() => {
+    let orderedItems = items;
+
+    if (shuffle) {
+      orderedItems = shuffleArray(orderedItems);
+    }
+
+    if (prioritizeFree) {
+      orderedItems = items.sort((a, b) => {
+        if (a.isCategoryLocked && !b.isCategoryLocked) {
+          return 1;
+        }
+        if (!a.isCategoryLocked && b.isCategoryLocked) {
+          return -1;
+        }
+        return 0;
+      });
+    }
+
+    return orderedItems.slice(0, limit);
+  }, [items, limit, prioritizeFree, shuffle]);
+
+  return (
+    <View>
+      <View className="flex flex-row items-center justify-between w-full mb-5 pl-5 pr-3">
+        <ListTitle t={title} />
+        {onShowAll && (
+          <Pressable onPress={() => onShowAll()} className="p-2">
+            <Text className="text-[13px] leading-4 text-neutral-700">
+              {i18n.t('showAll')}
+            </Text>
+          </Pressable>
+        )}
       </View>
-    )}
-    <HorizontalList
-      renderUsing={renderItem}
-      data={(shuffle ? shuffleArray(items) : items).slice(0, limit)}
-    />
-  </View>
-);
+      {items.length === 0 && (
+        <View className="flex flex-row items-center justify-center w-full h-32">
+          <Text className="text-neutral-500">{i18n.t('noSessions')}</Text>
+        </View>
+      )}
+      <HorizontalList renderUsing={renderItem} data={data} />
+    </View>
+  );
+};
 
 export default HorizontalCollection;

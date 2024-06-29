@@ -5,6 +5,7 @@ import SessionsGrid from '@common/components/SessionsGrid';
 import { ListTitle } from '@common/components/Styled';
 import Meditate from '@common/components/animation/Meditate';
 import NotFound from '@common/components/animation/NotFound';
+import { usePurchases } from '@common/context/PurchaseContext';
 import theme from '@common/theme';
 import { useNavigation } from '@react-navigation/native';
 import { useDebouncedState } from '@services/hooks/useDebouncedState';
@@ -21,6 +22,7 @@ import { Session } from 'types/Meditation';
 import SearchBar from './SearchBar';
 
 const Explore = () => {
+  const { hasPremium } = usePurchases();
   const [firstCollection, ...collections] = useDiscovery();
   const [isLoading, setIsLoading] = useState(false);
   const [searchQuery, setSearchQuery] = useDebouncedState('', 500);
@@ -109,6 +111,7 @@ const Explore = () => {
           <View>
             <View>
               <HorizontalCollection
+                prioritizeFree={!hasPremium}
                 items={firstCollection.items}
                 title={firstCollection.title}
                 onShowAll={() =>
@@ -135,6 +138,7 @@ const Explore = () => {
             {shuffleArray(collections).map(category => (
               <View key={category.id}>
                 <HorizontalCollection
+                  prioritizeFree={!hasPremium}
                   items={category.items}
                   title={category.title}
                   onShowAll={() => onShowAll(category.title, category.items)}
