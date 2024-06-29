@@ -12,7 +12,14 @@ import {
   removeEmojiesFromString,
 } from '@utils/chat';
 import React, { useCallback, useEffect, useMemo, useRef } from 'react';
-import { FlatList, Platform, Pressable, View } from 'react-native';
+import {
+  ActivityIndicator,
+  FlatList,
+  Platform,
+  Pressable,
+  Text,
+  View,
+} from 'react-native';
 import CryptoJS from 'react-native-crypto-js';
 import {
   Bubble,
@@ -41,7 +48,7 @@ export default function Chat({
   const { sessions } = useSessions();
   const { hasPremium } = usePurchases();
   const navigation = useNavigation();
-  const { chat } = useChatSession(params.id, params?.isNew);
+  const { chat, loading, error } = useChatSession(params.id, params?.isNew);
 
   const {
     messages: chatMsgs,
@@ -133,6 +140,22 @@ export default function Chat({
   }, [chatMsgs, extractSessionIds, sessions]);
 
   const insets = useSafeAreaInsets();
+
+  if (!params?.isNew && loading) {
+    return (
+      <View className="flex-1 justify-center items-center bg-[#FFF7EA] w-full h-full">
+        <ActivityIndicator size="large" color={theme.colors.primary} />
+      </View>
+    );
+  }
+
+  if (error) {
+    return (
+      <View className="flex-1 justify-center items-center bg-[#FFF7EA] w-full h-full">
+        <Text>אירעה שגיאה</Text>
+      </View>
+    );
+  }
 
   return (
     <View className="w-full h-full">
