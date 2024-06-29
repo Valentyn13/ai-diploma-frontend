@@ -45,7 +45,7 @@ const MyWay = () => {
   );
 
   const dates = meditationsPracticed.map(m => stringToDate(m.timestamp));
-  const [totalMinutesPracticed, setTotalMinutesMeditated] = useState(212301);
+  const [totalMinutesPracticed, setTotalMinutesMeditated] = useState(251240);
 
   useEffect(() => {
     const fetchData = async () => {
