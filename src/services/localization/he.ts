@@ -44,7 +44,7 @@ export default {
   home: 'בית',
   courses: 'קורסים',
   profile: 'פרופיל',
-  meditations: 'גלו עוד',
+  explore: 'גלו עוד',
   chat: 'ליווי',
 
   categories: 'נושאים',
