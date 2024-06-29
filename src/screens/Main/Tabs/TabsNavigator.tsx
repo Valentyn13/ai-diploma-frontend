@@ -11,12 +11,12 @@ import Svg, { Path, SvgProps } from 'react-native-svg';
 
 import Chat from './Chat';
 import Courses from './Courses';
+import Explore from './Explore';
 import Home from './Home';
-import Meditations from './Meditations';
 import Profile from './Profile';
 
 const Tab = createBottomTabNavigator();
-const TABS = { Home, Meditations, Chat, Courses, Profile };
+const TABS = { Home, Explore, Chat, Courses, Profile };
 
 const HomeIcon = (props: SvgProps) => (
   <Svg fill="none" {...props}>
@@ -29,7 +29,7 @@ const HomeIcon = (props: SvgProps) => (
   </Svg>
 );
 
-const MeditationsIcon = props => (
+const ExploreIcon = props => (
   <Svg xmlns="http://www.w3.org/2000/svg" fill="none" {...props}>
     <Path
       fill={props.color}
@@ -77,7 +77,7 @@ const ChatIcon = props => (
 
 const ICONS = {
   home: HomeIcon,
-  meditations: MeditationsIcon,
+  explore: ExploreIcon,
   chat: ChatIcon,
   courses: CoursesIcon,
   profile: ProfileIcon,

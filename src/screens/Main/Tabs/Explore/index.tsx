@@ -20,7 +20,7 @@ import { Session } from 'types/Meditation';
 
 import SearchBar from './SearchBar';
 
-const Meditations = () => {
+const Explore = () => {
   const [firstCollection, ...collections] = useDiscovery();
   const [isLoading, setIsLoading] = useState(false);
   const [searchQuery, setSearchQuery] = useDebouncedState('', 500);
@@ -161,4 +161,4 @@ const Meditations = () => {
   );
 };
 
-export default Meditations;
+export default Explore;
