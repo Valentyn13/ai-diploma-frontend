@@ -21,7 +21,7 @@ interface ChatComponentProps {
   navigation: any;
 }
 
-const ChatComponent: React.FC<ChatComponentProps> = ({
+const Chat: React.FC<ChatComponentProps> = ({
   messages,
   onSend,
   handleQuickReply,
@@ -51,7 +51,6 @@ const ChatComponent: React.FC<ChatComponentProps> = ({
           backgroundColor: theme.colors.light,
           paddingVertical: 0,
         }}
-        renderUsernameOnMessage
         scrollToBottom
         inverted={false}
         isTyping={isLoading}
@@ -118,4 +117,4 @@ const ChatComponent: React.FC<ChatComponentProps> = ({
   );
 };
 
-export default ChatComponent;
+export default Chat;
