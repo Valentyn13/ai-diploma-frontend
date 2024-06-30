@@ -141,7 +141,6 @@ const Feed: FC<FeedProps> = ({ navigation, copilot }) => {
               <View className="bg-[#FCE8CD]">
                 <View className="flex-1">
                   <HorizontalCollection
-                    prioritizeFree={!hasPremium}
                     shuffle={false}
                     key={latestCollection.id}
                     title={latestCollection.title}
