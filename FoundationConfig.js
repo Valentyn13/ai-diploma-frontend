@@ -51,10 +51,10 @@ Spacings.loadSpacings({
   page: 20,
   card: 12,
   gridGutter: 16,
-  section: 24, // Additional spacing for sections
-  item: 8, // Spacing between items
-  small: 4, // Small spacing for tight layouts
-  large: 32, // Large spacing for wider layouts
+  section: 24,
+  item: 8,
+  small: 4,
+  large: 32,
 });
 
 export default {

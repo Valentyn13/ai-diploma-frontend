@@ -268,7 +268,6 @@ const Settings = ({ navigation }) => {
             value={isNotificationLocal}
             onValueChange={onToggleSwitch}
             onColor={theme.colors.primary}
-            thumbColor={theme.colors.textColor}
             style={{ transform: [{ scaleX: 1.2 }, { scaleY: 1.2 }] }}
           />
         </View>
