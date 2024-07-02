@@ -5,9 +5,6 @@ import { usePurchases } from '@common/context/PurchaseContext';
 import theme from '@common/theme';
 import Clipboard from '@react-native-clipboard/clipboard';
 import DateTimePicker from '@react-native-community/datetimepicker';
-import rudderClient, {
-  RUDDER_LOG_LEVEL,
-} from '@rudderstack/rudder-sdk-react-native';
 import { useAmplitude } from '@services/hooks/useAmplitude';
 import useDeleteData from '@services/hooks/useDeleteData';
 import useUpdateProfile from '@services/hooks/useUpdateProfile';
@@ -16,7 +13,6 @@ import { logout } from '@store/actions';
 import { logEvent } from '@utils/analytics';
 import { fbLogout } from '@utils/facebook';
 import { googleSignOut } from '@utils/google';
-import PropTypes from 'prop-types';
 import React, { useEffect } from 'react';
 import {
   Alert,
@@ -52,23 +48,8 @@ const Settings = ({ navigation }) => {
   );
 
   const amplitudeInstance = useAmplitude();
-  const initRudderstack = async () => {
-    await rudderClient.setup('2Ah3U42Qc6y9v3PB4w8sKYhvkkJ', {
-      dataPlaneUrl: 'https://regatomxprg.dataplane.rudderstack.com',
-      logLevel: RUDDER_LOG_LEVEL.DEBUG,
-      flushQueueSize: 1,
-      configRefreshInterval: 1,
-    });
-  };
-  useEffect(() => {
-    initRudderstack();
-  }, []);
 
   const onLogout = async () => {
-    await rudderClient.track('logout', {
-      email,
-      name,
-    });
     amplitudeInstance.logEvent('LOGOUT');
     logEvent('logout', {
       email,
@@ -416,12 +397,6 @@ const Settings = ({ navigation }) => {
       </Modal>
     </SafeAreaView>
   );
-};
-
-Settings.propTypes = {
-  navigation: PropTypes.shape({
-    navigate: PropTypes.func.isRequired,
-  }).isRequired,
 };
 
 export default Settings;
