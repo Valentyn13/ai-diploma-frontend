@@ -1,10 +1,16 @@
-import { Colors, Spacings, Typography } from 'react-native-ui-lib';
+import theme from '@common/theme';
+import {
+  Colors,
+  Spacings,
+  ThemeManager,
+  Typography,
+} from 'react-native-ui-lib';
 
 Colors.loadColors({
-  secondaryColor: '#D66366', // Soft Red
-  primaryColor: '#A395D1', // Lavender
+  primaryColor: theme.colors.primaryColor, // Soft Red
+  secondaryColor: '#D66366', // Lavender
   backgroundColor: '#FFF8EE', // Light Beige
-  accentColor: '#FFEFD7', // Light Peach
+  accentColor: '#273051', // Light Peach
   textColor: '#273051', // Dark Blue
   errorColor: '#D66366', // Soft Red for errors
   successColor: '#A395D1', // Lavender for success
@@ -55,6 +61,17 @@ Spacings.loadSpacings({
   item: 8,
   small: 4,
   large: 32,
+});
+
+// Set custom theme for buttons
+ThemeManager.setComponentTheme('Button', {
+  backgroundColor: Colors.primaryColor,
+  borderRadius: 8, // Adjust the border radius for a rounded look
+  text70: true, // Example of using a typography style
+  paddingV: Spacings.s2, // Vertical padding
+  paddingH: Spacings.s3, // Horizontal padding
+  color: Colors.black, // Set text color
+  labelStyle: Typography.button, // Use the defined button typography
 });
 
 export default {

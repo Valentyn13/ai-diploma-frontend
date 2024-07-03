@@ -1,19 +1,16 @@
 /* eslint-disable handle-callback-err */
-import { BoldTitle } from '@common/components/Styled';
 import { CircleButton } from '@common/components/buttons/CircleButton';
 import { usePurchases } from '@common/context/PurchaseContext';
 import theme from '@common/theme';
 import Clipboard from '@react-native-clipboard/clipboard';
-import DateTimePicker from '@react-native-community/datetimepicker';
 import { useAmplitude } from '@services/hooks/useAmplitude';
 import useDeleteData from '@services/hooks/useDeleteData';
-import useUpdateProfile from '@services/hooks/useUpdateProfile';
 import { useUser } from '@services/hooks/useUser';
 import { logout } from '@store/actions';
 import { logEvent } from '@utils/analytics';
 import { fbLogout } from '@utils/facebook';
 import { googleSignOut } from '@utils/google';
-import React, { useEffect } from 'react';
+import React, { useRef } from 'react';
 import {
   Alert,
   FlatList,
@@ -25,27 +22,17 @@ import {
   View,
 } from 'react-native';
 import DeviceInfo from 'react-native-device-info';
-import Modal from 'react-native-modal';
-import { Switch } from 'react-native-ui-lib';
 import Icon from 'react-native-vector-icons/FontAwesome6';
 import { useDispatch } from 'react-redux';
 
 const Settings = ({ navigation }) => {
-  const [showModal, setShowModal] = React.useState(false);
   const { hasPremium } = usePurchases();
-  const [showTime, setShowTime] = React.useState(false);
 
   const dispatch = useDispatch();
   const {
-    user: { name, email, isNotification, notificationTime, id },
+    user: { name, email, id },
   } = useUser();
   const { DeleteUserData, cancelSubscription } = useDeleteData();
-  const { saveNotification, cancelNotification } = useUpdateProfile();
-
-  const [isNotificationLocal, setIsNotificationLocal] = React.useState(false);
-  const [notificationTimeLocal, setNotificationTimeLocal] = React.useState(
-    new Date(),
-  );
 
   const amplitudeInstance = useAmplitude();
 
@@ -66,41 +53,6 @@ const Settings = ({ navigation }) => {
       routes: [{ name: 'Auth' }],
     });
   };
-
-  const onChange = (event, selectedDate) => {
-    if (Platform.OS === 'android') {
-      setShowModal(false);
-      setShowTime(false);
-      const currentDate = selectedDate;
-      saveNotification(currentDate);
-      setNotificationTimeLocal(currentDate);
-    } else {
-      const currentDate = selectedDate;
-      setNotificationTimeLocal(currentDate);
-    }
-  };
-
-  const onToggleSwitch = e => {
-    setIsNotificationLocal(e);
-    if (!e) {
-      cancelNotification();
-    }
-  };
-
-  const onTimeSave = () => {
-    setShowTime(false);
-    saveNotification(notificationTimeLocal);
-    setIsNotificationLocal(true);
-  };
-
-  useEffect(() => {
-    if (notificationTime) {
-      setNotificationTimeLocal(new Date(notificationTime));
-    }
-    if (isNotification) {
-      setIsNotificationLocal(isNotification);
-    }
-  }, [isNotification, notificationTime]);
 
   const onContactUs = () => {
     const instagramUrl = 'https://www.instagram.com/rega.app';
@@ -147,6 +99,8 @@ const Settings = ({ navigation }) => {
       { cancelable: true },
     );
   };
+
+  const timePickerRef = useRef(null);
 
   const cancelSubscriptionPrompt = () => {
     Alert.prompt(
@@ -225,34 +179,8 @@ const Settings = ({ navigation }) => {
     },
     {
       title: 'התראות',
-      onPress: () => setShowTime(true),
+      onPress: () => navigation.navigate('Notifications'),
       icon: 'bullhorn',
-      // eslint-disable-next-line react/no-unstable-nested-components
-      left: () => (
-        <View className="flex flex-row items-center">
-          {isNotificationLocal === true && notificationTimeLocal !== null && (
-            <Text className="text-sm text-left mr-4 text-black">
-              {`כל יום ב-${notificationTimeLocal
-                .getHours()
-                .toLocaleString('en-US', {
-                  minimumIntegerDigits: 2,
-                  useGrouping: false,
-                })}:${notificationTimeLocal
-                .getMinutes()
-                .toLocaleString('en-US', {
-                  minimumIntegerDigits: 2,
-                  useGrouping: false,
-                })}`}
-            </Text>
-          )}
-          <Switch
-            value={isNotificationLocal}
-            onValueChange={onToggleSwitch}
-            onColor={theme.colors.primary}
-            style={{ transform: [{ scaleX: 1.2 }, { scaleY: 1.2 }] }}
-          />
-        </View>
-      ),
     },
     {
       title: 'פנו אלינו',
@@ -321,9 +249,7 @@ const Settings = ({ navigation }) => {
         showsVerticalScrollIndicator={false}
         data={list}
         keyExtractor={item => item.title}
-        renderItem={({
-          item: { onPress, title, icon, left = null, onLongPress },
-        }) => (
+        renderItem={({ item: { onPress, title, icon, onLongPress } }) => (
           <TouchableOpacity
             onPress={onPress}
             onLongPress={onLongPress}
@@ -342,7 +268,6 @@ const Settings = ({ navigation }) => {
                   {title}
                 </Text>
               </View>
-              {left && left()}
             </View>
           </TouchableOpacity>
         )}
@@ -350,51 +275,6 @@ const Settings = ({ navigation }) => {
       <Text className="text-center text-sm mt-2 mb-1 text-gray-500">
         גרסה נוכחית {DeviceInfo.getVersion()}
       </Text>
-      {showTime && Platform.OS === 'android' && (
-        <DateTimePicker
-          value={notificationTimeLocal}
-          mode="time"
-          display="spinner"
-          is24Hour={false}
-          onChange={onChange}
-        />
-      )}
-      <Modal isVisible={Platform.OS === 'ios' && showTime}>
-        {showTime && (
-          <View
-            style={{
-              display: 'flex',
-              backgroundColor: 'white',
-              marginVertical: 10,
-              paddingVertical: 10,
-            }}>
-            <BoldTitle
-              t="בחרו את השעה המתאימה"
-              style={{ textAlign: 'center', paddingVertical: 10 }}
-            />
-            <DateTimePicker
-              value={notificationTimeLocal}
-              mode="time"
-              display="spinner"
-              is24Hour={false}
-              onChange={onChange}
-              textColor={theme.colors.textColor}
-            />
-            <View className="items-center flex flex-row justify-around">
-              <TouchableOpacity
-                onPress={() => setShowTime(false)}
-                className="bg-red-500 py-2 px-6 rounded">
-                <Text className="text-white">ביטול</Text>
-              </TouchableOpacity>
-              <TouchableOpacity
-                onPress={onTimeSave}
-                className="bg-[#273051] py-2 px-6 rounded">
-                <Text className="text-white">שמירה</Text>
-              </TouchableOpacity>
-            </View>
-          </View>
-        )}
-      </Modal>
     </SafeAreaView>
   );
 };
