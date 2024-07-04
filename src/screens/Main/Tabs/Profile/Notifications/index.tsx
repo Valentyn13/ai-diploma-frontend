@@ -2,39 +2,51 @@ import { CircleButton } from '@common/components/buttons/CircleButton';
 import theme from '@common/theme';
 import useUpdateProfile from '@services/hooks/useUpdateProfile';
 import { useUser } from '@services/hooks/useUser';
+import { setUserData } from '@store/actions';
 import React, { useState } from 'react';
 import { FlatList, SafeAreaView, Text, View } from 'react-native';
 import { Card, DateTimePicker, Switch } from 'react-native-ui-lib';
+import { useDispatch } from 'react-redux';
 
 const Notifications = ({ navigation }) => {
   const { saveNotification, cancelNotification } = useUpdateProfile();
   const {
     user: { isNotification, notificationTime },
   } = useUser();
-  const [time, setTime] = useState(
-    notificationTime ? new Date(notificationTime) : null,
-  );
+  const dispatch = useDispatch();
 
   const [notifications, setNotifications] = useState([
     {
       id: 1,
       title: 'תזכורת יומית',
       isEnabled: isNotification,
-      time: new Date(),
+      time: notificationTime ? new Date(notificationTime) : new Date(),
       color: '#FF6F61',
     },
   ]);
 
   const handleToggleSwitch = (id: number) => {
+    const isEnabled = notifications[0].isEnabled;
+    const time = notifications[0].time;
+
     setNotifications(prevNotifications =>
       prevNotifications.map(notification =>
         notification.id === id
-          ? { ...notification, isEnabled: !notification.isEnabled }
+          ? { ...notification, isEnabled: !isEnabled }
           : notification,
       ),
     );
 
-    notifications[0].isEnabled ? cancelNotification() : saveNotification(time);
+    isEnabled ? cancelNotification() : saveNotification(time);
+
+    setTimeout(() => {
+      dispatch(
+        setUserData({
+          isNotification: !isEnabled,
+          notificationTime: !isEnabled ? time : null,
+        }),
+      );
+    }, 0);
   };
 
   const handleTimeChange = (id: number, selectedDate: Date) => {
@@ -46,8 +58,16 @@ const Notifications = ({ navigation }) => {
       ),
     );
 
-    setTime(selectedDate);
     saveNotification(selectedDate);
+
+    setTimeout(() => {
+      dispatch(
+        setUserData({
+          isNotification: true,
+          notificationTime: selectedDate,
+        }),
+      );
+    }, 0);
   };
 
   const renderItem = ({ item }) => (
@@ -60,7 +80,7 @@ const Notifications = ({ navigation }) => {
       <View className="flex-row justify-between items-center">
         <View className="flex-1 mr-10">
           <DateTimePicker
-            value={time || new Date()}
+            value={item.time}
             label="תזכורת יומית"
             labelStyle={{
               color: 'white',
@@ -76,7 +96,7 @@ const Notifications = ({ navigation }) => {
             mode="time"
             display="spinner"
             is24Hour={true}
-            locale="he"
+            locale="he-IL"
             dateTimeFormatter={d =>
               d.toLocaleTimeString([], {
                 hour: '2-digit',
