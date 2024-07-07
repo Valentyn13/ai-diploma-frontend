@@ -1,5 +1,5 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import PrivacyPolicy from '@screens/Auth/PrivacyPolicy';
+import PrivacyPolicy from '@screens/Auth/TOS';
 import React from 'react';
 
 import Details from './Details';

@@ -4,8 +4,8 @@ import React from 'react';
 import ForgotPassword from './ForgotPassword';
 import Login from './Login';
 import PreLogin from './PreLogin';
-import PrivacyPolicy from './PrivacyPolicy';
 import Register from './Register';
+import TOS from './TOS';
 
 export type AuthStackParamList = {
   Login: undefined;
@@ -27,7 +27,7 @@ export default () => {
       }}>
       <AuthStack.Screen name="Login" component={Login} />
       <AuthStack.Screen name="Register" component={Register} />
-      <AuthStack.Screen name="PrivacyPolicy" component={PrivacyPolicy} />
+      <AuthStack.Screen name="PrivacyPolicy" component={TOS} />
       <AuthStack.Screen name="PreLogin" component={PreLogin} />
       <AuthStack.Screen name="ForgotPassword" component={ForgotPassword} />
     </AuthStack.Navigator>
