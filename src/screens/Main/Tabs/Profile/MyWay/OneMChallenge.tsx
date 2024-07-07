@@ -39,7 +39,7 @@ const OneMChallenge: FC<{
             דקות מתוך{' '}
             {CHALLANGE_TOTAL.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}{' '}
           </Text>
-          <Text>{Math.round(totalProgress * 100)}%</Text>
+          <Text className="text-black">{Math.round(totalProgress * 100)}%</Text>
         </View>
         <ProgressBar progress={Math.round(totalProgress * 100)} />
         <Text className="text-left text-xs text-[#160F29] opacity-70 mt-2">
