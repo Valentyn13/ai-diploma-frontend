@@ -1,5 +1,6 @@
 import theme from '@common/theme';
-import React, { useRef } from 'react';
+import useStreamText from '@services/hooks/useStreamText';
+import React, { useMemo, useRef } from 'react';
 import { FlatList, Platform, Pressable, View } from 'react-native';
 import {
   Bubble,
@@ -32,6 +33,20 @@ const Chat: React.FC<ChatComponentProps> = ({
   const ref = useRef<FlatList<IMessage>>(null);
   const insets = useSafeAreaInsets();
 
+  const lastMessage = useMemo(() => messages[messages.length - 1], [messages]);
+  const streamedText = useStreamText(lastMessage?.text, 50);
+
+  const computedMsgs = useMemo(() => {
+    const newLocal = messages.map((msg, index) => {
+      if (index === messages.length - 1 && msg.user._id !== 'USER') {
+        return { ...msg, text: streamedText };
+      }
+      return msg;
+    });
+
+    return newLocal;
+  }, [messages, streamedText]);
+
   return (
     <View className="w-full h-full bg-[#FFF7EA]">
       {shouldShowPaywall && (
@@ -54,7 +69,7 @@ const Chat: React.FC<ChatComponentProps> = ({
         scrollToBottom
         inverted={false}
         isTyping={isLoading}
-        messages={messages}
+        messages={computedMsgs}
         onQuickReply={handleQuickReply}
         onSend={messages => onSend(messages)}
         placeholder="הכנס הודעה..."
@@ -79,7 +94,11 @@ const Chat: React.FC<ChatComponentProps> = ({
         renderSend={props => (
           <Send {...props} containerStyle={{ justifyContent: 'center' }}>
             <View className="rotate-[228deg] mr-4">
-              <Icon name="send" color={theme.colors.primary} size={24} />
+              <Icon
+                name="send"
+                color={isLoading ? '#D0D0D0' : theme.colors.primary}
+                size={24}
+              />
             </View>
           </Send>
         )}
