@@ -4,6 +4,7 @@ import theme from '@common/theme';
 import { useNavigation } from '@react-navigation/native';
 import useChatSession from '@services/hooks/useChatSession';
 import useSessions from '@services/hooks/useSessions';
+import useStreamText from '@services/hooks/useStreamText';
 import { useUser } from '@services/hooks/useUser';
 import {
   FIRST_MESSAGES,
@@ -12,10 +13,10 @@ import {
   mapMessageToIMessage,
   removeEmojiesFromString,
 } from '@utils/chat';
-import React, { useCallback, useEffect, useMemo } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { ActivityIndicator, Text, View } from 'react-native';
 import CryptoJS from 'react-native-crypto-js';
-import { Reply } from 'react-native-gifted-chat';
+import { IMessage, Reply } from 'react-native-gifted-chat';
 import { useChat } from 'react-native-vercel-ai';
 
 const generateUUID = () => CryptoJS.lib.WordArray.random(128 / 8).toString();
@@ -33,6 +34,7 @@ export default function ChatContainer({
   const { hasPremium } = usePurchases();
   const navigation = useNavigation();
   const { chat, loading, error } = useChatSession(params.id, params?.isNew);
+  const [sessionStarted, setSessionStarted] = useState(false);
 
   const {
     messages: chatMsgs,
@@ -57,6 +59,7 @@ export default function ChatContainer({
   const onSend = (msgs: IMessage[] = []) => {
     const msg = mapIMessageToMessage(msgs[0]);
     append(msg);
+    setSessionStarted(true);
   };
 
   const shouldShowPaywall = useMemo(
@@ -90,6 +93,15 @@ export default function ChatContainer({
     [sessions],
   );
 
+  const sysLastMsg = useMemo(() => {
+    const lastMsg = chatMsgs[chatMsgs.length - 1];
+    return lastMsg?.role === 'assistant' && sessionStarted
+      ? lastMsg
+      : undefined;
+  }, [chatMsgs, sessionStarted]);
+
+  const streamedText = useStreamText(sysLastMsg?.content, 50);
+
   const messages = useMemo(() => {
     if (!chatMsgs.length) {
       return FIRST_MESSAGES;
@@ -98,10 +110,11 @@ export default function ChatContainer({
     const msgs = chatMsgs.map(mapMessageToIMessage);
     const lastMsg = msgs[msgs.length - 1];
 
-    if (lastMsg.user._id === SYSTEM_USER._id) {
-      const ids = extractSessionIds(lastMsg.text);
+    const meditationIds = extractSessionIds(lastMsg.text);
+
+    if (lastMsg.user._id === SYSTEM_USER._id && meditationIds.length) {
       const values = sessions
-        .filter(session => ids.includes(session.id))
+        .filter(session => meditationIds.includes(session.id))
         .map(({ name, id: value }) => ({
           title: `▶️ נגן את "${name}"`,
           value,
@@ -115,6 +128,19 @@ export default function ChatContainer({
 
     return msgs;
   }, [chatMsgs, extractSessionIds, sessions]);
+
+  const computedMsgs = useMemo(() => {
+    return messages.map((msg, index) => {
+      if (
+        index === messages.length - 1 &&
+        msg.user._id === SYSTEM_USER._id &&
+        sessionStarted
+      ) {
+        return { ...msg, text: streamedText };
+      }
+      return msg;
+    });
+  }, [messages, sessionStarted, streamedText]);
 
   if (!params?.isNew && loading) {
     return (
@@ -134,7 +160,7 @@ export default function ChatContainer({
 
   return (
     <Chat
-      messages={messages}
+      messages={computedMsgs}
       onSend={onSend}
       handleQuickReply={handleQuickReply}
       isLoading={isLoading}

@@ -5,10 +5,13 @@ import { getReadableTimeDifference } from '@utils/time';
 import React, { useState } from 'react';
 import { Text, View } from 'react-native';
 import CryptoJS from 'react-native-crypto-js';
+import { enableScreens } from 'react-native-screens';
 import { Session } from 'types/Chat';
 
 import ChatContainer from './ChatContainer';
 import ChatHeader from './ChatHeader';
+
+enableScreens();
 
 const generateUUID = () =>
   CryptoJS.lib.WordArray.random(128 / 8)
@@ -28,9 +31,11 @@ export default function ChatDrawer() {
 
   return (
     <Drawer.Navigator
+      detachInactiveScreens={true}
       drawerContent={props => <DrawerContent {...props} />}
       initialRouteName={'שיחה חדשה' + newChat.id}
       screenOptions={({ navigation }) => ({
+        unmountOnBlur: true,
         // eslint-disable-next-line react/no-unstable-nested-components
         header: () => (
           <ChatHeader
