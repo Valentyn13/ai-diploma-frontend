@@ -55,6 +55,11 @@ const Settings = ({ navigation }) => {
   };
 
   const onContactUs = () => {
+    const whatsappNumber = '+972532424833';
+    const whatsappUrl = `whatsapp://send?phone=${whatsappNumber}&text=${encodeURIComponent(
+      'היי, רציתי לשאול שאלה',
+    )}`;
+
     const instagramUrl = 'https://www.instagram.com/rega.app';
     const instagramDMUrl = 'instagram://direct_message?username=rega.app';
 
@@ -66,14 +71,16 @@ const Settings = ({ navigation }) => {
       emailSubject,
     )}&body=${encodeURIComponent(emailBody)}`;
 
-    Linking.openURL(instagramDMUrl).catch(err => {
-      Linking.openURL(instagramUrl).catch(err => {
-        Linking.openURL(emailUrl).catch(err =>
-          Alert.alert(
-            'לא ניתן לפתוח את האפליקציה',
-            'אנא צרו קשר עם התמיכה במייל hello@rega.co.il, תודה',
-          ),
-        );
+    Linking.openURL(whatsappUrl).catch(err => {
+      Linking.openURL(instagramDMUrl).catch(err => {
+        Linking.openURL(instagramUrl).catch(err => {
+          Linking.openURL(emailUrl).catch(err =>
+            Alert.alert(
+              'לא ניתן לפתוח את האפליקציה',
+              'אנא צרו קשר עם התמיכה במייל hello@rega.co.il, תודה',
+            ),
+          );
+        });
       });
     });
   };
@@ -201,7 +208,7 @@ const Settings = ({ navigation }) => {
           'נתוני משתמש הועתקו, אנא הדביקו אותם בשיחה עם התמיכה',
         );
       },
-      icon: 'instagram',
+      icon: 'whatsapp',
     },
     {
       title: 'מדיניות הפרטיות ותנאי השימוש',
