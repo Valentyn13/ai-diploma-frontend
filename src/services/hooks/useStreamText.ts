@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 
-const useStreamText = (text: string | undefined, interval = 50) => {
+const useStreamText = (text: string | undefined, interval = 80) => {
   const [displayText, setDisplayText] = useState('');
 
   useEffect(() => {
@@ -11,13 +11,15 @@ const useStreamText = (text: string | undefined, interval = 50) => {
       return;
     }
 
-    const innerText = text.toString();
+    const wordsArray = text.split(' ');
 
     const timer = setInterval(() => {
-      setDisplayText(prev => prev + innerText[currentIndex]);
+      setDisplayText(
+        prev => prev + (currentIndex > 0 ? ' ' : '') + wordsArray[currentIndex],
+      );
       currentIndex++;
 
-      if (currentIndex >= text.length) {
+      if (currentIndex >= wordsArray.length) {
         clearInterval(timer);
       }
     }, interval);

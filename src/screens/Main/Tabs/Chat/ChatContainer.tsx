@@ -100,7 +100,7 @@ export default function ChatContainer({
       : undefined;
   }, [chatMsgs, sessionStarted]);
 
-  const streamedText = useStreamText(sysLastMsg?.content, 50);
+  const streamedText = useStreamText(sysLastMsg?.content);
 
   const messages = useMemo(() => {
     if (!chatMsgs.length) {
