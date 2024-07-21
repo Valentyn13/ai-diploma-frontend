@@ -85,11 +85,14 @@ const ChooseSex = () => {
         <View className="relative flex-1 -z-20">
           <View className="top-0 right-0 absolute w-10/12 flex flex-col">
             <View className="bg-white rounded-3xl w-10/12 mt-10 opacity-80 p-4 mr-auto">
-              <Text className="text-xs text-left text-black">{`היי 👋 אני מיכאל, כאן כדי לעזור לך.
+              <Text className="text-xs text-left text-black">{`היי, אני מיכאל 👋
 
-אני יודע שלחץ וחרדה יכולים להיות קשים, אך אני כאן לתמוך בך- נלמד טכניקות מיינדפולנס, נתמודד עם מחשבות ורגשות ונמצא מדיטציות מותאמות אישית לעזור לך להרגע ולהרגיש בשליטה.
+אני כאן כדי להקשיב, לתמוך ולהציע פרספקטיבות חדשות - בדיוק כמו חבר טוב. אבל חשוב לזכור:
+- אני לא מחליף טיפול מקצועי, אלא כלי עזר.
+- ⁠בכל שיחה נוכל להחליף עד 40 הודעות. אם נרצה להמשיך לדבר, פשוט תפתח.י שיחה חדשה!
+- ככל שתשתף.י איתי יותר, אוכל לתת לך תובנות מועילות יותר!
 
-איך את/ה מרגיש/ה היום?`}</Text>
+אז בואו נתחיל - מה הנושא שהכי מעסיק אותך כרגע?`}</Text>
             </View>
             <View className="w-10/12 bg-white rounded-3xl mt-2 opacity-80 p-4 ml-auto">
               <Text className="text-xs text-left text-black">{`בן הזוג שלי נפרד ממני היום, אני לא מצליחה לתפקד :(`}</Text>
