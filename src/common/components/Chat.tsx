@@ -75,7 +75,6 @@ const Chat: React.FC<ChatComponentProps> = ({
           textAlign: 'left',
           direction: 'rtl',
         }}
-        alwaysShowSend
         renderSend={props => (
           <Send {...props} containerStyle={{ justifyContent: 'center' }}>
             <View className="rotate-[228deg] mr-4">

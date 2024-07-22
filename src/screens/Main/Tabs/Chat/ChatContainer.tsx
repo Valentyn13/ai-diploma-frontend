@@ -7,8 +7,8 @@ import useSessions from '@services/hooks/useSessions';
 import useStreamText from '@services/hooks/useStreamText';
 import { useUser } from '@services/hooks/useUser';
 import {
-  FIRST_MESSAGES,
   SYSTEM_USER,
+  getFirstMsgs,
   mapIMessageToMessage,
   mapMessageToIMessage,
   removeEmojiesFromString,
@@ -28,7 +28,7 @@ export default function ChatContainer({
   route: { params: { id: string; isNew: boolean } };
 }) {
   const {
-    user: { id: userId },
+    user: { id: userId, name, sex },
   } = useUser();
   const { sessions } = useSessions();
   const { hasPremium } = usePurchases();
@@ -104,7 +104,7 @@ export default function ChatContainer({
 
   const messages = useMemo(() => {
     if (!chatMsgs.length) {
-      return FIRST_MESSAGES;
+      return getFirstMsgs(name, sex);
     }
 
     const msgs = chatMsgs.map(mapMessageToIMessage);
@@ -127,7 +127,7 @@ export default function ChatContainer({
     }
 
     return msgs;
-  }, [chatMsgs, extractSessionIds, sessions]);
+  }, [chatMsgs, extractSessionIds, name, sessions, sex]);
 
   const computedMsgs = useMemo(() => {
     return messages.map((msg, index) => {
