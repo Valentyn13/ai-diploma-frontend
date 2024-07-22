@@ -56,32 +56,6 @@ export const getFirstMsgs = (name: string, gender: 'M' | 'F'): IMessage[] => [
       gender === 'M' ? 'ספר' : 'ספרי'
     } לי, מה מעסיק אותך היום? אני כאן, מקשיב ומוכן לעזור✨`,
   },
-  // @ts-ignore
-  {
-    _id: 'intro_quick_replies',
-    user: CLIENT_USER,
-    quickReplies: {
-      type: 'radio',
-      values: [
-        {
-          title: 'למה קשה לי להירדם בלילה? 🥱',
-          value: 'sleeping_problems',
-        },
-        {
-          title: 'אני רוצה המלצה למדיטציה 🧘',
-          value: 'learn_to_meditate',
-        },
-        {
-          title: 'איך לשחרר מחשבה שלילית? 🤔',
-          value: 'negative_thoughts',
-        },
-        {
-          title: 'אני רוצה לשתף משהו 😳',
-          value: 'share_feelings',
-        },
-      ],
-    },
-  },
 ];
 
 export function removeEmojiesFromString(str: string) {
