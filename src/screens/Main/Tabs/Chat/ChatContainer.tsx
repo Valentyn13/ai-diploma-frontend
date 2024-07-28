@@ -3,7 +3,6 @@ import { usePurchases } from '@common/context/PurchaseContext';
 import theme from '@common/theme';
 import { useNavigation } from '@react-navigation/native';
 import useChatSession from '@services/hooks/useChatSession';
-import useSessions from '@services/hooks/useSessions';
 import useStreamText from '@services/hooks/useStreamText';
 import { useUser } from '@services/hooks/useUser';
 import {
@@ -11,12 +10,11 @@ import {
   getFirstMsgs,
   mapIMessageToMessage,
   mapMessageToIMessage,
-  removeEmojiesFromString,
 } from '@utils/chat';
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { ActivityIndicator, Text, View } from 'react-native';
 import CryptoJS from 'react-native-crypto-js';
-import { IMessage, Reply } from 'react-native-gifted-chat';
+import { IMessage } from 'react-native-gifted-chat';
 import { useChat } from 'react-native-vercel-ai';
 
 const generateUUID = () => CryptoJS.lib.WordArray.random(128 / 8).toString();
@@ -30,7 +28,6 @@ export default function ChatContainer({
   const {
     user: { id: userId, name, sex },
   } = useUser();
-  const { sessions } = useSessions();
   const { hasPremium } = usePurchases();
   const navigation = useNavigation();
   const { chat, loading, error } = useChatSession(params.id, params?.isNew);
@@ -67,32 +64,6 @@ export default function ChatContainer({
     [chatMsgs.length, hasPremium],
   );
 
-  const handleQuickReply = (replies: Reply[]) => {
-    const item = sessions.find(({ id }) => id === replies[0].value);
-
-    if (item) {
-      navigation.navigate('MeditationPlayer', { item });
-      return;
-    }
-
-    const messagesToAdd = replies.map((reply, index) => ({
-      _id: `${index}-${Date.now()}`,
-      text: removeEmojiesFromString(reply.title),
-      createdAt: new Date(),
-      user: { _id: 'USER' },
-    }));
-
-    onSend(messagesToAdd);
-  };
-
-  const extractSessionIds = useCallback(
-    (text: string) =>
-      sessions
-        .filter(session => text.includes(`"${session.name}"`))
-        .map(session => session.id),
-    [sessions],
-  );
-
   const sysLastMsg = useMemo(() => {
     const lastMsg = chatMsgs[chatMsgs.length - 1];
     return lastMsg?.role === 'assistant' && sessionStarted
@@ -102,45 +73,28 @@ export default function ChatContainer({
 
   const streamedText = useStreamText(sysLastMsg?.content);
 
-  const messages = useMemo(() => {
-    if (!chatMsgs.length) {
-      return getFirstMsgs(name, sex);
-    }
+  const messages = useMemo(
+    () =>
+      chatMsgs.length
+        ? chatMsgs.map(mapMessageToIMessage)
+        : getFirstMsgs(name, sex),
+    [chatMsgs, name, sex],
+  );
 
-    const msgs = chatMsgs.map(mapMessageToIMessage);
-    const lastMsg = msgs[msgs.length - 1];
-
-    const meditationIds = extractSessionIds(lastMsg.text);
-
-    if (lastMsg.user._id === SYSTEM_USER._id && meditationIds.length) {
-      const values = sessions
-        .filter(session => meditationIds.includes(session.id))
-        .map(({ name, id: value }) => ({
-          title: `▶️ נגן את "${name}"`,
-          value,
-        }));
-
-      msgs[msgs.length - 1] = {
-        ...lastMsg,
-        quickReplies: { type: 'radio', values },
-      };
-    }
-
-    return msgs;
-  }, [chatMsgs, extractSessionIds, name, sessions, sex]);
-
-  const computedMsgs = useMemo(() => {
-    return messages.map((msg, index) => {
-      if (
-        index === messages.length - 1 &&
-        msg.user._id === SYSTEM_USER._id &&
-        sessionStarted
-      ) {
-        return { ...msg, text: streamedText };
-      }
-      return msg;
-    });
-  }, [messages, sessionStarted, streamedText]);
+  const streamedMsgs = useMemo(
+    () =>
+      messages.map((msg, index) => {
+        if (
+          index === messages.length - 1 &&
+          msg.user._id === SYSTEM_USER._id &&
+          sessionStarted
+        ) {
+          return { ...msg, text: streamedText };
+        }
+        return msg;
+      }),
+    [messages, sessionStarted, streamedText],
+  );
 
   if (!params?.isNew && loading) {
     return (
@@ -160,9 +114,8 @@ export default function ChatContainer({
 
   return (
     <Chat
-      messages={computedMsgs}
+      messages={streamedMsgs}
       onSend={onSend}
-      handleQuickReply={handleQuickReply}
       isLoading={isLoading}
       shouldShowPaywall={shouldShowPaywall}
       navigation={navigation}

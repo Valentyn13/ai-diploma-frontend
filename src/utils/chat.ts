@@ -58,10 +58,6 @@ export const getFirstMsgs = (name: string, gender: 'M' | 'F'): IMessage[] => [
   },
 ];
 
-export function removeEmojiesFromString(str: string) {
-  return str.slice(0, str.length - 3);
-}
-
 export const mapMessageToIMessage = (message: Message): IMessage => {
   return {
     _id: message.id,
