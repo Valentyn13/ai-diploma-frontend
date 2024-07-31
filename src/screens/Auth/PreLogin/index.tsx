@@ -1,5 +1,6 @@
 import AppText from '@common/components/AppText';
-import { Icon } from '@common/components/Styled';
+import Gradient from '@common/components/Gradient';
+import Logo from '@common/components/Logo';
 import Meditate from '@common/components/animation/Meditate';
 import { EmailLoginButton } from '@common/components/buttons/EmailLoginButton';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
@@ -12,11 +13,13 @@ import { useLoginStore } from '@store/useLoginStore';
 import alert from '@utils/alert';
 import logger from '@utils/logger';
 import React, { FC, useEffect } from 'react';
-import { ActivityIndicator, Text, View } from 'react-native';
-import { TouchableOpacity } from 'react-native-gesture-handler';
+import { ActivityIndicator, Dimensions, Text } from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { scale } from 'react-native-size-matters';
-import IconFA from 'react-native-vector-icons/FontAwesome6';
+import { TouchableOpacity, View } from 'react-native-ui-lib';
 import { useSelector } from 'react-redux';
+
+import { SOCIAL_ICONS } from './Icons';
 
 type PreLoginProps = NativeStackScreenProps<
   RootStackParamList,
@@ -82,29 +85,46 @@ const PreLogin: FC<PreLoginProps> = ({ navigation: { navigate } }) => {
 
       setIsLoading(false);
     }
+
+    setIsLoading(false);
   };
+
+  const insets = useSafeAreaInsets();
+  const { width } = Dimensions.get('screen');
 
   return (
     <View
       style={{
         flex: 1,
         backgroundColor: '#fdedd6',
-        padding: scale(24),
+        padding: scale(30),
         alignItems: 'center',
       }}>
-      <View className="h-1/2">
+      <View
+        style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0 }}>
+        <Gradient colors={['#6190E8', '#A395D1', '#FFEFD7']} angle={45} />
+      </View>
+      <View
+        className="h-1/2"
+        style={{
+          paddingTop: insets.top,
+        }}>
         <View className="flex-col items-center">
-          <Icon style={{ marginTop: scale(40) }} name="logo" size={40} />
+          <Logo height={40} />
           <AppText
-            style={{ fontSize: 50, marginTop: scale(30), color: 'black' }}
-            black>
-            רגע לעצמך
-          </AppText>
-          <AppText style={{ fontSize: 18, color: 'black' }}>
-            זה כל מה שצריך
+            medium
+            style={{
+              fontSize: 42,
+              marginTop: scale(4),
+              color: '#fff',
+            }}>
+            רגע
           </AppText>
         </View>
-        <View className="mt-4 flex-1">
+        <View
+          style={{
+            width: width / 3,
+          }}>
           <Meditate />
         </View>
       </View>
@@ -115,7 +135,7 @@ const PreLogin: FC<PreLoginProps> = ({ navigation: { navigate } }) => {
             alignItems: 'center',
             justifyContent: 'center',
           }}>
-          <ActivityIndicator className="mb-4" size="large" color="#000" />
+          <ActivityIndicator className="mb-4" size="large" color="#fff" />
           <AppText
             style={{
               color: '#000',
@@ -126,46 +146,77 @@ const PreLogin: FC<PreLoginProps> = ({ navigation: { navigate } }) => {
       ) : (
         <View
           style={{
+            width: '100%',
             position: 'absolute',
+            bottom: insets.bottom,
+            paddingBottom: scale(24),
+            display: 'flex',
+            flexDirection: 'column',
             alignItems: 'center',
-            bottom: scale(40),
+            rowGap: 48,
           }}>
-          <View className="flex flex-row space-x-4">
-            {['facebook', 'google', 'apple'].map(provider => (
-              <TouchableOpacity
-                key={provider}
-                onPress={() => loginWith(provider)}
-                style={{
-                  backgroundColor: '#273051',
-                  width: 56,
-                  height: 56,
-                  borderRadius: 56 / 2,
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                }}>
-                <IconFA name={provider} size={56 / 2} color="#fff" />
-              </TouchableOpacity>
-            ))}
-          </View>
-          <Text className="text-center text-black text-lg my-4">או</Text>
-          <EmailLoginButton
-            onPress={() => navigate('Auth', { screen: 'Login' })}
-          />
-          <Text className="text-center text-black text-md mt-20">
-            חדשים פה?
-          </Text>
+          <View
+            style={{
+              flex: 1,
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              gap: 12,
+            }}>
+            <EmailLoginButton
+              onPress={() => navigate('Auth', { screen: 'Login' })}
+            />
+            <Text className="text-center text-black text-lg">או</Text>
 
-          <TouchableOpacity onPress={() => navigate('Register')}>
-            <AppText
-              black
+            <View
+              row
               style={{
-                fontSize: 16,
-                textDecorationLine: 'underline',
-                color: 'black',
+                gap: 8,
               }}>
-              הירשמו
-            </AppText>
-          </TouchableOpacity>
+              {['facebook', 'google', 'apple'].map(provider => {
+                const SocialIcon = SOCIAL_ICONS[provider];
+
+                return (
+                  <TouchableOpacity
+                    center
+                    style={{
+                      backgroundColor: '#FFF',
+                      flex: 1,
+                      borderRadius: 100,
+                      height: 64,
+                      width: width / 3.5,
+                      alignItems: 'center',
+                      shadowColor: '#000',
+                      shadowOffset: {
+                        width: 0,
+                        height: 1,
+                      },
+                      shadowOpacity: 0.22,
+                      shadowRadius: 2.22,
+                      elevation: 3,
+                    }}
+                    onPress={() => loginWith(provider)}>
+                    <SocialIcon />
+                  </TouchableOpacity>
+                );
+              })}
+            </View>
+          </View>
+
+          <View className="flex-col items-center gap-1">
+            <Text className="text-center text-black text-md">חדשים פה?</Text>
+            <TouchableOpacity onPress={() => navigate('Register')}>
+              <AppText
+                black
+                style={{
+                  fontSize: 16,
+                  textDecorationLine: 'underline',
+                  color: 'black',
+                }}>
+                הירשמו
+              </AppText>
+            </TouchableOpacity>
+          </View>
         </View>
       )}
     </View>

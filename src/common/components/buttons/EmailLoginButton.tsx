@@ -1,20 +1,36 @@
 import React from 'react';
-import { Text, TouchableOpacity } from 'react-native';
+import { Dimensions, Text, TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/Feather';
+
+const { width } = Dimensions.get('screen');
 
 export const EmailLoginButton: React.FC<{ onPress: () => void }> = ({
   onPress,
 }) => (
   <TouchableOpacity
-    className="justify-center items-center w-11/12 py-3 px-7 bg-[#273051] rounded-lg flex-row"
+    className="justify-center items-center py-3 bg-[#fff] rounded-lg flex-row"
+    style={{
+      gap: 8,
+      width: width / 1.5,
+      shadowColor: '#000',
+      shadowOffset: {
+        width: 0,
+        height: 1,
+      },
+      shadowOpacity: 0.22,
+      shadowRadius: 2.22,
+      elevation: 3,
+    }}
     onPress={onPress}>
     <Icon
       name="mail"
       size={20}
-      color="#fff"
-      style={{ position: 'absolute', left: 10 }}
+      color="#273051"
+      style={{
+        marginTop: 2,
+      }}
     />
-    <Text className="text-[#fff] text-lg text-center font-bold">
+    <Text className="text-[#273051] text-lg text-center font-bold">
       התחברו עם אימייל
     </Text>
   </TouchableOpacity>
