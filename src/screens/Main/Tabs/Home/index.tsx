@@ -171,7 +171,7 @@ const Feed: FC<FeedProps> = ({ navigation, copilot }) => {
                   </CopilotStep>
 
                   {collections.map(({ id, title, items }) => (
-                    <View className="flex-1">
+                    <View className="flex-1" key={id}>
                       <HorizontalCollection
                         shuffle={id !== 'top-rated' && id !== 'latest-release'}
                         key={id}
