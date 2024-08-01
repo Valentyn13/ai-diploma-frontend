@@ -111,7 +111,6 @@ const Explore = () => {
           <View>
             <View>
               <HorizontalCollection
-                prioritizeFree={!hasPremium}
                 items={firstCollection.items}
                 title={firstCollection.title}
                 onShowAll={() =>
@@ -138,7 +137,6 @@ const Explore = () => {
             {shuffleArray(collections).map(category => (
               <View key={category.id}>
                 <HorizontalCollection
-                  prioritizeFree={!hasPremium}
                   items={category.items}
                   title={category.title}
                   onShowAll={() => onShowAll(category.title, category.items)}

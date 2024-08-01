@@ -125,7 +125,6 @@ const Feed: FC<FeedProps> = ({ navigation, copilot }) => {
                   }}
                   className="flex-1">
                   <HorizontalCollection
-                    prioritizeFree={!hasPremium}
                     key="by-time"
                     title={byTimeCollection.title}
                     items={byTimeCollection.items}
@@ -174,7 +173,6 @@ const Feed: FC<FeedProps> = ({ navigation, copilot }) => {
                   {collections.map(({ id, title, items }) => (
                     <View className="flex-1">
                       <HorizontalCollection
-                        prioritizeFree={!hasPremium}
                         shuffle={id !== 'top-rated' && id !== 'latest-release'}
                         key={id}
                         title={title}
@@ -189,7 +187,6 @@ const Feed: FC<FeedProps> = ({ navigation, copilot }) => {
 
                   <View className="flex-1">
                     <HorizontalCollection
-                      prioritizeFree={!hasPremium}
                       shuffle={false}
                       limit={6}
                       title="תרגולי נשימה"

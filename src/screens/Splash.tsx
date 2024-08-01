@@ -6,13 +6,12 @@ import WithRotate from '@common/components/transitions/WithRotate';
 import WithScale from '@common/components/transitions/WithScale';
 import WithTranslateY from '@common/components/transitions/WithTranslateY';
 import config from '@common/config';
-import theme from '@common/theme';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { AMPLITUDE_EVENTS, useAmplitude } from '@services/hooks/useAmplitude';
 import useAppData from '@services/hooks/useAppData';
 import { useIntro } from '@services/hooks/useIntro';
 import React, { FC, useEffect, useState } from 'react';
-import { Text, View } from 'react-native';
+import { View } from 'react-native';
 import { useSelector } from 'react-redux';
 
 import { RootStackParamList } from './RootNavigator';
@@ -82,20 +81,6 @@ const Splash: FC<SplashProps> = ({ navigation: { navigate, replace } }) => {
             </WithRotate>
           </WithTranslateY>
         </WithPulse>
-      </WithFadeIn>
-
-      <WithFadeIn delay={500} duration={500}>
-        <WithTranslateY value={-50} duration={700} delay={1000}>
-          <WithScale scaleValue={0.9} duration={550}>
-            <Text
-              style={{
-                fontFamily: theme.fonts.regular,
-              }}
-              className="mt-2 text-center text-2xl text-white">
-              רגע
-            </Text>
-          </WithScale>
-        </WithTranslateY>
       </WithFadeIn>
     </View>
   );
