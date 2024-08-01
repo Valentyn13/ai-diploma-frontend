@@ -3,6 +3,19 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 
+const AsyncStorageWrapper = {
+  getItem: async (name: string) => {
+    const item = await AsyncStorage.getItem(name);
+    return item ? JSON.parse(item) : null;
+  },
+  setItem: (name: string, value: any) => {
+    return AsyncStorage.setItem(name, JSON.stringify(value));
+  },
+  removeItem: (name: string) => {
+    return AsyncStorage.removeItem(name);
+  },
+};
+
 type TrackStore = {
   selectedTrack: BgTrackID;
   setSelectedTrack: (id: BgTrackID) => void;
@@ -21,7 +34,7 @@ export const useBgTrackStore = create<TrackStore>(
     }),
     {
       name: 'bg-track-storage',
-      getStorage: () => AsyncStorage,
+      storage: AsyncStorageWrapper,
     },
   ),
 );
