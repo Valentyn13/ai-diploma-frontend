@@ -115,7 +115,7 @@ const Register = ({ navigation }) => {
         extraScrollHeight={40}
         keyboardOpeningTime={0}>
         <AppText style={{ color: '#000', fontSize: 18, marginTop: scale(50) }}>
-          איך זה?
+          הרשמה
         </AppText>
         <AppText
           style={{
@@ -125,7 +125,7 @@ const Register = ({ navigation }) => {
             color: '#000000',
           }}>
           {
-            'עוד רגע והחשבון שלך מוכן\nכל שנשאר זה למלא את הפרטים הדרושים,\nולאחר מכן נוכל להתחיל בחווית הרגע שהכנו לך'
+            'עוד רגע והחשבון שלך מוכן\nכל שנשאר זה למלא את הפרטים הדרושים,\nולאחר מכן נוכל להתחיל בחוויית רגע'
           }
         </AppText>
         <View
