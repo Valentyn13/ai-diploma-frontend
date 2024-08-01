@@ -1,10 +1,7 @@
 import Gradient from '@common/components/Gradient';
-import { Icon } from '@common/components/Styled';
+import Logo from '@common/components/Logo';
 import WithPulse from '@common/components/transitions/WIthPulse';
 import WithFadeIn from '@common/components/transitions/WithFadeIn';
-import WithRotate from '@common/components/transitions/WithRotate';
-import WithScale from '@common/components/transitions/WithScale';
-import WithTranslateY from '@common/components/transitions/WithTranslateY';
 import config from '@common/config';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { AMPLITUDE_EVENTS, useAmplitude } from '@services/hooks/useAmplitude';
@@ -52,9 +49,9 @@ const Splash: FC<SplashProps> = ({ navigation: { navigate, replace } }) => {
   }, [accessToken, getAppData, isFirstTimeUser, navigate]);
 
   useEffect(() => {
-    if (isLoaded && animationFinished) {
-      replace('Main');
-    }
+    // if (isLoaded && animationFinished) {
+    //   replace('Main');
+    // }
   }, [isLoaded, animationFinished, replace]);
 
   useEffect(() => {
@@ -69,17 +66,9 @@ const Splash: FC<SplashProps> = ({ navigation: { navigate, replace } }) => {
   return (
     <View className="flex-1 items-center justify-center">
       <Gradient colors={['#6190E8', '#A395D1', '#FFEFD7']} angle={45} />
-      <WithFadeIn delay={0} duration={500}>
-        <WithPulse scaleMin={0.9} scaleMax={1.1} duration={2000}>
-          <WithTranslateY value={-50} duration={700} delay={1000}>
-            <WithRotate degrees={10} duration={600}>
-              <WithScale scaleValue={0.9} duration={550}>
-                <WithRotate degrees={-20} duration={600}>
-                  <Icon color="white" name="logo" size={100} />
-                </WithRotate>
-              </WithScale>
-            </WithRotate>
-          </WithTranslateY>
+      <WithFadeIn delay={0} duration={1000}>
+        <WithPulse scaleMin={0.9} scaleMax={1.2} duration={2000}>
+          <Logo transform={[{ rotate: '-10deg' }]} />
         </WithPulse>
       </WithFadeIn>
     </View>
