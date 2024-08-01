@@ -49,9 +49,9 @@ const Splash: FC<SplashProps> = ({ navigation: { navigate, replace } }) => {
   }, [accessToken, getAppData, isFirstTimeUser, navigate]);
 
   useEffect(() => {
-    // if (isLoaded && animationFinished) {
-    //   replace('Main');
-    // }
+    if (isLoaded && animationFinished) {
+      replace('Main');
+    }
   }, [isLoaded, animationFinished, replace]);
 
   useEffect(() => {
