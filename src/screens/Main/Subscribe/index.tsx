@@ -237,7 +237,7 @@ const Subscribe: FC = ({ navigation }) => {
                       selected={selectedPlan === 'annual'}
                       onPress={() => setSelectedPlan('annual')}
                       title="מנוי שנתי"
-                      monthPrice={18.75}
+                      monthPrice={15.6}
                       subTitle={
                         <Text className="text-white text-center text-sm">
                           <Text
@@ -246,7 +246,7 @@ const Subscribe: FC = ({ navigation }) => {
                                 ? 'font-bold'
                                 : 'font-medium'
                             }`}>
-                            ₪224.90
+                            ₪187.90
                             {'  '}
                           </Text>
                           <Text
@@ -255,13 +255,13 @@ const Subscribe: FC = ({ navigation }) => {
                                 ? 'font-bold'
                                 : 'font-medium'
                             }`}>
-                            ₪419.90
+                            ₪358.90
                           </Text>
                         </Text>
                       }
                     />
                     <PackageItem
-                      monthPrice={34.9}
+                      monthPrice={29.9}
                       selected={selectedPlan === 'monthly'}
                       onPress={() => setSelectedPlan('monthly')}
                       title="מנוי חודשי"
