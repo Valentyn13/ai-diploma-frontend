@@ -5,13 +5,12 @@ import SessionsGrid from '@common/components/SessionsGrid';
 import { ListTitle } from '@common/components/Styled';
 import Meditate from '@common/components/animation/Meditate';
 import NotFound from '@common/components/animation/NotFound';
-import { usePurchases } from '@common/context/PurchaseContext';
 import theme from '@common/theme';
 import { useNavigation } from '@react-navigation/native';
 import { useDebouncedState } from '@services/hooks/useDebouncedState';
 import useDiscovery from '@services/hooks/useDiscovery';
 import { categoriesSelector } from '@store/selectors';
-import { searchInCategories } from '@utils/category';
+import { querySessions } from '@utils/category';
 import { shuffleArray } from '@utils/rand';
 import React, { useEffect, useMemo, useState } from 'react';
 import { ActivityIndicator, ScrollView, Text, View } from 'react-native';
@@ -22,11 +21,11 @@ import { Session } from 'types/Meditation';
 import SearchBar from './SearchBar';
 
 const Explore = () => {
-  const { hasPremium } = usePurchases();
   const [firstCollection, ...collections] = useDiscovery();
   const [isLoading, setIsLoading] = useState(false);
   const [searchQuery, setSearchQuery] = useDebouncedState('', 500);
   const { navigate } = useNavigation();
+  const instructors = useSelector((state: any) => state.appData.instructors);
   const categories = useSelector(categoriesSelector) as Category[];
 
   useEffect(() => {
@@ -41,12 +40,9 @@ const Explore = () => {
     });
   };
 
-  const filteredCategories = useMemo(
-    () =>
-      searchQuery.length > 2
-        ? searchInCategories(categories, searchQuery.toLowerCase())
-        : categories,
-    [categories, searchQuery],
+  const filteredSessions = useMemo(
+    () => querySessions(categories, instructors, searchQuery.toLowerCase()),
+    [categories, instructors, searchQuery],
   );
 
   return (
@@ -92,7 +88,7 @@ const Explore = () => {
 
       {!isLoading &&
         searchQuery.length > 2 &&
-        filteredCategories.length === 0 && (
+        filteredSessions.length === 0 && (
           <View className="flex-1 flex items-center justify-center">
             <View className="px-4 py-2">
               <Text className="text-gray-500 text-center">
@@ -105,58 +101,49 @@ const Explore = () => {
           </View>
         )}
 
-      {!isLoading &&
-        searchQuery.length === 0 &&
-        filteredCategories.length > 0 && (
+      {!isLoading && searchQuery.length === 0 && (
+        <View>
           <View>
-            <View>
-              <HorizontalCollection
-                items={firstCollection.items}
-                title={firstCollection.title}
-                onShowAll={() =>
-                  onShowAll(firstCollection.title, firstCollection.items)
-                }
-              />
-              <Divider className="my-6" />
-            </View>
-            <View className="px-3">
-              <View className="mb-5 px-2">
-                <ListTitle t="על פי קטגוריה" />
-              </View>
-              <CategoriesSelection
-                categories={categories}
-                onPress={(c: Category) => {
-                  if (!c) {
-                    return;
-                  }
-                  onShowAll(c.title, c.meditations);
-                }}
-              />
-              <Divider className="my-6" />
-            </View>
-            {shuffleArray(collections).map(category => (
-              <View key={category.id}>
-                <HorizontalCollection
-                  items={category.items}
-                  title={category.title}
-                  onShowAll={() => onShowAll(category.title, category.items)}
-                />
-                <Divider className="my-6" />
-              </View>
-            ))}
+            <HorizontalCollection
+              items={firstCollection.items}
+              title={firstCollection.title}
+              onShowAll={() =>
+                onShowAll(firstCollection.title, firstCollection.items)
+              }
+            />
+            <Divider className="my-6" />
           </View>
-        )}
+          <View className="px-3">
+            <View className="mb-5 px-2">
+              <ListTitle t="על פי קטגוריה" />
+            </View>
+            <CategoriesSelection
+              categories={categories}
+              onPress={(c: Category) => {
+                if (!c) {
+                  return;
+                }
+                onShowAll(c.title, c.meditations);
+              }}
+            />
+            <Divider className="my-6" />
+          </View>
+          {shuffleArray(collections).map(category => (
+            <View key={category.id}>
+              <HorizontalCollection
+                items={category.items}
+                title={category.title}
+                onShowAll={() => onShowAll(category.title, category.items)}
+              />
+              <Divider className="my-6" />
+            </View>
+          ))}
+        </View>
+      )}
 
-      {searchQuery.length > 2 && filteredCategories.length > 0 && (
+      {searchQuery.length > 2 && filteredSessions.length > 0 && (
         <View className="px-5">
-          <SessionsGrid
-            meditations={shuffleArray(
-              filteredCategories.reduce(
-                (acc, curr) => [...acc, ...curr.meditations],
-                [] as Session[],
-              ),
-            )}
-          />
+          <SessionsGrid meditations={shuffleArray(filteredSessions)} />
         </View>
       )}
     </ScrollView>

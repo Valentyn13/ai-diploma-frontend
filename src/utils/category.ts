@@ -1,39 +1,39 @@
 import { Category } from 'types/Category';
 import { Session } from 'types/Meditation';
 
-const queryInMeditation = (meditation: Session, query: string) => {
-  return meditation.name.toLowerCase().includes(query.toLowerCase());
-};
+const querySession = (
+  categoryName: string,
+  meditationName: string,
+  instructorName: string,
+  query: string,
+) =>
+  categoryName.toLowerCase().includes(query.toLowerCase()) ||
+  meditationName.toLowerCase().includes(query.toLowerCase()) ||
+  instructorName.toLowerCase().includes(query.toLowerCase());
 
-function searchInMeditations(meditations: Session[], query: string) {
-  return meditations.filter(meditation => {
-    return queryInMeditation(meditation, query);
-  });
-}
-
-const queryInCategory = (category: Category, query: string) => {
-  if (category.title.toLowerCase().includes(query.toLowerCase())) {
-    return true;
+export function querySessions(
+  categories: Category[],
+  instructors: any[],
+  query: string,
+) {
+  if (query.length < 3) {
+    return categories.reduce(
+      (acc, category) => [...acc, ...category.meditations],
+      [] as Session[],
+    );
   }
 
-  return category.meditations.some(meditation => {
-    return queryInMeditation(meditation, query);
-  });
-};
+  return categories.reduce((acc, category) => {
+    const sessions = category.meditations.filter(session =>
+      querySession(
+        category.title,
+        session.name,
+        instructors.find(i => i.categories.includes(session.id)).name ||
+          'default',
+        query,
+      ),
+    );
 
-export function searchInCategories(categories: Category[], query: string) {
-  return categories
-    .filter(category => {
-      return queryInCategory(category, query);
-    })
-    .map(category => {
-      if (category.title.toLowerCase().includes(query.toLowerCase())) {
-        return category;
-      }
-
-      return {
-        ...category,
-        meditations: searchInMeditations(category.meditations, query),
-      };
-    });
+    return [...acc, ...sessions];
+  }, [] as Session[]);
 }
