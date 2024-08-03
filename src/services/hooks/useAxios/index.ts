@@ -139,6 +139,7 @@ export default ({
 
         if (status === 200 || status === 201) {
           if (token && token.accessToken) {
+            console.log('setting token');
             setAuthHeader(token.accessToken);
             storeToken(token.accessToken);
           }
@@ -160,6 +161,7 @@ export default ({
             );
 
             if (accessToken && refreshToken) {
+              console.log('setting token');
               storeToken(accessToken);
               dispatchAction(setAccessToken({ accessToken, refreshToken }));
               const res = requestAfterRefresh(requestApi, apiParams, user.id);

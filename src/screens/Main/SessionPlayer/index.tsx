@@ -3,7 +3,6 @@ import FavoriteButton from '@common/components/FavoriteButton';
 import { CircleButton } from '@common/components/buttons/CircleButton';
 import { useRoute } from '@react-navigation/native';
 import { useAmplitude } from '@services/hooks/useAmplitude';
-import { useFlag } from '@services/hooks/useFlag';
 import useTrigger from '@services/hooks/useTrigger';
 import useUpdateMeditation from '@services/hooks/useUpdateMeditation';
 import { meditationStarted, minutesPracticed } from '@store/actions';
@@ -81,13 +80,13 @@ const MeditationPlayer: FC = ({ navigation }) => {
   const controlsOpacity = useSharedValue(1);
   const { state } = usePlaybackState();
   const { playing } = useIsPlaying();
-  const value = useFlag<number>('push_to_michael', 5);
+  // const value = useFlag<number>('push_to_michael', 1);
 
   const triggerMichael = useTrigger(
-    // () => setIsOpen(true),
-    () => {},
+    () => setIsOpen(true),
+    // () => {},
     'push_to_michael',
-    value,
+    1,
   );
 
   useEffect(() => {
