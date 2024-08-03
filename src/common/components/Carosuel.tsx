@@ -1,3 +1,4 @@
+import { getCategoryImg } from '@common/assets/images';
 import { useNavigation } from '@react-navigation/native';
 import { FC, default as React, useCallback } from 'react';
 import type {
@@ -172,8 +173,12 @@ const Carousel2: FC<CoursesCarouselProps> = ({
   const { navigate } = useNavigation();
 
   const onItemPress = useCallback(
-    (item: any) => {
-      navigate('Courses', { item });
+    (item: { id: string }, index: number) => {
+      // @ts-ignore
+      navigate('Course', {
+        id: item.id,
+        image: getCategoryImg('starthere', index),
+      });
     },
     [navigate],
   );
@@ -184,7 +189,7 @@ const Carousel2: FC<CoursesCarouselProps> = ({
         <CoursesCarouselItem
           item={item}
           index={index}
-          onPress={() => onItemPress(item)}
+          onPress={() => onItemPress(item, index)}
         />
       );
     },

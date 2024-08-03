@@ -1,7 +1,13 @@
 import { useNavigation } from '@react-navigation/native';
+import {
+  addFavoriteMeditation,
+  removeFavoriteMeditation,
+} from '@store/actions';
+import { favoriteMeditationsSelector } from '@store/selectors';
 import captureMessage from '@utils/captureMessage';
 import React, { FC, useCallback } from 'react';
 import { FlatList, ListRenderItemInfo } from 'react-native';
+import { useDispatch, useSelector } from 'react-redux';
 import { Session } from 'types/Meditation';
 
 import CourseRowItem from './CourseRowItem';
@@ -22,6 +28,10 @@ const CourseMeditations: FC<CourseMeditationsProps> = ({
   hasPremium,
 }) => {
   const { navigate } = useNavigation();
+  const favoriteSessions = useSelector(
+    favoriteMeditationsSelector,
+  ) as Session[];
+  const dispatch = useDispatch();
 
   const onPress = useCallback(
     (item: Session) => {
@@ -34,6 +44,17 @@ const CourseMeditations: FC<CourseMeditationsProps> = ({
     [hasPremium, isCategoryLocked, navigate],
   );
 
+  const onFavoritePress = useCallback(
+    (id: string) => {
+      const isFavorite = favoriteSessions.map(item => item.id).includes(id);
+      const action = isFavorite
+        ? removeFavoriteMeditation
+        : addFavoriteMeditation;
+      dispatch(action({ meditationId: id }));
+    },
+    [dispatch, favoriteSessions],
+  );
+
   const renderItem = (props: RenderItemProps) => {
     const { item, index } = props;
 
@@ -42,6 +63,8 @@ const CourseMeditations: FC<CourseMeditationsProps> = ({
         isListened={history.includes(item.id)}
         item={item}
         onPress={() => onPress(item)}
+        isFavorite={favoriteSessions.map(({ id }) => id).includes(item.id)}
+        onFavoritePress={() => onFavoritePress(item.id)}
         index={index}
       />
     );

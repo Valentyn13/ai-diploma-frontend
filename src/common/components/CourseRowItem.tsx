@@ -1,4 +1,5 @@
-import FavoriteButton from '@common/components/FavoriteButton';
+import { Icon } from '@common/components/Styled';
+import theme from '@common/theme';
 import meditationTime from '@utils/time';
 import React, { memo } from 'react';
 import { Text, View } from 'react-native';
@@ -8,17 +9,21 @@ import { Session } from 'types/Meditation';
 interface CourseRowItemProps {
   item: Session;
   onPress: () => void;
+  onFavoritePress: () => void;
   index: number;
   isListened: boolean;
+  isFavorite: boolean;
 }
 
 const CourseRowItem: React.FC<CourseRowItemProps> = ({
   item,
   onPress,
+  onFavoritePress,
   index,
   isListened,
+  isFavorite = false,
 }) => {
-  const { name, id, duration } = item;
+  const { name, duration } = item;
 
   return (
     <TouchableOpacity
@@ -40,7 +45,12 @@ const CourseRowItem: React.FC<CourseRowItemProps> = ({
         </Text>
       </View>
       <View>
-        <FavoriteButton id={id} isDark={true} />
+        <TouchableOpacity onPress={onFavoritePress}>
+          <Icon
+            name={isFavorite ? 'heartSelected' : 'heart'}
+            color={theme.colors.textColor}
+          />
+        </TouchableOpacity>
       </View>
     </TouchableOpacity>
   );
