@@ -83,8 +83,8 @@ const MeditationPlayer: FC = ({ navigation }) => {
   // const value = useFlag<number>('push_to_michael', 1);
 
   const triggerMichael = useTrigger(
-    () => setIsOpen(true),
-    // () => {},
+    // () => setIsOpen(false),
+    () => {},
     'push_to_michael',
     1,
   );
