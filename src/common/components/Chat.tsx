@@ -3,17 +3,16 @@ import React, { useRef } from 'react';
 import { FlatList, Platform, Pressable, View } from 'react-native';
 import {
   Bubble,
+  BubbleProps,
   GiftedChat,
   IMessage,
   InputToolbar,
+  InputToolbarProps,
   Send,
+  SendProps,
 } from 'react-native-gifted-chat';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import Icon from 'react-native-vector-icons/Feather';
-
-import { BubbleProps } from '../../../node_modules/react-native-gifted-chat/lib/Bubble.d.ts';
-import { InputToolbarProps } from '../../../node_modules/react-native-gifted-chat/lib/InputToolbar.d.ts';
-import { SendProps } from '../../../node_modules/react-native-gifted-chat/lib/Send.d.ts';
 
 interface ChatComponentProps {
   messages: IMessage[];
