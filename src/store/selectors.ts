@@ -220,7 +220,7 @@ export const toptMeditationSelector = createSelector(
       (value, index) => names.indexOf(value.name) === index,
     );
     topRated.sort((a, b) => b.count - a.count);
-    return topRated.slice(0, 9);
+    return topRated.slice(0, 30);
   },
 );
 
