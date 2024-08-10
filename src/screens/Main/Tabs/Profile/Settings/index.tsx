@@ -10,7 +10,7 @@ import { logout } from '@store/actions';
 import { logEvent } from '@utils/analytics';
 import { fbLogout } from '@utils/facebook';
 import { googleSignOut } from '@utils/google';
-import React, { useRef } from 'react';
+import React from 'react';
 import {
   Alert,
   FlatList,
@@ -107,40 +107,45 @@ const Settings = ({ navigation }) => {
     );
   };
 
-  const timePickerRef = useRef(null);
-
   const cancelSubscriptionPrompt = () => {
-    Alert.prompt(
-      'ביטול מנוי',
-      'אנא הזינו את הסיבה לביטול המנוי, על מנת שנוכל לשפר את השירות',
-      [
-        {
-          text: 'ביטול',
-          onPress: () => console.log('Cancelled'),
-          style: 'cancel',
-        },
-        {
-          text: 'אישור',
-          onPress: reason => {
-            cancelSubscription(reason);
-            const url =
-              Platform.OS === 'android'
-                ? 'https://play.google.com/store/account/subscriptions'
-                : 'https://apps.apple.com/account/subscriptions';
-
-            Linking.openURL(url).catch(err => {
-              Alert.alert(
-                'Unable to open the app',
-                'Please contact support via email at hello@rega.co.il, thank you',
-              );
-            });
+    if (Platform.OS === 'android') {
+      const url = 'https://play.google.com/store/account/subscriptions';
+      Linking.openURL(url).catch(err => {
+        Alert.alert(
+          'לא ניתן לפתוח את האפליקציה',
+          'אנא צרו קשר עם התמיכה בוואטסאפ',
+        );
+      });
+    } else {
+      Alert.prompt(
+        'ביטול מנוי',
+        'אנא הזינו את הסיבה לביטול המנוי, על מנת שנוכל לשפר את השירות',
+        [
+          {
+            text: 'ביטול',
+            onPress: () => console.log('Cancelled'),
+            style: 'cancel',
           },
-          style: 'destructive',
-        },
-      ],
-      'plain-text',
-      'אני רוצה לבטל את הרישום כי ',
-    );
+          {
+            text: 'אישור',
+            onPress: reason => {
+              cancelSubscription(reason);
+              const url = 'https://apps.apple.com/account/subscriptions';
+
+              Linking.openURL(url).catch(err => {
+                Alert.alert(
+                  'לא ניתן לפתוח את האפליקציה',
+                  'אנא צרו קשר עם התמיכה בוואטסאפ',
+                );
+              });
+            },
+            style: 'destructive',
+          },
+        ],
+        'plain-text',
+        'אני רוצה לבטל את הרישום כי ',
+      );
+    }
   };
 
   const logoutConfirm = () => {
