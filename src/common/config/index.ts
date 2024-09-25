@@ -1,4 +1,4 @@
-import { HOST, PORT } from '@env';
+import { HOST, PORT, DEV_HOST } from '@env';
 
 const baseURL = `http://${HOST}:${PORT}/v1/`;
 const isDev = process.env.NODE_ENV === 'development';
