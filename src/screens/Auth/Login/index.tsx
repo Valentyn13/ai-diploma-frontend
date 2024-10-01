@@ -2,6 +2,7 @@ import AppButton from '@common/components/AppButton';
 import AppText from '@common/components/AppText';
 import { Icon } from '@common/components/Styled';
 import { CircleButton } from '@common/components/buttons/CircleButton';
+import config from '@common/config';
 import crashlytics from '@react-native-firebase/crashlytics';
 import { useNavigation } from '@react-navigation/native';
 import { useAmplitude } from '@services/hooks/useAmplitude';
@@ -53,11 +54,14 @@ const Login: FC = () => {
 
   useEffect(() => {
     if (user.accessToken) {
-      amplitudeInstance.setUserId(user.id);
-      amplitudeInstance.logEvent('LOGIN', { userID: user.id });
-      amplitudeInstance.uploadEvents();
+      if (!config.isDev) {
+        amplitudeInstance.setUserId(user.id);
+        amplitudeInstance.logEvent('LOGIN', { userID: user.id });
+        amplitudeInstance.uploadEvents();
+        initCrashlytics();
+      }
+
       getAppData();
-      initCrashlytics();
     }
   }, [user.accessToken, getAppData]);
 

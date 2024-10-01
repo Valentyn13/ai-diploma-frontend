@@ -6,11 +6,12 @@ import {
   setUserId,
   track,
 } from '@amplitude/analytics-react-native';
+import config from '@common/config';
 import { useCallback } from 'react';
 
 const AMPLITUDE_API_KEY = '427fe3c12d3885dc7345d6a53e3877c8';
 
-init(AMPLITUDE_API_KEY);
+init(config.isDev ? '' : AMPLITUDE_API_KEY);
 
 export const AMPLITUDE_EVENTS = {
   // Onboarding
@@ -22,6 +23,10 @@ export const AMPLITUDE_EVENTS = {
 export const useAmplitude = () => {
   const trackEvent = useCallback(
     (event: string, props?: Record<string, any>) => {
+      if (config.isDev) {
+        return;
+      }
+
       track(event, props);
     },
     [],
@@ -31,6 +36,10 @@ export const useAmplitude = () => {
     logEvent: trackEvent,
     setUserId,
     logRevenue: item => {
+      if (config.isDev) {
+        return;
+      }
+
       try {
         const event = new Revenue()
           .setProductId(item.productId)
@@ -42,6 +51,10 @@ export const useAmplitude = () => {
       }
     },
     uploadEvents: () => {
+      if (config.isDev) {
+        return;
+      }
+
       flush();
     },
   };

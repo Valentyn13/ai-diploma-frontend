@@ -3,6 +3,7 @@ import AppButton from '@common/components/AppButton';
 import AppText from '@common/components/AppText';
 import AppTextInput from '@common/components/AppTextInput';
 import { CircleButton } from '@common/components/buttons/CircleButton';
+import config from '@common/config';
 import CheckBox from '@react-native-community/checkbox';
 import { useAmplitude } from '@services/hooks/useAmplitude';
 import useAppData from '@services/hooks/useAppData';
@@ -71,8 +72,10 @@ const Register = ({ navigation }) => {
       return;
     }
 
-    amplitudeInstance.setUserId(id);
-    amplitudeInstance.logEvent('SIGNUP', { userID: id });
+    if (!config.isDev) {
+      amplitudeInstance.setUserId(id);
+      amplitudeInstance.logEvent('SIGNUP', { userID: id });
+    }
     getAppData();
 
     AppEventsLogger.logEvent(AppEventsLogger.AppEvents.CompletedRegistration, {

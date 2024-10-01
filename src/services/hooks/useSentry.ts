@@ -1,3 +1,4 @@
+import config from '@common/config';
 import * as Sentry from '@sentry/react-native';
 import { useEffect } from 'react';
 
@@ -7,6 +8,7 @@ const SENTRY_DSN =
 Sentry.init({
   dsn: SENTRY_DSN,
   tracesSampleRate: 1.0,
+  enabled: !config.isDev,
 });
 
 const useSentry = () => {
