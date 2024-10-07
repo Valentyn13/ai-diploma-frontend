@@ -1,13 +1,19 @@
 import { useEffect, useState } from 'react';
 
-const useStreamText = (text: string | undefined, interval = 80) => {
+type Props = {
+  text: string;
+  interval?: number;
+  shouldStart?: boolean;
+};
+
+const useStreamText = ({ text, interval = 80, shouldStart }: Props) => {
   const [displayText, setDisplayText] = useState('');
 
   useEffect(() => {
     setDisplayText('');
 
     let currentIndex = 0;
-    if (!text) {
+    if (!text || !shouldStart) {
       return;
     }
 
@@ -27,7 +33,7 @@ const useStreamText = (text: string | undefined, interval = 80) => {
     return () => {
       clearInterval(timer);
     };
-  }, [text, interval]);
+  }, [text, shouldStart, interval]);
 
   return displayText;
 };

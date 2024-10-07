@@ -1,6 +1,9 @@
 import image from '@common/assets/images';
+import CryptoJS from 'react-native-crypto-js';
 import { IMessage } from 'react-native-gifted-chat';
-import { Message } from 'react-native-vercel-ai';
+import { Message } from 'types/Chat';
+
+import { generateUUID } from './generateUUID';
 
 export const SYSTEM_USER = {
   _id: 'DR_MICHAEL',
@@ -61,18 +64,18 @@ export const getFirstMsgs = (name: string, gender: 'M' | 'F'): IMessage[] => [
 
 export const mapMessageToIMessage = (message: Message): IMessage => {
   return {
-    _id: message.id,
+    _id: message._id || generateUUID(),
     text: message.content,
-    createdAt: new Date(message.createdAt || new Date()),
+    createdAt: new Date(message.timestamp),
     user: message.role === 'user' ? { _id: 'USER' } : SYSTEM_USER,
   };
 };
 
 export const mapIMessageToMessage = (message: IMessage): Message => {
   return {
-    id: message._id.toString(),
+    id: message._id as string,
     content: message.text,
-    createdAt: new Date(message.createdAt),
-    role: message.user._id === 'USER' ? 'user' : 'system',
+    timestamp: message.createdAt.toString(),
+    role: message.user._id === 'USER' ? 'user' : 'assistant',
   };
 };

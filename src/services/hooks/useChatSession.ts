@@ -1,11 +1,10 @@
-import { chatApi } from '@common/config';
-import { jwtToken } from '@services/hooks/useAxios/index';
+import { fetchChat } from '@services/api/chat';
 import { useEffect, useState } from 'react';
 import { Session } from 'types/Chat';
 
-const useChatSession = (chatId: string, isNew: boolean) => {
+const useChatSession = (chatId: string | null) => {
   const [chat, setChat] = useState<Session>({
-    id: '',
+    _id: '',
     userId: '',
     messages: [],
   });
@@ -13,33 +12,18 @@ const useChatSession = (chatId: string, isNew: boolean) => {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    const fetchChat = async () => {
-      try {
-        setLoading(true);
-        const response = await fetch(`${chatApi}/${chatId}`, {
-          headers: {
-            Authorization: `Bearer ${jwtToken}`,
-            'content-type': 'application/json',
-          },
-        });
-        if (!response.ok) {
-          throw new Error('Failed to fetch chat');
-        }
-        const data = await response.json();
-        setChat(data);
-        setLoading(false);
-      } catch (err) {
-        setError(err);
-        setLoading(false);
-      }
-    };
-
-    if (chatId && !isNew) {
-      fetchChat();
-    } else {
-      setChat({ id: chatId, userId: '', messages: [] });
+    if (!chatId) {
+      return;
     }
-  }, [chatId, isNew]);
+    setLoading(true);
+    fetchChat(chatId)
+      .then(chatData => setChat(chatData))
+      .catch(error => {
+        console.log(error);
+        setError(error);
+      })
+      .finally(() => setLoading(false));
+  }, [chatId]);
 
   return { chat, loading, error };
 };
