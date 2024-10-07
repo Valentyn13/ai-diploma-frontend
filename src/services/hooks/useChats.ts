@@ -19,14 +19,16 @@ const useChats = () => {
     try {
       setLoading(true);
       const data = await fetchChats(user.id);
-
       if (!data) {
         throw new Error('No data');
       }
-
-      setChats(data);
+      const withNeedStreaming = data.map(chat => ({
+        ...chat,
+        needStreaming: false,
+      }));
+      setChats(withNeedStreaming);
       setLoading(false);
-    } catch (err) {
+    } catch (err: any) {
       setChats([]);
       setError(err);
       setLoading(false);
@@ -36,7 +38,6 @@ const useChats = () => {
   useEffect(() => {
     fetchData();
   }, [fetchData]);
-
   return { chats, loading, error, fetchData };
 };
 

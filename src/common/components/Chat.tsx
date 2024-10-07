@@ -1,6 +1,6 @@
 import theme from '@common/theme';
-import React, { useRef } from 'react';
-import { FlatList, Platform, Pressable, View } from 'react-native';
+import React, { useEffect, useRef } from 'react';
+import { FlatList, Platform, View } from 'react-native';
 import {
   Bubble,
   BubbleProps,
@@ -81,17 +81,18 @@ const Chat: React.FC<ChatComponentProps> = ({
   const ref = useRef<FlatList<IMessage>>(null);
   const insets = useSafeAreaInsets();
 
+  useEffect(() => {
+    if (shouldShowPaywall) {
+      navigation.navigate('Main', {
+        screen: 'Subscribe',
+        params: {
+          isFromChatScreen: true,
+        },
+      });
+    }
+  }, [shouldShowPaywall, navigation]);
   return (
     <View className="w-full h-full bg-[#FFF7EA]">
-      {shouldShowPaywall && (
-        <Pressable
-          className="absolute top-0 left-0 w-full h-full z-10"
-          onPress={() => {
-            navigation.navigate('Main', { screen: 'Subscribe' });
-          }}
-        />
-      )}
-
       <GiftedChat
         renderAvatarOnTop
         messageContainerRef={ref}

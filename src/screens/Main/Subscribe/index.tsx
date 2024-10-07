@@ -99,6 +99,8 @@ const Subscribe: FC = ({ navigation }) => {
 
   // @ts-ignore
   const isFirstTime = route.params?.isFirstTime as boolean;
+  // @ts-ignore
+  const isFromChatScreen = route.params?.isFromChatScreen as boolean;
 
   const initRudderstack = async () => {
     await rudderClient.setup('2Ah3U42Qc6y9v3PB4w8sKYhvkkJ', {
@@ -117,6 +119,11 @@ const Subscribe: FC = ({ navigation }) => {
 
   const onClose = async () => {
     await AsyncStorage.setItem(KEY_PLAYED_FIRST, true.toString());
+
+    if (isFromChatScreen) {
+      navigation.replace('Main', { screen: 'Home' });
+      return;
+    }
 
     if (isFirstTime) {
       navigation.replace('Main', { screen: 'Home' });

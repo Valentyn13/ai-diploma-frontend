@@ -2,9 +2,11 @@ import Chat from '@common/components/Chat';
 import { usePurchases } from '@common/context/PurchaseContext';
 import theme from '@common/theme';
 import { useNavigation } from '@react-navigation/native';
+import { useChat } from '@services/hooks/useChat';
 import useChatSession from '@services/hooks/useChatSession';
 import useStreamText from '@services/hooks/useStreamText';
 import { useUser } from '@services/hooks/useUser';
+import { useChatsStore } from '@store/useChatsStore';
 import {
   SYSTEM_USER,
   getFirstMsgs,
@@ -13,90 +15,119 @@ import {
 } from '@utils/chat';
 import React, { useEffect, useMemo, useState } from 'react';
 import { ActivityIndicator, Text, View } from 'react-native';
-import CryptoJS from 'react-native-crypto-js';
 import { IMessage } from 'react-native-gifted-chat';
-import { useChat } from 'react-native-vercel-ai';
-
-const generateUUID = () => CryptoJS.lib.WordArray.random(128 / 8).toString();
-const API_URL = 'https://chat.rega.co.il/api/chat';
 
 export default function ChatContainer({
   route: { params },
 }: {
-  route: { params: { id: string; isNew: boolean } };
+  route: {
+    params: { id: string | null; isNew: boolean };
+  };
 }) {
-  const {
-    user: { id: userId, name, sex },
-  } = useUser();
-  const { hasPremium } = usePurchases();
   const navigation = useNavigation();
-  const { chat, loading, error } = useChatSession(params.id, params?.isNew);
+
+  const chatIdFromDrawer = params.id;
+  const isNew = params.isNew;
+
+  const { chats, currentChatId, setCurrentChatId, updateChatStreaming } =
+    useChatsStore(state => ({
+      chats: state.chats,
+      currentChatId: state.currentChatId,
+      setCurrentChatId: state.setCurrentChatId,
+      updateChatStreaming: state.updateChatStreaming,
+    }));
+
+  const calculatedChatId = chatIdFromDrawer || (isNew ? null : currentChatId);
+
   const [sessionStarted, setSessionStarted] = useState(false);
 
   const {
-    messages: chatMsgs,
-    setMessages,
-    append,
-    isLoading,
-  } = useChat({
-    api: API_URL,
-    body: {
-      userId,
-      sessionId: params.id,
-    },
-    headers: {
-      'content-type': 'application/json',
-    },
+    user: { id: userId, name, sex },
+  } = useUser();
+
+  const { hasPremium } = usePurchases();
+
+  const { chat, loading, error } = useChatSession(chatIdFromDrawer);
+
+  const { messages, isMessageLoading, updateMessages, addMessage } = useChat({
+    userId,
+    chatId: calculatedChatId,
   });
 
+  const chatStreamStatus = useMemo(() => {
+    const currentChat = chats.find(chat => chat.chatId === calculatedChatId);
+    return currentChat?.needStreaming || false;
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const streamLastMessage = sessionStarted || chatStreamStatus;
+
   useEffect(() => {
-    setMessages(chat.messages.map(m => ({ ...m, id: generateUUID() })));
-  }, [chat.messages, setMessages]);
+    if (calculatedChatId) {
+      updateChatStreaming(calculatedChatId);
+    }
+  }, [calculatedChatId, updateChatStreaming]);
 
-  const onSend = (msgs: IMessage[] = []) => {
-    const msg = mapIMessageToMessage(msgs[0]);
-    append(msg);
-    setSessionStarted(true);
-  };
+  const shouldShowPaywall = useMemo(() => !hasPremium, [hasPremium]);
 
-  const shouldShowPaywall = useMemo(
-    () => !hasPremium && chatMsgs.length >= 4,
-    [chatMsgs.length, hasPremium],
+  const messagesToShowInChat = useMemo(
+    () => (messages.length ? messages : getFirstMsgs(name, sex)),
+    [messages, name, sex],
   );
 
   const sysLastMsg = useMemo(() => {
-    const lastMsg = chatMsgs[chatMsgs.length - 1];
-    return lastMsg?.role === 'assistant' && sessionStarted
+    const lastIMessage = messages[messages.length - 1];
+    if (!lastIMessage) {
+      return undefined;
+    }
+    const lastMsg = mapIMessageToMessage(lastIMessage);
+    return lastMsg?.role === 'assistant' && streamLastMessage
       ? lastMsg
       : undefined;
-  }, [chatMsgs, sessionStarted]);
+  }, [messages, streamLastMessage]);
 
-  const streamedText = useStreamText(sysLastMsg?.content);
-
-  const messages = useMemo(
-    () =>
-      chatMsgs.length
-        ? chatMsgs.map(mapMessageToIMessage)
-        : getFirstMsgs(name, sex),
-    [chatMsgs, name, sex],
-  );
+  const streamedText = useStreamText({
+    text: sysLastMsg?.content || '',
+    shouldStart: streamLastMessage,
+  });
 
   const streamedMsgs = useMemo(
     () =>
-      messages.map((msg, index) => {
+      messagesToShowInChat.map((msg, index) => {
         if (
-          index === messages.length - 1 &&
+          index === messagesToShowInChat.length - 1 &&
           msg.user._id === SYSTEM_USER._id &&
-          sessionStarted
+          streamLastMessage
         ) {
           return { ...msg, text: streamedText };
         }
         return msg;
       }),
-    [messages, sessionStarted, streamedText],
+    [messagesToShowInChat, streamLastMessage, streamedText],
   );
 
-  if (!params?.isNew && loading) {
+  const onSend = (msgs: IMessage[] = []) => {
+    setSessionStarted(true);
+    const msg = mapIMessageToMessage(msgs[0]);
+    addMessage(msg);
+  };
+
+  useEffect(() => {
+    const iMessagesFromIncomingChatMessages =
+      chat.messages.map(mapMessageToIMessage);
+    updateMessages(iMessagesFromIncomingChatMessages);
+  }, [chat, updateMessages]);
+
+  useEffect(() => {
+    if (isNew && !chatIdFromDrawer) {
+      setCurrentChatId(null);
+    }
+    if (!isNew && calculatedChatId) {
+      setCurrentChatId(calculatedChatId);
+    }
+  }, [isNew, chatIdFromDrawer, setCurrentChatId, calculatedChatId]);
+
+  if (loading) {
     return (
       <View className="flex-1 justify-center items-center bg-[#FFF7EA] w-full h-full">
         <ActivityIndicator size="large" color={theme.colors.primary} />
@@ -116,7 +147,7 @@ export default function ChatContainer({
     <Chat
       messages={streamedMsgs}
       onSend={onSend}
-      isLoading={isLoading}
+      isLoading={isMessageLoading}
       shouldShowPaywall={shouldShowPaywall}
       navigation={navigation}
     />
