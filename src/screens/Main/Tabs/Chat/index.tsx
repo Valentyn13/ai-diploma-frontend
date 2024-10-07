@@ -1,3 +1,4 @@
+import image from '@common/assets/images';
 import { DrawerContent, createDrawerNavigator } from '@react-navigation/drawer';
 import useChats from '@services/hooks/useChats';
 import { useUser } from '@services/hooks/useUser';
@@ -40,7 +41,7 @@ export default function ChatDrawer() {
         header: () => (
           <ChatHeader
             title="מיכאל"
-            avatarUri="https://rega.co.il/images/michael.png"
+            avatarSrc={image('michael_2')}
             onNew={() => {
               if (!loading) {
                 fetchData();

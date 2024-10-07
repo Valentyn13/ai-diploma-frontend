@@ -1,3 +1,4 @@
+import image from '@common/assets/images';
 import {
   BottomSheetBackdrop,
   BottomSheetFlatList,
@@ -192,7 +193,7 @@ const WhereYouAt: FC<{ onNext: (l: Place) => void }> = ({ onNext }) => {
 const MichaelAvatar = () => (
   <Image
     className="absolute -top-7 w-14 h-14 rounded-full bg-[#F1F1F1] border-2 border-[#CAD1D6] left-1/2 transform translate-x-7"
-    source={{ uri: 'https://rega.co.il/images/michael.png' }}
+    source={image('michael_2')}
   />
 );
 

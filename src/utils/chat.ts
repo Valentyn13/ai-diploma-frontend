@@ -1,10 +1,11 @@
+import image from '@common/assets/images';
 import { IMessage } from 'react-native-gifted-chat';
 import { Message } from 'react-native-vercel-ai';
 
 export const SYSTEM_USER = {
   _id: 'DR_MICHAEL',
   name: 'מיכאל',
-  avatar: 'https://rega.co.il/images/michael.png',
+  avatar: image('michael_2'),
 } as const;
 
 export const CLIENT_USER = {
