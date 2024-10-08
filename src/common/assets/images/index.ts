@@ -1,3 +1,5 @@
+import { BGS_ASSETS_URL } from '@common/constants';
+
 const BGS: Record<string, string[]> = {
   advanceBGs: [
     'advance_1.png',
@@ -218,8 +220,6 @@ export const getCategoryImgName = (
     return BGS.sleepBGs[0];
   }
 };
-
-const BGS_ASSETS_URL = 'https://d137rfe7jg135q.cloudfront.net/bgs/';
 
 export const getCategoryImg = (
   category: string,

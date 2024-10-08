@@ -1,10 +1,8 @@
-import { BG_TRACKS } from '@common/constants';
+import { BG_TRACKS, SOUNDS_URL } from '@common/constants';
 import { useBgTrackStore } from '@store/useBgTrackStore';
 import logger from '@utils/logger';
 import React, { FC, useMemo } from 'react';
 import Video from 'react-native-video';
-
-const SOUNDS_URL = 'https://d137rfe7jg135q.cloudfront.net/sounds/';
 
 const BgPlayer: FC = () => {
   const { selectedTrack, volume } = useBgTrackStore(state => state);

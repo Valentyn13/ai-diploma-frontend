@@ -1,6 +1,12 @@
 import { getCategoryImgName } from '@common/assets/images';
 import FavoriteButton from '@common/components/FavoriteButton';
 import { CircleButton } from '@common/components/buttons/CircleButton';
+import {
+  ASSETS_URL,
+  BGS_ASSETS_URL,
+  OLD_ASSETS_URL,
+  VIDEO_URL,
+} from '@common/constants';
 import { useRoute } from '@react-navigation/native';
 import { useAmplitude } from '@services/hooks/useAmplitude';
 import useTrigger from '@services/hooks/useTrigger';
@@ -47,13 +53,6 @@ import styled from 'styled-components';
 import AudioPlayer from './AudioPlayer';
 import PlayerControls from './PlayerButtons';
 import TimesLabel from './TimesLabel';
-
-const ASSETS_URL = 'https://d137rfe7jg135q.cloudfront.net/';
-const OLD_ASSETS_URL = 'https://regameditation.s3.us-east-2.amazonaws.com/';
-
-const BGS_ASSETS_URL = 'https://d137rfe7jg135q.cloudfront.net/bgs/';
-
-const VIDEO_URL = `${ASSETS_URL}videos/`;
 
 const VideoPlayer = styled(Video).attrs(() => ({
   resizeMode: 'cover',

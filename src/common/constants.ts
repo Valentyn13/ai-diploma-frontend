@@ -547,8 +547,6 @@ export const ABSTRACT_VIDEOS: Record<string, string> = {
   south: 'beterSelf.mp4',
 };
 
-export const BGS_ASSETS_URL = 'https://d137rfe7jg135q.cloudfront.net/bgs/';
-
 export const VIDEOS: Record<string, string> = {
   ...ABSTRACT_VIDEOS,
   breath478: 'breathe-4-7-8.mp4',
@@ -733,9 +731,6 @@ export const COLLECTIONS = [
   },
 ];
 
-export const MEDITATIONS_IMAGES_URL =
-  'https://d137rfe7jg135q.cloudfront.net/sessions/meditations/';
-
 export const COUNTRY_CODE = 'IL';
 
 export const KEY_PLAYED_FIRST = 'firstPlay';
@@ -869,3 +864,13 @@ export const PERSONALIZED_STATES: PersonalizedState[] = [
 ] as const;
 
 export const TIME_SLOTS = [1, 10, 20, 60];
+
+// URL CONSTANTS FROM ALL APP
+export const BGS_ASSETS_URL = 'https://d137rfe7jg135q.cloudfront.net/bgs/';
+export const MEDITATIONS_IMAGES_URL =
+  'https://d137rfe7jg135q.cloudfront.net/sessions/meditations/';
+export const SOUNDS_URL = 'https://d137rfe7jg135q.cloudfront.net/sounds/';
+export const ASSETS_URL = 'https://d137rfe7jg135q.cloudfront.net/';
+export const VIDEO_URL = `${ASSETS_URL}videos/`;
+export const OLD_ASSETS_URL =
+  'https://regameditation.s3.us-east-2.amazonaws.com/';
