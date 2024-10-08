@@ -35,7 +35,7 @@ const HorizontalCollection: FC<Props> = ({
   prioritizeFree = false,
 }) => {
   const data = useMemo(() => {
-    const uniqueIds = [...new Set(items.map(item => item.id))];
+    const uniqueIds = [...new Set(items.filter(Boolean).map(item => item.id))];
     let orderedItems = uniqueIds.map(id => items.find(item => item.id === id));
 
     if (shuffle) {
