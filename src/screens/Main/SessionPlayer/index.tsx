@@ -4,9 +4,12 @@ import { CircleButton } from '@common/components/buttons/CircleButton';
 import {
   ASSETS_URL,
   BGS_ASSETS_URL,
+  KEY_PLAYED_FIRST,
   OLD_ASSETS_URL,
   VIDEO_URL,
 } from '@common/constants';
+import { usePurchases } from '@common/context/PurchaseContext';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useRoute } from '@react-navigation/native';
 import { useAmplitude } from '@services/hooks/useAmplitude';
 import useTrigger from '@services/hooks/useTrigger';
@@ -66,19 +69,27 @@ const VideoPlayer = styled(Video).attrs(() => ({
 `;
 
 const MeditationPlayer: FC = ({ navigation }) => {
-  const { setIsOpen } = useMichaelStore(state => state);
-  const [loading, setLoading] = useState(true);
-  const [cachedVideoUri, setCachedVideoUri] = useState<string>();
-  const route = useRoute();
   const { goBack, navigate } = navigation;
+
+  const route = useRoute();
+
   const { updateMeditationCount } = useUpdateMeditation();
   const { position, duration } = useProgress();
-  const { selectedTrack } = useBgTrackStore(state => state);
-  const [hideControls, setHideControls] = useState(false);
-  const hideTimerRef = useRef<NodeJS.Timeout | null>(null);
-  const controlsOpacity = useSharedValue(1);
   const { state } = usePlaybackState();
   const { playing } = useIsPlaying();
+  const { hasPremium } = usePurchases();
+
+  const { setIsOpen } = useMichaelStore(state => state);
+  const { selectedTrack } = useBgTrackStore(state => state);
+
+  const [loading, setLoading] = useState(true);
+  const [cachedVideoUri, setCachedVideoUri] = useState<string>();
+  const [hideControls, setHideControls] = useState(false);
+
+  const hideTimerRef = useRef<NodeJS.Timeout | null>(null);
+
+  const controlsOpacity = useSharedValue(1);
+
   // const value = useFlag<number>('push_to_michael', 1);
 
   const triggerMichael = useTrigger(
@@ -147,15 +158,20 @@ const MeditationPlayer: FC = ({ navigation }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id]);
 
-  const onClose = () => {
+  const onClose = async () => {
     amplitudeInstance.logEvent('MEDITATION_STOP', { categoryName });
     amplitudeInstance.uploadEvents();
-
     // @ts-ignore
-    if (route.params?.isFirstTime) {
+    if (route.params?.isFirstTime && !hasPremium) {
       // @ts-ignore
       navigation.replace('Subscribe', {
         isFirstTime: true,
+      });
+      // @ts-ignore
+    } else if (route.params?.isFirstTime && hasPremium) {
+      await AsyncStorage.setItem(KEY_PLAYED_FIRST, true.toString());
+      navigation.replace('Main', {
+        screen: 'Home',
       });
     } else {
       goBack();
