@@ -28,7 +28,7 @@ export function querySessions(
       querySession(
         category.title,
         session.name,
-        instructors.find(i => i.categories.includes(session.id)).name ||
+        instructors.find(i => i.categories.includes(session.id))?.name ||
           'default',
         query,
       ),
