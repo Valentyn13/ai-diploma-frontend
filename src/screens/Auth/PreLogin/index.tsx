@@ -102,7 +102,7 @@ const PreLogin: FC<PreLoginProps> = ({ navigation: { navigate } }) => {
       }}>
       <View
         style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0 }}>
-        <Gradient colors={['#6190E8', '#A395D1', '#FFEFD7']} angle={45} />
+        <Gradient colors={['#4F84D5', '#A9B8E8', '#FFF8EE']} angle={0} />
       </View>
       <View
         className="h-1/2"
