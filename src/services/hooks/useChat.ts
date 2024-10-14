@@ -31,41 +31,50 @@ export const useChat = ({ userId, chatId }: Props) => {
 
       setIsMessageLoading(true);
       if (!chatId) {
-        const newChat = await createChat(userId, msg);
+        try {
+          const newChat = await createChat(userId, msg);
 
-        addChat({
-          chatId: newChat._id,
-          firstMessageContent: newChat.messages[0].content,
-          firstMessageTimestamp: newChat.messages[0].timestamp,
-          needStreaming: true,
-        });
+          addChat({
+            chatId: newChat._id,
+            firstMessageContent: newChat.messages[0].content,
+            firstMessageTimestamp: newChat.messages[0].timestamp,
+            needStreaming: true,
+          });
 
-        const lastMessage = newChat.messages[newChat.messages.length - 1];
-        lastMessage.id = lastMessage._id || generateUUID();
+          const lastMessage = newChat.messages[newChat.messages.length - 1];
+          lastMessage.id = lastMessage._id || generateUUID();
 
-        setCurrentChatId(newChat._id);
+          setCurrentChatId(newChat._id);
 
-        setMessages(prevItems => [
-          ...prevItems,
-          mapMessageToIMessage(lastMessage),
-        ]);
+          setMessages(prevItems => [
+            ...prevItems,
+            mapMessageToIMessage(lastMessage),
+          ]);
 
-        setIsMessageLoading(false);
-
-        navigation.navigate(newChat._id, {
-          id: newChat._id,
-          isNew: false,
-        });
+          navigation.navigate(newChat._id, {
+            id: newChat._id,
+            isNew: false,
+          });
+        } catch (error) {
+          console.log(error);
+        } finally {
+          setIsMessageLoading(false);
+        }
 
         return;
       }
 
-      const responseByAI = await addMessageToChat(chatId, msg);
-      responseByAI.id = responseByAI._id || generateUUID();
+      try {
+        const responseByAI = await addMessageToChat(chatId, msg);
+        responseByAI.id = responseByAI._id || generateUUID();
 
-      const iMessage = mapMessageToIMessage(responseByAI);
-      setMessages(prevItems => [...prevItems, iMessage]);
-      setIsMessageLoading(false);
+        const iMessage = mapMessageToIMessage(responseByAI);
+        setMessages(prevItems => [...prevItems, iMessage]);
+      } catch (error) {
+        console.log(error);
+      } finally {
+        setIsMessageLoading(false);
+      }
     },
     [chatId, userId, addChat, navigation, setCurrentChatId],
   );
