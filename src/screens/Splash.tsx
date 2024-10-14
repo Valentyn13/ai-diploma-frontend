@@ -65,7 +65,7 @@ const Splash: FC<SplashProps> = ({ navigation: { navigate, replace } }) => {
 
   return (
     <View className="flex-1 items-center justify-center">
-      <Gradient colors={['#6190E8', '#A395D1', '#FFEFD7']} angle={45} />
+      <Gradient colors={['#4F84D5', '#A9B8E8', '#FFF8EE']} angle={0} />
       <WithFadeIn delay={0} duration={1000}>
         <WithPulse scaleMin={0.9} scaleMax={1.2} duration={2000}>
           <Logo transform={[{ rotate: '-10deg' }]} />
