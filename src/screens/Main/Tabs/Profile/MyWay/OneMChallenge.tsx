@@ -16,7 +16,7 @@ const Title = styled(SubTitle)`
 const OneMChallenge: FC<{
   totalMinutesPracticed: number;
   userMinutes: number;
-}> = ({ totalMinutesPracticed, userMinutes }) => {
+}> = ({ totalMinutesPracticed = 0, userMinutes }) => {
   const totalProgress = useMemo(
     () => totalMinutesPracticed / CHALLANGE_TOTAL,
     [totalMinutesPracticed],
@@ -34,8 +34,8 @@ const OneMChallenge: FC<{
         <View className="flex-row justify-between mb-4">
           <Text className="text-black">
             {totalMinutesPracticed
-              .toString()
-              .replace(/\B(?=(\d{3})+(?!\d))/g, ',')}{' '}
+              ?.toString()
+              ?.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}{' '}
             דקות מתוך{' '}
             {CHALLANGE_TOTAL.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}{' '}
           </Text>
