@@ -2,8 +2,8 @@ import Divider from '@common/components/Divider';
 import { SubTitle } from '@common/components/Styled';
 import { CircleButton } from '@common/components/buttons/CircleButton';
 import { useNavigation } from '@react-navigation/native';
+import { getChallengeProgress } from '@services/api/challenge';
 import { stringToDate } from '@utils/string';
-import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { View } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
@@ -23,14 +23,12 @@ const Title = styled(SubTitle)`
   font-weight: bold;
 `;
 
-const LISTEN_TIME_URL = 'https://www.rega.co.il/api/listens/total';
-
 const fetchChallengeProgress = async () => {
   let practivedMinutes = 202000;
 
   try {
-    const res = await axios.get(LISTEN_TIME_URL);
-    practivedMinutes = res.data.totalMinutes;
+    const progress = await getChallengeProgress();
+    practivedMinutes = progress;
   } catch (error) {
     console.error('error fetching challenge progress', error);
   }
