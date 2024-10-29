@@ -60,6 +60,7 @@
     "react-native-dotenv": "^3.4.9",
     "react-native-fast-image": "^8.6.3",
     "react-native-fbsdk-next": "^12.1.2",
+    "react-native-fetch-api": "^3.0.0",
     "react-native-gesture-handler": "^2.14.0",
     "react-native-gifted-chat": "^2.4.0",
     "react-native-gradients": "^2.1.1",
@@ -67,6 +68,7 @@
     "react-native-modal": "^13.0.1",
     "react-native-pager-view": "^6.2.3",
     "react-native-permissions": "^4.1.5",
+    "react-native-polyfill-globals": "^3.1.0",
     "react-native-purchases": "^7.5.0",
     "react-native-push-notification": "^8.1.1",
     "react-native-reanimated": "^3.6.1",
@@ -89,6 +91,8 @@
     "rn-fetch-blob": "^0.12.0",
     "semver-compare": "^1.0.0",
     "styled-components": "^6.1.1",
+    "text-encoding": "^0.7.0",
+    "web-streams-polyfill": "^4.0.0",
     "zustand": "^4.4.7"
   },
   "devDependencies": {

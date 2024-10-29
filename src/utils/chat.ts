@@ -1,5 +1,4 @@
 import image from '@common/assets/images';
-import CryptoJS from 'react-native-crypto-js';
 import { IMessage } from 'react-native-gifted-chat';
 import { Message } from 'types/Chat';
 

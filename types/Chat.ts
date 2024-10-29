@@ -14,8 +14,8 @@ export interface Session {
 }
 
 export type ChatForDrawer = {
+  sessionStartedAfterCreation?: boolean;
   chatId: string;
-  needStreaming: boolean;
   firstMessageContent: string;
   firstMessageTimestamp: string;
 };

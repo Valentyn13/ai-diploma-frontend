@@ -1,7 +1,13 @@
 /* eslint-disable react/no-unstable-nested-components */
 import image from '@common/assets/images';
-import { DrawerContent, createDrawerNavigator } from '@react-navigation/drawer';
+import {
+  DrawerContentScrollView,
+  DrawerItem,
+  createDrawerNavigator,
+} from '@react-navigation/drawer';
+import { CommonActions, DrawerActions } from '@react-navigation/native';
 import useChats from '@services/hooks/useChats';
+import { useChatsStore } from '@store/useChatsStore';
 import { getReadableTimeDifference } from '@utils/time';
 import React from 'react';
 import { Text, View } from 'react-native';
@@ -16,10 +22,66 @@ const Drawer = createDrawerNavigator();
 
 export default function ChatDrawer() {
   const { chats } = useChats();
+  const { isSessionStarted, setNavCallback, setIsLeaveModalVisible } =
+    useChatsStore(state => ({
+      isSessionStarted: state.isSessionStarted,
+      setNavCallback: state.setNavCallback,
+      setIsLeaveModalVisible: state.setIsLeaveModalVisible,
+    }));
+
   return (
     <Drawer.Navigator
       detachInactiveScreens={true}
-      drawerContent={props => <DrawerContent {...props} />}
+      drawerContent={props => {
+        return (
+          <DrawerContentScrollView {...props}>
+            {props.state.routes.map((route, i) => {
+              const focused = i === props.state.index;
+              const { title, drawerLabel, drawerIcon } =
+                props.descriptors[route.key].options;
+
+              return (
+                <DrawerItem
+                  key={route.key}
+                  style={{
+                    borderBottomWidth: 1,
+                    borderBottomColor: '#00000020',
+                    marginVertical: 0,
+                    paddingVertical: 2,
+                    marginHorizontal: 0,
+                  }}
+                  label={
+                    drawerLabel !== undefined
+                      ? drawerLabel
+                      : title !== undefined
+                      ? title
+                      : route.name
+                  }
+                  icon={drawerIcon}
+                  focused={focused}
+                  {...props}
+                  onPress={() => {
+                    const cb = () => {
+                      props.navigation.dispatch({
+                        ...(focused
+                          ? DrawerActions.closeDrawer()
+                          : CommonActions.navigate(route.name)),
+                        target: props.state.key,
+                      });
+                    };
+                    if (!isSessionStarted) {
+                      cb();
+                      return;
+                    }
+                    setNavCallback(cb);
+                    setIsLeaveModalVisible(true);
+                  }}
+                />
+              );
+            })}
+          </DrawerContentScrollView>
+        );
+      }}
       initialRouteName={'שיחה חדשה'}
       screenOptions={({ navigation }) => ({
         unmountOnBlur: true,
@@ -45,13 +107,6 @@ export default function ChatDrawer() {
               שיחה חדשה
             </Text>
           ),
-          drawerItemStyle: {
-            borderBottomWidth: 1,
-            borderBottomColor: '#00000020',
-            marginVertical: 0,
-            paddingVertical: 2,
-            marginHorizontal: 0,
-          },
         }}
         // @ts-ignore
         component={ChatContainer}
@@ -74,16 +129,9 @@ export default function ChatDrawer() {
                 </Text>
               </View>
             ),
-            drawerItemStyle: {
-              borderBottomWidth: 1,
-              borderBottomColor: '#00000020',
-              marginVertical: 0,
-              paddingVertical: 2,
-              marginHorizontal: 0,
-            },
           }}
           key={chat.chatId}
-          name={`${chat.chatId}`}
+          name={chat.chatId}
           // @ts-ignore
           component={ChatContainer}
           initialParams={{

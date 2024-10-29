@@ -1,10 +1,11 @@
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { addMessageToChat, createChat } from '@services/api/chat';
+import { createSseChat, streamAiResponse } from '@services/api/chat';
 import { useChatsStore } from '@store/useChatsStore';
 import { mapMessageToIMessage } from '@utils/chat';
+import createIMessage from '@utils/createIMessage';
 import { generateUUID } from '@utils/generateUUID';
-import { useCallback, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { IMessage } from 'react-native-gifted-chat';
 import { Message } from 'types/Chat';
 
@@ -14,70 +15,85 @@ type Props = {
 };
 
 export const useChat = ({ userId, chatId }: Props) => {
-  const setCurrentChatId = useChatsStore(state => state.setCurrentChatId);
   const navigation = useNavigation<NativeStackNavigationProp<any>>();
-  const addChat = useChatsStore(state => state.addChat);
+
+  const { setCurrentChatId, addChat } = useChatsStore(state => ({
+    setCurrentChatId: state.setCurrentChatId,
+    addChat: state.addChat,
+  }));
+
   const [messages, setMessages] = useState<IMessage[]>([]);
   const [isMessageLoading, setIsMessageLoading] = useState(false);
+  const [accumulatedText, setAccumulatedText] = useState('');
 
   const updateMessages = useCallback((msgs: IMessage[]) => {
     setMessages([...msgs]);
   }, []);
 
-  const addMessage = useCallback(
-    async (msg: Message) => {
-      const message = mapMessageToIMessage(msg);
-      setMessages(prevItems => [...prevItems, message]);
+  useEffect(() => {
+    if (isMessageLoading && accumulatedText) {
+      setIsMessageLoading(false);
+    }
+  }, [accumulatedText, isMessageLoading]);
 
-      setIsMessageLoading(true);
-      if (!chatId) {
-        try {
-          const newChat = await createChat(userId, msg);
-
-          addChat({
-            chatId: newChat._id,
-            firstMessageContent: newChat.messages[0].content,
-            firstMessageTimestamp: newChat.messages[0].timestamp,
-            needStreaming: true,
-          });
-
-          const lastMessage = newChat.messages[newChat.messages.length - 1];
-          lastMessage.id = lastMessage._id || generateUUID();
-
-          setCurrentChatId(newChat._id);
-
-          setMessages(prevItems => [
-            ...prevItems,
-            mapMessageToIMessage(lastMessage),
-          ]);
-
-          navigation.navigate(newChat._id, {
-            id: newChat._id,
-            isNew: false,
-          });
-        } catch (error) {
-          console.log(error);
-        } finally {
-          setIsMessageLoading(false);
-        }
-
-        return;
+  useEffect(() => {
+    if (messages.length > 0 && accumulatedText && !isMessageLoading) {
+      const assistantMessage = createIMessage(accumulatedText, 'assistant');
+      if (messages[messages.length - 1].user._id === 'DR_MICHAEL') {
+        messages[messages.length - 1].text = assistantMessage.text;
+        setMessages([...messages]);
+      } else {
+        setMessages(prevItems => [...prevItems, assistantMessage]);
       }
+    }
 
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [accumulatedText]);
+
+  const addMessage = async (msg: Message) => {
+    const message = mapMessageToIMessage(msg);
+    setMessages(prevItems => [...prevItems, message]);
+    if (!chatId) {
       try {
-        const responseByAI = await addMessageToChat(chatId, msg);
-        responseByAI.id = responseByAI._id || generateUUID();
+        setIsMessageLoading(true);
+        const newChat = await createSseChat(userId, msg);
+        await streamAiResponse(newChat._id, msg, setAccumulatedText);
 
-        const iMessage = mapMessageToIMessage(responseByAI);
-        setMessages(prevItems => [...prevItems, iMessage]);
+        addChat({
+          chatId: newChat._id,
+          firstMessageContent: newChat.messages[0].content,
+          firstMessageTimestamp: newChat.messages[0].timestamp,
+          sessionStartedAfterCreation: true,
+        });
+
+        const lastMessage = newChat.messages[newChat.messages.length - 1];
+        lastMessage.id = lastMessage._id || generateUUID();
+
+        setCurrentChatId(newChat._id);
+
+        setMessages(prevItems => [
+          ...prevItems,
+          mapMessageToIMessage(lastMessage),
+        ]);
+
+        navigation.navigate(newChat._id, {
+          id: newChat._id,
+          isNew: false,
+        });
       } catch (error) {
-        console.log(error);
-      } finally {
         setIsMessageLoading(false);
       }
-    },
-    [chatId, userId, addChat, navigation, setCurrentChatId],
-  );
+
+      return;
+    }
+
+    try {
+      setIsMessageLoading(true);
+      streamAiResponse(chatId, msg, setAccumulatedText);
+    } catch (error) {
+      setIsMessageLoading(false);
+    }
+  };
 
   return { messages, isMessageLoading, updateMessages, addMessage };
 };

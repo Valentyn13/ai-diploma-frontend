@@ -6,7 +6,10 @@ import { useUser } from './useUser';
 
 const useChats = () => {
   const { user } = useUser();
-  const { chats, setChats } = useChatsStore(state => ({ ...state }));
+  const { chats, setChats } = useChatsStore(state => ({
+    chats: state.chats,
+    setChats: state.setChats,
+  }));
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
@@ -22,11 +25,7 @@ const useChats = () => {
       if (!data) {
         throw new Error('No data');
       }
-      const withNeedStreaming = data.map(chat => ({
-        ...chat,
-        needStreaming: false,
-      }));
-      setChats(withNeedStreaming);
+      setChats(data);
       setLoading(false);
     } catch (err: any) {
       setChats([]);

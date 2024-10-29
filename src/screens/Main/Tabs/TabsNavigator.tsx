@@ -1,10 +1,15 @@
 import MeditationPicker from '@common/components/MeditationPicker';
 import MichaelAsk from '@common/components/MichaelAsk';
 import theme from '@common/theme';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import {
+  BottomTabBarButtonProps,
+  createBottomTabNavigator,
+} from '@react-navigation/bottom-tabs';
+import { NavigationProp, useNavigation } from '@react-navigation/native';
 import i18n from '@services/localization/i18n';
+import { useChatsStore } from '@store/useChatsStore';
 import React from 'react';
-import { StatusBar, Text } from 'react-native';
+import { Pressable, StatusBar, Text } from 'react-native';
 import Animated from 'react-native-reanimated';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import Svg, { Path, SvgProps } from 'react-native-svg';
@@ -51,7 +56,7 @@ const CoursesIcon = props => (
   </Svg>
 );
 
-const ProfileIcon = (props: SvgProps) => (
+const ProfileIcon = props => (
   <Svg xmlns="http://www.w3.org/2000/svg" fill="none" {...props}>
     <Path
       fill={props.color}
@@ -114,7 +119,43 @@ const tabScreen = (name: string) => ({
   ),
 });
 
+const CustomTabBarButton = ({
+  navigation,
+  link,
+  isSessionStarted,
+  setIsLeaveModalVisible,
+  setNavCallback,
+  ...other
+}: BottomTabBarButtonProps & {
+  navigation: NavigationProp<any>;
+  link: string;
+  isSessionStarted: boolean;
+  setIsLeaveModalVisible: (visible: boolean) => void;
+  setNavCallback: (cb: Function | null) => void;
+}) => {
+  const handlePress = () => {
+    const cb = () => {
+      navigation.navigate(link);
+    };
+    if (!isSessionStarted) {
+      cb();
+      return;
+    }
+    setNavCallback(cb);
+    setIsLeaveModalVisible(true);
+  };
+
+  return <Pressable {...other} onPress={handlePress} />;
+};
+
 const TabNavigator = () => {
+  const navigation = useNavigation();
+  const { isSessionStarted, setNavCallback, setIsLeaveModalVisible } =
+    useChatsStore(state => ({
+      isSessionStarted: state.isSessionStarted,
+      setIsLeaveModalVisible: state.setIsLeaveModalVisible,
+      setNavCallback: state.setNavCallback,
+    }));
   return (
     <SafeAreaView
       className="flex-1"
@@ -149,6 +190,16 @@ const TabNavigator = () => {
                 paddingTop: 2,
                 height: 64,
               },
+              tabBarButton: props => (
+                <CustomTabBarButton
+                  {...props}
+                  setNavCallback={setNavCallback}
+                  isSessionStarted={isSessionStarted}
+                  setIsLeaveModalVisible={setIsLeaveModalVisible}
+                  navigation={navigation}
+                  link={key}
+                />
+              ),
               ...tabScreen(key.toLowerCase()),
               headerShown: false,
             }}

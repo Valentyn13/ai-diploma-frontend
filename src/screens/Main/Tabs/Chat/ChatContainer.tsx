@@ -4,16 +4,14 @@ import theme from '@common/theme';
 import { useNavigation } from '@react-navigation/native';
 import { useChat } from '@services/hooks/useChat';
 import useChatSession from '@services/hooks/useChatSession';
-import useStreamText from '@services/hooks/useStreamText';
 import { useUser } from '@services/hooks/useUser';
 import { useChatsStore } from '@store/useChatsStore';
 import {
-  SYSTEM_USER,
   getFirstMsgs,
   mapIMessageToMessage,
   mapMessageToIMessage,
 } from '@utils/chat';
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import { ActivityIndicator, Text, View } from 'react-native';
 import { IMessage } from 'react-native-gifted-chat';
 
@@ -29,17 +27,22 @@ export default function ChatContainer({
   const chatIdFromDrawer = params.id;
   const isNew = params.isNew;
 
-  const { chats, currentChatId, setCurrentChatId, updateChatStreaming } =
-    useChatsStore(state => ({
-      chats: state.chats,
-      currentChatId: state.currentChatId,
-      setCurrentChatId: state.setCurrentChatId,
-      updateChatStreaming: state.updateChatStreaming,
-    }));
+  const {
+    chats,
+    currentChatId,
+    setSessionStarted,
+    setCurrentChatId,
+    setChatSessionStartedAfterCreationToFalse,
+  } = useChatsStore(state => ({
+    chats: state.chats,
+    currentChatId: state.currentChatId,
+    setCurrentChatId: state.setCurrentChatId,
+    setSessionStarted: state.setSessionStarted,
+    setChatSessionStartedAfterCreationToFalse:
+      state.setChatSessionStartedAfterCreationToFalse,
+  }));
 
   const calculatedChatId = chatIdFromDrawer || (isNew ? null : currentChatId);
-
-  const [sessionStarted, setSessionStarted] = useState(false);
 
   const {
     user: { id: userId, name, sex },
@@ -53,63 +56,22 @@ export default function ChatContainer({
     userId,
     chatId: calculatedChatId,
   });
-
-  const chatStreamStatus = useMemo(() => {
-    const currentChat = chats.find(chat => chat.chatId === calculatedChatId);
-    return currentChat?.needStreaming || false;
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  const streamLastMessage = sessionStarted || chatStreamStatus;
-
-  useEffect(() => {
-    if (calculatedChatId) {
-      updateChatStreaming(calculatedChatId);
-    }
-  }, [calculatedChatId, updateChatStreaming]);
-
   const shouldShowPaywall = useMemo(() => !hasPremium, [hasPremium]);
-
   const messagesToShowInChat = useMemo(
     () => (messages.length ? messages : getFirstMsgs(name, sex)),
     [messages, name, sex],
   );
 
-  const sysLastMsg = useMemo(() => {
-    const lastIMessage = messages[messages.length - 1];
-    if (!lastIMessage) {
-      return undefined;
-    }
-    const lastMsg = mapIMessageToMessage(lastIMessage);
-    return lastMsg?.role === 'assistant' && streamLastMessage
-      ? lastMsg
-      : undefined;
-  }, [messages, streamLastMessage]);
-
-  const streamedText = useStreamText({
-    text: sysLastMsg?.content || '',
-    shouldStart: streamLastMessage,
-  });
-
-  const streamedMsgs = useMemo(
-    () =>
-      messagesToShowInChat.map((msg, index) => {
-        if (
-          index === messagesToShowInChat.length - 1 &&
-          msg.user._id === SYSTEM_USER._id &&
-          streamLastMessage
-        ) {
-          return { ...msg, text: streamedText };
-        }
-        return msg;
-      }),
-    [messagesToShowInChat, streamLastMessage, streamedText],
-  );
+  const isSessionStartedAfterCreation = useMemo(() => {
+    const chatFromStore = chats.find(chat => chat.chatId === calculatedChatId);
+    return chatFromStore?.sessionStartedAfterCreation;
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const onSend = (msgs: IMessage[] = []) => {
-    setSessionStarted(true);
     const msg = mapIMessageToMessage(msgs[0]);
     addMessage(msg);
+    setSessionStarted(true);
   };
 
   useEffect(() => {
@@ -126,6 +88,14 @@ export default function ChatContainer({
       setCurrentChatId(calculatedChatId);
     }
   }, [isNew, chatIdFromDrawer, setCurrentChatId, calculatedChatId]);
+
+  useEffect(() => {
+    if (isSessionStartedAfterCreation) {
+      setChatSessionStartedAfterCreationToFalse(calculatedChatId as string);
+      setSessionStarted(true);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   if (loading) {
     return (
@@ -145,7 +115,7 @@ export default function ChatContainer({
 
   return (
     <Chat
-      messages={streamedMsgs}
+      messages={messagesToShowInChat}
       onSend={onSend}
       isLoading={isMessageLoading}
       shouldShowPaywall={shouldShowPaywall}

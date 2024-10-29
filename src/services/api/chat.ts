@@ -1,5 +1,6 @@
 import { baseURL } from '@common/config';
 import { jwtToken } from '@services/hooks/useAxios/index';
+import { SetStateAction } from 'react';
 import { ChatForDrawer, Message, Session } from 'types/Chat';
 
 export const fetchChats = async (userId: string) => {
@@ -25,23 +26,48 @@ export const fetchChat = async (chatId: string) => {
   return data;
 };
 
-export const addMessageToChat = async (chatId: string, message: Message) => {
-  const response = await fetch(`${baseURL}chats/message/${chatId}`, {
+export const streamAiResponse = async (
+  chatId: string,
+  message: Message,
+  setAccumulatedText: (value: SetStateAction<string>) => void,
+) => {
+  setAccumulatedText('');
+  const response = await fetch(`${baseURL}chats/message/sse/${chatId}`, {
     method: 'POST',
+    reactNative: {
+      textStreaming: true,
+    },
     headers: {
       Authorization: `Bearer ${jwtToken}`,
       'content-type': 'application/json',
     },
     body: JSON.stringify({ input: message.content }),
   });
+  const reader = response.body?.getReader();
+  const decoder = new TextDecoder();
+  if (!reader) {
+    console.log('No reader');
+    return;
+  }
 
-  const data = await response.json();
+  while (true) {
+    const { done, value } = await reader.read();
 
-  return data as Message;
+    if (done) {
+      break;
+    }
+
+    if (!value) {
+      continue;
+    }
+
+    const text = decoder.decode(value, { stream: true });
+    setAccumulatedText(prev => (prev += text));
+  }
 };
 
-export const createChat = async (userId: string, message: Message) => {
-  const response = await fetch(`${baseURL}chats/create?userId=${userId}`, {
+export const createSseChat = async (userId: string, message: Message) => {
+  const response = await fetch(`${baseURL}chats/create/sse?userId=${userId}`, {
     method: 'POST',
     headers: {
       Authorization: `Bearer ${jwtToken}`,
