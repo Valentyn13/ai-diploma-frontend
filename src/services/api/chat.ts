@@ -30,6 +30,7 @@ export const streamAiResponse = async (
   chatId: string,
   message: Message,
   setAccumulatedText: (value: SetStateAction<string>) => void,
+  setDisableUserInput: (value: SetStateAction<boolean>) => void,
 ) => {
   setAccumulatedText('');
   const response = await fetch(`${baseURL}chats/message/sse/${chatId}`, {
@@ -54,6 +55,7 @@ export const streamAiResponse = async (
     const { done, value } = await reader.read();
 
     if (done) {
+      setDisableUserInput(false);
       break;
     }
 

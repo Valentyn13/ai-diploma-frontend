@@ -33,7 +33,7 @@ const mapMeditations = category =>
     }),
   );
 
-const getCategories = state => state.appData.categories;
+export const getCategories = state => state.appData.categories;
 const getCourses = state => state.appData.courses;
 const getInstructors = state => state.appData.instructors;
 const getSelectedCategories = state => state.userPreferences.selectedCategories;

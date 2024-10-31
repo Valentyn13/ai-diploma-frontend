@@ -8,15 +8,15 @@ type Props = {
   onCancel: () => void;
 };
 
-const LEAVE_CHAT_TITLE = 'עדיין לא סיימנו את הפגישה';
-const LEAVE_CHAT_DESCRIPTION = 'נשאר ממש עוד קצת... אתה בטוח שברצונך לצאת?';
+const LEAVE_CHAT_TITLE = 'עדיין לא סיימנו את השיחה';
+const LEAVE_CHAT_DESCRIPTION = 'בטוח/ה שברצונך לצאת?';
 const LEAVE_CHAT_CONFIRM_BUTTON = 'אני רוצה לצאת';
-const LEAVE_CHAT_CANCEL_BUTTON = 'המשך פגישה';
+const LEAVE_CHAT_CANCEL_BUTTON = 'המשך שיחה';
 
-const DELETE_CHAT_TITLE = `מחק צ'אט`;
-const DELETE_CHAT_DESCRIPTION = `האם אתה בטוח שברצונך למחוק את הצ'אט הזה?`;
-const DELETE_CHAT_CONFIRM_BUTTON = `כן, אני בטוח`;
-const DELETE_CHAT_CANCEL_BUTTON = 'א';
+const DELETE_CHAT_TITLE = 'מחק צ׳אט';
+const DELETE_CHAT_DESCRIPTION = 'האם ברצונך למחוק את השיחה?';
+const DELETE_CHAT_CONFIRM_BUTTON = 'כן';
+const DELETE_CHAT_CANCEL_BUTTON = 'לא';
 
 const ConfirmationModal: FC<Props> = ({
   type,
@@ -34,23 +34,27 @@ const ConfirmationModal: FC<Props> = ({
   return (
     <Modal transparent visible={visible}>
       <View className="w-full h-full bg-[#00000060] justify-center items-center p-[10px]">
-        <View className="p-[16px] rounded-[16px] w-[96%] bg-[#FCF5EB]">
+        <View className="p-[16px] rounded-[16px] flex items-start w-[96%] bg-[#FCF5EB]">
           <Text className="text-[#273051] font-bold text-[18px] mb-[12px]">
             {title}
           </Text>
-          <Text className="text-[#494949] mb-[35px] text-[14px]">
+          <Text className="text-[#494949] mb-[25px] text-[14px]">
             {description}
           </Text>
-          <View className="flex-row space-x-[10px]">
+          <View className="flex-row w-full justify-between space-x-[10px]">
             <TouchableOpacity
               onPress={onConfirm}
-              className="px-[24px] py-[12px] bg-[#D66366] rounded-[8px]">
-              <Text className="text-lg text-white">{confirmText}</Text>
+              className="px-[24px] grow h-[40px] flex justify-center bg-[#273051] rounded-[8px]">
+              <Text className="text-lg text-center font-semibold text-[14px] text-white">
+                {confirmText}
+              </Text>
             </TouchableOpacity>
             <TouchableOpacity
               onPress={onCancel}
-              className=" bg-transparent border-[1px] border-[#27305152] px-[24px] py-[12px] rounded-[8px] ">
-              <Text className="text-lg text-[#273051]">{cancelText}</Text>
+              className="bg-transparent grow border-[1px] border-[#27305152] px-[24px] h-[40px] flex justify-center rounded-[8px] ">
+              <Text className="text-lg text-center font-semibold text-[14px] text-[#273051]">
+                {cancelText}
+              </Text>
             </TouchableOpacity>
           </View>
         </View>

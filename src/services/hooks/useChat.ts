@@ -24,6 +24,7 @@ export const useChat = ({ userId, chatId }: Props) => {
 
   const [messages, setMessages] = useState<IMessage[]>([]);
   const [isMessageLoading, setIsMessageLoading] = useState(false);
+  const [disableUserInput, setDisableUserInput] = useState(false);
   const [accumulatedText, setAccumulatedText] = useState('');
 
   const updateMessages = useCallback((msgs: IMessage[]) => {
@@ -56,8 +57,14 @@ export const useChat = ({ userId, chatId }: Props) => {
     if (!chatId) {
       try {
         setIsMessageLoading(true);
+        setDisableUserInput(true);
         const newChat = await createSseChat(userId, msg);
-        await streamAiResponse(newChat._id, msg, setAccumulatedText);
+        await streamAiResponse(
+          newChat._id,
+          msg,
+          setAccumulatedText,
+          setDisableUserInput,
+        );
 
         addChat({
           chatId: newChat._id,
@@ -81,6 +88,7 @@ export const useChat = ({ userId, chatId }: Props) => {
           isNew: false,
         });
       } catch (error) {
+        setDisableUserInput(false);
         setIsMessageLoading(false);
       }
 
@@ -89,11 +97,19 @@ export const useChat = ({ userId, chatId }: Props) => {
 
     try {
       setIsMessageLoading(true);
-      streamAiResponse(chatId, msg, setAccumulatedText);
+      setDisableUserInput(true);
+      streamAiResponse(chatId, msg, setAccumulatedText, setDisableUserInput);
     } catch (error) {
+      setDisableUserInput(false);
       setIsMessageLoading(false);
     }
   };
 
-  return { messages, isMessageLoading, updateMessages, addMessage };
+  return {
+    messages,
+    isMessageLoading,
+    disableUserInput,
+    updateMessages,
+    addMessage,
+  };
 };

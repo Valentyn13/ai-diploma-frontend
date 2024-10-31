@@ -80,7 +80,6 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     color: 'black',
     fontFamily: theme.fonts.bold,
-    lineHeight: 32,
   },
   foreground: {
     flex: 1,

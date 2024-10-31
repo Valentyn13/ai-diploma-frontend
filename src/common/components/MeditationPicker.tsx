@@ -1,4 +1,3 @@
-import { MEDITATIONS_FEELING_LOCATION } from '@common/constants';
 import { usePurchases } from '@common/context/PurchaseContext';
 import {
   BottomSheetBackdrop,
@@ -25,12 +24,21 @@ import Icon from 'react-native-vector-icons/Feather';
 import { useSelector } from 'react-redux';
 
 const FEELINGS = {
-  calm: { label: 'רגוע', emoji: '😌' },
-  stressed: { label: 'מתוסכל', emoji: '😓' },
-  anxious: { label: 'חרד', emoji: '😰' },
-  sad: { label: 'עצוב', emoji: '😢' },
-  unfocused: { label: 'חסר מיקוד', emoji: '😵‍💫' },
-  angry: { label: 'כועס', emoji: '😡' },
+  unsure: { label: 'לא בטוח/ה', emoji: '🤔' },
+  anxious: { label: 'חרדה', emoji: '😟' },
+  tired: { label: 'עייפות', emoji: '😪' },
+  sad: { label: 'עצב', emoji: '😢' },
+  unfocused: { label: 'חוסר מיקוד', emoji: '🙄' },
+  panicked: { label: 'פאניקה', emoji: '😖' },
+};
+
+const CATEGORY_NAMES = {
+  unsure: 'PocketMeditation',
+  anxious: 'Stress',
+  tired: 'Sleep',
+  sad: 'Empower',
+  unfocused: 'South',
+  panicked: 'Emergency',
 };
 
 type Feeling = keyof typeof FEELINGS;
@@ -208,8 +216,8 @@ const MeditationPicker = () => {
   const navigation = useNavigation();
   const { isOpen, setIsOpen } = useSheetStore(state => state);
   const bottomSheetRef = useRef<BottomSheetModal>(null);
-  const [showWhereYouAt, setShowWhereYouAt] = useState(false);
-  const [selectedFeeling, setSelectedFeeling] = useState<Feeling | null>(null);
+  //const [showWhereYouAt, setShowWhereYouAt] = useState(false);
+  //const [selectedFeeling, setSelectedFeeling] = useState<Feeling | null>(null);
 
   const snapPoints = useMemo(() => ['20%', 380], []);
 
@@ -228,51 +236,28 @@ const MeditationPicker = () => {
     [setIsOpen],
   );
 
-  const handleNext = useCallback((f: Feeling) => {
-    setSelectedFeeling(f);
-    setShowWhereYouAt(true);
-  }, []);
+  // const handleNext = useCallback((f: Feeling) => {
+  //   setSelectedFeeling(f);
+  //   setShowWhereYouAt(true);
+  // }, []);
 
   const onFinish = useCallback(
-    (selectedPlace: Place) => {
+    (f: Feeling) => {
       bottomSheetRef.current!.close();
 
-      if (!hasPremium) {
-        // @ts-ignore
-        navigation.navigate('Main', {
-          screen: 'Subscribe',
-        });
-        setSelectedFeeling(null);
-        setShowWhereYouAt(false);
-        return;
-      }
+      const sessions = meditations.filter(
+        m => m.categoryName === CATEGORY_NAMES[f],
+      );
 
-      const filteredIds = MEDITATIONS_FEELING_LOCATION.filter(
-        ({ feeling, location }) =>
-          // @ts-ignore
-          feeling.includes(selectedFeeling!) &&
-          // @ts-ignore
-          location.includes(selectedPlace!),
-      ).map(({ id }) => id);
+      const title = `${FEELINGS[f].label} ${FEELINGS[f].emoji}`;
 
-      const id = filteredIds[Math.floor(Math.random() * filteredIds.length)];
-
-      let item = meditations.find(m => m.id === id);
-
-      if (!item) {
-        item = meditations.find(m => m.name === 'שחרור היום') || meditations[0];
-      }
-
-      // @ts-ignore
+      //@ts-ignore
       navigation.navigate('Main', {
-        screen: 'MeditationPlayer',
-        params: { item },
+        screen: 'Collection',
+        params: { title, sessions },
       });
-
-      setSelectedFeeling(null);
-      setShowWhereYouAt(false);
     },
-    [hasPremium, meditations, navigation, selectedFeeling],
+    [navigation, meditations],
   );
 
   const renderBackdrop = useCallback(
@@ -336,11 +321,12 @@ const MeditationPicker = () => {
             justifyContent: 'center',
             alignItems: 'center',
           }}>
-          {showWhereYouAt ? (
+          {/* {showWhereYouAt ? (
             <WhereYouAt onNext={onFinish} />
           ) : (
-            <HowUFeel onNext={handleNext} isMale={sex === 'M'} />
-          )}
+
+          )} */}
+          <HowUFeel onNext={onFinish} isMale={sex === 'M'} />
         </BottomSheetView>
       </BottomSheetView>
     </BottomSheetModal>

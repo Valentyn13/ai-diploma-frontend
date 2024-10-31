@@ -1,6 +1,7 @@
 import { getBGImageByTime } from '@utils/time';
 import React, { FC, PropsWithChildren } from 'react';
-import { ImageBackground, StyleSheet, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
+import FastImage from 'react-native-fast-image';
 import Animated, {
   useAnimatedScrollHandler,
   useAnimatedStyle,
@@ -8,8 +9,8 @@ import Animated, {
 } from 'react-native-reanimated';
 
 const BGS = {
-  sunrise: require('./bgs/sunrise.png'),
-  sunset: require('./bgs/sunset.png'),
+  sunrise: require('./bgs/morning.png'),
+  sunset: require('./bgs/night.png'),
 };
 
 const ParallaxScroll: FC<PropsWithChildren> = ({ children }) => {
@@ -29,13 +30,18 @@ const ParallaxScroll: FC<PropsWithChildren> = ({ children }) => {
     <View style={styles.container}>
       <Animated.View
         className="relative"
-        style={[StyleSheet.absoluteFillObject, backgroundStyle]}>
-        <ImageBackground
-          source={BGS[getBGImageByTime()]}
+        style={[
+          StyleSheet.absoluteFillObject,
+          backgroundStyle,
+          {
+            height: 251,
+          },
+        ]}>
+        <FastImage
           resizeMode="cover"
+          source={BGS[getBGImageByTime()]}
           style={StyleSheet.absoluteFillObject}
         />
-        <View className="absolute top-0 left-0 w-full h-full bg-[#F1F1F1] opacity-5" />
       </Animated.View>
       <Animated.ScrollView
         showsVerticalScrollIndicator={false}

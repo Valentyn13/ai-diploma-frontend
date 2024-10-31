@@ -20,8 +20,8 @@ const BgSelector: React.FC = () => {
       size={40}
       icon="music"
       onPress={toggleBgMenu}
-      backgroundColor={selectedTrack === 'off' ? '#00000060' : '#FFEFD7'}
-      color={selectedTrack === 'off' ? '#FFEFD7' : '#513F73'}
+      backgroundColor={selectedTrack === 'off' ? '#00000060' : '#FFFFFF'}
+      color={selectedTrack === 'off' ? '#FFFFFF' : '#513F73'}
     />
   );
 };

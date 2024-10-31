@@ -18,6 +18,7 @@ interface ChatComponentProps {
   messages: IMessage[];
   onSend: (messages: IMessage[]) => void;
   isLoading: boolean;
+  disableUserInput: boolean;
   shouldShowPaywall: boolean;
   navigation: any;
 }
@@ -75,6 +76,7 @@ const Chat: React.FC<ChatComponentProps> = ({
   messages,
   onSend,
   isLoading,
+  disableUserInput,
   shouldShowPaywall,
   navigation,
 }) => {
@@ -96,7 +98,7 @@ const Chat: React.FC<ChatComponentProps> = ({
       <GiftedChat
         renderAvatarOnTop
         messageContainerRef={ref}
-        disableComposer={isLoading}
+        disableComposer={disableUserInput}
         bottomOffset={Platform.OS === 'ios' ? insets.bottom + 64 : 0}
         messagesContainerStyle={{
           backgroundColor: theme.colors.light,
@@ -110,7 +112,9 @@ const Chat: React.FC<ChatComponentProps> = ({
         onSend={onSend}
         placeholder="הכנס הודעה..."
         user={{ _id: 'USER' }}
-        renderSend={props => <CustomSend {...props} isLoading={isLoading} />}
+        renderSend={props => (
+          <CustomSend {...props} isLoading={disableUserInput} />
+        )}
         renderInputToolbar={CustomInputToolbar}
         renderBubble={CustomBubble}
       />

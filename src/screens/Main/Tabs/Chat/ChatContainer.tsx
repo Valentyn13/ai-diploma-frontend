@@ -52,7 +52,13 @@ export default function ChatContainer({
 
   const { chat, loading, error } = useChatSession(chatIdFromDrawer);
 
-  const { messages, isMessageLoading, updateMessages, addMessage } = useChat({
+  const {
+    messages,
+    isMessageLoading,
+    disableUserInput,
+    updateMessages,
+    addMessage,
+  } = useChat({
     userId,
     chatId: calculatedChatId,
   });
@@ -71,6 +77,10 @@ export default function ChatContainer({
   const onSend = (msgs: IMessage[] = []) => {
     const msg = mapIMessageToMessage(msgs[0]);
     addMessage(msg);
+    if (messages.length >= 10) {
+      setSessionStarted(false);
+      return;
+    }
     setSessionStarted(true);
   };
 
@@ -115,6 +125,7 @@ export default function ChatContainer({
 
   return (
     <Chat
+      disableUserInput={disableUserInput}
       messages={messagesToShowInChat}
       onSend={onSend}
       isLoading={isMessageLoading}

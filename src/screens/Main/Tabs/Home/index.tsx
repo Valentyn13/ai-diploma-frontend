@@ -27,6 +27,7 @@ import styled from 'styled-components/native';
 import { Session } from 'types/Meditation';
 
 import InstructorList from './InstructorList';
+import MichaelCard from './MichaelCard';
 import ParallaxScroll from './ParallaxScroll';
 
 const ListTitle = styled(SubTitle)`
@@ -111,19 +112,32 @@ const Feed: FC<FeedProps> = ({ navigation, copilot }) => {
 
             <View className="relative bg-[#FCE8CD]">
               <View className="absolute top-0 h-48 w-full">
-                <Gradient colors={['#FFFFFF', '#FCE8CD']} angle={90} />
+                <Gradient colors={['#ffeed6', '#FCE8CD']} angle={90} />
               </View>
+              <MichaelCard />
+              <CopilotStep
+                text="גלו מדיטציות המותאמות למצב הרוח והמיקום שלכם בכל יום"
+                order={3}
+                name="howufeel">
+                <CopilotView copilot={copilot}>
+                  <View className="flex w-full items-center px-5 flex-1">
+                    <ListTitle k="personalized" />
+                    <View className="w-full flex items-center mt-5">
+                      <Feeling
+                        onClick={() => setIsOpen(true)}
+                        isMale={sex === 'M'}
+                      />
+                    </View>
+                    <Divider className="my-6" />
+                  </View>
+                </CopilotView>
+              </CopilotStep>
 
               <CopilotStep
                 text="כאן תוכלו למצוא מגוון עשיר של מדיטציות מותאמות אישית לצרכים שלכם"
                 order={1}
                 name="first">
-                <CopilotView
-                  copilot={copilot}
-                  style={{
-                    paddingTop: 100,
-                  }}
-                  className="flex-1">
+                <CopilotView copilot={copilot} className="flex-1">
                   <HorizontalCollection
                     key="by-time"
                     title={byTimeCollection.title}
@@ -152,24 +166,6 @@ const Feed: FC<FeedProps> = ({ navigation, copilot }) => {
                 </View>
 
                 <DynamicComposition>
-                  <CopilotStep
-                    text="גלו מדיטציות המותאמות למצב הרוח והמיקום שלכם בכל יום"
-                    order={3}
-                    name="howufeel">
-                    <CopilotView copilot={copilot}>
-                      <View className="flex w-full items-center px-5 flex-1">
-                        <ListTitle k="personalized" />
-                        <View className="w-full flex items-center mt-5">
-                          <Feeling
-                            onClick={() => setIsOpen(true)}
-                            isMale={sex === 'M'}
-                          />
-                        </View>
-                        <Divider className="my-6" />
-                      </View>
-                    </CopilotView>
-                  </CopilotStep>
-
                   {collections.map(({ id, title, items }) => (
                     <View className="flex-1" key={id}>
                       <HorizontalCollection
