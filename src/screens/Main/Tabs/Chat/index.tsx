@@ -89,7 +89,7 @@ export default function ChatDrawer() {
         header: () => (
           <ChatHeader
             title="מיכאל"
-            avatarSrc={image('michael_2')}
+            avatarSrc={image('michael_chat')}
             navigation={navigation}
           />
         ),

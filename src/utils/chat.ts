@@ -7,7 +7,7 @@ import { generateUUID } from './generateUUID';
 export const SYSTEM_USER = {
   _id: 'DR_MICHAEL',
   name: 'מיכאל',
-  avatar: image('michael_2'),
+  avatar: image('michael_chat'),
 } as const;
 
 export const CLIENT_USER = {
