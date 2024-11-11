@@ -4,6 +4,7 @@ import theme from '@common/theme';
 import { useNavigation } from '@react-navigation/native';
 import { useChat } from '@services/hooks/useChat';
 import useChatSession from '@services/hooks/useChatSession';
+import useOverrideBackGesture from '@services/hooks/useOverrideBackGesture';
 import { useUser } from '@services/hooks/useUser';
 import { useChatsStore } from '@store/useChatsStore';
 import {
@@ -11,8 +12,8 @@ import {
   mapIMessageToMessage,
   mapMessageToIMessage,
 } from '@utils/chat';
-import React, { useCallback, useEffect, useMemo } from 'react';
-import { ActivityIndicator, BackHandler, Text, View } from 'react-native';
+import React, { useEffect, useMemo } from 'react';
+import { ActivityIndicator, Text, View } from 'react-native';
 import { IMessage } from 'react-native-gifted-chat';
 
 export default function ChatContainer({
@@ -90,30 +91,16 @@ export default function ChatContainer({
     setSessionStarted(true);
   };
 
-  const backAction = useCallback(() => {
-    const cb = () => {
-      // @ts-ignore
-      navigation.replace('Main', {
-        screen: 'Home',
-      });
-    };
-    if (isSessionStarted) {
-      setIsLeaveModalVisible(true);
-      setNavCallback(cb);
-      return true;
-    }
-    cb();
-    return true;
-  }, []);
-
-  useEffect(() => {
-    const backHandler = BackHandler.addEventListener(
-      'hardwareBackPress',
-      backAction,
-    );
-
-    return () => backHandler.remove();
-  }, [backAction]);
+  useOverrideBackGesture({
+    onBack: () => {
+      if (isSessionStarted) {
+        setIsLeaveModalVisible(true);
+        setNavCallback(navigation.goBack);
+      } else {
+        navigation.goBack();
+      }
+    },
+  });
 
   useEffect(() => {
     const iMessagesFromIncomingChatMessages =
