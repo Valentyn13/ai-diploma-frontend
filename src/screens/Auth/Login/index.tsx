@@ -77,7 +77,11 @@ const Login: FC = () => {
 
   useEffect(() => {
     if (appDataloaded) {
-      navigation.navigate('Main', { screen: 'Home' });
+      // @ts-ignore
+      navigation.reset({
+        index: 0,
+        routes: [{ name: 'Main' }],
+      });
     }
   }, [appDataloaded, navigation]);
 

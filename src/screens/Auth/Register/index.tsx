@@ -89,7 +89,10 @@ const Register = ({ navigation }) => {
 
   useEffect(() => {
     if (appDataloaded) {
-      navigation.navigate('Main');
+      navigation.reset({
+        index: 0,
+        routes: [{ name: 'Main' }],
+      });
     }
   }, [appDataloaded, navigation]);
 

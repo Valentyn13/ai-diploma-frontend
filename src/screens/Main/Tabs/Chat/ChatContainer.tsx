@@ -11,8 +11,8 @@ import {
   mapIMessageToMessage,
   mapMessageToIMessage,
 } from '@utils/chat';
-import React, { useEffect, useMemo } from 'react';
-import { ActivityIndicator, Text, View } from 'react-native';
+import React, { useCallback, useEffect, useMemo } from 'react';
+import { ActivityIndicator, BackHandler, Text, View } from 'react-native';
 import { IMessage } from 'react-native-gifted-chat';
 
 export default function ChatContainer({
@@ -30,12 +30,18 @@ export default function ChatContainer({
   const {
     chats,
     currentChatId,
+    isSessionStarted,
     setSessionStarted,
+    setNavCallback,
+    setIsLeaveModalVisible,
     setCurrentChatId,
     setChatSessionStartedAfterCreationToFalse,
   } = useChatsStore(state => ({
     chats: state.chats,
     currentChatId: state.currentChatId,
+    isSessionStarted: state.isSessionStarted,
+    setNavCallback: state.setNavCallback,
+    setIsLeaveModalVisible: state.setIsLeaveModalVisible,
     setCurrentChatId: state.setCurrentChatId,
     setSessionStarted: state.setSessionStarted,
     setChatSessionStartedAfterCreationToFalse:
@@ -83,6 +89,31 @@ export default function ChatContainer({
     }
     setSessionStarted(true);
   };
+
+  const backAction = useCallback(() => {
+    const cb = () => {
+      // @ts-ignore
+      navigation.replace('Main', {
+        screen: 'Home',
+      });
+    };
+    if (isSessionStarted) {
+      setIsLeaveModalVisible(true);
+      setNavCallback(cb);
+      return true;
+    }
+    cb();
+    return true;
+  }, []);
+
+  useEffect(() => {
+    const backHandler = BackHandler.addEventListener(
+      'hardwareBackPress',
+      backAction,
+    );
+
+    return () => backHandler.remove();
+  }, [backAction]);
 
   useEffect(() => {
     const iMessagesFromIncomingChatMessages =
