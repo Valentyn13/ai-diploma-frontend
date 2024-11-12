@@ -45,9 +45,9 @@ const ChatHeader: FC<{
 
   const [isDeleteModalVisible, setIsDeleteModalVisible] = useState(false);
 
-  const handleDeleteChat = () => {
+  const handleDeleteChat = async () => {
     if (currentChatId) {
-      deleteChat(currentChatId);
+      await deleteChat(currentChatId);
       removeChat(currentChatId);
       setIsDeleteModalVisible(false);
       setSessionStarted(false);

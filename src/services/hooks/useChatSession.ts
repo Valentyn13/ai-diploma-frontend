@@ -17,9 +17,10 @@ const useChatSession = (chatId: string | null) => {
     }
     setLoading(true);
     fetchChat(chatId)
-      .then(chatData => setChat(chatData))
+      .then(chatData => {
+        setChat(chatData);
+      })
       .catch(error => {
-        console.log(error);
         setError(error);
       })
       .finally(() => setLoading(false));

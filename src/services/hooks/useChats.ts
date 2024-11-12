@@ -22,14 +22,11 @@ const useChats = () => {
     try {
       setLoading(true);
       const data = await fetchChats(user.id);
-      if (!data) {
-        throw new Error('No data');
-      }
       setChats(data);
-      setLoading(false);
     } catch (err: any) {
       setChats([]);
       setError(err);
+    } finally {
       setLoading(false);
     }
   }, [setChats, user.id]);

@@ -88,6 +88,11 @@ export const useChat = ({ userId, chatId }: Props) => {
           isNew: false,
         });
       } catch (error) {
+        const errorMessage = createIMessage(
+          'משהו השתבש בבקשה נסה שוב',
+          'assistant',
+        );
+        setMessages(prevItems => [...prevItems, errorMessage]);
         setDisableUserInput(false);
         setIsMessageLoading(false);
       }
@@ -100,6 +105,11 @@ export const useChat = ({ userId, chatId }: Props) => {
       setDisableUserInput(true);
       streamAiResponse(chatId, msg, setAccumulatedText, setDisableUserInput);
     } catch (error) {
+      const errorMessage = createIMessage(
+        'משהו השתבש בבקשה נסה שוב',
+        'assistant',
+      );
+      setMessages(prevItems => [...prevItems, errorMessage]);
       setDisableUserInput(false);
       setIsMessageLoading(false);
     }

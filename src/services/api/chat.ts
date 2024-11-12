@@ -1,5 +1,6 @@
 import { baseURL } from '@common/config';
 import { jwtToken } from '@services/hooks/useAxios/index';
+import { checkResponseOkStatus } from '@utils/checkResponseOkStatus';
 import { SetStateAction } from 'react';
 import { ChatForDrawer, Message, Session } from 'types/Chat';
 
@@ -10,6 +11,9 @@ export const fetchChats = async (userId: string) => {
       'content-type': 'application/json',
     },
   });
+
+  checkResponseOkStatus(response);
+
   const data = await response.json();
   return data as ChatForDrawer[];
 };
@@ -21,6 +25,8 @@ export const fetchChat = async (chatId: string) => {
       'content-type': 'application/json',
     },
   });
+
+  checkResponseOkStatus(response);
 
   const data = (await response.json()) as Session;
   return data;
@@ -44,6 +50,9 @@ export const streamAiResponse = async (
     },
     body: JSON.stringify({ input: message.content }),
   });
+
+  checkResponseOkStatus(response);
+
   const reader = response.body?.getReader();
   const decoder = new TextDecoder();
   if (!reader) {
@@ -78,13 +87,15 @@ export const createSseChat = async (userId: string, message: Message) => {
     body: JSON.stringify({ input: message.content }),
   });
 
+  checkResponseOkStatus(response);
+
   const data = (await response.json()) as Session;
 
   return data;
 };
 
 export const deleteChat = async (chatId: string) => {
-  const response = await fetch(`${baseURL}chats/${chatId}`, {
+  await fetch(`${baseURL}chats/${chatId}`, {
     method: 'DELETE',
     headers: {
       Authorization: `Bearer ${jwtToken}`,
@@ -92,5 +103,5 @@ export const deleteChat = async (chatId: string) => {
     },
   });
 
-  return response;
+  return true;
 };
