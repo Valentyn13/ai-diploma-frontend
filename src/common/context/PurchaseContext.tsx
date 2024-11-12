@@ -23,6 +23,7 @@ interface PurchaseContextProps {
   makePurchase: (
     packageToPurchase: PurchasesPackage,
   ) => Promise<MakePurchaseResult>;
+  restorePurchase: () => Promise<void>;
 }
 
 const PurchaseContext = createContext<PurchaseContextProps | undefined>(
@@ -129,11 +130,41 @@ export const PurchaseProvider: React.FC<PropsWithChildren> = ({ children }) => {
     [amplitudeInstance, email, id],
   );
 
+  const restorePurchase = useCallback(async () => {
+    try {
+      setPurchasing(true);
+      const customerInfo = await Purchases.restorePurchases();
+
+      const currentActiveSubscription = Object.values(
+        customerInfo?.entitlements?.active || {},
+      )?.[0];
+
+      if (
+        !!currentActiveSubscription &&
+        !currentActiveSubscription?.unsubscribeDetectedAt
+      ) {
+        setPremium(true);
+        amplitudeInstance.logEvent('Purchase Restored', { id, email });
+      } else {
+        throw new Error('Purchase failed: no active entitlements');
+      }
+    } catch (err) {
+      if (err instanceof Error) {
+        throw new Error(err.message);
+      } else {
+        throw new Error('Something went wrong');
+      }
+    } finally {
+      setPurchasing(false);
+    }
+  }, [amplitudeInstance, email, id]);
+
   const contextValue: PurchaseContextProps = {
     plans,
     hasPremium,
     purchasing,
     makePurchase,
+    restorePurchase,
     identify,
   };
 

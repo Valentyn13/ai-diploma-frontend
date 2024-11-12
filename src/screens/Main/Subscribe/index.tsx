@@ -87,7 +87,7 @@ const PackageItem: React.FC<{
 const Subscribe: FC = ({ navigation }) => {
   const route = useRoute();
   const { goBack } = useNavigation();
-  const { plans, makePurchase, purchasing } = usePurchases();
+  const { plans, makePurchase, purchasing, restorePurchase } = usePurchases();
   const {
     user: { email, name: userName },
   } = useUser();
@@ -171,6 +171,17 @@ const Subscribe: FC = ({ navigation }) => {
     }
   };
 
+  const onRestorePurchase = async () => {
+    try {
+      await restorePurchase();
+
+      onClose();
+    } catch (error) {
+      Sentry.captureException(error);
+      Alert.alert('מצטערים קרתה תקלה, אנא פנו לתמיכה שלנו באינסטגרם @rega.app');
+    }
+  };
+
   // const bullets = useObjectFlag('paywall-bullets', [
   //   i18n.t('point1'),
   //   i18n.t('point2'),
@@ -197,7 +208,7 @@ const Subscribe: FC = ({ navigation }) => {
           style={{
             position: 'absolute',
             width: '100%',
-            height: '120%',
+            height: '110%',
           }}
           resizeMode="cover"
         />
@@ -284,6 +295,9 @@ const Subscribe: FC = ({ navigation }) => {
                       ? 'הירשמו ונסו 7 ימים חינם'
                       : i18n.t('subscribeBtn1')}
                   </Text>
+                </TouchableOpacity>
+                <TouchableOpacity className="mt-3" onPress={onRestorePurchase}>
+                  <Text>שחזור מנוי</Text>
                 </TouchableOpacity>
                 {isFirstTime && (
                   <Text
