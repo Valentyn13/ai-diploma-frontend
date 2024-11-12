@@ -32,7 +32,7 @@ type PreLoginProps = NativeStackScreenProps<
 //   NativeStackScreenProps<RootStackParamList, 'Auth', 'PreLogin'>
 // >;
 
-const PreLogin: FC<PreLoginProps> = ({ navigation: { reset, navigate } }) => {
+const PreLogin: FC<PreLoginProps> = ({ navigation: { navigate } }) => {
   const { isLoading, setIsLoading } = useLoginStore(state => state);
   const { loginWithApple, loginWithFacebook, loginWithGoogle } = useLogin();
   const { getAppData } = useAppData();
@@ -53,12 +53,9 @@ const PreLogin: FC<PreLoginProps> = ({ navigation: { reset, navigate } }) => {
   useEffect(() => {
     if (appDataLoaded) {
       // @ts-ignore TODO: fix this
-      reset({
-        index: 0,
-        routes: [{ name: 'Main' }],
-      });
+      navigate('Main', { screen: 'Home' });
     }
-  }, [appDataLoaded, firstCourse, reset]);
+  }, [appDataLoaded, firstCourse, navigate]);
 
   const loginWith = async (provider: string) => {
     setIsLoading(true);

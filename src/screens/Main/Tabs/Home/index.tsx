@@ -48,7 +48,6 @@ const Feed: FC<FeedProps> = ({ navigation, copilot }) => {
   } = useUser();
   const [byTimeCollection, latestCollection, ...collections]: Collection[] =
     useFeed();
-
   const { isOldUser, updateIsOldUser } = useOnboarding(navigation);
 
   const onForeground = useCallback(() => {
