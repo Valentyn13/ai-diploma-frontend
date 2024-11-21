@@ -100,14 +100,9 @@ const ChatController = () => {
         <ChatsList
           category={currentCategory}
           chats={chats?.filter(chat => {
-            if (selectedCategory === null) {
-              if (!chat.category) {
-                return true;
-              } else {
-                return false;
-              }
-            }
-            return chat.category === selectedCategory;
+            return selectedCategory === null
+              ? !chat.category
+              : chat.category === selectedCategory;
           })}
         />
       )}

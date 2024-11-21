@@ -118,7 +118,6 @@ const Selection: FC<SelectionProps> = ({
 
   return (
     <View className="relative px-[16px] pt-[16px] flex flex-1 bg-[#FFF7EE]">
-      {/* Header */}
       <View>
         <View className="flex flex-row justify-between mb-[15px]">
           <Text className="text-2xl text-[#273051] font-bold">ליווי</Text>
@@ -131,7 +130,6 @@ const Selection: FC<SelectionProps> = ({
           </TouchableOpacity>
         </View>
       </View>
-      {/* Main FlatList */}
       <View />
       <View className="relative">
         <FlatList

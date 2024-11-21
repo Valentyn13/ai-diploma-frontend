@@ -131,7 +131,6 @@ export default ({
       const apiParams = fetchParams || params;
 
       try {
-        console.log(requestApi)
         const { data, status } = await httpRequest(
           requestApi,
           apiParams,

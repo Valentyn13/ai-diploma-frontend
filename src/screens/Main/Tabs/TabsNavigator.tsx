@@ -16,7 +16,7 @@ import {
   useCategorizedChatFlowStore,
 } from '@store/useCategorizedChatFlowStore';
 import { useChatsStore } from '@store/useChatsStore';
-import React from 'react';
+import React, { useLayoutEffect } from 'react';
 import { Pressable, StatusBar, Text } from 'react-native';
 import Animated from 'react-native-reanimated';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -177,7 +177,7 @@ const TabNavigator = ({ route }) => {
       setNavCallback: state.setNavCallback,
     }));
 
-  React.useLayoutEffect(() => {
+  useLayoutEffect(() => {
     const routeName = getFocusedRouteNameFromRoute(route);
     if (routeName === 'Chat' && chatStep === 'list') {
       setIsTabbarVisible(false);
