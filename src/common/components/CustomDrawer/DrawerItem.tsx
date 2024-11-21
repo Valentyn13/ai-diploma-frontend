@@ -1,4 +1,5 @@
 import { deleteChat } from '@services/api/chat';
+import { useRequestWithReauth } from '@services/hooks/useAxios/reauthWrapper';
 import { useCategorizedChatFlowStore } from '@store/useCategorizedChatFlowStore';
 import { useChatsStore } from '@store/useChatsStore';
 import { getReadableTimeDifference } from '@utils/time';
@@ -8,6 +9,7 @@ import Icon from 'react-native-vector-icons/Feather';
 import { ChatForDrawer } from 'types/Chat';
 
 const DrawerItem = ({ chat }: { chat: ChatForDrawer }) => {
+  const { executeApiRequest } = useRequestWithReauth();
   const { setIsDrawerOpen } = useCategorizedChatFlowStore(state => ({
     setIsDrawerOpen: state.setIsDrawerOpen,
   }));
@@ -51,7 +53,7 @@ const DrawerItem = ({ chat }: { chat: ChatForDrawer }) => {
   const handleDeleteChat = () => {
     const cb = async () => {
       removeChat(chat.chatId);
-      await deleteChat(chat.chatId);
+      await executeApiRequest(deleteChat, chat.chatId);
     };
     setDeleteCallback(cb);
     setIsDeleteModalVisible(true);

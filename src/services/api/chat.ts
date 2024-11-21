@@ -3,37 +3,28 @@ import { ChatCategories } from '@store/useCategorizedChatFlowStore';
 import { checkResponseOkStatus } from '@utils/checkResponseOkStatus';
 import { getToken } from '@utils/tokenHolder';
 import { SetStateAction } from 'react';
-import { ChatForDrawer, Message, Session } from 'types/Chat';
+import { Message } from 'types/Chat';
 
 export const fetchChats = async (userId: string) => {
   const jwtToken = await getToken();
-  const response = await fetch(`${baseURL}chats/?userId=${userId}`, {
+
+  return fetch(`${baseURL}chats/?userId=${userId}`, {
     headers: {
       'content-type': 'application/json',
       Authorization: `Bearer ${jwtToken}`,
     },
   });
-
-  checkResponseOkStatus(response);
-
-  const data = await response.json();
-
-  return data as ChatForDrawer[];
 };
 
 export const fetchChat = async (chatId: string) => {
   const jwtToken = await getToken();
-  const response = await fetch(`${baseURL}chats/${chatId}`, {
+
+  return fetch(`${baseURL}chats/${chatId}`, {
     headers: {
       'content-type': 'application/json',
       Authorization: `Bearer ${jwtToken}`,
     },
   });
-  checkResponseOkStatus(response);
-
-  const data = (await response.json()) as Session;
-
-  return data;
 };
 
 export const streamAiResponse = async (
@@ -95,7 +86,8 @@ export const createSseChat = async (
   chatType: ChatCategories = null,
 ) => {
   const jwtToken = await getToken();
-  const response = await fetch(
+
+  return fetch(
     `${baseURL}chats/create/sse?userId=${userId}&chatType=${
       chatType ? chatType : ''
     }`,
@@ -108,23 +100,16 @@ export const createSseChat = async (
       body: JSON.stringify({ input: message.content }),
     },
   );
-
-  checkResponseOkStatus(response);
-
-  const data = (await response.json()) as Session;
-
-  return data;
 };
 
 export const deleteChat = async (chatId: string) => {
   const jwtToken = await getToken();
-  await fetch(`${baseURL}chats/${chatId}`, {
+
+  return fetch(`${baseURL}chats/${chatId}`, {
     method: 'DELETE',
     headers: {
       'content-type': 'application/json',
       Authorization: `Bearer ${jwtToken}`,
     },
   });
-
-  return true;
 };

@@ -1,6 +1,7 @@
 import ParallaxScrollView from '@common/components/ParallaxScrollView';
 import { CircleButton } from '@common/components/buttons/CircleButton';
 import { deleteChat } from '@services/api/chat';
+import { useRequestWithReauth } from '@services/hooks/useAxios/reauthWrapper';
 import useOverrideBackGesture from '@services/hooks/useOverrideBackGesture';
 import {
   ChatCategoriesEnum,
@@ -32,6 +33,7 @@ const ChatItem = ({
   chat: { chatId, firstMessageContent, firstMessageTimestamp },
   index,
 }: ChatItemProps) => {
+  const { executeApiRequest } = useRequestWithReauth();
   const setCurrentStep = useCategorizedChatFlowStore(
     state => state.setCurrentStep,
   );
@@ -55,7 +57,7 @@ const ChatItem = ({
   const handleDeleteChat = () => {
     const cb = async () => {
       removeChat(chatId);
-      await deleteChat(chatId);
+      await executeApiRequest(deleteChat, chatId);
     };
     setDeleteCallback(cb);
     setIsDeleteModalVisible(true);

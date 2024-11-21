@@ -6,7 +6,9 @@ import createIMessage from '@utils/createIMessage';
 import { generateUUID } from '@utils/generateUUID';
 import { useCallback, useEffect, useState } from 'react';
 import { IMessage } from 'react-native-gifted-chat';
-import { Message } from 'types/Chat';
+import { Message, Session } from 'types/Chat';
+
+import { useRequestWithReauth } from './useAxios/reauthWrapper';
 
 type Props = {
   userId: string;
@@ -14,6 +16,7 @@ type Props = {
 };
 
 export const useChat = ({ userId, chatId }: Props) => {
+  const { executeApiRequest } = useRequestWithReauth();
   const { setCurrentChatId, addChat } = useChatsStore(state => ({
     setCurrentChatId: state.setCurrentChatId,
     addChat: state.addChat,
@@ -61,7 +64,17 @@ export const useChat = ({ userId, chatId }: Props) => {
       try {
         setIsMessageLoading(true);
         setDisableUserInput(true);
-        const newChat = await createSseChat(userId, msg, selectedCategory);
+        const newChat = (await executeApiRequest(
+          createSseChat,
+          userId,
+          msg,
+          selectedCategory,
+        )) as Session | null;
+
+        if (!newChat) {
+          throw new Error('Failed to create chat');
+        }
+
         await streamAiResponse(
           newChat._id,
           msg,
