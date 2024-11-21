@@ -5,8 +5,16 @@ import {
   BottomTabBarButtonProps,
   createBottomTabNavigator,
 } from '@react-navigation/bottom-tabs';
-import { NavigationProp, useNavigation } from '@react-navigation/native';
+import {
+  NavigationProp,
+  getFocusedRouteNameFromRoute,
+  useNavigation,
+} from '@react-navigation/native';
 import i18n from '@services/localization/i18n';
+import {
+  ChatControllerSteps,
+  useCategorizedChatFlowStore,
+} from '@store/useCategorizedChatFlowStore';
 import { useChatsStore } from '@store/useChatsStore';
 import React from 'react';
 import { Pressable, StatusBar, Text } from 'react-native';
@@ -14,14 +22,14 @@ import Animated from 'react-native-reanimated';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import Svg, { Path, SvgProps } from 'react-native-svg';
 
-import Chat from './Chat';
+import ChatController from './Chat/ChatController';
 import Courses from './Courses';
 import Explore from './Explore';
 import Home from './Home';
 import Profile from './Profile';
 
 const Tab = createBottomTabNavigator();
-const TABS = { Home, Explore, Chat, Courses, Profile };
+const TABS = { Home, Explore, Chat: ChatController, Courses, Profile };
 
 const HomeIcon = (props: SvgProps) => (
   <Svg fill="none" {...props}>
@@ -123,18 +131,28 @@ const CustomTabBarButton = ({
   navigation,
   link,
   isSessionStarted,
+  chatStep,
+  route,
   setIsLeaveModalVisible,
   setNavCallback,
   ...other
 }: BottomTabBarButtonProps & {
   navigation: NavigationProp<any>;
   link: string;
+  chatStep: ChatControllerSteps;
+  route: any;
   isSessionStarted: boolean;
   setIsLeaveModalVisible: (visible: boolean) => void;
   setNavCallback: (cb: Function | null) => void;
 }) => {
+  const setCurrentStep = useCategorizedChatFlowStore(state => state.setCurrentStep);
   const handlePress = () => {
+    const currRoute = getFocusedRouteNameFromRoute(route);
+
     const cb = () => {
+      if (currRoute === 'Chat' && chatStep !== 'selection') {
+        setCurrentStep('selection');
+      }
       navigation.navigate(link);
     };
     if (!isSessionStarted) {
@@ -148,14 +166,26 @@ const CustomTabBarButton = ({
   return <Pressable {...other} onPress={handlePress} />;
 };
 
-const TabNavigator = () => {
+const TabNavigator = ({ route }) => {
   const navigation = useNavigation();
+  const chatStep = useCategorizedChatFlowStore(state => state.currentStep);
+  const [isTabbarVisible, setIsTabbarVisible] = React.useState(true);
   const { isSessionStarted, setNavCallback, setIsLeaveModalVisible } =
     useChatsStore(state => ({
       isSessionStarted: state.isSessionStarted,
       setIsLeaveModalVisible: state.setIsLeaveModalVisible,
       setNavCallback: state.setNavCallback,
     }));
+
+  React.useLayoutEffect(() => {
+    const routeName = getFocusedRouteNameFromRoute(route);
+    if (routeName === 'Chat' && chatStep === 'list') {
+      setIsTabbarVisible(false);
+    } else {
+      setIsTabbarVisible(true);
+    }
+  }, [route, chatStep]);
+
   return (
     <SafeAreaView
       className="flex-1"
@@ -172,7 +202,7 @@ const TabNavigator = () => {
         screenOptions={{
           tabBarStyle: {
             height: 64,
-            display: 'flex',
+            display: isTabbarVisible ? 'flex' : 'none',
             alignItems: 'center',
             justifyContent: 'center',
             backgroundColor: '#FFF8EE',
@@ -193,6 +223,8 @@ const TabNavigator = () => {
               tabBarButton: props => (
                 <CustomTabBarButton
                   {...props}
+                  route={route}
+                  chatStep={chatStep}
                   setNavCallback={setNavCallback}
                   isSessionStarted={isSessionStarted}
                   setIsLeaveModalVisible={setIsLeaveModalVisible}

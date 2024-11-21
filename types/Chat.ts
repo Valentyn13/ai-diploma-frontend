@@ -1,3 +1,5 @@
+import { ChatCategories } from '@store/useCategorizedChatFlowStore';
+
 export type Message = {
   id: string;
   _id?: string;
@@ -11,6 +13,7 @@ export interface Session {
   sessionId?: string;
   userId: string;
   messages: Message[];
+  category?: ChatCategories;
 }
 
 export type ChatForDrawer = {
@@ -18,4 +21,5 @@ export type ChatForDrawer = {
   chatId: string;
   firstMessageContent: string;
   firstMessageTimestamp: string;
+  category?: ChatCategories;
 };

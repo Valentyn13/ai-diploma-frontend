@@ -1,6 +1,6 @@
 import { useNavigation } from '@react-navigation/native';
 import React from 'react';
-import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import FastImage from 'react-native-fast-image';
 
 const MichaelCard = () => {
@@ -13,7 +13,7 @@ const MichaelCard = () => {
         resizeMode="cover"
         style={StyleSheet.absoluteFill}
       />
-      <Image
+      <FastImage
         className="w-[140px] h-[110px] absolute bottom-0 right-0"
         source={require('./bgs/michael_person.png')}
       />

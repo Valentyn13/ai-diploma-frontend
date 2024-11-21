@@ -31,6 +31,7 @@ const ConfirmationModal: FC<Props> = ({
     type === 'leave' ? LEAVE_CHAT_CONFIRM_BUTTON : DELETE_CHAT_CONFIRM_BUTTON;
   const cancelText =
     type === 'leave' ? LEAVE_CHAT_CANCEL_BUTTON : DELETE_CHAT_CANCEL_BUTTON;
+
   return (
     <Modal transparent visible={visible}>
       <View className="w-full h-full bg-[#00000060] justify-center items-center p-[10px]">

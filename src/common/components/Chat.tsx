@@ -94,7 +94,7 @@ const Chat: React.FC<ChatComponentProps> = ({
     }
   }, [shouldShowPaywall, navigation]);
   return (
-    <View className="w-full h-full bg-[#FFF7EA]">
+    <View className="w-full flex-1 bg-[#FFF7EA]">
       <GiftedChat
         renderAvatarOnTop
         messageContainerRef={ref}

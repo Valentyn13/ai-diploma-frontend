@@ -6,10 +6,16 @@ import config from '@common/config';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { AMPLITUDE_EVENTS, useAmplitude } from '@services/hooks/useAmplitude';
 import useAppData from '@services/hooks/useAppData';
+import {
+  checkIsTokenValid,
+  useRequestWithReauth,
+} from '@services/hooks/useAxios/reauthWrapper';
+import { useClearChatStore } from '@services/hooks/useClearChatStore';
 import { useIntro } from '@services/hooks/useIntro';
+import { logout } from '@store/actions';
 import React, { FC, useEffect, useState } from 'react';
 import { View } from 'react-native';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import { RootStackParamList } from './RootNavigator';
 
@@ -20,18 +26,26 @@ type SplashProps = NativeStackScreenProps<RootStackParamList, 'Splash'>;
 const Splash: FC<SplashProps> = ({ navigation: { navigate, replace } }) => {
   const { isFirstTimeUser } = useIntro();
   const { getAppData } = useAppData();
+  const { clearChatStore } = useClearChatStore();
+  const dispatchAction = useDispatch();
   const [animationFinished, setAnimationFinished] = useState(false);
   const { logEvent, uploadEvents } = useAmplitude();
-
+  const { executeApiRequest } = useRequestWithReauth();
   const isLoaded = useSelector((state: RootState) => state.appData.loaded);
   const accessToken = useSelector(
     (state: RootState) => state.userDetails.accessToken,
   );
-
   useEffect(() => {
     const timer = setTimeout(
-      () => {
+      async () => {
         if (accessToken) {
+          const checkResult = await executeApiRequest(checkIsTokenValid);
+          if (!checkResult) {
+            dispatchAction(logout());
+            clearChatStore();
+            replace('Auth');
+            return;
+          }
           getAppData();
         } else if (isFirstTimeUser) {
           logEvent(AMPLITUDE_EVENTS.ONBOARDING_START);

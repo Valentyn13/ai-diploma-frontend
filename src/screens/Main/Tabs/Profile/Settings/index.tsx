@@ -4,6 +4,7 @@ import { usePurchases } from '@common/context/PurchaseContext';
 import theme from '@common/theme';
 import Clipboard from '@react-native-clipboard/clipboard';
 import { useAmplitude } from '@services/hooks/useAmplitude';
+import { useClearChatStore } from '@services/hooks/useClearChatStore';
 import useDeleteData from '@services/hooks/useDeleteData';
 import { useUser } from '@services/hooks/useUser';
 import { logout } from '@store/actions';
@@ -27,7 +28,7 @@ import { useDispatch } from 'react-redux';
 
 const Settings = ({ navigation }) => {
   const { hasPremium } = usePurchases();
-
+  const { clearChatStore } = useClearChatStore();
   const dispatch = useDispatch();
   const {
     user: { name, email, id },
@@ -44,6 +45,7 @@ const Settings = ({ navigation }) => {
     });
     amplitudeInstance.uploadEvents();
     dispatch(logout());
+    clearChatStore();
     fbLogout();
     googleSignOut();
     // applelogout();

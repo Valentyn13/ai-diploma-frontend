@@ -1,5 +1,6 @@
 import React, { FC, PropsWithChildren } from 'react';
 import { Image, StyleSheet, View } from 'react-native';
+import FastImage, { Source } from 'react-native-fast-image';
 import Animated, {
   interpolate,
   useAnimatedScrollHandler,
@@ -9,7 +10,9 @@ import Animated, {
 
 const ParallaxScrollView: FC<
   PropsWithChildren & {
-    image: string;
+    image?: string;
+    srcImage?: Source;
+    parallaxEnabled?: boolean;
     backgroundColor?: string;
     contentBackgroundColor?: string;
     parallaxHeaderHeight?: number;
@@ -19,7 +22,9 @@ const ParallaxScrollView: FC<
 > = ({
   children,
   image,
+  srcImage,
   backgroundColor = '#fdedd6',
+  parallaxEnabled = true,
   contentBackgroundColor = '#fdedd6',
   parallaxHeaderHeight = 200,
   renderForeground = () => null,
@@ -65,12 +70,30 @@ const ParallaxScrollView: FC<
         scrollEventThrottle={16}
         style={{ flex: 1 }}>
         <Animated.View
-          style={[headerStyle, styles.header, { backgroundColor }]}>
-          <Image
-            source={{ uri: image }}
-            style={StyleSheet.absoluteFill}
-            resizeMode="cover"
-          />
+          style={[
+            parallaxEnabled
+              ? headerStyle
+              : {
+                  height: parallaxHeaderHeight,
+                },
+            styles.header,
+            { backgroundColor },
+          ]}>
+          {image && (
+            <Image
+              source={{ uri: image }}
+              style={StyleSheet.absoluteFill}
+              resizeMode="cover"
+            />
+          )}
+          {srcImage && (
+            <FastImage
+              source={srcImage}
+              style={[StyleSheet.absoluteFill, { transform: [{ scaleX: -1 }] }]}
+              resizeMode="cover"
+            />
+          )}
+
           <Animated.View style={[StyleSheet.absoluteFill, foregroundStyle]}>
             {renderForeground()}
           </Animated.View>

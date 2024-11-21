@@ -1,6 +1,5 @@
-import { useNavigation } from '@react-navigation/native';
-import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { createSseChat, streamAiResponse } from '@services/api/chat';
+import { useCategorizedChatFlowStore } from '@store/useCategorizedChatFlowStore';
 import { useChatsStore } from '@store/useChatsStore';
 import { mapMessageToIMessage } from '@utils/chat';
 import createIMessage from '@utils/createIMessage';
@@ -15,12 +14,16 @@ type Props = {
 };
 
 export const useChat = ({ userId, chatId }: Props) => {
-  const navigation = useNavigation<NativeStackNavigationProp<any>>();
-
   const { setCurrentChatId, addChat } = useChatsStore(state => ({
     setCurrentChatId: state.setCurrentChatId,
     addChat: state.addChat,
   }));
+
+  const { selectedCategory, setLatestActiveSessionId } =
+    useCategorizedChatFlowStore(state => ({
+      selectedCategory: state.selectedCategory,
+      setLatestActiveSessionId: state.setLatestActiveSessionId,
+    }));
 
   const [messages, setMessages] = useState<IMessage[]>([]);
   const [isMessageLoading, setIsMessageLoading] = useState(false);
@@ -58,21 +61,23 @@ export const useChat = ({ userId, chatId }: Props) => {
       try {
         setIsMessageLoading(true);
         setDisableUserInput(true);
-        const newChat = await createSseChat(userId, msg);
+        const newChat = await createSseChat(userId, msg, selectedCategory);
         await streamAiResponse(
           newChat._id,
           msg,
+          selectedCategory,
           setAccumulatedText,
           setDisableUserInput,
         );
 
         addChat({
           chatId: newChat._id,
+          category: newChat.category,
           firstMessageContent: newChat.messages[0].content,
           firstMessageTimestamp: newChat.messages[0].timestamp,
           sessionStartedAfterCreation: true,
         });
-
+        setLatestActiveSessionId(newChat._id);
         const lastMessage = newChat.messages[newChat.messages.length - 1];
         lastMessage.id = lastMessage._id || generateUUID();
 
@@ -82,11 +87,6 @@ export const useChat = ({ userId, chatId }: Props) => {
           ...prevItems,
           mapMessageToIMessage(lastMessage),
         ]);
-
-        navigation.navigate(newChat._id, {
-          id: newChat._id,
-          isNew: false,
-        });
       } catch (error) {
         const errorMessage = createIMessage(
           'משהו השתבש בבקשה נסה שוב',
@@ -103,7 +103,13 @@ export const useChat = ({ userId, chatId }: Props) => {
     try {
       setIsMessageLoading(true);
       setDisableUserInput(true);
-      streamAiResponse(chatId, msg, setAccumulatedText, setDisableUserInput);
+      streamAiResponse(
+        chatId,
+        msg,
+        selectedCategory,
+        setAccumulatedText,
+        setDisableUserInput,
+      );
     } catch (error) {
       const errorMessage = createIMessage(
         'משהו השתבש בבקשה נסה שוב',

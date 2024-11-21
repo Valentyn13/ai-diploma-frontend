@@ -1,7 +1,7 @@
 import GlitterIcon from '@common/components/common/Glitter';
-import { deleteChat } from '@services/api/chat';
+import { useCategorizedChatFlowStore } from '@store/useCategorizedChatFlowStore';
 import { useChatsStore } from '@store/useChatsStore';
-import React, { FC, useState } from 'react';
+import React, { FC } from 'react';
 import { Image, Text, TouchableOpacity, View } from 'react-native';
 import Icon from 'react-native-vector-icons/Feather';
 
@@ -11,10 +11,10 @@ type CloseIconProps = {
   onPress: () => void;
 };
 
-const DeleteButton = ({ onPress }: CloseIconProps) => {
+const GoBackButton = ({ onPress }: CloseIconProps) => {
   return (
     <TouchableOpacity onPress={onPress} className="p-2">
-      <Icon name="trash" size={22} />
+      <Icon name="chevron-left" size={30} />
     </TouchableOpacity>
   );
 };
@@ -23,36 +23,30 @@ const ChatHeader: FC<{
   title: string;
   avatarSrc: number;
   navigation: any;
-}> = ({ title, avatarSrc, navigation }) => {
+  toggleDrawer: (isOpen: boolean) => void;
+}> = ({ title, avatarSrc, toggleDrawer }) => {
   const {
-    currentChatId,
     isLeaveModalVisible,
     navCallback,
+    isSessionStarted,
     setNavCallback,
     setIsLeaveModalVisible,
     setSessionStarted,
-    removeChat,
   } = useChatsStore(state => ({
-    currentChatId: state.currentChatId,
-    isSessionStarted: state.isSessionStarted,
     isLeaveModalVisible: state.isLeaveModalVisible,
     navCallback: state.navCallback,
+    isSessionStarted: state.isSessionStarted,
     setNavCallback: state.setNavCallback,
     setIsLeaveModalVisible: state.setIsLeaveModalVisible,
-    removeChat: state.removeChat,
     setSessionStarted: state.setSessionStarted,
   }));
 
-  const [isDeleteModalVisible, setIsDeleteModalVisible] = useState(false);
-
-  const handleDeleteChat = async () => {
-    if (currentChatId) {
-      await deleteChat(currentChatId);
-      removeChat(currentChatId);
-      setIsDeleteModalVisible(false);
-      setSessionStarted(false);
-    }
-  };
+  const { selectedCategory, setCurrentStep } = useCategorizedChatFlowStore(
+    state => ({
+      selectedCategory: state.selectedCategory,
+      setCurrentStep: state.setCurrentStep,
+    }),
+  );
 
   const handleLeaveModalCancel = () => {
     setIsLeaveModalVisible(false);
@@ -67,29 +61,41 @@ const ChatHeader: FC<{
     }
   };
 
+  const handleGoBack = () => {
+    if (isSessionStarted) {
+      setIsLeaveModalVisible(true);
+      if (!selectedCategory) {
+        setNavCallback(() => setCurrentStep('selection'));
+        return;
+      }
+      setNavCallback(() => setCurrentStep('list'));
+      return;
+    }
+    if (!selectedCategory) {
+      setCurrentStep('selection');
+      return;
+    }
+    setCurrentStep('list');
+  };
+
   return (
     <View className="bg-[#FFF8EE] w-full flex-row justify-between items-center p-2 border-b border-gray-300">
       <View className="flex-row items-center">
         <TouchableOpacity
           className="p-2"
-          onPress={() => navigation.toggleDrawer()}>
+          onPress={() => {
+            toggleDrawer(true);
+          }}>
           <Icon color="#000" name="menu" size={30} />
         </TouchableOpacity>
-        <View className="flex-row items-center ml-2">
+        <View className="flex-row items-center ml-6">
           <Image source={avatarSrc} className="w-8 h-8 rounded-full" />
           <Text className="text-black font-normal text-xl ml-2">{title}</Text>
           <GlitterIcon className="w-6 h-6 ml-1" />
         </View>
       </View>
-      {currentChatId && (
-        <DeleteButton onPress={() => setIsDeleteModalVisible(true)} />
-      )}
-      <ConfirmationModal
-        type="delete"
-        visible={isDeleteModalVisible}
-        onCancel={() => setIsDeleteModalVisible(false)}
-        onConfirm={handleDeleteChat}
-      />
+      <GoBackButton onPress={handleGoBack} />
+
       <ConfirmationModal
         type="leave"
         visible={isLeaveModalVisible}

@@ -10,6 +10,7 @@ import axios from 'axios';
 import { useCallback, useEffect, useMemo, useReducer } from 'react';
 import { useDispatch } from 'react-redux';
 
+import { useClearChatStore } from '../useClearChatStore';
 import usePrevious from '../usePrevious';
 import { useUser } from '../useUser';
 import { actions, initialResponse, responseReducer } from './reducers';
@@ -59,7 +60,7 @@ const httpRequest = async ({ method, url }, apiParams, userId) => {
   return { data, status };
 };
 
-const refreshAccessToken = async (
+export const refreshAccessToken = async (
   id: string,
   email: string,
   refreshToken: string,
@@ -106,6 +107,7 @@ export default ({
   const [results, dispatch] = useReducer(responseReducer, initialResponse);
   const { user } = useUser();
   const dispatchAction = useDispatch();
+  const { clearChatStore } = useClearChatStore();
 
   const fetch = useCallback(
     async (fetchParams = undefined) => {
@@ -129,6 +131,7 @@ export default ({
       const apiParams = fetchParams || params;
 
       try {
+        console.log(requestApi)
         const { data, status } = await httpRequest(
           requestApi,
           apiParams,
@@ -171,6 +174,7 @@ export default ({
               dispatch({ type: actions.success, payload: res.data });
             } else {
               dispatchAction(logout());
+              clearChatStore()
             }
           } else {
             Sentry.captureException(error);

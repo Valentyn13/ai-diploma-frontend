@@ -16,7 +16,9 @@ import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { RootStackParamList } from '@screens/RootNavigator';
 import useAppData from '@services/hooks/useAppData';
 import useAppState from '@services/hooks/useAppState';
+import useChats from '@services/hooks/useChats';
 import useFeed from '@services/hooks/useFeed';
+import useLatestActiveSession from '@services/hooks/useLatestActiveSession';
 import { useOnboarding } from '@services/hooks/useOnboarding';
 import { useUser } from '@services/hooks/useUser';
 import { useSheetStore } from '@store/useSheetStore';
@@ -43,6 +45,8 @@ const CopilotView = walkthroughable(View);
 const Feed: FC<FeedProps> = ({ navigation, copilot }) => {
   const { hasPremium } = usePurchases();
   const { getAppData } = useAppData();
+  useLatestActiveSession();
+  const { fetchData } = useChats();
   const {
     user: { sex },
   } = useUser();
@@ -87,6 +91,7 @@ const Feed: FC<FeedProps> = ({ navigation, copilot }) => {
   const [showModal, setShowModal] = useState(false);
 
   useEffect(() => {
+    fetchData();
     const timer = setTimeout(() => {
       setShowModal(true);
     }, 1000);

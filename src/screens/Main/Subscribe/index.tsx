@@ -11,6 +11,8 @@ import * as Sentry from '@sentry/react-native';
 import { useAmplitude } from '@services/hooks/useAmplitude';
 import { useUser } from '@services/hooks/useUser';
 import i18n from '@services/localization/i18n';
+import { useCategorizedChatFlowStore } from '@store/useCategorizedChatFlowStore';
+import { useChatsStore } from '@store/useChatsStore';
 import { logEvent } from '@utils/analytics';
 import get from '@utils/get';
 import React, { FC, useEffect, useMemo, useState } from 'react';
@@ -91,7 +93,15 @@ const Subscribe: FC = ({ navigation }) => {
   const {
     user: { email, name: userName },
   } = useUser();
-
+  const { setCurrentStep, setSelectedCategory } = useCategorizedChatFlowStore(
+    state => ({
+      setCurrentStep: state.setCurrentStep,
+      setSelectedCategory: state.setSelectedCategory,
+    }),
+  );
+  const { setCurrentChatId } = useChatsStore(state => ({
+    setCurrentChatId: state.setCurrentChatId,
+  }));
   const availablePackages = get(plans, 'availablePackages', []);
 
   const amplitudeInstance = useAmplitude();
@@ -121,7 +131,10 @@ const Subscribe: FC = ({ navigation }) => {
     await AsyncStorage.setItem(KEY_PLAYED_FIRST, true.toString());
 
     if (isFromChatScreen) {
-      navigation.replace('Main', { screen: 'Home' });
+      setCurrentStep('selection');
+      setSelectedCategory(null);
+      setCurrentChatId(null);
+      goBack();
       return;
     }
 

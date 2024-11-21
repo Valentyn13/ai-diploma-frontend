@@ -6,7 +6,12 @@ import {
   Sleep,
   Stress,
 } from '@common/assets/illustrations';
+import {
+  ChatCategories,
+  ChatCategoriesEnum,
+} from '@store/useCategorizedChatFlowStore';
 
+// CHAT CATEGORIES CONSTANTS
 import { PersonalizedState } from '../../types/Personalized';
 
 export const SHOULD_SHOW_REMINDER_POPUP_STATUS_NOT_INITIALIED =
@@ -876,3 +881,66 @@ export const ASSETS_URL = 'https://d137rfe7jg135q.cloudfront.net/';
 export const VIDEO_URL = `${ASSETS_URL}videos/`;
 export const OLD_ASSETS_URL =
   'https://regameditation.s3.us-east-2.amazonaws.com/';
+
+export const FREE_CHAT_TITLE = 'צ׳אט חופשי';
+export const SELF_DEV_TITLE = 'פיתוח עצמי';
+export const NEGATIVE_THOUGHTS_TITLE = 'ניהול דפוסי חשיבה שליליים';
+export const ANXIETY_TITLE = 'חרדה: הבנה והתמודדות';
+export const BAD_HABITS_TITLE = 'שחרור מהרגלים רעים';
+
+export type ChatTypeData = {
+  id: number;
+  type: ChatCategories;
+  title: string;
+  description: string;
+  sessionCount: number;
+  bgColor: string;
+};
+
+export const CHAT_TYPES: ChatTypeData[] = [
+  {
+    id: 1,
+    type: null,
+    title: FREE_CHAT_TITLE,
+    description:
+      'לשתף, להתייעץ או סתם לפרוק... זה המקום לדבר עם מיכאל על כל נושא שתרצו. כאן גם תמצאו את כל השיחות הקודמות שלכם.',
+    sessionCount: 0,
+    bgColor: '#14767778',
+  },
+  {
+    id: 2,
+    type: ChatCategoriesEnum.SELF_DEV,
+    title: SELF_DEV_TITLE,
+    description:
+      'מרגישים תקועים ולא מצליחים להתקדם? מרגישים שהפוטנציאל שם אבל צריך לדייק את עצמכם? במפגשים שלנו יחד נוכל לצמוח ולהגשים את המטרות שתמיד חלמתם להגשים.',
+    sessionCount: 0,
+    bgColor: '#FFE3C5',
+  },
+  {
+    id: 3,
+    type: ChatCategoriesEnum.NEGATIVE,
+    title: NEGATIVE_THOUGHTS_TITLE,
+    description:
+      'בוא נזהה וננהל יחד את דפוסי החשיבה השליליים שלך, נבין את השפעתם על התחושות וההתנהגות, ונלמד כיצד להפוך אותם לדפוסים בריאים ומקדמים.',
+    sessionCount: 0,
+    bgColor: '#D4E4FE',
+  },
+  {
+    id: 4,
+    type: ChatCategoriesEnum.ANXIETY,
+    title: ANXIETY_TITLE,
+    description:
+      'גלו את שורשי החרדה שלכם ולמדו כלים מעשיים להתמודדות יעילה. יחד נעבוד על הבנה עמוקה יותר והשגת רוגע נפשי.',
+    sessionCount: 0,
+    bgColor: '#F9D8D7',
+  },
+  {
+    id: 5,
+    type: ChatCategoriesEnum.BAD_HABITS,
+    title: BAD_HABITS_TITLE,
+    description:
+      ' שחרור מהרגלים רעים דורש זמן ולעיתים עזרה. אם אתם זקוקים לתמיכה כדי להיפטר מהם, אני כאן ללוות אתכם בתהליך ולסייע לכם לצעוד לעבר שינוי חיובי.',
+    sessionCount: 0,
+    bgColor: '#E8E6F3',
+  },
+];
