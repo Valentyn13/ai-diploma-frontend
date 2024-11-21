@@ -191,7 +191,7 @@ const Subscribe: FC = ({ navigation }) => {
       onClose();
     } catch (error) {
       Sentry.captureException(error);
-      Alert.alert('מצטערים קרתה תקלה, אנא פנו לתמיכה שלנו באינסטגרם @rega.app');
+      Alert.alert('אין מנוי פעיל במכשיר זה.');
     }
   };
 
