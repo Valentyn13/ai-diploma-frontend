@@ -236,6 +236,10 @@ const MeditationPicker = () => {
     [setIsOpen],
   );
 
+  const handleCloseClick = () => {
+    bottomSheetRef.current?.close();
+  };
+
   // const handleNext = useCallback((f: Feeling) => {
   //   setSelectedFeeling(f);
   //   setShowWhereYouAt(true);
@@ -243,7 +247,7 @@ const MeditationPicker = () => {
 
   const onFinish = useCallback(
     (f: Feeling) => {
-      bottomSheetRef.current!.close();
+      bottomSheetRef.current?.close();
 
       const sessions = meditations.filter(
         m => m.categoryName === CATEGORY_NAMES[f],
@@ -279,9 +283,9 @@ const MeditationPicker = () => {
 
   useEffect(() => {
     if (isOpen) {
-      bottomSheetRef.current!.present();
+      bottomSheetRef.current?.present();
     } else {
-      bottomSheetRef.current!.close();
+      bottomSheetRef.current?.close();
     }
   }, [isOpen]);
 
@@ -310,7 +314,7 @@ const MeditationPicker = () => {
             padding: 6,
             borderRadius: 100,
           }}
-          onPress={() => bottomSheetRef.current!.close()}>
+          onPress={handleCloseClick}>
           <Icon name="x" size={24} color="#000" />
         </TouchableOpacity>
         <BottomSheetView
