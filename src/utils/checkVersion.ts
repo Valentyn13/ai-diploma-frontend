@@ -51,10 +51,10 @@ const getVersion = async () => {
   if (Platform.OS === 'ios') {
     version = await getIOSVersion();
   } else if (Platform.OS === 'android') {
-    version = getAndroidVersion();
+    version = await getAndroidVersion();
   }
 
-  return version;
+  return !!version ? String(version) : null;
 };
 
 const getUpdateUrl = async () => {
@@ -67,6 +67,11 @@ const getUpdateUrl = async () => {
 
 const shouldUpdate = async () => {
   const version = await getVersion();
+
+  if (!version || version === 'NaN') {
+    return false;
+  }
+
   return compare(version, DeviceInfo.getVersion()) > 0;
 };
 
