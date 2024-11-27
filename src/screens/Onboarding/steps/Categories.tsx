@@ -74,8 +74,9 @@ const Intro = () => {
         subTitle="ניתן לבחור עד 3 נושאים"
       />
       <View className="flex flex-row flex-wrap gap-2 items-center justify-center">
-        {CATEGORIES.map(item => (
+        {CATEGORIES.map((item, index) => (
           <TouchableOpacity
+            key={index}
             onPress={() => {
               let newSelectedItems: Category[] = [];
               if (isSelected(item.key)) {

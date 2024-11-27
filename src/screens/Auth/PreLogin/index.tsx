@@ -173,6 +173,7 @@ const PreLogin: FC<PreLoginProps> = ({ navigation: { navigate } }) => {
 
                 return (
                   <TouchableOpacity
+                    key={provider}
                     center
                     style={{
                       backgroundColor: '#FFF',
