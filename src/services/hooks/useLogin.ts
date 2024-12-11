@@ -219,7 +219,7 @@ export default () => {
 
   useEffect(() => {
     if (emailLoginCompleted) {
-      if (emailLoginData) {
+      if (!!emailLoginData?.user) {
         dispatchLogin(emailLoginData);
       } else {
         captureMessage('Missing Email Login Data');
@@ -235,7 +235,7 @@ export default () => {
 
   useEffect(() => {
     if (fbLoginCompleted) {
-      if (fbLoginData) {
+      if (!!fbLoginData?.user) {
         dispatchLogin(fbLoginData);
       } else {
         captureMessage('Missing FB Login Data');
@@ -251,7 +251,7 @@ export default () => {
 
   useEffect(() => {
     if (googleLoginCompleted) {
-      if (googleLoginData) {
+      if (!!googleLoginData?.user) {
         dispatchLogin(googleLoginData);
       } else {
         captureMessage('Missing Google Login Data');
@@ -268,7 +268,7 @@ export default () => {
 
   useEffect(() => {
     if (appleLoginCompleted) {
-      if (appleLoginData) {
+      if (!!appleLoginData?.user) {
         dispatchLogin(appleLoginData);
       } else {
         captureMessage('Missing Apple Login Data');
@@ -284,7 +284,7 @@ export default () => {
 
   useEffect(() => {
     if (registerCompleted) {
-      if (registerData) {
+      if (!!registerData?.user) {
         dispatchLogin(registerData);
       } else {
         captureMessage('Missing Regsiter Data');
