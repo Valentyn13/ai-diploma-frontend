@@ -14,14 +14,15 @@ const Instructor = () => {
 
   const instructorId = route.params?.id;
   const instructor = useSelector(state => state.appData.instructors).find(
-    x => x._id === instructorId,
+    x => !!x && x._id === instructorId,
   );
 
   const allMeditations = useSelector(allMeditationsSelector);
 
   const meditations = useMemo(
-    () => allMeditations.filter(({ id }) => instructor.categories.includes(id)),
-    [allMeditations, instructor.categories],
+    () =>
+      allMeditations.filter(({ id }) => instructor?.categories?.includes(id)),
+    [allMeditations, instructor?.categories],
   );
 
   const { updateIstructorTractionData } = useInstructor();
@@ -37,83 +38,85 @@ const Instructor = () => {
           color="white"
         />
       </View>
-      <ParallaxScrollView image={instructor?.image}>
-        <View className="px-5 flex-1 mt-8">
-          <View className="mb-8">
-            <View className="flex flex-row justify-between items-center">
-              <Text className="text-2xl font-bold text-black">
-                {instructor?.name}
-              </Text>
-              <View className="flex flex-row">
-                {instructor.SocialIconLink && (
-                  <View className="mr-1">
+      {!!instructor && (
+        <ParallaxScrollView image={instructor?.image}>
+          <View className="px-5 flex-1 mt-8">
+            <View className="mb-8">
+              <View className="flex flex-row justify-between items-center">
+                <Text className="text-2xl font-bold text-black">
+                  {instructor?.name}
+                </Text>
+                <View className="flex flex-row">
+                  {instructor.SocialIconLink && (
+                    <View className="mr-1">
+                      <CircleButton
+                        size={40}
+                        icon="instagram"
+                        onPress={() => {
+                          const data = {
+                            ...instructor,
+                            social_link_press: true,
+                          };
+                          updateIstructorTractionData(data);
+                          const url = instructor.SocialIconLink;
+                          Linking.canOpenURL(url);
+                          Linking.openURL(url);
+                        }}
+                        backgroundColor="#00000060"
+                      />
+                    </View>
+                  )}
+
+                  {instructor.social && instructor.social['spotify'] && (
+                    <View className="mr-1">
+                      <CircleButton
+                        size={40}
+                        icon="spotify"
+                        onPress={() => {
+                          const data = {
+                            ...instructor,
+                            social_link_press: true,
+                          };
+                          updateIstructorTractionData(data);
+                          const url = instructor.SocialIconLink;
+                          Linking.canOpenURL(url);
+                          Linking.openURL(url);
+                        }}
+                        backgroundColor="#00000060"
+                      />
+                    </View>
+                  )}
+
+                  {instructor.buttonLink && (
                     <CircleButton
                       size={40}
-                      icon="instagram"
+                      icon="link"
                       onPress={() => {
                         const data = {
                           ...instructor,
-                          social_link_press: true,
+                          button_press: true,
                         };
                         updateIstructorTractionData(data);
-                        const url = instructor.SocialIconLink;
+                        const url = instructor.buttonLink;
                         Linking.canOpenURL(url);
                         Linking.openURL(url);
                       }}
                       backgroundColor="#00000060"
                     />
-                  </View>
-                )}
-
-                {instructor.social && instructor.social['spotify'] && (
-                  <View className="mr-1">
-                    <CircleButton
-                      size={40}
-                      icon="spotify"
-                      onPress={() => {
-                        const data = {
-                          ...instructor,
-                          social_link_press: true,
-                        };
-                        updateIstructorTractionData(data);
-                        const url = instructor.SocialIconLink;
-                        Linking.canOpenURL(url);
-                        Linking.openURL(url);
-                      }}
-                      backgroundColor="#00000060"
-                    />
-                  </View>
-                )}
-
-                {instructor.buttonLink && (
-                  <CircleButton
-                    size={40}
-                    icon="link"
-                    onPress={() => {
-                      const data = {
-                        ...instructor,
-                        button_press: true,
-                      };
-                      updateIstructorTractionData(data);
-                      const url = instructor.buttonLink;
-                      Linking.canOpenURL(url);
-                      Linking.openURL(url);
-                    }}
-                    backgroundColor="#00000060"
-                  />
-                )}
+                  )}
+                </View>
               </View>
+              <Text className="text-left text-base leading-none font-normal mt-4 text-black">
+                {instructor?.description}
+              </Text>
             </View>
-            <Text className="text-left text-base leading-none font-normal mt-4 text-black">
-              {instructor?.description}
+            <Text className="text-center text-base leading-none font-normal text-gray-700">
+              {meditations.length} תרגולים
             </Text>
+            <SessionsGrid meditations={meditations} />
           </View>
-          <Text className="text-center text-base leading-none font-normal text-gray-700">
-            {meditations.length} תרגולים
-          </Text>
-          <SessionsGrid meditations={meditations} />
-        </View>
-      </ParallaxScrollView>
+        </ParallaxScrollView>
+      )}
     </View>
   );
 };
