@@ -10,4 +10,5 @@ export interface User {
   updateloader: boolean;
   isNotification: boolean;
   notificationTime: string | null;
+  hasPassedStarterChat: boolean;
 }

@@ -21,12 +21,14 @@ export default function ChatContainer() {
   const navigation = useNavigation();
 
   const {
+    chats,
     currentChatId,
     isSessionStarted,
     setSessionStarted,
     setNavCallback,
     setIsLeaveModalVisible,
   } = useChatsStore(state => ({
+    chats: state.chats,
     currentChatId: state.currentChatId,
     isSessionStarted: state.isSessionStarted,
     setNavCallback: state.setNavCallback,
@@ -67,8 +69,15 @@ export default function ChatContainer() {
   const shouldShowPaywall = useMemo(() => !hasPremium, [hasPremium]);
   const messagesToShowInChat = useMemo(
     () =>
-      messages.length ? messages : getFirstMsgs(name, sex, selectedCategory),
-    [messages, name, sex, selectedCategory],
+      messages.length
+        ? messages
+        : getFirstMsgs(
+            name,
+            sex,
+            selectedCategory,
+            chats.filter(c => c.category === selectedCategory).length,
+          ),
+    [messages, name, sex, selectedCategory, chats],
   );
 
   const onSend = (msgs: IMessage[] = []) => {

@@ -153,11 +153,11 @@ const Selection: FC<SelectionProps> = ({
             style={{ width: FLOATING_BUTTON_WIDTH }}
             className="h-[70px] bg-[#273051] rounded-[12px] absolute bottom-[70px]  right-[12px] py-[12px] pl-[12px] pr-[25px]">
             <View className="flex items-start justify-center h-full">
-              <View className="flex flex-1 flex-row gap-[10px]">
-                <View className="overflow-hidden relative w-[50px] h-[50px] rounded-full bg-[#FFF7EE]">
+              <View className="flex-row gap-[10px]">
+                <View className="overflow-hidden relative w-[52px] h-[52px] rounded-full">
                   <FastImage
                     className="w-full h-full rounded-full"
-                    source={image('michael_button_icon')}
+                    source={image('michael_chat')}
                   />
                 </View>
                 <View className="flex-1 pl-[20px]">

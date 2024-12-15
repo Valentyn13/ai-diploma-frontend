@@ -1,4 +1,5 @@
-import {REHYDRATE} from 'redux-persist';
+import { REHYDRATE } from 'redux-persist';
+
 import * as actions from '../actions';
 
 const initialState = {
@@ -13,9 +14,10 @@ const initialState = {
   updateloader: false,
   isNotification: false,
   notificationTime: null,
+  hasPassedStarterChat: false,
 };
 
-const userDetails = (state = initialState, {type, payload}) => {
+const userDetails = (state = initialState, { type, payload }) => {
   switch (type) {
     case REHYDRATE: {
       return {
@@ -36,7 +38,16 @@ const userDetails = (state = initialState, {type, payload}) => {
       };
     }
     case actions.login.actionName: {
-      const {id, email, name, accessToken, refreshToken, sex, isNotification, notificationTime} = payload;
+      const {
+        id,
+        email,
+        name,
+        accessToken,
+        refreshToken,
+        sex,
+        isNotification,
+        notificationTime,
+      } = payload;
       return {
         ...state,
         id,
@@ -50,12 +61,21 @@ const userDetails = (state = initialState, {type, payload}) => {
         loder: false,
       };
     }
+    case actions.setUserStarterChatPassed.actionName: {
+      const { accepted } = payload;
+      return {
+        ...state,
+        hasPassedStarterChat: accepted,
+      };
+    }
+
     case actions.setUserData.actionName: {
-      const {isNotification, notificationTime} = payload;
+      const { isNotification, notificationTime } = payload;
       return {
         ...state,
         isNotification,
         notificationTime,
+        hasPassedStarterChat: payload.hasPassedStarterChat || false,
       };
     }
     case actions.updateProfile.actionName: {
@@ -65,7 +85,7 @@ const userDetails = (state = initialState, {type, payload}) => {
       };
     }
     case actions.setUpdateLoaderFalse.actionName: {
-      const {name, sex} = payload;
+      const { name, sex } = payload;
       return {
         ...state,
         updateloader: false,
@@ -80,7 +100,7 @@ const userDetails = (state = initialState, {type, payload}) => {
       };
     }
     case actions.setAccessToken.actionName: {
-      const {accessToken, refreshToken} = payload;
+      const { accessToken, refreshToken } = payload;
       return {
         ...state,
         accessToken,
@@ -88,7 +108,7 @@ const userDetails = (state = initialState, {type, payload}) => {
       };
     }
     case actions.chooseSex.actionName: {
-      const {sex} = payload;
+      const { sex } = payload;
       return {
         ...state,
         sex,

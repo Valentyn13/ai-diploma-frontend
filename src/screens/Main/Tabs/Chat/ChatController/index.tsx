@@ -1,14 +1,24 @@
 import { CHAT_TYPES, ChatTypeData } from '@common/constants';
+import { usePurchases } from '@common/context/PurchaseContext';
+import { useNavigation } from '@react-navigation/native';
+import { useUser } from '@services/hooks/useUser';
 import { useCategorizedChatFlowStore } from '@store/useCategorizedChatFlowStore';
 import { useChatsStore } from '@store/useChatsStore';
-import React, { useMemo } from 'react';
+import React, { useEffect, useMemo } from 'react';
 
 import ConfirmationModal from '../DeleteConfirmation';
 import ChatView from './ChatView';
 import ChatsList from './ChatsList';
 import Selection from './Selection';
+import UserInsightView from './UserInsightView';
 
 const ChatController = () => {
+  const navigation = useNavigation<any>();
+  const { hasPremium } = usePurchases();
+  const {
+    user: { hasPassedStarterChat },
+  } = useUser();
+
   const {
     currentStep,
     selectedCategory,
@@ -40,6 +50,11 @@ const ChatController = () => {
     setDeleteCallback: state.setDeleteCallback,
     setSessionStarted: state.setSessionStarted,
   }));
+
+  const shouldShowPayWall = useMemo(
+    () => !hasPremium && !hasPassedStarterChat,
+    [hasPremium, hasPassedStarterChat],
+  );
 
   const latestChat = useMemo(() => {
     return chats.find(chat => chat.chatId === lastActiveSessionId);
@@ -87,15 +102,30 @@ const ChatController = () => {
     setIsDeleteModalVisible(false);
   };
 
+  useEffect(() => {
+    if (shouldShowPayWall) {
+      navigation.navigate('Main', {
+        screen: 'Subscribe',
+        params: {
+          isFromChatController: true,
+        },
+      });
+    }
+  }, [shouldShowPayWall, navigation]);
+
   return (
     <>
-      {currentStep === 'selection' && (
-        <Selection
-          latestChat={latestChat}
-          categories={categories}
-          lastActiveSessionIndex={lastActiveSessionIndex}
-        />
-      )}
+      {currentStep === 'selection' ? (
+        hasPassedStarterChat ? (
+          <Selection
+            categories={categories}
+            lastActiveSessionIndex={lastActiveSessionIndex}
+            latestChat={latestChat}
+          />
+        ) : (
+          <UserInsightView />
+        )
+      ) : null}
       {currentStep === 'list' && (
         <ChatsList
           category={currentCategory}

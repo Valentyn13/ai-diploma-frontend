@@ -13,6 +13,9 @@ export const setAccessToken = createAction('SET_ACCESS_TOKEN');
 export const setLoder = createAction('SET_LODER');
 export const setLoaderFalse = createAction('SET_LOADER_FALSE');
 export const setUserData = createAction('SET_USER_DATA');
+export const setUserStarterChatPassed = createAction(
+  'SET_USER_STARTER_CHAT_PASSED',
+);
 
 export const updateProfile = createAction('UPDATE_PROFILE');
 export const setUpdateLoaderFalse = createAction('SET_UPDATE_LOADER_FALSE');

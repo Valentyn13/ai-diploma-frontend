@@ -22,7 +22,7 @@ import useLatestActiveSession from '@services/hooks/useLatestActiveSession';
 import { useOnboarding } from '@services/hooks/useOnboarding';
 import { useUser } from '@services/hooks/useUser';
 import { useSheetStore } from '@store/useSheetStore';
-import React, { FC, useCallback, useEffect, useState } from 'react';
+import { FC, useCallback, useEffect, useMemo, useState } from 'react';
 import { Button, Modal, Text, View } from 'react-native';
 import { CopilotStep, walkthroughable } from 'react-native-copilot';
 import styled from 'styled-components/native';
@@ -45,6 +45,7 @@ const CopilotView = walkthroughable(View);
 const Feed: FC<FeedProps> = ({ navigation, copilot }) => {
   const { hasPremium } = usePurchases();
   const { getAppData } = useAppData();
+
   useLatestActiveSession();
   const { fetchData } = useChats();
   const {
@@ -77,6 +78,18 @@ const Feed: FC<FeedProps> = ({ navigation, copilot }) => {
     title: string;
     items: Session[];
   }
+
+  const [mCollections, greetingItem] = useMemo(() => {
+    const greetingCollectionIndex = collections.findIndex(
+      c => c.id === 'greeting-general',
+    );
+    const modifiedCollections = [...collections];
+    const greetingCollection = modifiedCollections.splice(
+      greetingCollectionIndex,
+      1,
+    );
+    return [modifiedCollections, greetingCollection];
+  }, [collections]);
 
   // const { start, copilotEvents } = useCopilot();
   // const onStop = useCallback(() => updateIsOldUser(), [updateIsOldUser]);
@@ -137,6 +150,21 @@ const Feed: FC<FeedProps> = ({ navigation, copilot }) => {
                 </CopilotView>
               </CopilotStep>
 
+              {greetingItem.map(({ id, title, items }) => (
+                <View className="flex-1" key={id}>
+                  <HorizontalCollection
+                    shuffle={id !== 'top-rated' && id !== 'latest-release'}
+                    key={id}
+                    title={title}
+                    items={items}
+                    onShowAll={() => {
+                      onShowAll(title, items);
+                    }}
+                  />
+                  <Divider className="my-6" />
+                </View>
+              ))}
+
               <CopilotStep
                 text="כאן תוכלו למצוא מגוון עשיר של מדיטציות מותאמות אישית לצרכים שלכם"
                 order={1}
@@ -170,7 +198,7 @@ const Feed: FC<FeedProps> = ({ navigation, copilot }) => {
                 </View>
 
                 <DynamicComposition>
-                  {collections.map(({ id, title, items }) => (
+                  {mCollections.map(({ id, title, items }) => (
                     <View className="flex-1" key={id}>
                       <HorizontalCollection
                         shuffle={id !== 'top-rated' && id !== 'latest-release'}

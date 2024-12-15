@@ -9,6 +9,7 @@ import rudderClient, {
 } from '@rudderstack/rudder-sdk-react-native';
 import * as Sentry from '@sentry/react-native';
 import { useAmplitude } from '@services/hooks/useAmplitude';
+import useOverrideBackGesture from '@services/hooks/useOverrideBackGesture';
 import { useUser } from '@services/hooks/useUser';
 import i18n from '@services/localization/i18n';
 import { useCategorizedChatFlowStore } from '@store/useCategorizedChatFlowStore';
@@ -111,6 +112,8 @@ const Subscribe: FC = ({ navigation }) => {
   const isFirstTime = route.params?.isFirstTime as boolean;
   // @ts-ignore
   const isFromChatScreen = route.params?.isFromChatScreen as boolean;
+  // @ts-ignore
+  const isFromChatController = route.params?.isFromChatController as boolean;
 
   const initRudderstack = async () => {
     await rudderClient.setup('2Ah3U42Qc6y9v3PB4w8sKYhvkkJ', {
@@ -129,6 +132,11 @@ const Subscribe: FC = ({ navigation }) => {
 
   const onClose = async () => {
     await AsyncStorage.setItem(KEY_PLAYED_FIRST, true.toString());
+
+    if (isFromChatController) {
+      navigation.replace('Main', { screen: 'Home' });
+      return;
+    }
 
     if (isFromChatScreen) {
       setCurrentStep('selection');
@@ -210,6 +218,8 @@ const Subscribe: FC = ({ navigation }) => {
     ],
     [],
   );
+
+  useOverrideBackGesture({ onBack: onClose });
 
   return (
     <>

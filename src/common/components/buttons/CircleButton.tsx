@@ -1,5 +1,5 @@
 import React from 'react';
-import { Pressable } from 'react-native';
+import { TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome6';
 
 export const CircleButton: React.FC<{
@@ -18,7 +18,7 @@ export const CircleButton: React.FC<{
   color = '#fff',
   ...props
 }) => (
-  <Pressable
+  <TouchableOpacity
     onPress={onPress}
     disabled={disabled}
     className="flex-row items-center justify-center"
@@ -32,5 +32,5 @@ export const CircleButton: React.FC<{
     }}
     {...props}>
     <Icon name={icon} size={size / 2} color={color} />
-  </Pressable>
+  </TouchableOpacity>
 );

@@ -911,8 +911,7 @@ export const CHAT_TYPES: ChatTypeData[] = [
     id: 2,
     type: ChatCategoriesEnum.SELF_DEV,
     title: SELF_DEV_TITLE,
-    description:
-      'מרגישים תקועים ולא מצליחים להתקדם? מרגישים שהפוטנציאל שם אבל צריך לדייק את עצמכם? במפגשים שלנו יחד נוכל לצמוח ולהגשים את המטרות שתמיד חלמתם להגשים.',
+    description: `מרגישים תקועים ולא מצליחים להתקדם? במפגשים שלנו יחד נוכל לצמוח ולהגשים את המטרות שתמיד חלמתם להגשים.`,
     sessionCount: 0,
     bgColor: '#FFE3C5',
   },

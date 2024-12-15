@@ -76,9 +76,12 @@ const BGS: Record<string, string[]> = {
 };
 
 const images: Record<string, any> = {
+  lock_agreement: require('./lock_agreement.png'),
+  stars_agreement: require('./stars_agreement.png'),
+  notes_agreement: require('./notes_agreement.png'),
+  questionnaire: require('./questionnaire.png'),
   michael_2: require('./michael.png'),
   michael_chat: require('./michael_chat.png'),
-  michael_button_icon: require('./michael_button_icon.png'),
   homeOn: require('./homeOn.png'),
   homeOff: require('./homeOff.png'),
   meditationsOn: require('./meditationsOn.png'),

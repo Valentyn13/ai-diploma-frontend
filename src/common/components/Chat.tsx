@@ -1,5 +1,5 @@
 import theme from '@common/theme';
-import React, { useEffect, useRef } from 'react';
+import { FC, useEffect, useRef } from 'react';
 import { FlatList, Platform, View } from 'react-native';
 import {
   Bubble,
@@ -72,7 +72,7 @@ const CustomSend = ({
   </Send>
 );
 
-const Chat: React.FC<ChatComponentProps> = ({
+const Chat: FC<ChatComponentProps> = ({
   messages,
   onSend,
   isLoading,
@@ -93,6 +93,7 @@ const Chat: React.FC<ChatComponentProps> = ({
       });
     }
   }, [shouldShowPaywall, navigation]);
+
   return (
     <View className="w-full flex-1 bg-[#FFF7EA]">
       <GiftedChat

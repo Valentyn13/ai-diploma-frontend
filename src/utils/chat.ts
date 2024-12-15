@@ -139,7 +139,21 @@ const FIRST_MESSAGE = {
   },
 };
 
-const getFirstMsgArr = (name: string, category: ChatCategoriesEnum) => {
+const getFirstMsgArr = (
+  name: string,
+  category: ChatCategoriesEnum,
+  chatsLength: number,
+) => {
+  if (chatsLength) {
+    return [
+      {
+        _id: 'intro_system',
+        user: SYSTEM_USER,
+        createdAt: new Date(),
+        text: 'Test message',
+      },
+    ];
+  }
   return FIRST_MESSAGE[category](name);
 };
 
@@ -147,6 +161,7 @@ export const getFirstMsgs = (
   name: string,
   gender: 'M' | 'F',
   category: ChatCategories,
+  chatsLength: number,
 ): IMessage[] => {
   if (!category) {
     return [
@@ -166,7 +181,7 @@ export const getFirstMsgs = (
       },
     ];
   }
-  return getFirstMsgArr(name, category);
+  return getFirstMsgArr(name, category, chatsLength);
 };
 
 export const mapMessageToIMessage = (message: Message): IMessage => {

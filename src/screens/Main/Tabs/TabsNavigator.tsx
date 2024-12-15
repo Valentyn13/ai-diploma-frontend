@@ -10,12 +10,14 @@ import {
   getFocusedRouteNameFromRoute,
   useNavigation,
 } from '@react-navigation/native';
+import { useUser } from '@services/hooks/useUser';
 import i18n from '@services/localization/i18n';
 import {
   ChatControllerSteps,
   useCategorizedChatFlowStore,
 } from '@store/useCategorizedChatFlowStore';
 import { useChatsStore } from '@store/useChatsStore';
+import { useStarterChatStore } from '@store/useStarterChatStore';
 import React, { useLayoutEffect } from 'react';
 import { Pressable, StatusBar, Text } from 'react-native';
 import Animated from 'react-native-reanimated';
@@ -131,6 +133,7 @@ const CustomTabBarButton = ({
   navigation,
   link,
   isSessionStarted,
+  hasPassedStarterChat,
   chatStep,
   route,
   setIsLeaveModalVisible,
@@ -141,14 +144,16 @@ const CustomTabBarButton = ({
   link: string;
   chatStep: ChatControllerSteps;
   route: any;
+  hasPassedStarterChat: boolean;
   isSessionStarted: boolean;
   setIsLeaveModalVisible: (visible: boolean) => void;
   setNavCallback: (cb: Function | null) => void;
 }) => {
-  const setCurrentStep = useCategorizedChatFlowStore(state => state.setCurrentStep);
+  const setCurrentStep = useCategorizedChatFlowStore(
+    state => state.setCurrentStep,
+  );
   const handlePress = () => {
     const currRoute = getFocusedRouteNameFromRoute(route);
-
     const cb = () => {
       if (currRoute === 'Chat' && chatStep !== 'selection') {
         setCurrentStep('selection');
@@ -168,6 +173,12 @@ const CustomTabBarButton = ({
 
 const TabNavigator = ({ route }) => {
   const navigation = useNavigation();
+  const {
+    user: { hasPassedStarterChat },
+  } = useUser();
+  const { isStartedChatActivated } = useStarterChatStore(state => ({
+    isStartedChatActivated: state.isStartedChatActivated,
+  }));
   const chatStep = useCategorizedChatFlowStore(state => state.currentStep);
   const [isTabbarVisible, setIsTabbarVisible] = React.useState(true);
   const { isSessionStarted, setNavCallback, setIsLeaveModalVisible } =
@@ -179,19 +190,26 @@ const TabNavigator = ({ route }) => {
 
   useLayoutEffect(() => {
     const routeName = getFocusedRouteNameFromRoute(route);
-    if (routeName === 'Chat' && chatStep === 'list') {
+    if (
+      (routeName === 'Chat' && chatStep === 'list') ||
+      (routeName === 'Chat' &&
+        chatStep === 'selection' &&
+        !hasPassedStarterChat &&
+        !isStartedChatActivated)
+    ) {
       setIsTabbarVisible(false);
     } else {
       setIsTabbarVisible(true);
     }
-  }, [route, chatStep]);
+  }, [route, chatStep, hasPassedStarterChat, isStartedChatActivated]);
 
   return (
     <SafeAreaView
-      className="flex-1"
       style={{
-        backgroundColor: '#FFF8EE',
-      }}>
+        // TODO: move StarterChat Agreement screen to a separate screen to avoid these conditions in navigator
+        backgroundColor: isTabbarVisible ? '#FFF8EE' : '#FCE8CD',
+      }}
+      className="flex-1">
       <StatusBar
         hidden={false}
         barStyle="dark-content"
@@ -224,6 +242,7 @@ const TabNavigator = ({ route }) => {
                 <CustomTabBarButton
                   {...props}
                   route={route}
+                  hasPassedStarterChat={hasPassedStarterChat}
                   chatStep={chatStep}
                   setNavCallback={setNavCallback}
                   isSessionStarted={isSessionStarted}
