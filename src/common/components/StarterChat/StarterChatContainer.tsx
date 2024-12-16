@@ -72,14 +72,19 @@ const StarterChatContainer = ({
   };
 
   const handleSendPollResult = (result: PollResult) => {
-    setIsStarterChatActivated(false);
-    dispatch(
-      setUserStarterChatPassed({
-        accepted: true,
-      }),
-    );
+    const hasResults = !!result && !!Object.values(result).length;
 
-    sendStarterChatData(result, user.id);
+    if (hasResults) {
+      setIsStarterChatActivated(false);
+
+      dispatch(
+        setUserStarterChatPassed({
+          accepted: true,
+        }),
+      );
+
+      sendStarterChatData(result, user.id);
+    }
   };
 
   // useOverrideBackGesture({
