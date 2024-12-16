@@ -47,6 +47,73 @@ const getBasicMessage = (name: string, gender: 'M' | 'F') => {
 לכל שיחה יש לנו 50 הודעות, אך תמיד נוכל להמשיך בשיחה חדשה!`;
 };
 
+const SHORT_FIRST_MESSAGE = {
+  [ChatCategoriesEnum.BAD_HABITS]: (name: string) => {
+    return [
+      {
+        _id: 'intro_system',
+        user: SYSTEM_USER,
+        createdAt: new Date(),
+        text: `היי ${name}, אני מיכאל 🤗
+
+שמח לראות אותך שוב!
+
+אפשר להמשיך לדבר על החרדה שלך, או לשתף בתחושות חדשות שהתעוררו.
+
+איך אוכל לעזור לך היום?`,
+      },
+    ];
+  },
+  [ChatCategoriesEnum.ANXIETY]: (name: string) => {
+    return [
+      {
+        _id: 'intro_system',
+        user: SYSTEM_USER,
+        createdAt: new Date(),
+        text: `היי ${name}, אני מיכאל 🤗
+
+שמח לראות אותך שוב!
+
+אפשר להמשיך לדבר על החרדה שלך, או לשתף בתחושות חדשות שהתעוררו.
+
+איך אוכל לעזור לך היום?`,
+      },
+    ];
+  },
+  [ChatCategoriesEnum.NEGATIVE]: (name: string) => {
+    return [
+      {
+        _id: 'intro_system',
+        user: SYSTEM_USER,
+        createdAt: new Date(),
+        text: `היי ${name}, אני מיכאל 🤗
+
+איזה כיף שחזרת!
+
+אפשר להמשיך לדבר על דפוסי החשיבה שלך, או לשתף אותי במשהו חדש שמעסיק אותך.
+
+מה תרצהי שנחקור יחד היום?`,
+      },
+    ];
+  },
+  [ChatCategoriesEnum.SELF_DEV]: (name: string) => {
+    return [
+      {
+        _id: 'intro_system',
+        user: SYSTEM_USER,
+        createdAt: new Date(),
+        text: `היי ${name}, אני מיכאל 🤗
+
+איזה יופי שחזרת!
+
+נוכל להמשיך לעבוד על ההתפתחות האישית שלך, או לדבר על משהו חדש שחשוב לך.
+
+מה בתוכנית שלך להיום?`,
+      },
+    ];
+  },
+};
+
 const FIRST_MESSAGE = {
   [ChatCategoriesEnum.BAD_HABITS]: (name: string) => {
     return [
@@ -145,14 +212,7 @@ const getFirstMsgArr = (
   chatsLength: number,
 ) => {
   if (chatsLength) {
-    return [
-      {
-        _id: 'intro_system',
-        user: SYSTEM_USER,
-        createdAt: new Date(),
-        text: 'Test message',
-      },
-    ];
+    return SHORT_FIRST_MESSAGE[category](name);
   }
   return FIRST_MESSAGE[category](name);
 };
