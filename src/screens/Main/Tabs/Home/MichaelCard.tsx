@@ -1,32 +1,40 @@
 import { useNavigation } from '@react-navigation/native';
 import React from 'react';
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import {
+  Platform,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import FastImage from 'react-native-fast-image';
 
 const MichaelCard = () => {
   const navigation = useNavigation();
 
   return (
-    <View className="h-[146px] flex items-start relative overflow-hidden rounded-[10px] mx-[22px] mt-0 mb-12 p-[15px]">
+    <View className="h-[156px] flex items-start relative overflow-hidden rounded-[10px] mx-[22px] mt-0 mb-12 p-4">
       <FastImage
-        source={require('./bgs/michael_card.png')}
+        source={require('./bgs/michael_card_2.png')}
         resizeMode="cover"
         style={StyleSheet.absoluteFill}
       />
       <FastImage
-        className="w-[140px] h-[110px] absolute bottom-0 right-0"
-        source={require('./bgs/michael_person.png')}
+        className="w-[130px] h-[120px] absolute bottom-3 right-2"
+        source={require('./bgs/chat_heart.png')}
       />
-      <Text className="font-bold text-[16px] text-[#273051]">
-        לשתף, להתייעץ, או סתם לפרוק.
+      <Text className="font-bold max-w-[50%] text-left text-[16px] text-[#273051]">
+        לשתף, להתייעץ, או סתם לפרוק
       </Text>
-      <Text className="text-[#494949] mt-1.5 font-medium">
-        אני כאן בשבילך, כל הזמן.
+      <Text
+        style={{ marginBottom: Platform.OS === 'ios' ? 8 : 0 }}
+        className="text-[#494949] mt-1.5 font-medium">
+        מיכאל כאן בשבילך, כל הזמן
       </Text>
       <Text />
       <TouchableOpacity
         onPress={() => navigation.navigate('Chat')}
-        className=" h-[40px] flex justify-center items-center mt-[15px] bg-[#273051] px-[16px] rounded-[20px]">
+        className="h-[40px] flex justify-center items-center bg-[#002136ed] px-[16px] rounded-[20px]">
         <Text className="text-lg font-semibold text-[14px] text-white">
           לשיחה עם מיכאל
         </Text>
