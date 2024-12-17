@@ -16,7 +16,7 @@ const ChatController = () => {
   const navigation = useNavigation<any>();
   const { hasPremium } = usePurchases();
   const {
-    user: { hasPassedStarterChat },
+    user: { hasPassedStarterChat, id: userId },
   } = useUser();
 
   const {
@@ -52,8 +52,8 @@ const ChatController = () => {
   }));
 
   const shouldShowPayWall = useMemo(
-    () => !hasPremium && !hasPassedStarterChat,
-    [hasPremium, hasPassedStarterChat],
+    () => !hasPremium && !hasPassedStarterChat && !!userId,
+    [hasPremium, hasPassedStarterChat, userId],
   );
 
   const latestChat = useMemo(() => {
