@@ -905,7 +905,7 @@ export const CHAT_TYPES: ChatTypeData[] = [
     description:
       'לשתף, להתייעץ או סתם לפרוק... זה המקום לדבר עם מיכאל על כל נושא שתרצו. כאן גם תמצאו את כל השיחות הקודמות שלכם.',
     sessionCount: 0,
-    bgColor: '#14767778',
+    bgColor: '#1476773D',
   },
   {
     id: 2,
