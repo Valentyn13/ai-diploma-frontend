@@ -105,7 +105,9 @@ const SessionModal = ({ navigation }) => {
             <Pressable
               //@ts-ignore
               onPress={() =>
-                navigation.navigate('Instructor', { id: instructor._id })
+                !!instructor
+                  ? navigation.navigate('Instructor', { id: instructor._id })
+                  : {}
               }
               className="flex-row items-center justify-center space-x-2">
               <Image
