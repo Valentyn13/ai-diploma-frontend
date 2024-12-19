@@ -9,6 +9,17 @@ Sentry.init({
   dsn: SENTRY_DSN,
   tracesSampleRate: 1.0,
   enabled: !config.isDev,
+  _experiments: {
+    replaysSessionSampleRate: config.isDev ? 0 : 1.0,
+    replaysOnErrorSampleRate: config.isDev ? 0 : 1.0,
+  },
+  integrations: [
+    Sentry.mobileReplayIntegration({
+      maskAllText: false,
+      maskAllImages: false,
+      maskAllVectors: false,
+    }),
+  ],
 });
 
 const useSentry = () => {
