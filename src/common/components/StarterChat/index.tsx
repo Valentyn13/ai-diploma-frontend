@@ -1,4 +1,6 @@
 import image from '@common/assets/images';
+import { AMPLITUDE_EVENTS } from '@common/constants';
+import { useLogViewedScreenEvent } from '@services/hooks/amplitude';
 import { InsightSteps } from '@store/useStarterChatStore';
 import { useState } from 'react';
 import { View } from 'react-native';
@@ -16,6 +18,11 @@ const UserPoll = ({ setStep }: Props) => {
   const handlePollState = (isEnded: boolean) => {
     setIsPollEnded(isEnded);
   };
+
+  useLogViewedScreenEvent(
+    AMPLITUDE_EVENTS.STARTER_CHAT.VIEWED_STARTER_CHAT_SCREEN,
+  );
+
   return (
     <View className="flex flex-1 relative">
       <StarterChatHeader

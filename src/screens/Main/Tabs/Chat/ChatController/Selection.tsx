@@ -1,7 +1,8 @@
 import image from '@common/assets/images';
-import { ChatTypeData } from '@common/constants';
+import { AMPLITUDE_EVENTS, ChatTypeData } from '@common/constants';
 import { useCategorizedChatFlowStore } from '@store/useCategorizedChatFlowStore';
 import { useChatsStore } from '@store/useChatsStore';
+import { logAmplitudeEvent } from '@utils/amplitude-helpers';
 import React, { FC } from 'react';
 import {
   Dimensions,
@@ -41,8 +42,12 @@ const ChatType: FC<ChatTypeData> = ({
     if (type === null) {
       setCurrentChatId(null);
       setCurrentStep('chat');
+      logAmplitudeEvent(
+        AMPLITUDE_EVENTS.CHATS.SELECTED_CHAT_CATEGORY('free_chat'),
+      );
       return;
     }
+    logAmplitudeEvent(AMPLITUDE_EVENTS.CHATS.SELECTED_CHAT_CATEGORY(type));
     setCurrentStep('list');
   };
 
@@ -105,12 +110,16 @@ const Selection: FC<SelectionProps> = ({
     }));
 
   const handleOpenRecentChat = () => {
+    logAmplitudeEvent(
+      AMPLITUDE_EVENTS.CHATS.PRESSED_CONTINUE_LAST_CONVERSATION_CTA,
+    );
     setCurrentStep('chat');
     setSelectedCategory(latestChat?.category || null);
     setCurrentChatId(lastActiveSessionId);
   };
 
   const handleGoToFreeChat = () => {
+    logAmplitudeEvent(AMPLITUDE_EVENTS.CHATS.PRESSED_FREE_CHAT_BUTTON);
     setCurrentChatId(null);
     setCurrentStep('chat');
     setSelectedCategory(null);

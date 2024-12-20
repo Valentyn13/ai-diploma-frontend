@@ -1,7 +1,9 @@
+import { AMPLITUDE_EVENTS } from '@common/constants';
 import { deleteChat } from '@services/api/chat';
 import { useRequestWithReauth } from '@services/hooks/useAxios/reauthWrapper';
 import { useCategorizedChatFlowStore } from '@store/useCategorizedChatFlowStore';
 import { useChatsStore } from '@store/useChatsStore';
+import { logAmplitudeEvent } from '@utils/amplitude-helpers';
 import { getReadableTimeDifference } from '@utils/time';
 import React from 'react';
 import { Text, TouchableHighlight, TouchableOpacity, View } from 'react-native';
@@ -37,6 +39,7 @@ const DrawerItem = ({ chat }: { chat: ChatForDrawer }) => {
   const isActive = chat.chatId === currentChatId;
 
   const handlePress = () => {
+    logAmplitudeEvent(AMPLITUDE_EVENTS.CHATS.PRESSED_EXISTING_CHAT('chat'));
     const cb = () => {
       setIsDrawerOpen(false);
       setCurrentChatId(chat.chatId);
@@ -52,9 +55,13 @@ const DrawerItem = ({ chat }: { chat: ChatForDrawer }) => {
 
   const handleDeleteChat = () => {
     const cb = async () => {
+      logAmplitudeEvent(AMPLITUDE_EVENTS.CHATS.CONFIRMED_CHAT_DELETION('chat'));
       removeChat(chat.chatId);
       await executeApiRequest(deleteChat, chat.chatId);
     };
+    logAmplitudeEvent(
+      AMPLITUDE_EVENTS.CHATS.PRESSED_DELETE_CHAT_BUTTON('chat'),
+    );
     setDeleteCallback(cb);
     setIsDeleteModalVisible(true);
   };

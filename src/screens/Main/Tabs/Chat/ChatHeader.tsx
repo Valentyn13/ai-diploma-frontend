@@ -1,6 +1,8 @@
 import GlitterIcon from '@common/components/common/Glitter';
+import { AMPLITUDE_EVENTS } from '@common/constants';
 import { useCategorizedChatFlowStore } from '@store/useCategorizedChatFlowStore';
 import { useChatsStore } from '@store/useChatsStore';
+import { logAmplitudeEvent } from '@utils/amplitude-helpers';
 import React, { FC } from 'react';
 import { Image, Text, TouchableOpacity, View } from 'react-native';
 import Icon from 'react-native-vector-icons/Feather';
@@ -53,6 +55,7 @@ const ChatHeader: FC<{
   };
 
   const handleLeaveModalConfirm = () => {
+    logAmplitudeEvent(AMPLITUDE_EVENTS.CHATS.CONFIRMED_LEAVE_CHAT);
     setSessionStarted(false);
     setIsLeaveModalVisible(false);
     if (navCallback) {
@@ -62,6 +65,8 @@ const ChatHeader: FC<{
   };
 
   const handleGoBack = () => {
+    logAmplitudeEvent(AMPLITUDE_EVENTS.CHATS.PRESSED_BACK_BUTTON('chat'));
+
     if (isSessionStarted) {
       setIsLeaveModalVisible(true);
       if (!selectedCategory) {
@@ -78,14 +83,15 @@ const ChatHeader: FC<{
     setCurrentStep('list');
   };
 
+  const handleToggleDrawer = () => {
+    logAmplitudeEvent(AMPLITUDE_EVENTS.CHATS.OPENED_CHAT_DRAWER);
+    toggleDrawer(true);
+  };
+
   return (
     <View className="bg-[#FFF8EE] w-full flex-row justify-between items-center p-2 border-b border-gray-300">
       <View className="flex-row items-center">
-        <TouchableOpacity
-          className="p-2"
-          onPress={() => {
-            toggleDrawer(true);
-          }}>
+        <TouchableOpacity className="p-2" onPress={handleToggleDrawer}>
           <Icon color="#000" name="menu" size={30} />
         </TouchableOpacity>
         <View className="flex-row items-center ml-6">

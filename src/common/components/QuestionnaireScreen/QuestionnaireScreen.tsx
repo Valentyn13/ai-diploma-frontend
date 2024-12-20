@@ -1,9 +1,12 @@
 import AlertSvgIcon from '@common/assets/icons/AlertSvgIcon';
 import image from '@common/assets/images';
+import { AMPLITUDE_EVENTS } from '@common/constants';
 import CheckBox from '@react-native-community/checkbox';
 import { useNavigation } from '@react-navigation/native';
 import { getStarterChatQuestions } from '@services/api/userInsight';
+import { useLogViewedScreenEvent } from '@services/hooks/amplitude';
 import { InsightSteps, useStarterChatStore } from '@store/useStarterChatStore';
+import { logAmplitudeEvent } from '@utils/amplitude-helpers';
 import { useEffect, useState } from 'react';
 import * as React from 'react';
 import { ScrollView, Text, TouchableOpacity, View } from 'react-native';
@@ -50,6 +53,10 @@ const QuestionnaireScreen = ({ setStep }: Props) => {
   const [isError, setIsError] = useState(false);
 
   const handleAgreedPress = async () => {
+    logAmplitudeEvent(
+      AMPLITUDE_EVENTS.STARTER_CHAT.PRESSED_START_STARTER_CHAT_FLOW,
+    );
+
     if (!isAgreementAccepted) {
       setIsError(true);
       return;
@@ -60,6 +67,7 @@ const QuestionnaireScreen = ({ setStep }: Props) => {
   };
 
   const handleLaterPress = () => {
+    logAmplitudeEvent(AMPLITUDE_EVENTS.STARTER_CHAT.PRESSED_NOT_NOW_BUTTON);
     navigation.goBack();
   };
 
@@ -77,6 +85,10 @@ const QuestionnaireScreen = ({ setStep }: Props) => {
 
     fetchPollData();
   }, []);
+
+  useLogViewedScreenEvent(
+    AMPLITUDE_EVENTS.STARTER_CHAT.VIEWED_STARTER_CHAT_AGREEMENT_SCREEN,
+  );
 
   return (
     <ScrollView
@@ -127,6 +139,11 @@ const QuestionnaireScreen = ({ setStep }: Props) => {
               onFillColor="#273051"
               tintColors={{ true: '#273051', false: '#273051' }}
               onValueChange={newValue => {
+                logAmplitudeEvent(
+                  AMPLITUDE_EVENTS.STARTER_CHAT
+                    .MARKED_STARTER_CHAT_AGREEMENT_CHECKBOX,
+                );
+
                 if (newValue && isError) {
                   setIsError(false);
                 }

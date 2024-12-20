@@ -1,4 +1,6 @@
+import { AMPLITUDE_EVENTS } from '@common/constants';
 import { useNavigation } from '@react-navigation/native';
+import { logAmplitudeEvent } from '@utils/amplitude-helpers';
 import React from 'react';
 import {
   Platform,
@@ -11,6 +13,12 @@ import FastImage from 'react-native-fast-image';
 
 const MichaelCard = () => {
   const navigation = useNavigation();
+
+  const handleOpenChat = () => {
+    logAmplitudeEvent(AMPLITUDE_EVENTS.HOME_SCREEN.PRESSED_MICHAEL_CHAT_CTA);
+
+    navigation.navigate('Chat');
+  };
 
   return (
     <View className="h-[156px] flex items-start relative overflow-hidden rounded-[10px] mx-[22px] mt-0 mb-12 p-4">
@@ -33,7 +41,7 @@ const MichaelCard = () => {
       </Text>
       <Text />
       <TouchableOpacity
-        onPress={() => navigation.navigate('Chat')}
+        onPress={handleOpenChat}
         className="h-[40px] flex justify-center items-center bg-[#002136ed] px-[16px] rounded-[20px]">
         <Text className="text-lg font-semibold text-[14px] text-white">
           לשיחה עם מיכאל

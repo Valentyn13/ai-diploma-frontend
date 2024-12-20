@@ -1,4 +1,5 @@
 import Chat from '@common/components/Chat';
+import { AMPLITUDE_EVENTS } from '@common/constants';
 import { usePurchases } from '@common/context/PurchaseContext';
 import theme from '@common/theme';
 import { useNavigation } from '@react-navigation/native';
@@ -8,6 +9,7 @@ import useOverrideBackGesture from '@services/hooks/useOverrideBackGesture';
 import { useUser } from '@services/hooks/useUser';
 import { useCategorizedChatFlowStore } from '@store/useCategorizedChatFlowStore';
 import { useChatsStore } from '@store/useChatsStore';
+import { logAmplitudeEvent } from '@utils/amplitude-helpers';
 import {
   getFirstMsgs,
   mapIMessageToMessage,
@@ -81,6 +83,7 @@ export default function ChatContainer() {
   );
 
   const onSend = (msgs: IMessage[] = []) => {
+    logAmplitudeEvent(AMPLITUDE_EVENTS.CHATS.PRESSED_SEND_MESSAGE);
     const msg = mapIMessageToMessage(msgs[0]);
     addMessage(msg);
 
@@ -97,6 +100,7 @@ export default function ChatContainer() {
 
   useOverrideBackGesture({
     onBack: () => {
+      logAmplitudeEvent(AMPLITUDE_EVENTS.CHATS.PRESSED_BACK_BUTTON('chat'));
       if (isSessionStarted) {
         setIsLeaveModalVisible(true);
         if (!selectedCategory) {

@@ -1,5 +1,6 @@
 import ParallaxScrollView from '@common/components/ParallaxScrollView';
 import { CircleButton } from '@common/components/buttons/CircleButton';
+import { AMPLITUDE_EVENTS } from '@common/constants';
 import { deleteChat } from '@services/api/chat';
 import { useRequestWithReauth } from '@services/hooks/useAxios/reauthWrapper';
 import useOverrideBackGesture from '@services/hooks/useOverrideBackGesture';
@@ -8,6 +9,7 @@ import {
   useCategorizedChatFlowStore,
 } from '@store/useCategorizedChatFlowStore';
 import { useChatsStore } from '@store/useChatsStore';
+import { logAmplitudeEvent } from '@utils/amplitude-helpers';
 import { getReadableTimeDifference } from '@utils/time';
 import React from 'react';
 import { FlatList, Text, TouchableHighlight, View } from 'react-native';
@@ -50,15 +52,23 @@ const ChatItem = ({
   }));
 
   const handleOnChatPress = () => {
+    logAmplitudeEvent(AMPLITUDE_EVENTS.CHATS.PRESSED_EXISTING_CHAT('category'));
     setCurrentStep('chat');
     setCurrentChatId(chatId);
   };
 
   const handleDeleteChat = () => {
     const cb = async () => {
+      logAmplitudeEvent(
+        AMPLITUDE_EVENTS.CHATS.CONFIRMED_CHAT_DELETION('category'),
+      );
       removeChat(chatId);
       await executeApiRequest(deleteChat, chatId);
     };
+
+    logAmplitudeEvent(
+      AMPLITUDE_EVENTS.CHATS.PRESSED_DELETE_CHAT_BUTTON('category'),
+    );
     setDeleteCallback(cb);
     setIsDeleteModalVisible(true);
   };
@@ -100,6 +110,7 @@ type ChatListType = {
   category: {
     title: string | undefined;
     sessionCount: number | undefined;
+    categoryValue: ChatCategoriesEnum;
   };
 };
 
@@ -115,14 +126,23 @@ const ChatsList = ({ chats, category }: ChatListType) => {
   useOverrideBackGesture({
     onBack: () => {
       if (currentStep === 'list') {
+        logAmplitudeEvent(
+          AMPLITUDE_EVENTS.CHATS.PRESSED_BACK_BUTTON('category'),
+        );
         setCurrentStep('selection');
       }
     },
   });
 
   const handleCreateChat = () => {
+    logAmplitudeEvent(AMPLITUDE_EVENTS.CHATS.PRESSED_NEW_CHAT('category'));
     setCurrentStep('chat');
     setCurrentChatId(null);
+  };
+
+  const handlePressBack = () => {
+    logAmplitudeEvent(AMPLITUDE_EVENTS.CHATS.PRESSED_BACK_BUTTON('category'));
+    setCurrentStep('selection');
   };
 
   return (
@@ -169,9 +189,7 @@ const ChatsList = ({ chats, category }: ChatListType) => {
             <CircleButton
               size={40}
               icon="chevron-left"
-              onPress={() => {
-                setCurrentStep('selection');
-              }}
+              onPress={handlePressBack}
               backgroundColor="#00000060"
               color="white"
             />

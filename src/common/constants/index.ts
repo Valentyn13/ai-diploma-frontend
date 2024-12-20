@@ -12,7 +12,9 @@ import {
 } from '@store/useCategorizedChatFlowStore';
 
 // CHAT CATEGORIES CONSTANTS
-import { PersonalizedState } from '../../types/Personalized';
+import { PersonalizedState } from '../../../types/Personalized';
+
+export * from './amplitude-events';
 
 export const SHOULD_SHOW_REMINDER_POPUP_STATUS_NOT_INITIALIED =
   'SHOULD_SHOW_REMINDER_POPUP_STATUS_NOT_INITIALIED';

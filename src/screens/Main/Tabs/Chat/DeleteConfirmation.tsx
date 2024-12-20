@@ -1,4 +1,6 @@
-import React, { FC } from 'react';
+import { AMPLITUDE_EVENTS } from '@common/constants';
+import { logAmplitudeEvent } from '@utils/amplitude-helpers';
+import React, { FC, useEffect } from 'react';
 import { Modal, Text, TouchableOpacity, View } from 'react-native';
 
 type Props = {
@@ -31,6 +33,14 @@ const ConfirmationModal: FC<Props> = ({
     type === 'leave' ? LEAVE_CHAT_CONFIRM_BUTTON : DELETE_CHAT_CONFIRM_BUTTON;
   const cancelText =
     type === 'leave' ? LEAVE_CHAT_CANCEL_BUTTON : DELETE_CHAT_CANCEL_BUTTON;
+
+  useEffect(() => {
+    if (visible && type === 'leave') {
+      logAmplitudeEvent(AMPLITUDE_EVENTS.CHATS.VIEWED_EARLY_LEAVE_MODAL);
+    } else if (visible && type === 'delete') {
+      logAmplitudeEvent(AMPLITUDE_EVENTS.CHATS.VIEWED_DELETE_CHAT_MODAL);
+    }
+  }, [type, visible]);
 
   return (
     <Modal transparent visible={visible}>

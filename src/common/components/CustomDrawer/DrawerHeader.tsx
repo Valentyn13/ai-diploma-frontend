@@ -1,5 +1,7 @@
+import { AMPLITUDE_EVENTS } from '@common/constants';
 import { useCategorizedChatFlowStore } from '@store/useCategorizedChatFlowStore';
 import { useChatsStore } from '@store/useChatsStore';
+import { logAmplitudeEvent } from '@utils/amplitude-helpers';
 import React from 'react';
 import { Text, TouchableHighlight } from 'react-native';
 
@@ -22,6 +24,7 @@ const DrawerListHeader = () => {
   }));
 
   const handlePress = () => {
+    logAmplitudeEvent(AMPLITUDE_EVENTS.CHATS.PRESSED_NEW_CHAT('chat'));
     const cb = () => {
       setIsDrawerOpen(false);
       setCurrentChatId(null);

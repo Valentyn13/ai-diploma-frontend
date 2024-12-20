@@ -1,6 +1,7 @@
-import { CHAT_TYPES, ChatTypeData } from '@common/constants';
+import { AMPLITUDE_EVENTS, CHAT_TYPES, ChatTypeData } from '@common/constants';
 import { usePurchases } from '@common/context/PurchaseContext';
 import { useNavigation } from '@react-navigation/native';
+import { useLogViewedScreenEvent } from '@services/hooks/amplitude';
 import { useUser } from '@services/hooks/useUser';
 import { useCategorizedChatFlowStore } from '@store/useCategorizedChatFlowStore';
 import { useChatsStore } from '@store/useChatsStore';
@@ -86,6 +87,7 @@ const ChatController = () => {
     return {
       title: category?.title,
       sessionCount: category?.sessionCount,
+      categoryValue: selectedCategory,
     };
   }, [categories, selectedCategory]);
 
@@ -112,6 +114,8 @@ const ChatController = () => {
       });
     }
   }, [shouldShowPayWall, navigation]);
+
+  useLogViewedScreenEvent(AMPLITUDE_EVENTS.CHATS.VIEWED_SCREEN);
 
   return (
     <>

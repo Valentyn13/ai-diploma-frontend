@@ -1,3 +1,4 @@
+import { AMPLITUDE_EVENTS } from '@common/constants';
 import theme from '@common/theme';
 import { sendStarterChatData } from '@services/api/userInsight';
 import { useUser } from '@services/hooks/useUser';
@@ -7,6 +8,7 @@ import {
   PollResult,
   useStarterChatStore,
 } from '@store/useStarterChatStore';
+import { logAmplitudeEvent } from '@utils/amplitude-helpers';
 import createIMessage from '@utils/createIMessage';
 import { useEffect, useState } from 'react';
 import { ActivityIndicator, View } from 'react-native';
@@ -61,6 +63,10 @@ const StarterChatContainer = ({
   const lastMessageId = messages[messages.length - 1]?._id;
 
   const handleOnSend = (msgs: IMessage[] = []) => {
+    logAmplitudeEvent(
+      AMPLITUDE_EVENTS.STARTER_CHAT.ANSWERED_STARTER_CHAT_QUESTION,
+    );
+
     setMessages(prev => [...prev, msgs[0]]);
     setQuestionIndex(currentQuestionIndex + 1);
     if (currentQuestionIndex <= starterChatQuestions.length - 1) {
@@ -72,6 +78,9 @@ const StarterChatContainer = ({
   };
 
   const handleSendPollResult = (result: PollResult) => {
+    logAmplitudeEvent(
+      AMPLITUDE_EVENTS.STARTER_CHAT.SUBMIT_STARTER_CHAT_ANSWERS,
+    );
     const hasResults = !!result && !!Object.values(result).length;
 
     if (hasResults) {
