@@ -3,13 +3,13 @@ import AppText from '@common/components/AppText';
 import { Icon } from '@common/components/Styled';
 import { CircleButton } from '@common/components/buttons/CircleButton';
 import config from '@common/config';
-import crashlytics from '@react-native-firebase/crashlytics';
+import { AMPLITUDE_EVENTS } from '@common/constants';
 import { useNavigation } from '@react-navigation/native';
-import { useAmplitude } from '@services/hooks/useAmplitude';
 import useAppData from '@services/hooks/useAppData';
 import useLogin from '@services/hooks/useLogin';
 import { useUser } from '@services/hooks/useUser';
-import { logEvent } from '@utils/analytics';
+import { logAmplitudeEvent } from '@utils/amplitude-helpers';
+import { initializeThirdParties } from '@utils/initialize-third-parties';
 import React, { FC, useEffect, useRef, useState } from 'react';
 import {
   ActivityIndicator,
@@ -37,7 +37,6 @@ const Login: FC = () => {
   const [loader, setLoader] = useState<boolean>(false);
   const { user } = useUser();
   const appDataloaded = useSelector((state: RootState) => state.appData.loaded);
-  const amplitudeInstance = useAmplitude();
 
   const scrollViewRef = useRef<ScrollView>(null);
 
@@ -48,29 +47,10 @@ const Login: FC = () => {
     setLoader(false);
   };
 
-  const initCrashlytics = async () => {
-    await Promise.all([
-      crashlytics().setUserId(user.id),
-      crashlytics().setAttributes({
-        email,
-        username: user.email,
-      }),
-      logEvent('LOGIN', {
-        userName: user.name,
-        email: user.email,
-      }),
-    ]);
-  };
-
   useEffect(() => {
     if (user.accessToken) {
-      if (!config.isDev) {
-        amplitudeInstance.setUserId(user.id);
-        amplitudeInstance.logEvent('LOGIN', { userID: user.id });
-        amplitudeInstance.uploadEvents();
-        initCrashlytics();
-      }
-
+      initializeThirdParties(user.id, user.email);
+      logAmplitudeEvent(AMPLITUDE_EVENTS.LOGIN_SCREEN.LOGIN_SUCCESS);
       getAppData();
     }
   }, [user.accessToken, getAppData]);

@@ -9,36 +9,30 @@ import config from '@common/config';
 const isDev = config.isDev;
 const identifyObj = new Identify();
 
-// export function setAmplitudeUser() {
-//   if (isDev) {
-//     return;
-//   }
-//
-//   const { user } = useUser();
-//
-//   if (user?.id) {
-//     const email = user.email ? user.email : '';
-//
-//     identifyObj
-//       .set('email', email)
-//       .set('phoneNumber', user.phoneNumber)
-//       .set('userId', user.id.toString());
-//
-//     const userId = user.id.toString();
-//
-//     identify(identifyObj);
-//     setUserId(userId);
-//   }
-// }
+export function setAmplitudeUser(userId: string, userEmail: string) {
+  if (isDev) {
+    return;
+  }
 
-// export function clearAmplitudeUser() {
-//   if (isDev) {
-//     return;
-//   }
-//
-//   identifyObj.clearAll();
-//   identify(identifyObj);
-// }
+  if (userId) {
+    const email = userEmail || '';
+    const id = userId.toString();
+
+    identifyObj.set('email', email).set('userId', id);
+
+    identify(identifyObj);
+    setUserId(id);
+  }
+}
+
+export function clearAmplitudeUser() {
+  if (isDev) {
+    return;
+  }
+
+  identifyObj.clearAll();
+  identify(identifyObj);
+}
 
 export function logAmplitudeEvent(name: string, props = {}) {
   // if (!name || name === 'undefined') {

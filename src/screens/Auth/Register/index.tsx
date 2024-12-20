@@ -4,12 +4,14 @@ import AppText from '@common/components/AppText';
 import AppTextInput from '@common/components/AppTextInput';
 import { CircleButton } from '@common/components/buttons/CircleButton';
 import config from '@common/config';
+import { AMPLITUDE_EVENTS } from '@common/constants';
 import CheckBox from '@react-native-community/checkbox';
-import { useAmplitude } from '@services/hooks/useAmplitude';
 import useAppData from '@services/hooks/useAppData';
 import useLogin from '@services/hooks/useLogin';
 import { useUser } from '@services/hooks/useUser';
+import { logAmplitudeEvent } from '@utils/amplitude-helpers';
 import { logEvent } from '@utils/analytics';
+import { initializeThirdParties } from '@utils/initialize-third-parties';
 import React, { useEffect, useState } from 'react';
 import {
   ActivityIndicator,
@@ -65,17 +67,14 @@ const Register = ({ navigation }) => {
     user: { accessToken, id, loder, email: useremail },
   } = useUser();
   const appDataloaded = useSelector(state => state.appData.loaded);
-  const amplitudeInstance = useAmplitude();
 
   useEffect(() => {
     if (!accessToken || !id) {
       return;
     }
 
-    if (!config.isDev) {
-      amplitudeInstance.setUserId(id);
-      amplitudeInstance.logEvent('SIGNUP', { userID: id });
-    }
+    initializeThirdParties(id, useremail);
+    logAmplitudeEvent(AMPLITUDE_EVENTS.REGISTER_SCREEN.REGISTER_SUCCESS);
     getAppData();
 
     AppEventsLogger.logEvent(AppEventsLogger.AppEvents.CompletedRegistration, {

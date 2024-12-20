@@ -1,4 +1,3 @@
-import { captureMessage } from '@sentry/react-native';
 import api from '@services/api';
 import { login, setLoder } from '@store/actions';
 import { useLoginStore } from '@store/useLoginStore';
@@ -6,6 +5,7 @@ import { applelogin } from '@utils/apple';
 import { fbLogin } from '@utils/facebook';
 import { googleSignIn } from '@utils/google';
 import logger from '@utils/logger';
+import { handleSentryException } from '@utils/sentry-helpers';
 import { useCallback, useEffect } from 'react';
 import { Alert } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
@@ -222,7 +222,12 @@ export default () => {
       if (!!emailLoginData?.user) {
         dispatchLogin(emailLoginData);
       } else {
-        captureMessage('Missing Email Login Data');
+        handleSentryException({
+          src: 'Login Screen',
+          error: new Error(
+            'Missing Email Login Data' + ' | ' + JSON.stringify(emailLoginData),
+          ),
+        });
       }
     }
   }, [emailLoginData, emailLoginCompleted, dispatchLogin]);
@@ -238,7 +243,12 @@ export default () => {
       if (!!fbLoginData?.user) {
         dispatchLogin(fbLoginData);
       } else {
-        captureMessage('Missing FB Login Data');
+        handleSentryException({
+          src: 'Login Screen',
+          error: new Error(
+            'Missing FB Login Data' + ' | ' + JSON.stringify(fbLoginData),
+          ),
+        });
       }
     }
   }, [fbLoginCompleted, fbLoginData, dispatchLogin]);
@@ -254,7 +264,14 @@ export default () => {
       if (!!googleLoginData?.user) {
         dispatchLogin(googleLoginData);
       } else {
-        captureMessage('Missing Google Login Data');
+        handleSentryException({
+          src: 'Login Screen',
+          error: new Error(
+            'Missing Google Login Data' +
+              ' | ' +
+              JSON.stringify(googleLoginData),
+          ),
+        });
       }
     }
   }, [dispatchLogin, googleLoginCompleted, googleLoginData]);
@@ -271,7 +288,12 @@ export default () => {
       if (!!appleLoginData?.user) {
         dispatchLogin(appleLoginData);
       } else {
-        captureMessage('Missing Apple Login Data');
+        handleSentryException({
+          src: 'Login Screen',
+          error: new Error(
+            'Missing Apple Login Data' + ' | ' + JSON.stringify(appleLoginData),
+          ),
+        });
       }
     }
   }, [appleLoginCompleted, appleLoginData, dispatchLogin]);
@@ -287,7 +309,12 @@ export default () => {
       if (!!registerData?.user) {
         dispatchLogin(registerData);
       } else {
-        captureMessage('Missing Regsiter Data');
+        handleSentryException({
+          src: 'Login Screen',
+          error: new Error(
+            'Missing Register Data' + ' | ' + JSON.stringify(registerData),
+          ),
+        });
       }
     }
   }, [registerCompleted, registerData, dispatchLogin]);

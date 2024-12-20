@@ -12,6 +12,14 @@ export const AMPLITUDE_EVENTS = {
   HOME_SCREEN: {
     PRESSED_MICHAEL_CHAT_CTA: '[HomeScreen] Pressed on Michael Chat CTA',
   },
+  LOGIN_SCREEN: {
+    VIEWED_SCREEN: '[ViewedScreen] Login Screen',
+    LOGIN_SUCCESS: '[LoginScreen] Login Success',
+  },
+  REGISTER_SCREEN: {
+    VIEWED_SCREEN: '[ViewedScreen] Register Screen',
+    REGISTER_SUCCESS: '[LoginScreen] Register Success',
+  },
   CHATS: {
     VIEWED_SCREEN: '[ViewedScreen] Chats Tab',
     SELECTED_CHAT_CATEGORY: (category: ChatCategories | 'free_chat') =>

@@ -10,8 +10,8 @@ Sentry.init({
   tracesSampleRate: 1.0,
   enabled: !config.isDev,
   _experiments: {
-    replaysSessionSampleRate: config.isDev ? 0 : 1.0,
-    replaysOnErrorSampleRate: config.isDev ? 0 : 1.0,
+    replaysSessionSampleRate: config.isDev ? 0 : 0.75,
+    replaysOnErrorSampleRate: config.isDev ? 0 : 0.75,
   },
   integrations: [
     Sentry.mobileReplayIntegration({

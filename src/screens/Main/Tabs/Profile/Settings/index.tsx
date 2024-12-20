@@ -8,9 +8,11 @@ import { useClearChatStore } from '@services/hooks/useClearChatStore';
 import useDeleteData from '@services/hooks/useDeleteData';
 import { useUser } from '@services/hooks/useUser';
 import { logout } from '@store/actions';
+import { clearAmplitudeUser } from '@utils/amplitude-helpers';
 import { logEvent } from '@utils/analytics';
 import { fbLogout } from '@utils/facebook';
 import { googleSignOut } from '@utils/google';
+import { clearSentryUser } from '@utils/sentry-helpers';
 import React from 'react';
 import {
   Alert,
@@ -48,6 +50,8 @@ const Settings = ({ navigation }) => {
     clearChatStore();
     fbLogout();
     googleSignOut();
+    clearSentryUser();
+    clearAmplitudeUser();
     // applelogout();
 
     navigation.reset({
