@@ -191,11 +191,10 @@ const TabNavigator = ({ route }) => {
   useLayoutEffect(() => {
     const routeName = getFocusedRouteNameFromRoute(route);
     if (
-      (routeName === 'Chat' && chatStep === 'list') ||
-      (routeName === 'Chat' &&
-        chatStep === 'selection' &&
-        !hasPassedStarterChat &&
-        !isStartedChatActivated)
+      routeName === 'Chat' &&
+      chatStep === 'selection' &&
+      !hasPassedStarterChat &&
+      !isStartedChatActivated
     ) {
       setIsTabbarVisible(false);
     } else {
