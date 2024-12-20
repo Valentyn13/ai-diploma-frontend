@@ -1,5 +1,5 @@
 import SubscriptionPoint from '@common/components/SubscriptionPoint';
-import { KEY_PLAYED_FIRST } from '@common/constants';
+import { AMPLITUDE_EVENTS, KEY_PLAYED_FIRST } from '@common/constants';
 import { usePurchases } from '@common/context/PurchaseContext';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useNavigation, useRoute } from '@react-navigation/native';
@@ -8,6 +8,7 @@ import rudderClient, {
   RUDDER_LOG_LEVEL,
 } from '@rudderstack/rudder-sdk-react-native';
 import * as Sentry from '@sentry/react-native';
+import { useLogViewedScreenEvent } from '@services/hooks/amplitude';
 import { useAmplitude } from '@services/hooks/useAmplitude';
 import useOverrideBackGesture from '@services/hooks/useOverrideBackGesture';
 import { useUser } from '@services/hooks/useUser';
@@ -220,6 +221,9 @@ const Subscribe: FC = ({ navigation }) => {
   );
 
   useOverrideBackGesture({ onBack: onClose });
+  useLogViewedScreenEvent(
+    AMPLITUDE_EVENTS.SUBSCRIPTION_SCREEN.VIEWED_SUBSCRIPTION_SCREEN,
+  );
 
   return (
     <>

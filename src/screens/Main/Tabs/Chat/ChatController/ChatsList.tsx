@@ -5,6 +5,7 @@ import { deleteChat } from '@services/api/chat';
 import { useRequestWithReauth } from '@services/hooks/useAxios/reauthWrapper';
 import useOverrideBackGesture from '@services/hooks/useOverrideBackGesture';
 import {
+  ChatCategories,
   ChatCategoriesEnum,
   useCategorizedChatFlowStore,
 } from '@store/useCategorizedChatFlowStore';
@@ -110,7 +111,7 @@ type ChatListType = {
   category: {
     title: string | undefined;
     sessionCount: number | undefined;
-    categoryValue: ChatCategoriesEnum;
+    categoryValue: ChatCategories;
   };
 };
 

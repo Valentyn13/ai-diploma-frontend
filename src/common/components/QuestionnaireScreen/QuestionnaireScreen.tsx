@@ -34,9 +34,10 @@ const AGREEMENT_LIST = [
 
 type Props = {
   setStep: (step: InsightSteps) => void;
+  shouldShowPaywall: boolean;
 };
 
-const QuestionnaireScreen = ({ setStep }: Props) => {
+const QuestionnaireScreen = ({ setStep, shouldShowPaywall }: Props) => {
   const navigation = useNavigation();
 
   const {
@@ -88,6 +89,7 @@ const QuestionnaireScreen = ({ setStep }: Props) => {
 
   useLogViewedScreenEvent(
     AMPLITUDE_EVENTS.STARTER_CHAT.VIEWED_STARTER_CHAT_AGREEMENT_SCREEN,
+    { shouldIgnore: shouldShowPaywall },
   );
 
   return (

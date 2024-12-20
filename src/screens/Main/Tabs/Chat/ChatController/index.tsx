@@ -52,7 +52,7 @@ const ChatController = () => {
     setSessionStarted: state.setSessionStarted,
   }));
 
-  const shouldShowPayWall = useMemo(
+  const shouldShowPaywall = useMemo(
     () => !hasPremium && !hasPassedStarterChat && !!userId,
     [hasPremium, hasPassedStarterChat, userId],
   );
@@ -105,7 +105,7 @@ const ChatController = () => {
   };
 
   useEffect(() => {
-    if (shouldShowPayWall) {
+    if (shouldShowPaywall) {
       navigation.navigate('Main', {
         screen: 'Subscribe',
         params: {
@@ -113,7 +113,7 @@ const ChatController = () => {
         },
       });
     }
-  }, [shouldShowPayWall, navigation]);
+  }, [shouldShowPaywall, navigation]);
 
   useLogViewedScreenEvent(AMPLITUDE_EVENTS.CHATS.VIEWED_SCREEN);
 
@@ -127,7 +127,7 @@ const ChatController = () => {
             latestChat={latestChat}
           />
         ) : (
-          <UserInsightView />
+          <UserInsightView shouldShowPaywall={shouldShowPaywall} />
         )
       ) : null}
       {currentStep === 'list' && (

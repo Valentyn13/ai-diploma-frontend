@@ -49,4 +49,7 @@ export const AMPLITUDE_EVENTS = {
     ANSWERED_STARTER_CHAT_QUESTION: '[StarterChat] Answered question',
     SUBMIT_STARTER_CHAT_ANSWERS: '[StarterChat] Submit Answers',
   },
+  SUBSCRIPTION_SCREEN: {
+    VIEWED_SUBSCRIPTION_SCREEN: '[ViewedScreen] Subscription Screen',
+  },
 };

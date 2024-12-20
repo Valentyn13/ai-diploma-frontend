@@ -10,9 +10,10 @@ import StarterChatHeader from './StarterChatHeader';
 
 type Props = {
   setStep: (step: InsightSteps) => void;
+  shouldShowPaywall: boolean;
 };
 
-const UserPoll = ({ setStep }: Props) => {
+const UserPoll = ({ setStep, shouldShowPaywall }: Props) => {
   const [isPollEnded, setIsPollEnded] = useState<boolean>(false);
 
   const handlePollState = (isEnded: boolean) => {
@@ -21,6 +22,7 @@ const UserPoll = ({ setStep }: Props) => {
 
   useLogViewedScreenEvent(
     AMPLITUDE_EVENTS.STARTER_CHAT.VIEWED_STARTER_CHAT_SCREEN,
+    { shouldIgnore: shouldShowPaywall },
   );
 
   return (
