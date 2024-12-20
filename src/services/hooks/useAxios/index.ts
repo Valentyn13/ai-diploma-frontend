@@ -173,10 +173,18 @@ export default ({
               dispatch({ type: actions.success, payload: res.data });
             } else {
               dispatchAction(logout());
-              clearChatStore()
+              clearChatStore();
             }
           } else {
-            Sentry.captureException(error);
+            // TODO: improve it
+            if (
+              error?.message?.includes('timeout') ||
+              error?.message?.includes('500') ||
+              error?.message?.includes('404')
+            ) {
+              Sentry.captureException(error);
+            }
+
             if (showError) {
               if (
                 requestApi.url === 'auth/apple' ||

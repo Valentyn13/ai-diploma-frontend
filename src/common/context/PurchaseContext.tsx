@@ -111,6 +111,10 @@ export const PurchaseProvider: React.FC<PropsWithChildren> = ({ children }) => {
         });
 
         Purchases.restorePurchases();
+
+        if (message?.includes('cancelled')) {
+          return;
+        }
         throw new Error(`Purchase failed: ${message}`);
       }
 
