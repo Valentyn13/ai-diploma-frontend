@@ -267,8 +267,8 @@ const Subscribe: FC = ({ navigation }) => {
 
             <View className="mt-10 self-center w-8/12">
               <Text className="text-white text-center text-lg">
-                בשביל פחות מ<Text className="font-bold">4 שקלים בשבוע</Text>,
-                האפליקציה שלכם לשנה!
+                רק <Text className="font-bold">5 שקלים בשבוע</Text>, האפליקציה
+                שלכם לשנה!
               </Text>
             </View>
             <View className="relative flex-1">
@@ -282,7 +282,7 @@ const Subscribe: FC = ({ navigation }) => {
                       selected={selectedPlan === 'annual'}
                       onPress={() => setSelectedPlan('annual')}
                       title="מנוי שנתי"
-                      monthPrice={15.6}
+                      monthPrice={22.49}
                       subTitle={
                         <Text className="text-white text-center text-sm">
                           <Text
@@ -291,7 +291,7 @@ const Subscribe: FC = ({ navigation }) => {
                                 ? 'font-bold'
                                 : 'font-medium'
                             }`}>
-                            ₪187.90
+                            ₪269.90
                             {'  '}
                           </Text>
                           <Text
@@ -300,13 +300,13 @@ const Subscribe: FC = ({ navigation }) => {
                                 ? 'font-bold'
                                 : 'font-medium'
                             }`}>
-                            ₪358.90
+                            ₪479.88
                           </Text>
                         </Text>
                       }
                     />
                     <PackageItem
-                      monthPrice={29.9}
+                      monthPrice={39.9}
                       selected={selectedPlan === 'monthly'}
                       onPress={() => setSelectedPlan('monthly')}
                       title="מנוי חודשי"
@@ -334,7 +334,7 @@ const Subscribe: FC = ({ navigation }) => {
                     נסו את האפליקציה במשך 7 ימים בחינם!{' '}
                     <Text
                       className={`${Platform.OS === 'ios' ? 'font-bold' : ''}`}>
-                      לאחר תקופה זו יתבצע חיוב אוטומטי בסך 187.90 שח עבור שנת
+                      לאחר תקופה זו יתבצע חיוב אוטומטי בסך 269.90 שח עבור שנת
                       שימוש באפליקציה.
                     </Text>{' '}
                     ניתן לבטל את המנוי בכל רגע וללא עלות.
