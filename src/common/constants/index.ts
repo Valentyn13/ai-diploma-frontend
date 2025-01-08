@@ -564,6 +564,11 @@ export const VIDEOS: Record<string, string> = {
   breathbox: 'breathe-box.mp4',
   circlebreating: 'circle-breathing.mp4',
   noseBreath: 'nose-breath.mp4',
+  ['2-8breath.mp4']: '2-8breath.mp4',
+  ['4-4-4triangle.mp4']: '4-4-4triangle.mp4',
+  ['4-4-4box.mp4']: '4-4-4box.mp4',
+  ['4-7-8new.mp4']: '4-7-8new.mp4',
+  ['4-4equal.mp4']: '4-4equal.mp4',
 };
 
 export const LIMIT_MAX_MEDITATIONS_FEED = 3;
