@@ -3,6 +3,7 @@ import AppText from '@common/components/AppText';
 import WithFadeIn from '@common/components/transitions/WithFadeIn';
 import WithSlideInX from '@common/components/transitions/WithSlideInX';
 import WithSlideInY from '@common/components/transitions/WithSlideInY';
+import Theme from '@common/theme';
 import { AMPLITUDE_EVENTS, useAmplitude } from '@services/hooks/useAmplitude';
 import React, { useEffect } from 'react';
 import { Image, Platform, View } from 'react-native';
@@ -32,7 +33,7 @@ const IntroStudy = () => {
       style={{
         flex: 1,
         alignItems: 'center',
-        backgroundColor: '#fcf2e3',
+        backgroundColor: Theme.colors.bgColor,
         padding: scale(40),
       }}>
       <WithSlideInX delay={300}>

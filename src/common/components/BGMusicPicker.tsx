@@ -66,7 +66,7 @@ const MusicModal = () => {
         justifyContent: 'center',
         alignItems: 'center',
         padding: 30,
-        backgroundColor: '#FFEFD7',
+        backgroundColor: '#FFF8EE',
       }}>
       <View className="absolute left-4 top-4">
         <CircleButton

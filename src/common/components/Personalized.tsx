@@ -1,31 +1,33 @@
 import BgSelector from '@common/components/buttons/BgSelector';
-import theme from '@common/theme';
 import { usePersonalized } from '@services/hooks/usePersonalized';
 import { useUser } from '@services/hooks/useUser';
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { Platform, StyleSheet, Text, View } from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
+
+const EXTRA_TOP_PADDING = Platform.OS === 'ios' ? 8 : 24;
 
 const Personalized = () => {
   const { getTitle, getSubtitle } = usePersonalized();
-
+  const insets = useSafeAreaInsets();
   const { user } = useUser();
 
   return (
-    <View style={styles.scrollView}>
-      <View className="h-[96px] flex-row justify-between items-center relative">
+    <View
+      style={[
+        styles.scrollView,
+        { paddingTop: insets.top + EXTRA_TOP_PADDING },
+      ]}>
+      <View className="h-[96px] flex-row justify-between relative">
         <View className="p-4">
-          <Text
-            style={{
-              fontFamily: theme.fonts.bold,
-            }}
-            className="text-left text-[#2F2F2F] font-medium text-[24px]">
+          <Text className="text-left text-[#0F1B48] font-semibold text-[27px] leading-[27px]">
             {getTitle()} {user.name ?? ''}
           </Text>
-          <Text className="text-left text-[#4F4F4F] font-normal text-base">
+          <Text className="text-left text-[#666D89] font-semibold text-[15px]">
             {getSubtitle()}
           </Text>
         </View>
-        <View className="mr-4">
+        <View className="mr-4 mt-2">
           <BgSelector />
         </View>
       </View>
@@ -46,7 +48,7 @@ const styles = StyleSheet.create({
   scrollView: {
     zIndex: 100,
     flex: 1,
-    height: 241,
+    height: 252,
     overflow: 'visible',
   },
   badgeScrollContainer: {

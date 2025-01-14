@@ -34,7 +34,7 @@ const ParallaxScroll: FC<PropsWithChildren> = ({ children }) => {
           StyleSheet.absoluteFillObject,
           backgroundStyle,
           {
-            height: 251,
+            height: 290,
           },
         ]}>
         <FastImage

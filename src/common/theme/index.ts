@@ -28,7 +28,7 @@ const dimens = {
 
 const theme = {
   colors: {
-    bgColor: '#fdedd6',
+    bgColor: '#FFF8EE',
     itemBgColor: '#DADACB',
     selectedCategoryColor: '#F2D1B2',
     textColor: '#160F29',

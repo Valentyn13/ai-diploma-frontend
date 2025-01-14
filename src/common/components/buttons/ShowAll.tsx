@@ -4,7 +4,7 @@ import { Pressable, PressableProps, Text } from 'react-native';
 
 const ShowAll: FC<PressableProps> = props => (
   <Pressable className="p-2" {...props}>
-    <Text className="text-[13px] leading-4 text-neutral-700">
+    <Text className="text-[14px] leading-4 text-[#16161691]">
       {i18n.t('showAll')}
     </Text>
   </Pressable>

@@ -5,17 +5,27 @@ const initialState = {
   courses: [],
   categories: [],
   instructors: [],
+  meditationsByTimeOfTheDay: [],
+  meditationsByCategories: [],
 };
 
-const appData = (state = initialState, {type, payload}) => {
+const appData = (state = initialState, { type, payload }) => {
   switch (type) {
     case actions.setAppData.actionName: {
-      const {courses, categories, instructors} = payload;
+      const {
+        courses,
+        categories,
+        instructors,
+        meditationsByCategories,
+        meditationsByTimeOfTheDay,
+      } = payload;
       return {
         loaded: true,
         courses,
         categories,
         instructors,
+        meditationsByCategories,
+        meditationsByTimeOfTheDay,
       };
     }
     case actions.logout.actionName:

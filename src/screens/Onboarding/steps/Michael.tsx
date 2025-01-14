@@ -1,5 +1,6 @@
 import image from '@common/assets/images';
 import { SubTitle, TouchableIcon } from '@common/components/Styled';
+import Theme from '@common/theme';
 import { AMPLITUDE_EVENTS, useAmplitude } from '@services/hooks/useAmplitude';
 import useCache from '@services/hooks/useCache';
 import { INTRO_METADATA_KEY, IntroMetadata } from '@services/hooks/useIntro';
@@ -70,6 +71,7 @@ const ChooseSex = () => {
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
+        backgroundColor: Theme.colors.bgColor,
       }}>
       <PageTitle title="הכירו את מיכאל" subTitle="מטפל AI הראשון בישראל" />
 

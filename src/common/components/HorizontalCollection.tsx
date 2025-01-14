@@ -3,7 +3,7 @@ import { SubTitle } from '@common/components/Styled';
 import i18n from '@services/localization/i18n';
 import { shuffleArray } from '@utils/rand';
 import React, { ElementType, FC, useMemo } from 'react';
-import { Pressable, Text, View } from 'react-native';
+import { Text, TouchableOpacity, View } from 'react-native';
 import styled from 'styled-components/native';
 
 const ListTitle = styled(SubTitle)`
@@ -11,6 +11,7 @@ const ListTitle = styled(SubTitle)`
   font-weight: bold;
   align-self: flex-start;
   letter-spacing: 0.1px;
+  color: #414141;
 `;
 
 interface Props {
@@ -59,14 +60,14 @@ const HorizontalCollection: FC<Props> = ({
 
   return (
     <View>
-      <View className="flex flex-row items-center justify-between w-full mb-5 pl-5 pr-3">
+      <View className="flex flex-row items-center justify-between w-full mb-[20px] pl-5 pr-3">
         <ListTitle t={title} />
         {onShowAll && (
-          <Pressable onPress={() => onShowAll()} className="p-2">
-            <Text className="text-[13px] leading-4 text-neutral-700">
+          <TouchableOpacity onPress={() => onShowAll()} className="p-2">
+            <Text className="text-[14px] leading-4 text-[#16161691]">
               {i18n.t('showAll')}
             </Text>
-          </Pressable>
+          </TouchableOpacity>
         )}
       </View>
       {items.length === 0 && (

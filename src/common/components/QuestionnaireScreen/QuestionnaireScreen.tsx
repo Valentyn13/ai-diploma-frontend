@@ -3,11 +3,10 @@ import image from '@common/assets/images';
 import { AMPLITUDE_EVENTS } from '@common/constants';
 import CheckBox from '@react-native-community/checkbox';
 import { useNavigation } from '@react-navigation/native';
-import { getStarterChatQuestions } from '@services/api/userInsight';
 import { useLogViewedScreenEvent } from '@services/hooks/amplitude';
 import { InsightSteps, useStarterChatStore } from '@store/useStarterChatStore';
 import { logAmplitudeEvent } from '@utils/amplitude-helpers';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import * as React from 'react';
 import { ScrollView, Text, TouchableOpacity, View } from 'react-native';
 import FastImage from 'react-native-fast-image';
@@ -40,14 +39,8 @@ type Props = {
 const QuestionnaireScreen = ({ setStep, shouldShowPaywall }: Props) => {
   const navigation = useNavigation();
 
-  const {
-    setIsStarterChatActivated,
-    setStarterChatQuestions,
-    setLoadingState,
-  } = useStarterChatStore(state => ({
+  const { setIsStarterChatActivated } = useStarterChatStore(state => ({
     setIsStarterChatActivated: state.setIsStarterChatActivated,
-    setStarterChatQuestions: state.setStarterChatQuestions,
-    setLoadingState: state.setLoadingState,
   }));
 
   const [isAgreementAccepted, setIsAgreementAccepted] = useState(false);
@@ -72,21 +65,6 @@ const QuestionnaireScreen = ({ setStep, shouldShowPaywall }: Props) => {
     navigation.goBack();
   };
 
-  useEffect(() => {
-    const fetchPollData = async () => {
-      try {
-        setLoadingState(true);
-        const data = await getStarterChatQuestions();
-        setStarterChatQuestions(data);
-      } catch (error) {
-      } finally {
-        setLoadingState(false);
-      }
-    };
-
-    fetchPollData();
-  }, []);
-
   useLogViewedScreenEvent(
     AMPLITUDE_EVENTS.STARTER_CHAT.VIEWED_STARTER_CHAT_AGREEMENT_SCREEN,
     { shouldIgnore: shouldShowPaywall },
@@ -98,7 +76,7 @@ const QuestionnaireScreen = ({ setStep, shouldShowPaywall }: Props) => {
         flexGrow: 1,
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: '#FCE8CD',
+        backgroundColor: '#FFF8EE',
         paddingHorizontal: 18,
         paddingTop: 10,
         paddingBottom: 20,

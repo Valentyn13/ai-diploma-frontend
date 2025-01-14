@@ -1,4 +1,5 @@
 import Button from '@common/components/buttons/Button';
+import Theme from '@common/theme';
 import React, { useRef, useState } from 'react';
 import { StyleSheet, View } from 'react-native';
 import PagerView from 'react-native-pager-view';
@@ -68,14 +69,14 @@ const OnBoarding = ({ navigation: { navigate } }) => {
         style={{
           backgroundColor:
             selected === 4 || selected === 5 || selected === 6
-              ? '#FFF5E4'
-              : '#FBEFDD',
+              ? Theme.colors.bgColor
+              : Theme.colors.bgColor,
         }}
       />
 
       <SafeAreaView
         edges={['bottom', 'right', 'left']}
-        className="flex-1 bg-[#FBEFDD]">
+        className="flex-1 bg-primary-bg">
         <AnimatedPager
           ref={ref}
           style={styles.pagerView}
@@ -115,6 +116,7 @@ const OnBoarding = ({ navigation: { navigate } }) => {
 const styles = StyleSheet.create({
   pagerView: {
     flex: 1,
+    backgroundColor: Theme.colors.bgColor,
   },
 });
 

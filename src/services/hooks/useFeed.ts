@@ -1,11 +1,9 @@
-import {
-  COLLECTIONS,
-  COLLECTIONS_TIME_OF_DAY,
-  LIMIT_MAX_MEDITATIONS_FEED,
-} from '@common/constants';
+import { LIMIT_MAX_MEDITATIONS_FEED } from '@common/constants';
 import i18n from '@services/localization/i18n';
 import {
   allMeditations as allMeditationsSelector,
+  getMeditationsByCategories,
+  getMeditationsByTimeOfTheDay,
   homeMeditationsSelector,
   latestMeditationSelector,
   toptMeditationSelector,
@@ -14,7 +12,11 @@ import { getRandomElements, shuffleArray } from '@utils/rand';
 import { getPeriodOfDay } from '@utils/time';
 import { useCallback, useMemo } from 'react';
 import { useSelector } from 'react-redux';
-import { Session } from 'types/Meditation';
+import {
+  MeditationByPredefinedCategories,
+  MeditationsByTimeOfTheDay,
+  Session,
+} from 'types/Meditation';
 
 interface Collection {
   id: string;
@@ -27,6 +29,12 @@ const useFeed = (): Collection[] => {
   const latest = useSelector(latestMeditationSelector) as Session[];
   const topRated = useSelector(toptMeditationSelector) as Session[];
   const allMeditations = useSelector(allMeditationsSelector) as Session[];
+  const meditationsByTimeOfTheDay = useSelector(
+    getMeditationsByTimeOfTheDay,
+  ) as MeditationsByTimeOfTheDay[];
+  const meditationsByCategories = useSelector(
+    getMeditationsByCategories,
+  ) as MeditationByPredefinedCategories[];
 
   const idToItem = useCallback(
     (id: string) => allMeditations.find(m => m.id === id)!,
@@ -35,16 +43,16 @@ const useFeed = (): Collection[] => {
 
   const firstCollections: Collection[] = useMemo(
     () => [
-      ...COLLECTIONS_TIME_OF_DAY.filter(
-        ({ id }) => id === getPeriodOfDay(),
-      ).map(({ title, id, trackIds }) => ({
-        id,
-        title,
-        items: trackIds.map(idToItem).filter(Boolean),
-      })),
+      ...meditationsByTimeOfTheDay
+        .filter(({ id }) => id === getPeriodOfDay())
+        .map(({ title, id, trackIds }) => ({
+          id,
+          title,
+          items: trackIds.map(idToItem).filter(Boolean),
+        })),
       { id: 'latest-release', title: i18n.t('latest_release'), items: latest },
     ],
-    [idToItem, latest],
+    [idToItem, latest, meditationsByTimeOfTheDay],
   );
 
   const fixedCollections: Collection[] = useMemo(
@@ -60,7 +68,7 @@ const useFeed = (): Collection[] => {
   );
 
   const dynamicCollections: Collection[] = getRandomElements(
-    COLLECTIONS,
+    meditationsByCategories,
     LIMIT_MAX_MEDITATIONS_FEED,
   ).map(({ title, id, trackIds }) => ({
     id,

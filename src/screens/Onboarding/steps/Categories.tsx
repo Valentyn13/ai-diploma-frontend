@@ -68,7 +68,7 @@ const Intro = () => {
   const isSelected = (itemKey: Category) => selectedItems.includes(itemKey);
 
   return (
-    <View className="flex-1 bg-[#fdedd6] justify-center items-center">
+    <View className="flex-1 bg-primary-bg justify-center items-center">
       <PageTitle
         title="במה רגע יכולה לעזור לך?"
         subTitle="ניתן לבחור עד 3 נושאים"

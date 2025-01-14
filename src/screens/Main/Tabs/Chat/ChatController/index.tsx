@@ -2,6 +2,7 @@ import { AMPLITUDE_EVENTS, CHAT_TYPES, ChatTypeData } from '@common/constants';
 import { usePurchases } from '@common/context/PurchaseContext';
 import { useNavigation } from '@react-navigation/native';
 import { useLogViewedScreenEvent } from '@services/hooks/amplitude';
+import useLatestChat from '@services/hooks/useLatestChat';
 import { useUser } from '@services/hooks/useUser';
 import { useCategorizedChatFlowStore } from '@store/useCategorizedChatFlowStore';
 import { useChatsStore } from '@store/useChatsStore';
@@ -52,20 +53,13 @@ const ChatController = () => {
     setSessionStarted: state.setSessionStarted,
   }));
 
+  const { latestChat, lastActiveSessionIndex, handleOpenRecentChat } =
+    useLatestChat({ withNavigation: false });
+
   const shouldShowPaywall = useMemo(
     () => !hasPremium && !hasPassedStarterChat && !!userId,
     [hasPremium, hasPassedStarterChat, userId],
   );
-
-  const latestChat = useMemo(() => {
-    return chats.find(chat => chat.chatId === lastActiveSessionId);
-  }, [chats, lastActiveSessionId]);
-
-  const lastActiveSessionIndex = useMemo(() => {
-    return chats
-      .filter(chat => chat.category === latestChat?.category)
-      .findIndex(chat => chat.chatId === lastActiveSessionId);
-  }, [chats, lastActiveSessionId, latestChat?.category]);
 
   const categories: ChatTypeData[] = useMemo(() => {
     return CHAT_TYPES.map(chatType => {
@@ -125,6 +119,7 @@ const ChatController = () => {
             categories={categories}
             lastActiveSessionIndex={lastActiveSessionIndex}
             latestChat={latestChat}
+            handleOpenRecentChat={handleOpenRecentChat}
           />
         ) : (
           <UserInsightView shouldShowPaywall={shouldShowPaywall} />

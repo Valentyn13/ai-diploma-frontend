@@ -9,7 +9,9 @@ export function getRandomElements<T>(arr: T[], x: number): T[] {
   let selectedElements: T[] = [];
   let seed = getCurrentHour() + getCurrentDay() + getCurrentMonth();
   let arrCopy = arr.slice();
-
+  if (!arrCopy.length) {
+    return [];
+  }
   for (let i = 0; i < x; i++) {
     seed = (seed * 9301 + 49297) % 233280; // Update the seed for each iteration
     let index = Math.floor(seededRandom(seed) * arrCopy.length);
@@ -24,7 +26,9 @@ export function getRandomElementsByDay<T>(arr: T[], x: number): T[] {
   let selectedElements: T[] = [];
   let seed = getCurrentDay();
   let arrCopy = arr.slice();
-
+  if (!arrCopy.length) {
+    return [];
+  }
   for (let i = 0; i < x; i++) {
     seed = (seed * 9301 + 49297) % 233280; // Update the seed for each iteration
     let index = Math.floor(seededRandom(seed) * arrCopy.length);

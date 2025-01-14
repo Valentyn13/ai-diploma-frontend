@@ -38,6 +38,10 @@ const getCourses = state => state.appData.courses;
 const getInstructors = state => state.appData.instructors;
 const getSelectedCategories = state => state.userPreferences.selectedCategories;
 
+export const getFavoriteMeditations = state => state.userPreferences.favoriteMeditations;
+export const getMeditationsByTimeOfTheDay = state => state.appData.meditationsByTimeOfTheDay;
+export const getMeditationsByCategories = state => state.appData.meditationsByCategories;
+
 const findMeditation = (allMeditations, meditationId) =>
   allMeditations.find(({ id }) => id === meditationId);
 
@@ -167,7 +171,7 @@ export const firstCourseSelector = createSelector([getCourses], courses => {
 });
 
 export const favoriteMeditationsSelector = createSelector(
-  [allMeditations, state => state.userPreferences.favoriteMeditations],
+  [allMeditations, getFavoriteMeditations],
   (allMeds, favMeds) =>
     Object.keys(favMeds)
       .map(value => findMeditation(allMeds, value))

@@ -14,7 +14,7 @@ const StarterChatHeader = ({ avatarSrc, title, setIsPollEnded }: Props) => {
   // }));
 
   return (
-    <View className="bg-[#FFF8EE] w-full flex-row justify-between items-center p-2 border-b border-gray-300">
+    <View className="bg-[#FFF8EE] w-full flex-row justify-between items-center p-2 border-b border-gray-200">
       <View className="flex-row items-center">
         <View className="flex-row items-center ml-6">
           <Image source={avatarSrc} className="w-8 h-8 rounded-full" />

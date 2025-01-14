@@ -118,7 +118,7 @@ const Notifications = ({ navigation }) => {
   );
 
   return (
-    <SafeAreaView className="flex-1 bg-[#FCE8CD]">
+    <SafeAreaView className="flex-1 bg-[#FFF8EE]">
       <View className="p-5 flex-row items-center">
         <View className="absolute top-5 left-5 z-10">
           <CircleButton

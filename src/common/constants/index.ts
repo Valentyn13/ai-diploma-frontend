@@ -918,7 +918,7 @@ export const CHAT_TYPES: ChatTypeData[] = [
     id: 2,
     type: ChatCategoriesEnum.SELF_DEV,
     title: SELF_DEV_TITLE,
-    description: `מרגישים תקועים ולא מצליחים להתקדם? במפגשים שלנו יחד נוכל לצמוח ולהגשים את המטרות שתמיד חלמתם להגשים.`,
+    description: 'מרגישים תקועים ולא מצליחים להתקדם? במפגשים שלנו יחד נוכל לצמוח ולהגשים את המטרות שתמיד חלמתם להגשים.',
     sessionCount: 0,
     bgColor: '#FFE3C5',
   },
@@ -948,5 +948,83 @@ export const CHAT_TYPES: ChatTypeData[] = [
       'שחרור מהרגלים רעים דורש זמן ולעיתים עזרה. אם אתם זקוקים לתמיכה כדי להיפטר מהם, אני כאן ללוות אתכם בתהליך ולסייע לכם לצעוד לעבר שינוי חיובי.',
     sessionCount: 0,
     bgColor: '#E8E6F3',
+  },
+];
+
+export const REGA_INSTRUCTOR_ID = '648af8fb0e66f2955d2ecbc8';
+
+export const CATEGORY_NAMES: Record<ChatCategoriesEnum | '', string> = {
+  [ChatCategoriesEnum.BAD_HABITS]: 'הרגלים רעים',
+  [ChatCategoriesEnum.ANXIETY]: 'חרדה',
+  [ChatCategoriesEnum.NEGATIVE]: 'מחשבות שליליות',
+  [ChatCategoriesEnum.SELF_DEV]: 'פיתוח עצמי',
+  '': '',
+};
+
+export const PICK_MEDITATION_CATEGORY_IDS = {
+  stress: '5eca521e10fe0480d350c9b1',
+  empover: '648ae4240e66f2955d2ecbc5',
+  emergency: '5eca521e10fe0480d350c9b4',
+  pocket_meditation: '602a6ef5410b770dd49e0d14',
+  focus: '5eca521e10fe0480d350c9b5',
+  breathe: '6476e7e7289563e63c577f94',
+  sleep: '5eca521e10fe0480d350c9b0',
+};
+
+export const CATEGORIES_TO_SHOW_IN_EXPLORE_CAROUSEL = [
+  '5eca521e10fe0480d350c9b3', // On the road
+  '61a8c014c9ff5226651bfcce', // Work
+  '6396d1d93a56cd4a3a74f778', // Advanced
+  '6476e7e7289563e63c577f94', // Visual
+];
+
+export type ExploreElement = {
+  imageName: any;
+  title: string;
+  design: {
+    height: number;
+    width: number;
+  };
+  screenNavigation?: string;
+  showAll?: 'sleep' | 'breathe';
+  navigateToRega?: boolean;
+};
+
+export const EXPLORE_LINK_BUTTONS: ExploreElement[] = [
+  {
+    imageName: 'explore_breath',
+    title: 'תרגילי נשימה',
+    design: {
+      height: 56,
+      width: 56,
+    },
+    showAll: 'breathe',
+  },
+  {
+    imageName: 'explore_sleep',
+    title: 'שינה',
+    design: {
+      height: 56,
+      width: 56,
+    },
+    showAll: 'sleep',
+  },
+  {
+    imageName: 'explore_rega_tools',
+    title: 'כלים מרגע',
+    design: {
+      height: 49,
+      width: 42,
+    },
+    navigateToRega: true,
+  },
+  {
+    imageName: 'explore_bg_music',
+    title: 'מוזיקת רקע',
+    design: {
+      height: 49,
+      width: 49,
+    },
+    screenNavigation: 'BGMusicPicker',
   },
 ];

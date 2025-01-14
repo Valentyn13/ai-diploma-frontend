@@ -32,7 +32,7 @@ const RequestReset = ({ onSendCode, navigation }) => {
   };
 
   return (
-    <SafeAreaView className="flex flex-1 bg-[#fdedd6] relative">
+    <SafeAreaView className="flex flex-1 bg-primary-bg relative">
       <View className="left-4 top-4 z-10">
         <CircleButton
           backgroundColor="#00000060"

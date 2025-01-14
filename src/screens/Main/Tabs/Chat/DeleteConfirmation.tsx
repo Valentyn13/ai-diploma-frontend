@@ -43,7 +43,7 @@ const ConfirmationModal: FC<Props> = ({
   }, [type, visible]);
 
   return (
-    <Modal transparent visible={visible}>
+    <Modal statusBarTranslucent transparent visible={visible}>
       <View className="w-full h-full bg-[#00000060] justify-center items-center p-[10px]">
         <View className="p-[16px] rounded-[16px] flex items-start w-[96%] bg-[#FCF5EB]">
           <Text className="text-[#273051] font-bold text-[18px] mb-[12px]">

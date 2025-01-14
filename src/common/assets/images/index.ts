@@ -76,6 +76,10 @@ const BGS: Record<string, string[]> = {
 };
 
 const images: Record<string, any> = {
+  explore_bg_music: require('./explore_bg_music.png'),
+  explore_breath: require('./explore_breath.png'),
+  explore_rega_tools: require('./explore_rega_tools.png'),
+  explore_sleep: require('./explore_sleep.png'),
   lock_agreement: require('./lock_agreement.png'),
   stars_agreement: require('./stars_agreement.png'),
   notes_agreement: require('./notes_agreement.png'),

@@ -80,7 +80,7 @@ const CircleExercise: FC<PropsWithChildren & AnimatedCircleProps> = ({
         {children}
       </View>
       <Canvas style={{ flex: 1 }}>
-        <Path path={path} color="#FFEFD7" style="stroke" strokeWidth={5} />
+        <Path path={path} color="#FFF8EE" style="stroke" strokeWidth={5} />
 
         {indicatorAngles.map((angle2, index) => {
           const rectWidth = 14;
@@ -95,7 +95,7 @@ const CircleExercise: FC<PropsWithChildren & AnimatedCircleProps> = ({
               cx={circleCenterX}
               cy={circleCenterY}
               r={circleRadius}
-              color="#FFEFD7"
+              color="#FFF8EE"
             />
           );
         })}

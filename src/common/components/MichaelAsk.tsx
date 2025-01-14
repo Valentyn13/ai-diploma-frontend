@@ -54,7 +54,7 @@ const Option = ({
         borderColor: selected ? '#FFC4B2' : '#ddd',
         width: 120,
         height: 80,
-        backgroundColor: selected ? '#FFEFD7' : 'transparent',
+        backgroundColor: selected ? '#FFF8EE' : 'transparent',
       }}
       onPress={onPress}>
       <Text className="text-lg">{icon}</Text>

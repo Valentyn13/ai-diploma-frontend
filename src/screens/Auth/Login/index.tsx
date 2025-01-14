@@ -82,7 +82,7 @@ const Login: FC = () => {
   }, []);
 
   return (
-    <SafeAreaView className="flex-1 bg-[#fdedd6] p-4">
+    <SafeAreaView className="flex-1 bg-primary-bg p-4">
       <View className="left-0 top-0 z-10">
         <CircleButton
           backgroundColor="#00000060"
@@ -102,7 +102,9 @@ const Login: FC = () => {
           <AppText className="font-bold text-2xl mt-16 text-center text-black">
             התחבר עם פרטי ההתחברות שלך
           </AppText>
-          <View className="bg-white py-4 px-2 rounded mt-24 flex-row items-center w-full">
+          <View
+            style={{ backgroundColor: 'white' }}
+            className="py-4 px-2 rounded mt-24 flex-row items-center w-full">
             <Icon name="email" size={scale(20)} color="#000" />
             <TextInput
               onChangeText={text => setEmail(text)}
@@ -113,7 +115,9 @@ const Login: FC = () => {
               className="w-5/6 mx-5 text-2xl text-right text-black"
             />
           </View>
-          <View className="bg-white py-4 px-2 rounded mt-4 flex-row items-center w-full">
+          <View
+            style={{ backgroundColor: 'white' }}
+            className="py-4 px-2 rounded mt-4 flex-row items-center w-full">
             <Icon name="lock" size={scale(20)} color="#000" />
             <TextInput
               onChangeText={text => setPassword(text)}

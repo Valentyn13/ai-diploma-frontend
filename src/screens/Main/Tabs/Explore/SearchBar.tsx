@@ -1,5 +1,5 @@
 import React, { FC, useRef } from 'react';
-import { TouchableOpacity, View } from 'react-native';
+import { Platform, TouchableOpacity, View } from 'react-native';
 import { TextInput } from 'react-native-gesture-handler';
 import { scale } from 'react-native-size-matters';
 import Icon from 'react-native-vector-icons/FontAwesome6';
@@ -9,18 +9,22 @@ interface Props {
   setSearchQuery: (v: string) => void;
 }
 
+const INPUT_VERTICAL_PADDING = Platform.OS === 'ios' ? 16 : 0;
+
 const SearchBar: FC<Props> = ({ searchQuery, setSearchQuery }) => {
   const ref = useRef<TextInput>(null);
 
   return (
-    <View className="relative py-2 px-2 rounded-full mt-8 flex-row items-center w-full mx-auto mb-4 border border-[#E0D3BC]">
+    <View
+      style={{ paddingVertical: INPUT_VERTICAL_PADDING }}
+      className="relative px-2 rounded-full mt-8 flex-row items-center w-full mx-auto mb-4 border border-[#A39E98]">
       <Icon
         style={{
-          transform: [{ rotateY: '180deg' }],
+          // transform: [{ rotateY: '180deg' }],
           marginLeft: scale(10),
         }}
         size={scale(18)}
-        color="#E0D3BC"
+        color="#9A9692"
         name="magnifying-glass"
       />
       <TextInput
@@ -32,8 +36,8 @@ const SearchBar: FC<Props> = ({ searchQuery, setSearchQuery }) => {
         placeholderTextColor="grey"
         keyboardType="default"
         returnKeyType="done"
-        placeholder="חיפוש מדיטציה..."
-        className="w-5/6 mx-5 text-xl text-right text-black leading-6"
+        placeholder="חיפוש מדיטציה, תרגיל נשימה או מורה"
+        className="w-5/6 mx-3 text-[17px] text-right text-[#4444448A] leading-[19px]"
       />
       {searchQuery.length > 0 && (
         <TouchableOpacity

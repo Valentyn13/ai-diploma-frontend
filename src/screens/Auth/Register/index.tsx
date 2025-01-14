@@ -5,6 +5,7 @@ import AppTextInput from '@common/components/AppTextInput';
 import { CircleButton } from '@common/components/buttons/CircleButton';
 import config from '@common/config';
 import { AMPLITUDE_EVENTS } from '@common/constants';
+import Theme from '@common/theme';
 import CheckBox from '@react-native-community/checkbox';
 import useAppData from '@services/hooks/useAppData';
 import useLogin from '@services/hooks/useLogin';
@@ -102,7 +103,7 @@ const Register = ({ navigation }) => {
     [loder],
   );
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: '#fdedd6' }}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: Theme.colors.bgColor }}>
       <View className="left-4 top-4 z-10">
         <CircleButton
           backgroundColor="#00000060"
@@ -248,7 +249,7 @@ const Register = ({ navigation }) => {
             disabled={false}
             value={toggleCheckBox}
             onValueChange={newValue => setToggleCheckBox(newValue)}
-            onFillColor="#fdedd6"
+            onFillColor={Theme.colors.bgColor}
           />
           <TouchableOpacity
             style={{ marginBottom: 10, marginRight: 15 }}

@@ -1,4 +1,5 @@
 import image from '@common/assets/images';
+import Theme from '@common/theme';
 import { AMPLITUDE_EVENTS, useAmplitude } from '@services/hooks/useAmplitude';
 import { chooseExperience } from '@store/actions';
 import React, { useCallback, useEffect, useState } from 'react';
@@ -63,7 +64,7 @@ const PickExperience = () => {
     <View
       style={{
         flex: 1,
-        backgroundColor: '#fdedd6',
+        backgroundColor: Theme.colors.bgColor,
         justifyContent: 'center',
         alignItems: 'center',
       }}>

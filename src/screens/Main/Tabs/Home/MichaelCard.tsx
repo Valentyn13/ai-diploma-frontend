@@ -1,50 +1,42 @@
-import { AMPLITUDE_EVENTS } from '@common/constants';
-import { useNavigation } from '@react-navigation/native';
-import { logAmplitudeEvent } from '@utils/amplitude-helpers';
-import React from 'react';
-import {
-  Platform,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-} from 'react-native';
+import React, { FC } from 'react';
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import FastImage from 'react-native-fast-image';
 
-const MichaelCard = () => {
-  const navigation = useNavigation();
+type MichaelCardProps = {
+  title: string;
+  subtitle: string;
+  buttonText: string;
+  handleButtonPress: () => void;
+};
 
-  const handleOpenChat = () => {
-    logAmplitudeEvent(AMPLITUDE_EVENTS.HOME_SCREEN.PRESSED_MICHAEL_CHAT_CTA);
-
-    navigation.navigate('Chat');
-  };
-
+const MichaelCard: FC<MichaelCardProps> = ({
+  title,
+  subtitle,
+  buttonText,
+  handleButtonPress,
+}) => {
   return (
-    <View className="h-[156px] flex items-start relative overflow-hidden rounded-[10px] mx-[22px] mt-0 mb-12 p-4">
+    <View className="h-[145px] border-[#ECECEC] border justify-between flex items-start relative overflow-hidden rounded-[10px] mx-[18px] py-[20px] px-[16px]">
       <FastImage
-        source={require('./bgs/michael_card_2.png')}
+        source={require('./bgs/michael_card_3.png')}
         resizeMode="cover"
         style={StyleSheet.absoluteFill}
       />
       <FastImage
-        className="w-[130px] h-[120px] absolute bottom-3 right-2"
-        source={require('./bgs/chat_heart.png')}
+        className="w-[112px] h-[106px] absolute bottom-3 right-5"
+        source={require('./bgs/chat_heart_2.png')}
       />
-      <Text className="font-bold max-w-[50%] text-left text-[16px] text-[#273051]">
-        לשתף, להתייעץ, או סתם לפרוק
-      </Text>
-      <Text
-        style={{ marginBottom: Platform.OS === 'ios' ? 8 : 0 }}
-        className="text-[#494949] mt-1.5 font-medium">
-        מיכאל כאן בשבילך, כל הזמן
-      </Text>
-      <Text />
+      <View>
+        <Text className="font-semibold max-w-[55%] text-left text-[18px] leading-[18px] text-[#273051]">
+          {title}
+        </Text>
+        <Text className="text-[#666D89] mt-0.5 text-left">{subtitle}</Text>
+      </View>
       <TouchableOpacity
-        onPress={handleOpenChat}
-        className="h-[40px] flex justify-center items-center bg-[#002136ed] px-[16px] rounded-[20px]">
-        <Text className="text-lg font-semibold text-[14px] text-white">
-          לשיחה עם מיכאל
+        onPress={handleButtonPress}
+        className="h-[33px] flex justify-center items-center bg-[#002136] px-[16px] rounded-[34px]">
+        <Text className="font-semibold text-[14px] text-white">
+          {buttonText}
         </Text>
       </TouchableOpacity>
     </View>

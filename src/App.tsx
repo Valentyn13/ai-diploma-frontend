@@ -50,7 +50,7 @@ const App: React.FC = () => {
           <PurchaseProvider>
             <BottomSheetModalProvider>
               <PersistGate loading={null} persistor={persistor}>
-                <StatusBar hidden />
+                <StatusBar backgroundColor="transparent" translucent={true} />
                 <ThemeProvider theme={theme}>
                   <StoreUpdate>
                     <TrackPlayerProvider>

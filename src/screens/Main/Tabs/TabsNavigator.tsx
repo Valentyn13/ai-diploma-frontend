@@ -1,6 +1,7 @@
 import MeditationPicker from '@common/components/MeditationPicker';
 import MichaelAsk from '@common/components/MichaelAsk';
 import theme from '@common/theme';
+import Theme from '@common/theme';
 import {
   BottomTabBarButtonProps,
   createBottomTabNavigator,
@@ -21,7 +22,7 @@ import { useStarterChatStore } from '@store/useStarterChatStore';
 import React, { useLayoutEffect } from 'react';
 import { Pressable, StatusBar, Text } from 'react-native';
 import Animated from 'react-native-reanimated';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import { Edges, SafeAreaView } from 'react-native-safe-area-context';
 import Svg, { Path, SvgProps } from 'react-native-svg';
 
 import ChatController from './Chat/ChatController';
@@ -188,8 +189,14 @@ const TabNavigator = ({ route }) => {
       setNavCallback: state.setNavCallback,
     }));
 
+  const routeName = getFocusedRouteNameFromRoute(route);
+
+  const safeAreaEdges =
+    routeName === 'Home' || !routeName
+      ? ['left', 'right', 'bottom']
+      : ['top', 'left', 'right', 'bottom'];
+
   useLayoutEffect(() => {
-    const routeName = getFocusedRouteNameFromRoute(route);
     if (
       routeName === 'Chat' &&
       chatStep === 'selection' &&
@@ -200,20 +207,22 @@ const TabNavigator = ({ route }) => {
     } else {
       setIsTabbarVisible(true);
     }
-  }, [route, chatStep, hasPassedStarterChat, isStartedChatActivated]);
+  }, [
+    route,
+    chatStep,
+    routeName,
+    hasPassedStarterChat,
+    isStartedChatActivated,
+  ]);
 
   return (
     <SafeAreaView
+      className="flex-1"
+      edges={safeAreaEdges as Edges}
       style={{
-        // TODO: move StarterChat Agreement screen to a separate screen to avoid these conditions in navigator
-        backgroundColor: isTabbarVisible ? '#FFF8EE' : '#FCE8CD',
-      }}
-      className="flex-1">
-      <StatusBar
-        hidden={false}
-        barStyle="dark-content"
-        backgroundColor={theme.colors.bgColor}
-      />
+        backgroundColor: Theme.colors.bgColor,
+      }}>
+      <StatusBar hidden={false} />
       <Tab.Navigator
         initialRouteName="Home"
         screenOptions={{
@@ -222,7 +231,7 @@ const TabNavigator = ({ route }) => {
             display: isTabbarVisible ? 'flex' : 'none',
             alignItems: 'center',
             justifyContent: 'center',
-            backgroundColor: '#FFF8EE',
+            backgroundColor: Theme.colors.bgColor,
           },
         }}>
         {Object.entries(TABS).map(([key, value]) => (

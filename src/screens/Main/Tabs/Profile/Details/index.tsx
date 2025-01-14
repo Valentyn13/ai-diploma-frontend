@@ -86,7 +86,7 @@ const Details: FC<DetailsProps> = ({ navigation }) => {
   };
 
   return (
-    <SafeAreaView className="flex-1 p-8 bg-[#fdedd6]">
+    <SafeAreaView className="flex-1 p-8 bg-primary-bg">
       <View className="-ml-4 mb-4 -mt-4 z-10">
         <CircleButton
           backgroundColor="#00000060"

@@ -245,7 +245,7 @@ const Settings = ({ navigation }) => {
   ];
 
   return (
-    <SafeAreaView className="relative w-full h-full flex-1 bg-[#FCE8CD]">
+    <SafeAreaView className="relative w-full h-full flex-1 bg-[#FFF8EE]">
       <View className="relative p-5 flex flex-row items-center">
         <View className="absolute top-5 left-5 z-10">
           <CircleButton

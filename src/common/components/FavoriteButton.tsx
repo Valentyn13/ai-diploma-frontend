@@ -3,6 +3,7 @@ import {
   addFavoriteMeditation,
   removeFavoriteMeditation,
 } from '@store/actions';
+import { getFavoriteMeditations } from '@store/selectors';
 import React, { FC, useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -16,9 +17,7 @@ interface FavoriteButtonProps {
 const FavoriteButton: FC<FavoriteButtonProps> = ({ id, isDark = false }) => {
   const dispatch = useDispatch();
 
-  const favoriteMeditations = useSelector(
-    state => state.userPreferences.favoriteMeditations,
-  );
+  const favoriteMeditations = useSelector(getFavoriteMeditations);
   const isFavorite = favoriteMeditations[id] === true;
 
   const toggleFavorite = useCallback(() => {

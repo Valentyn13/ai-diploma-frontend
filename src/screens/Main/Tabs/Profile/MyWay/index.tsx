@@ -55,7 +55,7 @@ const MyWay = () => {
   }, []);
 
   return (
-    <View className="flex-1 bg-[#fdedd6]">
+    <View className="flex-1 bg-[#FFF8EE]">
       <ScrollView showsVerticalScrollIndicator={false}>
         <View className="absolute right-5 top-5">
           <CircleButton

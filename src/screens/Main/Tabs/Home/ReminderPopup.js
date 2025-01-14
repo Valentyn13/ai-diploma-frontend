@@ -6,7 +6,7 @@ import styled from 'styled-components/native';
 const ModalContainer = styled.View`
   padding: 20px;
   padding-top: 50px;
-  background-color: #fdedd6;
+  background-color: #fff8ee;
   width: 90%;
   border-width: 2px;
   justify-content: center;

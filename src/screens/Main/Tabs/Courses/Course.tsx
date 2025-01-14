@@ -2,6 +2,7 @@ import CourseMeditations from '@common/components/CourseMeditations';
 import ParallaxScrollView from '@common/components/ParallaxScrollView';
 import { CircleButton } from '@common/components/buttons/CircleButton';
 import { usePurchases } from '@common/context/PurchaseContext';
+import Theme from '@common/theme';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import i18n from '@services/localization/i18n';
 import { coursesSelector, practiceHistorySelector } from '@store/selectors';
@@ -33,11 +34,11 @@ const Course = () => {
   return (
     <SafeAreaView
       edges={['top', 'right', 'left']}
-      className="bg-[#fdedd6] flex-1">
+      className="bg-primary-bg flex-1">
       <ParallaxScrollView
         image={image}
-        backgroundColor="#fdedd6"
-        contentBackgroundColor="#fdedd6"
+        backgroundColor={Theme.colors.bgColor}
+        contentBackgroundColor={Theme.colors.bgColor}
         parallaxHeaderHeight={200}
         renderForeground={() => (
           <View

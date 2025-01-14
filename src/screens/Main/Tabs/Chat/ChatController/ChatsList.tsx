@@ -1,6 +1,7 @@
 import ParallaxScrollView from '@common/components/ParallaxScrollView';
 import { CircleButton } from '@common/components/buttons/CircleButton';
 import { AMPLITUDE_EVENTS } from '@common/constants';
+import Theme from '@common/theme';
 import { deleteChat } from '@services/api/chat';
 import { useRequestWithReauth } from '@services/hooks/useAxios/reauthWrapper';
 import useOverrideBackGesture from '@services/hooks/useOverrideBackGesture';
@@ -155,8 +156,8 @@ const ChatsList = ({ chats, category }: ChatListType) => {
             ? BG_IMAGES[selectedCategory] || BG_IMAGES.anxiety
             : BG_IMAGES.anxiety
         }
-        backgroundColor="#fdedd6"
-        contentBackgroundColor="#FFF7EE"
+        backgroundColor={Theme.colors.bgColor}
+        contentBackgroundColor={Theme.colors.bgColor}
         parallaxHeaderHeight={205}
         renderForeground={() => (
           <View

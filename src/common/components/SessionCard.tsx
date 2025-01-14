@@ -10,6 +10,7 @@ import { isRecent } from '@utils/session';
 import meditationTime from '@utils/time';
 import React, { FC, memo, useCallback, useMemo } from 'react';
 import { ImageBackground, Pressable, Text, View } from 'react-native';
+import FastImage from 'react-native-fast-image';
 import IconFontAwesome from 'react-native-vector-icons/FontAwesome6';
 import { useSelector } from 'react-redux';
 import { EnrichedSession } from 'types/Meditation';
@@ -56,7 +57,6 @@ const SessionCard: FC<MeditationItemProps> = memo(
     const { navigate } = useNavigation();
     const amplitudeInstance = useAmplitude();
     const instructor = useSelector(state => meditationInstructor(state, id));
-
     const { hasPremium } = usePurchases();
     const isNew = useMemo(() => isRecent({ createdAt }), [createdAt]);
 
@@ -139,14 +139,23 @@ const SessionCard: FC<MeditationItemProps> = memo(
           onPress={navigateToModal}
           className="flex flex-col items-start justify-start py-1 px-2 h-16">
           <Text
-            numberOfLines={2}
+            numberOfLines={1}
             ellipsizeMode="tail"
             className="text-black text-[15px] font-medium text-left tracking-tighter leading-[20px] w-full">
             {name}
           </Text>
-          <View className="flex flex-row items-center">
-            <IconFontAwesome color="#000" name="user-large" size={10} />
-            <Text className="text-black text-xs ml-1">
+          <View className="flex flex-row items-center mt-[4px]">
+            {/*  */}
+            {instructor?.image ? (
+              <FastImage
+                className="h-[24px] w-[24px] rounded-full"
+                source={{ uri: instructor.image }}
+              />
+            ) : (
+              <IconFontAwesome color="#000" name="user-large" size={10} />
+            )}
+
+            <Text className="text-[#505050] text-xs ml-1">
               {instructor?.name ?? ''}
             </Text>
           </View>

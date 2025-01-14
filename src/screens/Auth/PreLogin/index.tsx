@@ -3,6 +3,7 @@ import Gradient from '@common/components/Gradient';
 import Logo from '@common/components/Logo';
 import Meditate from '@common/components/animation/Meditate';
 import { EmailLoginButton } from '@common/components/buttons/EmailLoginButton';
+import Theme from '@common/theme';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { RootStackParamList } from '@screens/RootNavigator';
 import useAppData from '@services/hooks/useAppData';
@@ -91,7 +92,7 @@ const PreLogin: FC<PreLoginProps> = ({ navigation: { navigate } }) => {
     <View
       style={{
         flex: 1,
-        backgroundColor: '#fdedd6',
+        backgroundColor: Theme.colors.bgColor,
         padding: scale(30),
         alignItems: 'center',
       }}>

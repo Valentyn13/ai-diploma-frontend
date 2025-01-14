@@ -60,7 +60,7 @@ const SessionModal = ({ navigation }) => {
   }
 
   return (
-    <SafeAreaView className="flex-1 bg-[#fdedd6]">
+    <SafeAreaView className="flex-1 bg-primary-bg">
       <ParallaxScrollView
         image={image}
         renderStickyHeader={() => (

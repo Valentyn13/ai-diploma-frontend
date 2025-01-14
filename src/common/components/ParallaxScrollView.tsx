@@ -1,3 +1,4 @@
+import Theme from '@common/theme';
 import React, { FC, PropsWithChildren } from 'react';
 import { Image, StyleSheet, View } from 'react-native';
 import FastImage, { Source } from 'react-native-fast-image';
@@ -23,9 +24,9 @@ const ParallaxScrollView: FC<
   children,
   image,
   srcImage,
-  backgroundColor = '#fdedd6',
+  backgroundColor = Theme.colors.bgColor,
   parallaxEnabled = true,
-  contentBackgroundColor = '#fdedd6',
+  contentBackgroundColor = Theme.colors.bgColor,
   parallaxHeaderHeight = 200,
   renderForeground = () => null,
   renderStickyHeader = () => null,
@@ -89,7 +90,7 @@ const ParallaxScrollView: FC<
           {srcImage && (
             <FastImage
               source={srcImage}
-              style={[StyleSheet.absoluteFill, { transform: [{ scaleX: -1 }] }]}
+              style={[StyleSheet.absoluteFill]}
               resizeMode="cover"
             />
           )}

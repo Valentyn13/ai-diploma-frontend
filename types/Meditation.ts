@@ -17,6 +17,18 @@ export interface Session {
   type?: SessionType;
 }
 
+export interface MeditationsByTimeOfTheDay {
+  id: string;
+  title: string;
+  trackIds: string[];
+}
+
+export interface MeditationByPredefinedCategories {
+  id: string;
+  title: string;
+  trackIds: string[];
+}
+
 export type EnrichedSession = Session & {
   // extend
   isNew?: boolean;

@@ -1,6 +1,6 @@
 import { getLatestSessionId } from '@services/api/latestActiveSession';
 import { useCategorizedChatFlowStore } from '@store/useCategorizedChatFlowStore';
-import { useEffect } from 'react';
+import { useCallback } from 'react';
 
 import { useUser } from './useUser';
 
@@ -10,8 +10,7 @@ const useLatestActiveSession = () => {
     setLatestActiveSessionId: state.setLatestActiveSessionId,
   }));
 
-  // TODO: add error handling
-  useEffect(() => {
+  const fetchLatestActiveSession = useCallback(async () => {
     if (!user.id) {
       return;
     }
@@ -20,6 +19,8 @@ const useLatestActiveSession = () => {
       setLatestActiveSessionId(sessionId),
     );
   }, [setLatestActiveSessionId, user.id]);
+
+  return { fetchLatestActiveSession };
 };
 
 export default useLatestActiveSession;

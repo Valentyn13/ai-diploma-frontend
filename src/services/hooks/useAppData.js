@@ -6,10 +6,15 @@ import { useCallback, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 
 import useAxios from './useAxios';
+import useChats from './useChats';
+import useGetStarterChatQuestions from './useGetStarterChatQuestions';
+import useLatestActiveSession from './useLatestActiveSession';
 
 export default () => {
   const dispatch = useDispatch();
-
+  const { fetchData } = useChats();
+  const { fetchPollData } = useGetStarterChatQuestions();
+  const { fetchLatestActiveSession } = useLatestActiveSession();
   const meditations = useAxios({
     api: api.meditations,
     shouldDispatch: () => false,
@@ -19,6 +24,9 @@ export default () => {
 
   const getAppData = useCallback(() => {
     fetchMeditations();
+    fetchPollData();
+    fetchLatestActiveSession();
+    fetchData();
   }, [fetchMeditations]);
 
   const { completed, data, error } = meditations;

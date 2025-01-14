@@ -1,10 +1,12 @@
-import { COLLECTIONS } from '@common/constants';
 import i18n from '@services/localization/i18n';
-import { allMeditations as allMeditationsSelector } from '@store/selectors';
+import {
+  allMeditations as allMeditationsSelector,
+  getMeditationsByCategories,
+} from '@store/selectors';
 import { getRandomElements } from '@utils/rand';
 import { useCallback, useMemo } from 'react';
 import { useSelector } from 'react-redux';
-import { Session } from 'types/Meditation';
+import { MeditationByPredefinedCategories, Session } from 'types/Meditation';
 
 import useFeed from './useFeed';
 
@@ -17,7 +19,9 @@ interface Collection {
 const useDiscovery = (): Collection[] => {
   const feedCollections = useFeed();
   const allMeditations = useSelector(allMeditationsSelector) as Session[];
-
+  const meditationByCategories = useSelector(
+    getMeditationsByCategories,
+  ) as MeditationByPredefinedCategories[];
   const idToItem = useCallback(
     (id: string) => allMeditations.find(m => m.id === id)!,
     [allMeditations],
@@ -25,14 +29,14 @@ const useDiscovery = (): Collection[] => {
 
   const dynamicCollections = useMemo(
     () =>
-      COLLECTIONS.filter(c => !feedCollections.some(fc => fc.id === c.id)).map(
-        ({ title, id, trackIds }) => ({
+      meditationByCategories
+        .filter(c => !feedCollections.some(fc => fc.id === c.id))
+        .map(({ title, id, trackIds }) => ({
           id,
           title,
           items: trackIds.map(idToItem).filter(Boolean),
-        }),
-      ),
-    [feedCollections, idToItem],
+        })),
+    [feedCollections, meditationByCategories, idToItem],
   );
 
   const fixedCollections: Collection[] = useMemo(() => {

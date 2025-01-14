@@ -1,6 +1,7 @@
 import ParallaxScrollView from '@common/components/ParallaxScrollView';
 import { CircleButton } from '@common/components/buttons/CircleButton';
 import theme from '@common/theme';
+import Theme from '@common/theme';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import React, { FC } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
@@ -41,8 +42,8 @@ const Collection = () => {
     <SafeAreaView edges={['top', 'right', 'left']} style={styles.safeAreaView}>
       <ParallaxScrollView
         image={sessions[0]?.thumbnail}
-        backgroundColor="#fdedd6"
-        contentBackgroundColor="#fdedd6"
+        backgroundColor={Theme.colors.bgColor}
+        contentBackgroundColor={Theme.colors.bgColor}
         parallaxHeaderHeight={250}
         renderForeground={() => (
           <View style={styles.foreground}>
@@ -72,7 +73,7 @@ const Collection = () => {
 const styles = StyleSheet.create({
   safeAreaView: {
     flex: 1,
-    backgroundColor: '#fdedd6',
+    backgroundColor: Theme.colors.bgColor,
   },
   headerTitle: {
     fontSize: 32,

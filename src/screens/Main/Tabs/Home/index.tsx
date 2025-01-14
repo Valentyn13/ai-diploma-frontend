@@ -1,34 +1,29 @@
-import CoursesCarousel from '@common/components/CoursesCarousel';
-import Divider from '@common/components/Divider';
-import DynamicComposition from '@common/components/DynamicComposition';
+import CoursesBanner from '@common/components/Banner/CoursesBanner';
 import Feeling from '@common/components/Feeling';
 import Gradient from '@common/components/Gradient';
 import HorizontalCollection from '@common/components/HorizontalCollection';
-import Logo from '@common/components/Logo';
 import Personalized from '@common/components/Personalized';
-import SessionItem from '@common/components/SessionItem';
 import { SubTitle } from '@common/components/Styled';
 import Welcome from '@common/components/animation/Welcome';
-import ShowAll from '@common/components/buttons/ShowAll';
-import { EXERCISES } from '@common/constants';
-import { usePurchases } from '@common/context/PurchaseContext';
+import { AMPLITUDE_EVENTS, CATEGORY_NAMES } from '@common/constants';
+//import { usePurchases } from '@common/context/PurchaseContext';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { RootStackParamList } from '@screens/RootNavigator';
 import useAppData from '@services/hooks/useAppData';
 import useAppState from '@services/hooks/useAppState';
-import useChats from '@services/hooks/useChats';
 import useFeed from '@services/hooks/useFeed';
-import useLatestActiveSession from '@services/hooks/useLatestActiveSession';
+import useLatestChat from '@services/hooks/useLatestChat';
 import { useOnboarding } from '@services/hooks/useOnboarding';
 import { useUser } from '@services/hooks/useUser';
+//import { useUser } from '@services/hooks/useUser';
 import { useSheetStore } from '@store/useSheetStore';
+import { logAmplitudeEvent } from '@utils/amplitude-helpers';
 import { FC, useCallback, useEffect, useMemo, useState } from 'react';
 import { Button, Modal, Text, View } from 'react-native';
 import { CopilotStep, walkthroughable } from 'react-native-copilot';
 import styled from 'styled-components/native';
 import { Session } from 'types/Meditation';
 
-import InstructorList from './InstructorList';
 import MichaelCard from './MichaelCard';
 import ParallaxScroll from './ParallaxScroll';
 
@@ -36,6 +31,7 @@ const ListTitle = styled(SubTitle)`
   font-size: 22px;
   font-weight: bold;
   align-self: flex-start;
+  color: #414141;
 `;
 
 type FeedProps = NativeStackScreenProps<RootStackParamList, 'Main'>;
@@ -43,17 +39,25 @@ type FeedProps = NativeStackScreenProps<RootStackParamList, 'Main'>;
 const CopilotView = walkthroughable(View);
 
 const Feed: FC<FeedProps> = ({ navigation, copilot }) => {
-  const { hasPremium } = usePurchases();
+  // const { hasPremium } = usePurchases();
   const { getAppData } = useAppData();
 
-  useLatestActiveSession();
-  const { fetchData } = useChats();
   const {
     user: { sex },
   } = useUser();
   const [byTimeCollection, latestCollection, ...collections]: Collection[] =
     useFeed();
   const { isOldUser, updateIsOldUser } = useOnboarding(navigation);
+
+  const {
+    chats,
+    lastActiveSessionIndex,
+    latestChat,
+    handleOpenRecentChat,
+    handleOpenChats,
+  } = useLatestChat({
+    withNavigation: true,
+  });
 
   const onForeground = useCallback(() => {
     getAppData();
@@ -79,16 +83,24 @@ const Feed: FC<FeedProps> = ({ navigation, copilot }) => {
     items: Session[];
   }
 
-  const [mCollections, greetingItem] = useMemo(() => {
-    const greetingCollectionIndex = collections.findIndex(
+  const [_, topRatedCollection, recommendedCollection] = useMemo(() => {
+    const topRatedCollectionIndex = collections.findIndex(
+      c => c.id === 'top-rated',
+    );
+
+    const modifiedCollections = [...collections];
+    const topRated = modifiedCollections.splice(topRatedCollectionIndex, 1);
+
+    const recommendedCollectionIndex = modifiedCollections.findIndex(
       c => c.id === 'greeting-general',
     );
-    const modifiedCollections = [...collections];
-    const greetingCollection = modifiedCollections.splice(
-      greetingCollectionIndex,
+
+    const recommendedColl = modifiedCollections.splice(
+      recommendedCollectionIndex,
       1,
     );
-    return [modifiedCollections, greetingCollection];
+
+    return [modifiedCollections, topRated, recommendedColl];
   }, [collections]);
 
   // const { start, copilotEvents } = useCopilot();
@@ -101,10 +113,31 @@ const Feed: FC<FeedProps> = ({ navigation, copilot }) => {
   //   };
   // }, [copilotEvents, onStop]);
 
+  const MichaelCardConfig = useMemo(() => {
+    const isChatsExists = chats.length > 0;
+    return {
+      title: isChatsExists
+        ? 'המשך שיחה עם מיכאל'
+        : 'לשתף, להתייעץ, או סתם לפרוק',
+      subtitle: isChatsExists
+        ? `${
+            CATEGORY_NAMES[latestChat?.category || '']
+          } פגישה ${lastActiveSessionIndex}`
+        : 'מיכאל כאן בשבילך כל הזמן',
+      buttonText: isChatsExists ? 'להמשך שיחה' : 'לשיחה עם מיכאל',
+      handleButtonPress: isChatsExists ? handleOpenRecentChat : handleOpenChats,
+    };
+  }, [
+    chats.length,
+    handleOpenChats,
+    handleOpenRecentChat,
+    lastActiveSessionIndex,
+    latestChat?.category,
+  ]);
+
   const [showModal, setShowModal] = useState(false);
 
   useEffect(() => {
-    fetchData();
     const timer = setTimeout(() => {
       setShowModal(true);
     }, 1000);
@@ -118,40 +151,54 @@ const Feed: FC<FeedProps> = ({ navigation, copilot }) => {
 
   return (
     <>
-      <View className="h-full w-full">
-        <View className="absolute -top-4 self-center">
+      <View className="flex-1">
+        {/* <View className="absolute  self-center">
           <Logo opacity={0.5} width={32} />
-        </View>
+        </View> */}
 
         <ParallaxScroll>
           <View className="relative">
             <Personalized />
+            <View className="relative bg-[#FFF7EE]">
+              <MichaelCard {...MichaelCardConfig} />
 
-            <View className="relative bg-[#FCE8CD]">
-              <View className="absolute top-0 h-48 w-full">
-                <Gradient colors={['#ffeed6', '#FCE8CD']} angle={90} />
-              </View>
-              <MichaelCard />
+              {/* BY TIME */}
               <CopilotStep
-                text="גלו מדיטציות המותאמות למצב הרוח והמיקום שלכם בכל יום"
+                text="כאן תוכלו למצוא מגוון עשיר של מדיטציות מותאמות אישית לצרכים שלכם"
+                order={1}
+                name="first">
+                <CopilotView copilot={copilot} className="flex-1 mt-[40px]">
+                  <HorizontalCollection
+                    key="by-time"
+                    title={byTimeCollection.title}
+                    items={byTimeCollection.items}
+                    onShowAll={() => {
+                      onShowAll(byTimeCollection.title, byTimeCollection.items);
+                    }}
+                  />
+                </CopilotView>
+              </CopilotStep>
+
+              <CopilotStep
+                text="מדיטציה בהתאמה אישית"
                 order={3}
                 name="howufeel">
-                <CopilotView copilot={copilot}>
+                <CopilotView copilot={copilot} className="mt-[24px]">
                   <View className="flex w-full items-center px-5 flex-1">
-                    <ListTitle k="personalized" />
+                    <ListTitle k="מדיטציה בהתאמה אישית" />
                     <View className="w-full flex items-center mt-5">
                       <Feeling
                         onClick={() => setIsOpen(true)}
                         isMale={sex === 'M'}
                       />
                     </View>
-                    <Divider className="my-6" />
                   </View>
                 </CopilotView>
               </CopilotStep>
 
-              {greetingItem.map(({ id, title, items }) => (
-                <View className="flex-1" key={id}>
+              {/* MOST POPULAR / TOP RATED */}
+              {topRatedCollection.map(({ id, title, items }) => (
+                <View className="flex-1 mt-[38px]" key={id}>
                   <HorizontalCollection
                     shuffle={id !== 'top-rated' && id !== 'latest-release'}
                     key={id}
@@ -161,29 +208,15 @@ const Feed: FC<FeedProps> = ({ navigation, copilot }) => {
                       onShowAll(title, items);
                     }}
                   />
-                  <Divider className="my-6" />
                 </View>
               ))}
 
-              <CopilotStep
-                text="כאן תוכלו למצוא מגוון עשיר של מדיטציות מותאמות אישית לצרכים שלכם"
-                order={1}
-                name="first">
-                <CopilotView copilot={copilot} className="flex-1">
-                  <HorizontalCollection
-                    key="by-time"
-                    title={byTimeCollection.title}
-                    items={byTimeCollection.items}
-                    onShowAll={() => {
-                      onShowAll(byTimeCollection.title, byTimeCollection.items);
-                    }}
-                  />
+              <View className="my-[40px]">
+                <CoursesBanner />
+              </View>
 
-                  <Divider className="my-6" />
-                </CopilotView>
-              </CopilotStep>
-
-              <View className="bg-[#FCE8CD]">
+              {/* RECENTLY UPLOADED */}
+              <View className="bg-[#FFF7EE]">
                 <View className="flex-1">
                   <HorizontalCollection
                     shuffle={false}
@@ -194,10 +227,24 @@ const Feed: FC<FeedProps> = ({ navigation, copilot }) => {
                       onShowAll(latestCollection.title, latestCollection.items);
                     }}
                   />
-                  <Divider className="my-6" />
                 </View>
 
-                <DynamicComposition>
+                {/* RECOMMENDED */}
+                {recommendedCollection.map(({ id, title, items }) => (
+                  <View className="flex-1 mt-[28px] mb-6" key={id}>
+                    <HorizontalCollection
+                      shuffle={id !== 'top-rated' && id !== 'latest-release'}
+                      key={id}
+                      title={title}
+                      items={items}
+                      onShowAll={() => {
+                        onShowAll(title, items);
+                      }}
+                    />
+                  </View>
+                ))}
+
+                {/* <DynamicComposition>
                   {mCollections.map(({ id, title, items }) => (
                     <View className="flex-1" key={id}>
                       <HorizontalCollection
@@ -229,22 +276,6 @@ const Feed: FC<FeedProps> = ({ navigation, copilot }) => {
                   </View>
 
                   <CopilotStep
-                    text="פגשו את צוות המורים שלנו שינחו אתכם לאורך הדרך"
-                    order={4}
-                    name="instructors">
-                    <CopilotView copilot={copilot} className="flex-1">
-                      <View className="flex flex-row items-center justify-between w-full mb-5 pl-5 pr-3">
-                        <ListTitle k="צוות המורים" />
-                        <ShowAll
-                          onPress={() => navigation.navigate('Instructors')}
-                        />
-                      </View>
-                      <InstructorList />
-                      <Divider className="my-6" />
-                    </CopilotView>
-                  </CopilotStep>
-
-                  <CopilotStep
                     text="התחילו את המסע שלכם - כאן תמצאו את הקורס למתחילים שילמד אתכם את יסודות התרגול"
                     order={2}
                     name="courses">
@@ -258,7 +289,7 @@ const Feed: FC<FeedProps> = ({ navigation, copilot }) => {
                       <Divider className="my-6" />
                     </CopilotView>
                   </CopilotStep>
-                </DynamicComposition>
+                </DynamicComposition> */}
               </View>
             </View>
           </View>

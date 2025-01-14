@@ -89,7 +89,7 @@ const Courses: FC<CoursesProps> = ({ navigation }) => {
   );
 
   return (
-    <SafeAreaView className="flex-1 bg-[#fdedd6]">
+    <SafeAreaView className="flex-1 bg-primary-bg">
       <Text className="text-2xl font-bold text-left p-4 text-black">
         קורסים
       </Text>

@@ -22,4 +22,5 @@ export type ChatForDrawer = {
   firstMessageContent: string;
   firstMessageTimestamp: string;
   category?: ChatCategories;
+  updatedAt: string;
 };
