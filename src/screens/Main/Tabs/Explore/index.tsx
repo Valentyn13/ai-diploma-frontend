@@ -36,7 +36,7 @@ import InstructorList from '../Home/InstructorList';
 import SearchBar from './SearchBar';
 
 function removeEmojis(text: string) {
-  return text.replace(
+  return text?.replace(
     /[\p{Emoji}\u200B-\u200D\uFE0F\u2122\uD83C-\uDBFF\uDC00-\uDFFF\u2300-\u23FF]/gu,
     '',
   );
@@ -79,7 +79,7 @@ const Explore = ({ navigation, copilot }) => {
 
   const regaCollection = {
     id: regaInstructor?.id,
-    title: `🎧 תדרים`,
+    title: '🎧 תדרים',
     meditations: regaInstructorMeditations,
     order: 1,
   } as Category;
@@ -94,7 +94,7 @@ const Explore = ({ navigation, copilot }) => {
   }, [categories]);
 
   function getMeditationData(id: MeditationCategoryKey) {
-    return categoriesArrayToObject[PICK_MEDITATION_CATEGORY_IDS[id]];
+    return categoriesArrayToObject[PICK_MEDITATION_CATEGORY_IDS[id]] || [];
   }
 
   const stress = getMeditationData('stress');

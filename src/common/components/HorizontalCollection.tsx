@@ -27,7 +27,7 @@ interface Props {
 }
 
 const HorizontalCollection: FC<Props> = ({
-  items,
+  items = [],
   onShowAll = null,
   title,
   limit = 5,
