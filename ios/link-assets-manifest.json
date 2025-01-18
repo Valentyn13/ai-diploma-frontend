@@ -2,20 +2,44 @@
   "migIndex": 1,
   "data": [
     {
-      "path": "src/common/assets/fonts/almoni-dl-aaa-black.otf",
-      "sha1": "1f8e737ff8c18c54fc8ca06cd0bded20ce9f68bf"
+      "path": "src/common/assets/fonts/Rubik-Bold.ttf",
+      "sha1": "f5630ce3441d94baa3a0812683d54d7a1991ef5f"
     },
     {
-      "path": "src/common/assets/fonts/almoni-dl-aaa-bold.otf",
-      "sha1": "3578716a84af92fc270e1a9c4e7615b30c2c7345"
+      "path": "src/common/assets/fonts/Rubik-BoldItalic.ttf",
+      "sha1": "6478fd4c8ed2e59e8097cb608b6a7e926e3ec298"
     },
     {
-      "path": "src/common/assets/fonts/almoni-dl-aaa-light.otf",
-      "sha1": "2cacefbc2b597416bc70343f789b461e021d9198"
+      "path": "src/common/assets/fonts/Rubik-Italic.ttf",
+      "sha1": "df8f3ddb2e86659443e1e890b84b9947ce481a25"
     },
     {
-      "path": "src/common/assets/fonts/almoni-dl-aaa-regular.otf",
-      "sha1": "23f45c454d4c9ea52b188c30d2bae0943f422c94"
+      "path": "src/common/assets/fonts/Rubik-Light.ttf",
+      "sha1": "63068365b8a2719b1a9268499bd489c1a685c6ce"
+    },
+    {
+      "path": "src/common/assets/fonts/Rubik-LightItalic.ttf",
+      "sha1": "5b82e581f8cbd4616a6e1307ffb65754b841d4bc"
+    },
+    {
+      "path": "src/common/assets/fonts/Rubik-Medium.ttf",
+      "sha1": "5da5f96c57060e54a922ea0df12b4c29797593b9"
+    },
+    {
+      "path": "src/common/assets/fonts/Rubik-MediumItalic.ttf",
+      "sha1": "0c47992a8b6e20ad1e6bb65649ed612351c7774a"
+    },
+    {
+      "path": "src/common/assets/fonts/Rubik-Regular.ttf",
+      "sha1": "f0711cdc35046a54d1b887fafbd12de0a5b82549"
+    },
+    {
+      "path": "src/common/assets/fonts/Rubik-SemiBold.ttf",
+      "sha1": "01a4b4fee8dbf9802ccb6256fdf53b3a86f2fcec"
+    },
+    {
+      "path": "src/common/assets/fonts/Rubik-SemiBoldItalic.ttf",
+      "sha1": "d5b3099c28cf63567f3d9eac452fd02fb3721f02"
     }
   ]
 }

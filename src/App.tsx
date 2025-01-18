@@ -8,10 +8,11 @@ import * as Sentry from '@sentry/react-native';
 import useSentry from '@services/hooks/useSentry';
 import WithFeatureFlag from '@utils/WithFeatureFlag';
 import React, { useEffect } from 'react';
-import { StatusBar, StyleSheet, View } from 'react-native';
+import { StatusBar, StyleSheet, Text, TextInput, View } from 'react-native';
 import { CopilotProvider } from 'react-native-copilot';
 import { Settings } from 'react-native-fbsdk-next';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
+import setDefaultProps from 'react-native-simple-default-props';
 import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
 import { ThemeProvider } from 'styled-components';
@@ -34,6 +35,15 @@ const styles = StyleSheet.create({
     color: theme.colors.textColor,
     backgroundColor: theme.colors.bgColor,
   },
+});
+
+setDefaultProps(TextInput, {
+  // allowFontScaling: false,
+  style: [{ fontFamily: 'Rubik' }],
+});
+setDefaultProps(Text, {
+  // allowFontScaling: false,
+  style: [{ fontFamily: 'Rubik' }],
 });
 
 const App: React.FC = () => {
