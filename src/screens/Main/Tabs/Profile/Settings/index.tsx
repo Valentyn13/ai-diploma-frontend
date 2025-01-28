@@ -81,7 +81,7 @@ const Settings = ({ navigation }) => {
     const instagramUrl = 'https://www.instagram.com/rega.app';
     const instagramDMUrl = 'instagram://direct_message?username=rega.app';
 
-    const emailAddress = 'hello@rega.co.il';
+    const emailAddress = 'hello@rega-app.com';
     const emailSubject = 'היי, רציתי לשאול שאלה';
     const emailBody = '';
 
