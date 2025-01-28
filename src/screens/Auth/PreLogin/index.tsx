@@ -108,7 +108,6 @@ const PreLogin: FC<PreLoginProps> = ({ navigation: { navigate } }) => {
         <View className="flex-col items-center">
           <Logo height={40} />
           <AppText
-            medium
             style={{
               fontSize: 42,
               marginTop: scale(4),
@@ -204,8 +203,8 @@ const PreLogin: FC<PreLoginProps> = ({ navigation: { navigate } }) => {
             <Text className="text-center text-black text-md">חדשים פה?</Text>
             <TouchableOpacity onPress={() => navigate('Register')}>
               <AppText
-                black
                 style={{
+                  fontWeight: '700',
                   fontSize: 16,
                   textDecorationLine: 'underline',
                   color: 'black',

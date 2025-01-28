@@ -51,7 +51,9 @@ const DrawerListHeader = () => {
       activeOpacity={1}
       underlayColor="#00000015"
       className="py-[16px] px-[12px]">
-      <Text className="text-black text-left font-bold text-md">שיחה חדשה</Text>
+      <Text className="text-black text-left font-semibold text-md">
+        שיחה חדשה
+      </Text>
     </TouchableHighlight>
   );
 };

@@ -22,13 +22,13 @@ const CoursesBanner = () => {
           source={require('./imgs/learn.png')}
         />
 
-        <Text className="font-semibold mb-1.5 text-left text-[#623F1A] text-[18px]">
+        <Text className="font-medium mb-1.5 text-left text-[#623F1A] text-[18px] leading-[21px]">
           קורסים במיינדפולנס והעצמה
         </Text>
         <View>
-          <Text className="max-w-[75%] text-left text-[#623F1A]">
+          <Text className="max-w-[65%] text-left leading-[16px] text-[#623F1A]">
             למדו מיינדפולנס, התחברו לגוף וטפחו שיח פנימי חיובי בסדרת שיעורים
-            קצרים{' '}
+            קצרים
           </Text>
         </View>
       </TouchableOpacity>

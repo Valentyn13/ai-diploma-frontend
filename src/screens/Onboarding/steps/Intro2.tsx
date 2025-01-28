@@ -39,10 +39,10 @@ const IntroStudy = () => {
       <WithSlideInX delay={300}>
         <WithFadeIn delay={300}>
           <AppText
-            black
             style={{
+              fontWeight: '500',
               color: '#160F29',
-              fontSize: scale(25),
+              fontSize: scale(24),
               marginTop: Platform.OS === 'ios' ? scale(70) : scale(60),
             }}>
             {'5 דקות ביום, זה כל הסיפור'}
@@ -53,7 +53,6 @@ const IntroStudy = () => {
         <WithFadeIn delay={600}>
           <AppText
             style={{
-              // color: '#160F29',
               color: '#000000',
               textAlign: 'center',
               fontSize: scale(16),

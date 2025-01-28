@@ -149,14 +149,14 @@ const QuestionnaireScreen = ({ setStep, shouldShowPaywall }: Props) => {
           <TouchableOpacity
             onPress={handleAgreedPress}
             className="bg-[#283A7E] p-[16px] w-full rounded-[8px]">
-            <Text className="font-bold text-[#FFFFFF] text-center">
+            <Text className="font-semibold text-[#FFFFFF] text-center">
               למילוי השאלון
             </Text>
           </TouchableOpacity>
           <TouchableOpacity
             onPress={handleLaterPress}
             className="p-[16px] w-full rounded-[8px]">
-            <Text className="text-[#3C3C3CB5] font-bold text-center">
+            <Text className="text-[#3C3C3CB5] font-semibold text-center">
               לא עכשיו
             </Text>
           </TouchableOpacity>

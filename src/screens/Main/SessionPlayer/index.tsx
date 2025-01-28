@@ -268,7 +268,7 @@ const MeditationPlayer: FC = ({ navigation }) => {
       if (playing) {
         fadeOutControls();
       }
-    }, 5000);
+    }, 3000);
   }, [controlsOpacity, fadeOutControls, playing]);
 
   useEffect(() => {

@@ -40,7 +40,7 @@ const ChatFloatingButton: FC<ChatFloatingButtonProps> = ({
             />
           </View>
           <View className="flex-1 pl-[20px]">
-            <Text className="text-[#FFFFFF] mb-0.5 text-base font-semibold text-left">
+            <Text className="text-[#FFFFFF] mb-0.5 text-base font-medium text-left">
               המשך שיחה
             </Text>
             <Text

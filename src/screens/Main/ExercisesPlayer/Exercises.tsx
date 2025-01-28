@@ -1,7 +1,6 @@
 import Background from '@common/components/Background';
 import { CircleButton } from '@common/components/buttons/CircleButton';
 import { EXERCISES } from '@common/constants';
-import theme from '@common/theme';
 import React, { useState } from 'react';
 import {
   SafeAreaView,
@@ -115,7 +114,6 @@ const Exercises = ({ route, navigation }) => {
             <Text
               allowFontScaling={false}
               style={{
-                fontFamily: theme.fonts!.regular,
                 color: '#000',
                 fontSize: 20,
               }}>

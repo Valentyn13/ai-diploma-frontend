@@ -1,20 +1,20 @@
 import { Dimensions, Platform } from 'react-native';
 
-const iosFont = (type = 'regular') => `AlmoniDLAAA${type}`;
-const androidFont = (type = 'regular') => `almoni-dl-aaa-${type}`;
+const iosFont = () => 'Rubik';
+const androidFont = () => 'Rubik';
 
 const fonts = Platform.select({
   android: {
-    light: androidFont('light'),
-    regular: androidFont('regular'),
-    bold: androidFont('bold'),
-    black: androidFont('black'),
+    light: androidFont(),
+    regular: androidFont(),
+    bold: androidFont(),
+    black: androidFont(),
   },
   ios: {
-    light: iosFont('-light'),
-    regular: iosFont('-regular'),
-    bold: iosFont('-bold'),
-    black: iosFont('-black'),
+    light: iosFont(),
+    regular: iosFont(),
+    bold: iosFont(),
+    black: iosFont(),
   },
 })!;
 

@@ -1,18 +1,8 @@
 import HorizontalList from '@common/components/HorizontalList';
-import { SubTitle } from '@common/components/Styled';
 import i18n from '@services/localization/i18n';
 import { shuffleArray } from '@utils/rand';
 import React, { ElementType, FC, useMemo } from 'react';
 import { Text, TouchableOpacity, View } from 'react-native';
-import styled from 'styled-components/native';
-
-const ListTitle = styled(SubTitle)`
-  font-size: 22px;
-  font-weight: bold;
-  align-self: flex-start;
-  letter-spacing: 0.1px;
-  color: #414141;
-`;
 
 interface Props {
   items: any[];
@@ -60,8 +50,10 @@ const HorizontalCollection: FC<Props> = ({
 
   return (
     <View>
-      <View className="flex flex-row items-center justify-between w-full mb-[20px] pl-5 pr-3">
-        <ListTitle t={title} />
+      <View className="flex flex-row items-center justify-between w-full mb-[10px] pl-5 pr-3">
+        <Text className="font-medium text-[20px] text-left text-[#414141]">
+          {title}
+        </Text>
         {onShowAll && (
           <TouchableOpacity onPress={() => onShowAll()} className="p-2">
             <Text className="text-[14px] leading-4 text-[#16161691]">

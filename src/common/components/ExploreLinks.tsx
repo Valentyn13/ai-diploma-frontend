@@ -60,7 +60,7 @@ const ExploreLinkButton = ({
         className="w-[75px] h-[75px] bg-[#ACB8E426] mb-[12px] items-center justify-center rounded-[17px]">
         <FastImage style={{ ...design }} source={image(imageName)} />
       </TouchableOpacity>
-      <Text className="text-center text-[#586DB7] font-semibold">{title}</Text>
+      <Text className="text-center text-[#586DB7] font-medium">{title}</Text>
     </View>
   );
 };

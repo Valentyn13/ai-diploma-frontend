@@ -1,24 +1,10 @@
-import PropTypes from 'prop-types';
 import React from 'react';
-import { Platform, TextInput } from 'react-native';
+import { TextInput } from 'react-native';
 
 export default class AppTextInput extends React.PureComponent {
   render() {
-    const { style, thin, black, medium, bold, light, children } = this.props;
-    let font = Platform.OS === 'ios' ? 'AlmoniDLAAA' : 'almoni-dl-aaa';
-    if (bold) {
-      font += '-bold';
-    } else if (light) {
-      font += '-light';
-    } else if (black) {
-      font += '-black';
-    } else if (thin) {
-      font += '-thin';
-    } else if (medium) {
-      font += '-medium';
-    } else {
-      font += '';
-    }
+    const { style, children } = this.props;
+    let font = 'Rubik';
 
     return (
       <TextInput
@@ -43,10 +29,3 @@ export default class AppTextInput extends React.PureComponent {
     this.textInput.focus();
   }
 }
-
-AppTextInput.propTypes = {
-  style: PropTypes.object,
-  italic: PropTypes.bool,
-  bold: PropTypes.bool,
-  light: PropTypes.bool,
-};

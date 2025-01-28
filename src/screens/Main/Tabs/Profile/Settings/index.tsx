@@ -1,7 +1,6 @@
 /* eslint-disable handle-callback-err */
 import { CircleButton } from '@common/components/buttons/CircleButton';
 import { usePurchases } from '@common/context/PurchaseContext';
-import theme from '@common/theme';
 import Clipboard from '@react-native-clipboard/clipboard';
 import { useAmplitude } from '@services/hooks/useAmplitude';
 import { useClearChatStore } from '@services/hooks/useClearChatStore';
@@ -256,9 +255,7 @@ const Settings = ({ navigation }) => {
             color="#fff"
           />
         </View>
-        <Text
-          className="flex-1 text-3xl font-bold text-center text-black"
-          style={{ fontFamily: theme.fonts!.regular }}>
+        <Text className="flex-1 text-3xl font-bold text-center text-black">
           הגדרות
         </Text>
       </View>

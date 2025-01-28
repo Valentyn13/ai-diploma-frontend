@@ -37,7 +37,7 @@ const SearchBar: FC<Props> = ({ searchQuery, setSearchQuery }) => {
         keyboardType="default"
         returnKeyType="done"
         placeholder="חיפוש מדיטציה, תרגיל נשימה או מורה"
-        className="w-5/6 mx-3 text-[17px] text-right text-[#4444448A] leading-[19px]"
+        className="w-5/6 mx-3 text-[16px] text-right text-[#4444448A] leading-[19px]"
       />
       {searchQuery.length > 0 && (
         <TouchableOpacity

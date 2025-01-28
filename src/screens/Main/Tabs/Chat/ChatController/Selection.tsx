@@ -51,10 +51,10 @@ const ChatType: FC<ChatTypeData> = ({
       style={{ backgroundColor: bgColor }}
       onPress={handleSelectCategory}>
       <View className="flex items-start gap-[20px]">
-        <Text className="text-[20px] text-[#222222] font-bold text-left">
+        <Text className="text-[20px] text-[#222222] font-semibold text-left">
           {title}
         </Text>
-        <Text className="text-[15px] text-[#222222] text-left leading-5">
+        <Text className="text-[14px] text-[#222222] text-left leading-5">
           {description}
         </Text>
         {sessionCount && (
@@ -90,7 +90,7 @@ const Selection: FC<SelectionProps> = ({
     <View className="relative px-[16px] pt-[16px] flex flex-1 bg-[#FFF7EE]">
       <View>
         <View className="flex flex-row justify-between">
-          <Text className="text-2xl text-[#273051] font-bold">ליווי</Text>
+          <Text className="text-2xl text-[#273051] font-semibold">ליווי</Text>
         </View>
         <Text className="text-base text-[#585858] mb-[15px] text-left">
           בחרו את התחום שברצונכם לחקור ולהעמיק בו:

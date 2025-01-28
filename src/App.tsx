@@ -41,6 +41,7 @@ setDefaultProps(TextInput, {
   // allowFontScaling: false,
   style: [{ fontFamily: 'Rubik' }],
 });
+
 setDefaultProps(Text, {
   // allowFontScaling: false,
   style: [{ fontFamily: 'Rubik' }],

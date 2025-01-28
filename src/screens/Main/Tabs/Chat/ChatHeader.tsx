@@ -96,7 +96,7 @@ const ChatHeader: FC<{
         </TouchableOpacity>
         <View className="flex-row items-center ml-6">
           <Image source={avatarSrc} className="w-8 h-8 rounded-full" />
-          <Text className="text-black font-normal text-xl ml-2">{title}</Text>
+          <Text className="text-black text-xl ml-2">{title}</Text>
           <GlitterIcon className="w-6 h-6 ml-1" />
         </View>
       </View>

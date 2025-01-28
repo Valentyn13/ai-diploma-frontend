@@ -123,7 +123,6 @@ const tabScreen = (name: string) => ({
       style={{
         color: focused ? theme.colors.selected : theme.colors.inactive,
         textAlign: 'center',
-        fontFamily: theme.fonts.regular,
       }}>
       {i18n.t(`${name.toLowerCase()}`)}
     </Text>

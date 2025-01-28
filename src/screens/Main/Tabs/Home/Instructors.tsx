@@ -1,5 +1,4 @@
 import { CircleButton } from '@common/components/buttons/CircleButton';
-import theme from '@common/theme';
 import { useNavigation } from '@react-navigation/native';
 import { allMeditations as allMeditationsSelector } from '@store/selectors';
 import { shuffleArray } from '@utils/rand';
@@ -48,9 +47,7 @@ const Instructors = () => {
             color="#fff"
           />
         </View>
-        <Text
-          className="flex-1 text-3xl font-bold text-center text-black"
-          style={{ fontFamily: theme.fonts!.regular }}>
+        <Text className="flex-1 text-3xl font-bold text-center text-black">
           המורים שלנו
         </Text>
       </View>

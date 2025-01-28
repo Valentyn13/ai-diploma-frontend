@@ -46,7 +46,7 @@ const ConfirmationModal: FC<Props> = ({
     <Modal statusBarTranslucent transparent visible={visible}>
       <View className="w-full h-full bg-[#00000060] justify-center items-center p-[10px]">
         <View className="p-[16px] rounded-[16px] flex items-start w-[96%] bg-[#FCF5EB]">
-          <Text className="text-[#273051] font-bold text-[18px] mb-[12px]">
+          <Text className="text-[#273051] font-semibold text-[18px] mb-[12px]">
             {title}
           </Text>
           <Text className="text-[#494949] mb-[25px] text-[14px]">
@@ -56,14 +56,14 @@ const ConfirmationModal: FC<Props> = ({
             <TouchableOpacity
               onPress={onConfirm}
               className="px-[24px] grow h-[40px] flex justify-center bg-[#273051] rounded-[8px]">
-              <Text className="text-lg text-center font-semibold text-[14px] text-white">
+              <Text className="text-lg text-center font-medium text-[14px] text-white">
                 {confirmText}
               </Text>
             </TouchableOpacity>
             <TouchableOpacity
               onPress={onCancel}
               className="bg-transparent grow border-[1px] border-[#27305152] px-[24px] h-[40px] flex justify-center rounded-[8px] ">
-              <Text className="text-lg text-center font-semibold text-[14px] text-[#273051]">
+              <Text className="text-lg text-center font-medium text-[14px] text-[#273051]">
                 {cancelText}
               </Text>
             </TouchableOpacity>

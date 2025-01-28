@@ -1,5 +1,4 @@
 import Gradient from '@common/components/Gradient';
-import theme from '@common/theme';
 import i18n from '@services/localization/i18n';
 import React, { FC } from 'react';
 import { Text, View } from 'react-native';
@@ -57,12 +56,8 @@ const MetricBox: FC<MetricBoxProps> = ({ id, value, title, ...props }) => {
           width: 22,
         }}
       />
-      <Text
-        style={{ fontFamily: theme.fonts.regular }}
-        className="text-lg text-black text-left mt-2">
-        {title}
-      </Text>
-      <Text className="text-4xl font-bold text-black text-left my-4">
+      <Text className="text-lg text-left text-black mt-2">{title}</Text>
+      <Text className="text-4xl font-semibold text-black text-left my-4">
         {value}
       </Text>
     </View>

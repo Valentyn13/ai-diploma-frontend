@@ -60,7 +60,7 @@ const InstructorList = () => {
             )}
           </View>
 
-          <Text className="text-center text-[#161616] font-medium text-[16px] mt-4">
+          <Text className="text-center text-[#161616] text-[16px] mt-4">
             {item?.name}
           </Text>
         </TouchableOpacity>

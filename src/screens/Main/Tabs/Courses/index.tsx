@@ -1,5 +1,4 @@
 import { getCategoryImg } from '@common/assets/images';
-import theme from '@common/theme';
 import { coursesSelector } from '@store/selectors';
 import meditationTime from '@utils/time';
 import React, { FC } from 'react';
@@ -43,11 +42,7 @@ const CourseItem = ({ item, index, onPress }) => {
       />
       <View className="p-5 z-10 flex flex-col justify-between h-full">
         <View>
-          <Text
-            style={{
-              fontFamily: theme.fonts.bold,
-            }}
-            className="text-2xl font-bold text-left text-black tracking-wide">
+          <Text className="text-2xl font-semibold text-left text-black tracking-wide">
             {item.title}
           </Text>
           <Text className="font-medium text-lg text-gray-700 text-left mb-4">
@@ -90,7 +85,7 @@ const Courses: FC<CoursesProps> = ({ navigation }) => {
 
   return (
     <SafeAreaView className="flex-1 bg-primary-bg">
-      <Text className="text-2xl font-bold text-left p-4 text-black">
+      <Text className="text-2xl font-semibold text-left p-4 text-black">
         קורסים
       </Text>
       <View className="p-5">

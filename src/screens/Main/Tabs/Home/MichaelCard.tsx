@@ -27,17 +27,17 @@ const MichaelCard: FC<MichaelCardProps> = ({
         source={require('./bgs/chat_heart_2.png')}
       />
       <View>
-        <Text className="font-semibold max-w-[55%] text-left text-[18px] leading-[18px] text-[#273051]">
+        <Text className="font-medium max-w-[55%] text-left text-[18px] leading-[21px] text-[#273051]">
           {title}
         </Text>
-        <Text className="text-[#666D89] mt-0.5 text-left">{subtitle}</Text>
+        <Text className="text-[#666D89] text-left leading-[18px]">
+          {subtitle}
+        </Text>
       </View>
       <TouchableOpacity
         onPress={handleButtonPress}
-        className="h-[33px] flex justify-center items-center bg-[#002136] px-[16px] rounded-[34px]">
-        <Text className="font-semibold text-[14px] text-white">
-          {buttonText}
-        </Text>
+        className="h-[33px] flex justify-center items-center bg-[#002136] mb-[-3px] px-[16px] rounded-[34px]">
+        <Text className="font-medium text-[14px] text-white">{buttonText}</Text>
       </TouchableOpacity>
     </View>
   );

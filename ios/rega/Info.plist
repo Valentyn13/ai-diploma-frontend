@@ -109,6 +109,8 @@
 		<string>Feather.ttf</string>
 		<string>FontAwesome6_Brands.ttf</string>
 		<string>FontAwesome6_Solid.ttf</string>
+		<string>Rubik-SemiBoldItalic.ttf</string>
+		<string>Rubik-SemiBold.otf</string>
 		<string>Rubik-Bold.ttf</string>
 		<string>Rubik-BoldItalic.ttf</string>
 		<string>Rubik-Italic.ttf</string>
@@ -117,8 +119,6 @@
 		<string>Rubik-Medium.ttf</string>
 		<string>Rubik-MediumItalic.ttf</string>
 		<string>Rubik-Regular.ttf</string>
-		<string>Rubik-SemiBold.ttf</string>
-		<string>Rubik-SemiBoldItalic.ttf</string>
 	</array>
 	<key>UIBackgroundModes</key>
 	<array>

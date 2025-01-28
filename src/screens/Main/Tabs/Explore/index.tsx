@@ -3,7 +3,6 @@ import CategoriesSelectionList from '@common/components/CategoriesSelectionList'
 import ExploreLinks from '@common/components/ExploreLinks';
 import HorizontalCollection from '@common/components/HorizontalCollection';
 import SessionsGrid from '@common/components/SessionsGrid';
-import { SubTitle } from '@common/components/Styled';
 import Meditate from '@common/components/animation/Meditate';
 import NotFound from '@common/components/animation/NotFound';
 import ShowAll from '@common/components/buttons/ShowAll';
@@ -28,7 +27,6 @@ import { ActivityIndicator, ScrollView, Text, View } from 'react-native';
 import { CopilotStep, walkthroughable } from 'react-native-copilot';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useSelector } from 'react-redux';
-import styled from 'styled-components';
 import { Category } from 'types/Category';
 import { Session } from 'types/Meditation';
 
@@ -41,13 +39,6 @@ function removeEmojis(text: string) {
     '',
   );
 }
-
-const ListTitle = styled(SubTitle)`
-  font-size: 22px;
-  font-weight: bold;
-  align-self: flex-start;
-  color: #414141;
-`;
 
 const CopilotView = walkthroughable(View);
 
@@ -243,7 +234,9 @@ const Explore = ({ navigation, copilot }) => {
             name="instructors">
             <CopilotView copilot={copilot} className="flex-1 mt-[28px] mb-4">
               <View className="flex flex-row items-center justify-between w-full mb-5 pl-5 pr-3">
-                <ListTitle k="צוות המורים" />
+                <Text className="text-[#414141] text-[20px] font-medium leading-[23px]">
+                  צוות המורים
+                </Text>
                 <ShowAll onPress={() => navigation.navigate('Instructors')} />
               </View>
               <InstructorList />
@@ -307,9 +300,9 @@ const Explore = ({ navigation, copilot }) => {
 
           {/* Categories Carousel */}
           <View className="mb-16 mt-[28px]">
-            <View className="mb-4 px-6">
-              <ListTitle t="קטגוריות נוספות" />
-            </View>
+            <Text className="text-[#414141] text-[20px] mb-[10px] font-medium leading-[23px] pr-3">
+              קטגוריות נוספות
+            </Text>
             <CategoriesSelectionList
               categories={categoriesToShowInCarousel}
               onPress={(c: Category) => {

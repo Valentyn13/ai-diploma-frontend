@@ -128,7 +128,7 @@ const SessionCard: FC<MeditationItemProps> = memo(
             ) : (
               <View className="flex-row bg-black/50 rounded-full px-2 py-1 absolute bottom-2 left-2 items-center">
                 <IconFontAwesome name="play" size={12} color="#fff" />
-                <Text className="ml-2 text-white text-xs">
+                <Text className="ml-2 text-white font-light">
                   {meditationTime(duration)}
                 </Text>
               </View>
@@ -141,7 +141,7 @@ const SessionCard: FC<MeditationItemProps> = memo(
           <Text
             numberOfLines={1}
             ellipsizeMode="tail"
-            className="text-black text-[15px] font-medium text-left tracking-tighter leading-[20px] w-full">
+            className="text-[#161616] text-[16px] text-left leading-[20px] w-full">
             {name}
           </Text>
           <View className="flex flex-row items-center mt-[4px]">
@@ -155,7 +155,7 @@ const SessionCard: FC<MeditationItemProps> = memo(
               <IconFontAwesome color="#000" name="user-large" size={10} />
             )}
 
-            <Text className="text-[#505050] text-xs ml-1">
+            <Text className="text-[#505050] text-[13px] leading-[15px] ml-1">
               {instructor?.name ?? ''}
             </Text>
           </View>

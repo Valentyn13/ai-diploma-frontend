@@ -97,7 +97,7 @@ const SessionModal = ({ navigation }) => {
             </TouchableOpacity>
           </View>
           <View>
-            <Text className="text-2xl font-bold text-black text-left">
+            <Text className="text-2xl font-semibold text-black text-left">
               {meditation.name}
             </Text>
           </View>

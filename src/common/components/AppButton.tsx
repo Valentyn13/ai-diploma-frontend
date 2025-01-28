@@ -1,7 +1,6 @@
 import React from 'react';
 import {
   ActivityIndicator,
-  Platform,
   Text,
   TouchableOpacity,
   TouchableOpacityProps,
@@ -9,43 +8,21 @@ import {
 
 interface AppButtonProps extends TouchableOpacityProps {
   style?: object;
-  medium?: boolean;
-  thin?: boolean;
-  bold?: boolean;
-  black?: boolean;
-  light?: boolean;
   ellipsizeMode?: 'head' | 'middle' | 'tail' | 'clip';
   numberOfLines?: number;
   loading?: boolean;
 }
 
 const AppButton: React.FC<AppButtonProps> = ({
-  medium,
-  thin,
-  bold,
-  black,
-  light,
   children,
   ellipsizeMode = 'tail',
   numberOfLines = 0,
   className,
+  style,
   loading = false,
   ...props
 }) => {
-  let font = Platform.OS === 'ios' ? 'AlmoniDLAAA' : 'almoni-dl-aaa';
-  if (bold) {
-    font += '-bold';
-  } else if (light) {
-    font += '-light';
-  } else if (black) {
-    font += '-black';
-  } else if (thin) {
-    font += '-thin';
-  } else if (medium) {
-    font += '-medium';
-  } else {
-    font += '';
-  }
+  let font = 'Rubik';
 
   return (
     <TouchableOpacity
@@ -59,11 +36,14 @@ const AppButton: React.FC<AppButtonProps> = ({
           ellipsizeMode={ellipsizeMode}
           numberOfLines={numberOfLines}
           allowFontScaling={false}
-          style={{
-            fontFamily: font,
-            color: 'white',
-            fontSize: 20,
-          }}>
+          style={[
+            {
+              fontFamily: font,
+              color: 'white',
+              fontSize: 20,
+            },
+            style,
+          ]}>
           {children}
         </Text>
       )}

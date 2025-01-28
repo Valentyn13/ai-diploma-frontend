@@ -1,6 +1,5 @@
 import ParallaxScrollView from '@common/components/ParallaxScrollView';
 import { CircleButton } from '@common/components/buttons/CircleButton';
-import theme from '@common/theme';
 import Theme from '@common/theme';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import React, { FC } from 'react';
@@ -77,10 +76,9 @@ const styles = StyleSheet.create({
   },
   headerTitle: {
     fontSize: 32,
-    fontWeight: 'bold',
+    fontWeight: '600',
     textAlign: 'center',
     color: 'black',
-    fontFamily: theme.fonts.bold,
   },
   foreground: {
     flex: 1,

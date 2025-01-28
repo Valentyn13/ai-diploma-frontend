@@ -172,7 +172,7 @@ const ChatsList = ({ chats, category }: ChatListType) => {
             <Text
               style={{
                 fontSize: 24,
-                fontWeight: 'bold',
+                fontWeight: '600',
                 color: '#273051',
                 textAlign: 'center',
                 width: 224,
@@ -204,7 +204,7 @@ const ChatsList = ({ chats, category }: ChatListType) => {
               activeOpacity={1}
               underlayColor={'#364373'}
               className="h-[50px] flex justify-center items-center bg-[#273051] rounded-[8px]">
-              <Text className="text-base font-bold text-[#FFFFFF]">
+              <Text className="text-base font-semibold text-[#FFFFFF]">
                 התחל מפגש
               </Text>
             </TouchableHighlight>

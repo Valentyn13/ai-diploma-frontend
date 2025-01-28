@@ -35,7 +35,7 @@ const CourseItem = ({ item, index, onPress }) => (
   <TouchableItem onPress={onPress}>
     <Item index={index}>
       <View className="absolute bottom-0 w-full bg-[#160f29] px-4 py-2 justify-center items-start rounded-b-lg">
-        <AppText bold style={{ color: 'white', fontSize: 26 }}>
+        <AppText style={{ color: 'white', fontSize: 26, fontWeight: '600' }}>
           {item.title}
         </AppText>
         <AppText style={{ color: 'white', fontSize: 16 }}>

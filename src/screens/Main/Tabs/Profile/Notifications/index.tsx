@@ -91,7 +91,7 @@ const Notifications = ({ navigation }) => {
             style={{
               color: 'white',
               fontSize: 36,
-              fontWeight: 'bold',
+              fontWeight: '600',
             }}
             mode="time"
             display="spinner"
@@ -129,7 +129,7 @@ const Notifications = ({ navigation }) => {
             color="#fff"
           />
         </View>
-        <Text className="flex-1 text-3xl font-bold text-center text-black">
+        <Text className="flex-1 text-3xl font-semibold text-center text-black">
           התראות
         </Text>
       </View>

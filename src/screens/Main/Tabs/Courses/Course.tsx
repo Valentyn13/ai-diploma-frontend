@@ -52,7 +52,7 @@ const Course = () => {
             <Text
               style={{
                 fontSize: 24,
-                fontWeight: 'bold',
+                fontWeight: '600',
                 color: 'white',
                 textShadowColor: 'rgba(0, 0, 0, 0.75)',
                 textShadowOffset: { width: -1, height: 1 },

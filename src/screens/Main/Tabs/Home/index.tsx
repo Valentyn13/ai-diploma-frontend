@@ -1,9 +1,7 @@
 import CoursesBanner from '@common/components/Banner/CoursesBanner';
 import Feeling from '@common/components/Feeling';
-import Gradient from '@common/components/Gradient';
 import HorizontalCollection from '@common/components/HorizontalCollection';
 import Personalized from '@common/components/Personalized';
-import { SubTitle } from '@common/components/Styled';
 import Welcome from '@common/components/animation/Welcome';
 import { AMPLITUDE_EVENTS, CATEGORY_NAMES } from '@common/constants';
 //import { usePurchases } from '@common/context/PurchaseContext';
@@ -21,18 +19,10 @@ import { logAmplitudeEvent } from '@utils/amplitude-helpers';
 import { FC, useCallback, useEffect, useMemo, useState } from 'react';
 import { Button, Modal, Text, View } from 'react-native';
 import { CopilotStep, walkthroughable } from 'react-native-copilot';
-import styled from 'styled-components/native';
 import { Session } from 'types/Meditation';
 
 import MichaelCard from './MichaelCard';
 import ParallaxScroll from './ParallaxScroll';
-
-const ListTitle = styled(SubTitle)`
-  font-size: 22px;
-  font-weight: bold;
-  align-self: flex-start;
-  color: #414141;
-`;
 
 type FeedProps = NativeStackScreenProps<RootStackParamList, 'Main'>;
 
@@ -118,7 +108,7 @@ const Feed: FC<FeedProps> = ({ navigation, copilot }) => {
     return {
       title: isChatsExists
         ? 'המשך שיחה עם מיכאל'
-        : 'לשתף, להתייעץ, או סתם לפרוק',
+        : 'לשתף, להתייעץ, או \nסתם לפרוק',
       subtitle: isChatsExists
         ? `${
             CATEGORY_NAMES[latestChat?.category || '']
@@ -185,7 +175,9 @@ const Feed: FC<FeedProps> = ({ navigation, copilot }) => {
                 name="howufeel">
                 <CopilotView copilot={copilot} className="mt-[24px]">
                   <View className="flex w-full items-center px-5 flex-1">
-                    <ListTitle k="מדיטציה בהתאמה אישית" />
+                    <Text className="text-[20px] w-full text-left font-medium text-[#414141] leading-[23px]">
+                      מדיטציה בהתאמה אישית
+                    </Text>
                     <View className="w-full flex items-center mt-5">
                       <Feeling
                         onClick={() => setIsOpen(true)}

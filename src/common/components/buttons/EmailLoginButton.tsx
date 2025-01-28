@@ -30,7 +30,7 @@ export const EmailLoginButton: React.FC<{ onPress: () => void }> = ({
         marginTop: 2,
       }}
     />
-    <Text className="text-[#273051] text-lg text-center font-bold">
+    <Text className="text-[#273051] text-lg text-center font-semibold">
       התחברו עם אימייל
     </Text>
   </TouchableOpacity>

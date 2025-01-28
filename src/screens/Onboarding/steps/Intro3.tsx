@@ -49,8 +49,8 @@ const IntroRelax = () => {
           resizeMode="contain"
         />
         <AppText
-          black
           style={{
+            fontWeight: '500',
             color: '#160F29',
             textAlign: 'center',
             fontSize: scale(24),

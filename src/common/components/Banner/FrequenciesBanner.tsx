@@ -24,10 +24,10 @@ const FrequenciesBanner = () => {
           source={require('./imgs/network.png')}
         />
         <View className="flex-1 p-4">
-          <Text className="font-semibold mb-1.5 text-left text-[#34435B] text-[18px]">
+          <Text className="font-medium mb-1.5 text-left text-[#34435B] text-[18px]">
             תדרים ומוזיקה מבית רגע
           </Text>
-          <Text className="max-w-[60%] text-left text-[#52668A]">
+          <Text className="max-w-[60%] text-left text-[#52668A] leading-[16px]">
             מוזיקה ותדרים מרגיעים לשיפור השינה, הריכוז ולהפגת מתחים
           </Text>
         </View>
