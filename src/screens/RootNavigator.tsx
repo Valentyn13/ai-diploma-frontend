@@ -18,10 +18,10 @@ export type RootStackParamList = {
 const RootStack = createStackNavigator<RootStackParamList>();
 
 const linking = {
-  prefixes: ['rega://'],
+  prefixes: ['rega://', 'https://app.rega-app.com'],
   config: {
     screens: {
-      Home: 'home',
+      Home: '/d/home',
     },
   },
 };
