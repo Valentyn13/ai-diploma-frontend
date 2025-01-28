@@ -2,7 +2,9 @@ import AppButton from '@common/components/AppButton';
 import AppText from '@common/components/AppText';
 import { Icon } from '@common/components/Styled';
 import { CircleButton } from '@common/components/buttons/CircleButton';
+import { EMAIL_ERROR_MESSAGE } from '@common/constants';
 import alert from '@utils/alert';
+import validateEmail from '@utils/validateEmail';
 import React, { useState } from 'react';
 import { SafeAreaView, TextInput, View } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
@@ -13,11 +15,9 @@ const RequestReset = ({ onSendCode, navigation }) => {
   const [loading, setLoading] = useState(false);
 
   const handleSendCode = async () => {
-    if (!email) {
-      alert('אנא הזינו כתובת אימייל');
-      return;
-    } else if (!/\S+@\S+\.\S+/.test(email)) {
-      alert('אנא הזינו כתובת אימייל תקינה');
+    const isEmailValid = validateEmail(email);
+    if (!isEmailValid) {
+      alert(EMAIL_ERROR_MESSAGE);
       return;
     }
 
@@ -32,7 +32,7 @@ const RequestReset = ({ onSendCode, navigation }) => {
   };
 
   return (
-    <SafeAreaView className="flex flex-1 bg-primary-bg relative">
+    <SafeAreaView className="flex flex-1 pb-[30px] bg-primary-bg relative">
       <View className="left-4 top-4 z-10">
         <CircleButton
           backgroundColor="#00000060"

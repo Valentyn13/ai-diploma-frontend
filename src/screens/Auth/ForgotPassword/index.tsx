@@ -1,3 +1,7 @@
+import {
+  PASSWORD_CHANGED_SUCCESSFULLY_MESSAGE,
+  RESET_PASSWORD_ERROR_MESSAGE,
+} from '@common/constants';
 import useLogin from '@services/hooks/useLogin';
 import alert from '@utils/alert';
 import React, { FC, useEffect, useState } from 'react';
@@ -20,11 +24,11 @@ const ForgotPassword: FC = ({ navigation }) => {
       return;
     }
     if (resetPasswordError) {
-      alert('ישנה בעיה באיפוס הסיסמה, אנא נסו שנית עם קוד אחר');
+      alert(RESET_PASSWORD_ERROR_MESSAGE);
       return;
     }
 
-    alert('הסיסמא שונתה בהצלחה');
+    alert(PASSWORD_CHANGED_SUCCESSFULLY_MESSAGE);
     navigation.navigate('Auth', { screen: 'Login' });
   }, [resetPasswordError, resetPasswordCompleted, navigation]);
 

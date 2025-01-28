@@ -16,6 +16,8 @@ import { PersonalizedState } from '../../../types/Personalized';
 
 export * from './amplitude-events';
 
+export * from './messages';
+
 export const SHOULD_SHOW_REMINDER_POPUP_STATUS_NOT_INITIALIED =
   'SHOULD_SHOW_REMINDER_POPUP_STATUS_NOT_INITIALIED';
 export const SHOULD_SHOW_REMINDER_POPUP_STATUS_TURNED_ON =
@@ -918,7 +920,8 @@ export const CHAT_TYPES: ChatTypeData[] = [
     id: 2,
     type: ChatCategoriesEnum.SELF_DEV,
     title: SELF_DEV_TITLE,
-    description: 'מרגישים תקועים ולא מצליחים להתקדם? במפגשים שלנו יחד נוכל לצמוח ולהגשים את המטרות שתמיד חלמתם להגשים.',
+    description:
+      'מרגישים תקועים ולא מצליחים להתקדם? במפגשים שלנו יחד נוכל לצמוח ולהגשים את המטרות שתמיד חלמתם להגשים.',
     sessionCount: 0,
     bgColor: '#FFE3C5',
   },
@@ -1028,3 +1031,6 @@ export const EXPLORE_LINK_BUTTONS: ExploreElement[] = [
     screenNavigation: 'BGMusicPicker',
   },
 ];
+
+export const EMAIL_CHECK_REGEXP =
+  /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+\.[a-zA-Z]{2,}$/;

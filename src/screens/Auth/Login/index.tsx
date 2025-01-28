@@ -2,14 +2,15 @@ import AppButton from '@common/components/AppButton';
 import AppText from '@common/components/AppText';
 import { Icon } from '@common/components/Styled';
 import { CircleButton } from '@common/components/buttons/CircleButton';
-import config from '@common/config';
-import { AMPLITUDE_EVENTS } from '@common/constants';
+import { AMPLITUDE_EVENTS, EMAIL_ERROR_MESSAGE } from '@common/constants';
 import { useNavigation } from '@react-navigation/native';
 import useAppData from '@services/hooks/useAppData';
 import useLogin from '@services/hooks/useLogin';
 import { useUser } from '@services/hooks/useUser';
+import alert from '@utils/alert';
 import { logAmplitudeEvent } from '@utils/amplitude-helpers';
 import { initializeThirdParties } from '@utils/initialize-third-parties';
+import validateEmail from '@utils/validateEmail';
 import React, { FC, useEffect, useRef, useState } from 'react';
 import {
   ActivityIndicator,
@@ -34,6 +35,7 @@ const Login: FC = () => {
   const { getAppData } = useAppData();
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
+
   const [loader, setLoader] = useState<boolean>(false);
   const { user } = useUser();
   const appDataloaded = useSelector((state: RootState) => state.appData.loaded);
@@ -41,6 +43,11 @@ const Login: FC = () => {
   const scrollViewRef = useRef<ScrollView>(null);
 
   const onContinue = async () => {
+    const isEmailValid = validateEmail(email);
+    if (!isEmailValid) {
+      alert(EMAIL_ERROR_MESSAGE);
+      return;
+    }
     const fcmToken = await getFcmToken();
     setLoader(true);
     await loginWithEmail(email, password, fcmToken);

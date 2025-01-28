@@ -1,5 +1,9 @@
 /* eslint-disable no-catch-shadow */
 import config from '@common/config';
+import {
+  LOGGING_CHANNLE_ERROR_MESSAGE,
+  REQUEST_FAILED_ERROR_MESSAGE,
+} from '@common/constants';
 import * as Sentry from '@sentry/react-native';
 import api from '@services/api';
 import { logout, setAccessToken, setLoaderFalse } from '@store/actions';
@@ -148,7 +152,7 @@ export default ({
           dispatch({ type: actions.success, payload: data });
         } else {
           if (showError) {
-            alert('request failed');
+            alert(REQUEST_FAILED_ERROR_MESSAGE);
           }
           dispatch({ type: actions.fail, payload: 'unknown' });
         }
@@ -192,9 +196,7 @@ export default ({
                 requestApi.url === 'auth/google'
               ) {
                 console.error(error);
-                alert(
-                  'היי אנחנו חווים תקלה בהתחברות דרך ערוץ זה, אנא נסו שנית או בחרו ערוץ התחברות אחר',
-                );
+                alert(LOGGING_CHANNLE_ERROR_MESSAGE);
                 dispatchAction(setLoaderFalse());
               } else {
                 if (

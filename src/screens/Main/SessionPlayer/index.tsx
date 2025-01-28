@@ -4,6 +4,8 @@ import { CircleButton } from '@common/components/buttons/CircleButton';
 import {
   ASSETS_URL,
   BGS_ASSETS_URL,
+  ERROR_TITLE,
+  ERROR_WHILE_LOADING,
   KEY_PLAYED_FIRST,
   OLD_ASSETS_URL,
   VIDEO_URL,
@@ -104,7 +106,7 @@ const MeditationPlayer: FC = ({ navigation }) => {
       setLoading(false);
     } else if (state === State.Error) {
       setLoading(false);
-      Alert.alert('שגיאה', 'אירעה שגיאה בזמן הטעינה, נסה שנית מאוחר יותר', [
+      Alert.alert(ERROR_TITLE, ERROR_WHILE_LOADING, [
         {
           text: 'אוקיי',
           onPress: () => {

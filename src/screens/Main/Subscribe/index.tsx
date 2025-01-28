@@ -1,5 +1,10 @@
 import SubscriptionPoint from '@common/components/SubscriptionPoint';
-import { AMPLITUDE_EVENTS, KEY_PLAYED_FIRST } from '@common/constants';
+import {
+  AMPLITUDE_EVENTS,
+  KEY_PLAYED_FIRST,
+  NO_SUBSCRIPTION_ERROR_MESSAGE,
+  SUBSCRIPTION_ERROR_MESSAGE_CONTACT_SUPPORT,
+} from '@common/constants';
 import { usePurchases } from '@common/context/PurchaseContext';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useNavigation, useRoute } from '@react-navigation/native';
@@ -189,7 +194,7 @@ const Subscribe: FC = ({ navigation }) => {
       onClose();
     } catch (error) {
       Sentry.captureException(error);
-      Alert.alert('מצטערים קרתה תקלה, אנא פנו לתמיכה שלנו באינסטגרם @rega.app');
+      Alert.alert(SUBSCRIPTION_ERROR_MESSAGE_CONTACT_SUPPORT);
     }
   };
 
@@ -200,7 +205,7 @@ const Subscribe: FC = ({ navigation }) => {
       onClose();
     } catch (error) {
       Sentry.captureException(error);
-      Alert.alert('אין מנוי פעיל במכשיר זה.');
+      Alert.alert(NO_SUBSCRIPTION_ERROR_MESSAGE);
     }
   };
 

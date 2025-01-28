@@ -6,6 +6,7 @@ import Button from '@common/components/Button';
 import { Title } from '@common/components/Styled';
 import Meditate from '@common/components/animation/Meditate';
 import { CircleButton } from '@common/components/buttons/CircleButton';
+import { PASSWORD_NOT_MATCH } from '@common/constants';
 import theme from '@common/theme';
 import useUpdateProfile from '@services/hooks/useUpdateProfile';
 import { useUser } from '@services/hooks/useUser';
@@ -81,7 +82,7 @@ const Details: FC<DetailsProps> = ({ navigation }) => {
         setPasswordModal(false);
       }, 1000);
     } else {
-      Alert.alert('הסיסמה לא תואמת');
+      Alert.alert(PASSWORD_NOT_MATCH);
     }
   };
 

@@ -1,24 +1,17 @@
 import AppButton from '@common/components/AppButton';
 import AppText from '@common/components/AppText';
 import { CircleButton } from '@common/components/buttons/CircleButton';
+import {
+  CONFIRM_PASSWORD_ERROR,
+  PASSWORD_LENGTH_ERROR_MESSAGE,
+  RESET_CODE_ERROR_MESSAGE,
+} from '@common/constants';
 import alert from '@utils/alert';
 import React, { FC, useState } from 'react';
 import { SafeAreaView, TextInput, View } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { scale } from 'react-native-size-matters';
 import Icon from 'react-native-vector-icons/FontAwesome6';
-
-const validatePassword = (password: string) => {
-  if (password.length < 8) {
-    return 'הסיסמא חייבת להכיל לפחות 8 תווים';
-  } else if (!/\d/.test(password)) {
-    return 'הסיסמא חייבת להכיל לפחות ספרה אחת';
-  } else if (!/[a-zA-Z]/.test(password)) {
-    return 'הסיסמא חייבת להכיל לפחות אות אחת';
-  }
-
-  return '';
-};
 
 interface Props {
   onSubmit: (newPassword: string, code: string) => Promise<void>;
@@ -34,16 +27,20 @@ const ResetPassword: FC<Props> = ({ onSubmit, navigation }) => {
   const handleResetPassword = async () => {
     setLoading(true);
     try {
-      if (newPassword !== confirmPassword) {
-        alert('הסיסמאות לא תואמות אחת לשניה');
+      if (!code.trim()) {
+        // TODO: Add new message
+        alert(RESET_CODE_ERROR_MESSAGE);
         setLoading(false);
         return;
       }
-
-      const error = validatePassword(newPassword);
-
-      if (error) {
-        alert(error);
+      if (newPassword.trim().length < 6) {
+        //TODO: Add new message
+        alert(PASSWORD_LENGTH_ERROR_MESSAGE);
+        setLoading(false);
+        return;
+      }
+      if (newPassword !== confirmPassword) {
+        alert(CONFIRM_PASSWORD_ERROR);
         setLoading(false);
         return;
       }
@@ -109,7 +106,7 @@ const ResetPassword: FC<Props> = ({ onSubmit, navigation }) => {
           />
         </View>
       </KeyboardAwareScrollView>
-      <View className="w-10/12 mx-auto mt-8">
+      <View className="w-10/12 mx-auto mt-8 pb-[30px]">
         <AppButton loading={loading} onPress={handleResetPassword}>
           שנה סיסמא
         </AppButton>

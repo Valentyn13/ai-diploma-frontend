@@ -1,3 +1,9 @@
+import {
+  ERROR_MESSAGES,
+  LOGIN_ALERT_TITLE,
+  LOGIN_DEFAULT_ERROR_MESSAGE,
+  USER_EXIST_WITH_THIS_EMAIL_ERROR_MESSAGE,
+} from '@common/constants';
 import api from '@services/api';
 import { login, setLoder } from '@store/actions';
 import { useLoginStore } from '@store/useLoginStore';
@@ -20,10 +26,30 @@ export default () => {
   const { user } = useUser();
   const preferences = useSelector(state => state.userPreferences);
 
-  const handleError = () => {
-    Alert.alert('שגיאה בהתחברות', 'אנא נסה שנית דרך ערוץ אחר');
-    setIsLoading(false);
-  };
+  const handleError = useCallback(
+    (error: string) => {
+      if (typeof error !== 'string') {
+        Alert.alert(LOGIN_ALERT_TITLE, LOGIN_DEFAULT_ERROR_MESSAGE);
+        setIsLoading(false);
+        return;
+      }
+
+      switch (error.trim()) {
+        case ERROR_MESSAGES.DUPLICATE_EMAIL:
+          // TODO: Add new message
+          Alert.alert(
+            LOGIN_ALERT_TITLE,
+            USER_EXIST_WITH_THIS_EMAIL_ERROR_MESSAGE,
+          );
+          break;
+        default:
+          Alert.alert(LOGIN_ALERT_TITLE, LOGIN_DEFAULT_ERROR_MESSAGE);
+          break;
+      }
+      setIsLoading(false);
+    },
+    [setIsLoading],
+  );
 
   const emailLogin = useAxios({
     api: api.login,
@@ -219,7 +245,7 @@ export default () => {
 
   useEffect(() => {
     if (emailLoginCompleted) {
-      if (!!emailLoginData?.user) {
+      if (emailLoginData?.user) {
         dispatchLogin(emailLoginData);
       } else {
         handleSentryException({
@@ -240,7 +266,7 @@ export default () => {
 
   useEffect(() => {
     if (fbLoginCompleted) {
-      if (!!fbLoginData?.user) {
+      if (fbLoginData?.user) {
         dispatchLogin(fbLoginData);
       } else {
         handleSentryException({
@@ -261,7 +287,7 @@ export default () => {
 
   useEffect(() => {
     if (googleLoginCompleted) {
-      if (!!googleLoginData?.user) {
+      if (googleLoginData?.user) {
         dispatchLogin(googleLoginData);
       } else {
         handleSentryException({
@@ -285,7 +311,7 @@ export default () => {
 
   useEffect(() => {
     if (appleLoginCompleted) {
-      if (!!appleLoginData?.user) {
+      if (appleLoginData?.user) {
         dispatchLogin(appleLoginData);
       } else {
         handleSentryException({
@@ -306,7 +332,7 @@ export default () => {
 
   useEffect(() => {
     if (registerCompleted) {
-      if (!!registerData?.user) {
+      if (registerData?.user) {
         dispatchLogin(registerData);
       } else {
         handleSentryException({
@@ -320,17 +346,18 @@ export default () => {
   }, [registerCompleted, registerData, dispatchLogin]);
 
   useEffect(() => {
-    if (emailError || fbError || googleError || appleError || registerError) {
-      handleError();
+    const possibleError =
+      emailError || fbError || googleError || appleError || registerError;
+    if (possibleError) {
+      handleError(possibleError);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
     emailError,
     fbError,
     googleError,
     appleError,
     registerError,
-    setIsLoading,
+    handleError,
   ]);
 
   return {

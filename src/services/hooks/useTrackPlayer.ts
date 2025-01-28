@@ -1,3 +1,7 @@
+import {
+  PRACTICE_PLAYER_ERROR_MESSAGE,
+  PRACTICE_PLAYER_ERROR_TITLE,
+} from '@common/constants';
 import { captureException } from '@sentry/react-native';
 import { useEffect } from 'react';
 import { Alert } from 'react-native';
@@ -71,7 +75,10 @@ const useTrackPlayerEventsHandler = () => {
           break;
         case Event.PlaybackError:
           captureException(event);
-          Alert.alert('בעיה בניגון התרגול הנבחר', 'אנא נסו שנית');
+          Alert.alert(
+            PRACTICE_PLAYER_ERROR_TITLE,
+            PRACTICE_PLAYER_ERROR_MESSAGE,
+          );
           break;
 
         default:

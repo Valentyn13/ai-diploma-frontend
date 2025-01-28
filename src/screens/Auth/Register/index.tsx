@@ -3,8 +3,16 @@ import AppButton from '@common/components/AppButton';
 import AppText from '@common/components/AppText';
 import AppTextInput from '@common/components/AppTextInput';
 import { CircleButton } from '@common/components/buttons/CircleButton';
-import config from '@common/config';
-import { AMPLITUDE_EVENTS } from '@common/constants';
+import {
+  AMPLITUDE_EVENTS,
+  CONFIRM_PASSWORD_ERROR,
+  EMAIL_ERROR_MESSAGE,
+  MISSING_EMAIL_ERROR_MESSAGE,
+  MISSING_PASSWORD_ERROR_MESSAGE,
+  NAME_ERROR_MESSAGE,
+  PASSWORD_LENGTH_ERROR_MESSAGE,
+  REGISTER_LICENSE_IS_NOT_ACCEPTED_ERROR,
+} from '@common/constants';
 import Theme from '@common/theme';
 import CheckBox from '@react-native-community/checkbox';
 import useAppData from '@services/hooks/useAppData';
@@ -13,6 +21,7 @@ import { useUser } from '@services/hooks/useUser';
 import { logAmplitudeEvent } from '@utils/amplitude-helpers';
 import { logEvent } from '@utils/analytics';
 import { initializeThirdParties } from '@utils/initialize-third-parties';
+import validateEmail from '@utils/validateEmail';
 import React, { useEffect, useState } from 'react';
 import {
   ActivityIndicator,
@@ -40,20 +49,31 @@ const Register = ({ navigation }) => {
   const [loader, setLoader] = useState(false);
 
   const onContinue = async () => {
+    const isEmailValid = validateEmail(email);
+    if (!isEmailValid) {
+      Alert.alert(EMAIL_ERROR_MESSAGE);
+      return;
+    }
+
+    const trimmedPassword = !!password ? password.trim() : '';
+
     if (!toggleCheckBox) {
-      Alert.alert('אנא אשר את תנאי השימוש ומדיניות הפרטיות');
+      Alert.alert(REGISTER_LICENSE_IS_NOT_ACCEPTED_ERROR);
       return;
     } else if (!name) {
-      Alert.alert('אנא הכנס שם');
+      Alert.alert(NAME_ERROR_MESSAGE);
       return;
     } else if (!email) {
-      Alert.alert('אנא הכנס אימייל');
+      Alert.alert(MISSING_EMAIL_ERROR_MESSAGE);
       return;
-    } else if (!password) {
-      Alert.alert('אנא הכנס סיסמא');
+    } else if (!trimmedPassword) {
+      Alert.alert(MISSING_PASSWORD_ERROR_MESSAGE);
       return;
+    } else if (trimmedPassword.length < 6) {
+      // TODO: Add new message
+      Alert.alert(PASSWORD_LENGTH_ERROR_MESSAGE);
     } else if (password !== verifyPassword) {
-      Alert.alert('סיסמאות לא תואמות');
+      Alert.alert(CONFIRM_PASSWORD_ERROR);
     } else {
       const fcmToken = await getFcmToken();
 

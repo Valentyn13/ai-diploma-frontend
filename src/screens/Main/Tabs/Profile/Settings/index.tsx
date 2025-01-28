@@ -1,5 +1,18 @@
 /* eslint-disable handle-callback-err */
 import { CircleButton } from '@common/components/buttons/CircleButton';
+import {
+  CONTACT_EMAIL_SUPPORT,
+  CONTACT_WATSAPP_SUPPORT,
+  COPIED_DATA_MESSAGE_CONTACT_SUPPORT_WITH,
+  COPIED_DATA_TITLE,
+  DELETE_DATA_CONFIRM_MESSAGE,
+  DELETE_DATA_CONFIRM_TITLE,
+  LOGOUT_CONFIRM_MESSAGE,
+  LOGOUT_CONFIRM_TITLE,
+  UNABLE_TO_OPEN_APP,
+  UNSUBSCRIBE_CONFIRM_MESSAGE,
+  UNSUBSCRIBE_CONFIRM_TITLE,
+} from '@common/constants';
 import { usePurchases } from '@common/context/PurchaseContext';
 import Clipboard from '@react-native-clipboard/clipboard';
 import { useAmplitude } from '@services/hooks/useAmplitude';
@@ -80,10 +93,7 @@ const Settings = ({ navigation }) => {
       Linking.openURL(instagramDMUrl).catch(err => {
         Linking.openURL(instagramUrl).catch(err => {
           Linking.openURL(emailUrl).catch(err =>
-            Alert.alert(
-              'לא ניתן לפתוח את האפליקציה',
-              'אנא צרו קשר עם התמיכה במייל hello@rega.co.il, תודה',
-            ),
+            Alert.alert(UNABLE_TO_OPEN_APP, CONTACT_EMAIL_SUPPORT),
           );
         });
       });
@@ -92,8 +102,8 @@ const Settings = ({ navigation }) => {
 
   const deleteDataConfirm = () => {
     Alert.alert(
-      'מחיקת נתונים',
-      'האם אתם בטוחים שאתם רוצים למחוק את הנתונים שלכם?',
+      DELETE_DATA_CONFIRM_TITLE,
+      DELETE_DATA_CONFIRM_MESSAGE,
       [
         {
           text: 'ביטול',
@@ -116,15 +126,12 @@ const Settings = ({ navigation }) => {
     if (Platform.OS === 'android') {
       const url = 'https://play.google.com/store/account/subscriptions';
       Linking.openURL(url).catch(err => {
-        Alert.alert(
-          'לא ניתן לפתוח את האפליקציה',
-          'אנא צרו קשר עם התמיכה בוואטסאפ',
-        );
+        Alert.alert(UNABLE_TO_OPEN_APP, CONTACT_WATSAPP_SUPPORT);
       });
     } else {
       Alert.prompt(
-        'ביטול מנוי',
-        'אנא הזינו את הסיבה לביטול המנוי, על מנת שנוכל לשפר את השירות',
+        UNSUBSCRIBE_CONFIRM_TITLE,
+        UNSUBSCRIBE_CONFIRM_MESSAGE,
         [
           {
             text: 'ביטול',
@@ -138,10 +145,7 @@ const Settings = ({ navigation }) => {
               const url = 'https://apps.apple.com/account/subscriptions';
 
               Linking.openURL(url).catch(err => {
-                Alert.alert(
-                  'לא ניתן לפתוח את האפליקציה',
-                  'אנא צרו קשר עם התמיכה בוואטסאפ',
-                );
+                Alert.alert(UNABLE_TO_OPEN_APP, CONTACT_WATSAPP_SUPPORT);
               });
             },
             style: 'destructive',
@@ -155,8 +159,8 @@ const Settings = ({ navigation }) => {
 
   const logoutConfirm = () => {
     Alert.alert(
-      'התנתקות',
-      'חבל לנו לראות אותך עוזב אותנו, האם אתם בטוחים?',
+      LOGOUT_CONFIRM_TITLE,
+      LOGOUT_CONFIRM_MESSAGE,
       [
         {
           text: 'התנתק',
@@ -214,8 +218,8 @@ const Settings = ({ navigation }) => {
         Clipboard.setString(JSON.stringify(data));
 
         Alert.alert(
-          'הנתונים הועתקו',
-          'נתוני משתמש הועתקו, אנא הדביקו אותם בשיחה עם התמיכה',
+          COPIED_DATA_TITLE,
+          COPIED_DATA_MESSAGE_CONTACT_SUPPORT_WITH,
         );
       },
       icon: 'whatsapp',
