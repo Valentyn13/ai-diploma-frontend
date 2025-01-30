@@ -38,12 +38,12 @@ const styles = StyleSheet.create({
 });
 
 setDefaultProps(TextInput, {
-  // allowFontScaling: false,
+  allowFontScaling: false,
   style: [{ fontFamily: 'Rubik' }],
 });
 
 setDefaultProps(Text, {
-  // allowFontScaling: false,
+  allowFontScaling: false,
   style: [{ fontFamily: 'Rubik' }],
 });
 
