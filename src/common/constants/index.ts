@@ -891,6 +891,12 @@ export const VIDEO_URL = `${ASSETS_URL}videos/`;
 export const OLD_ASSETS_URL =
   'https://regameditation.s3.us-east-2.amazonaws.com/';
 
+export const PLAY_STORE_FALLBACK_URL =
+  'https://play.google.com/store/apps/details?id=com.rega.regaapp';
+
+export const APP_STORE_FALLBACK_URL =
+  'https://apps.apple.com/ua/app/rega-%D7%A8%D7%92%D7%A2/id1549517842';
+
 export const FREE_CHAT_TITLE = 'צ׳אט חופשי';
 export const SELF_DEV_TITLE = 'פיתוח עצמי';
 export const NEGATIVE_THOUGHTS_TITLE = 'ניהול דפוסי חשיבה שליליים';

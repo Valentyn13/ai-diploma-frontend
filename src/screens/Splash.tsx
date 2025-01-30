@@ -3,6 +3,7 @@ import Logo from '@common/components/Logo';
 import WithPulse from '@common/components/transitions/WIthPulse';
 import WithFadeIn from '@common/components/transitions/WithFadeIn';
 import config from '@common/config';
+import StoreUpdate from '@common/storeUpdate';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { AMPLITUDE_EVENTS, useAmplitude } from '@services/hooks/useAmplitude';
 import useAppData from '@services/hooks/useAppData';
@@ -13,6 +14,7 @@ import {
 import { useClearChatStore } from '@services/hooks/useClearChatStore';
 import { useIntro } from '@services/hooks/useIntro';
 import { logout } from '@store/actions';
+import { useShowUpdateAppStore } from '@store/useShowUpdateAppStore';
 import { initializeThirdParties } from '@utils/initialize-third-parties';
 import React, { FC, useEffect, useState } from 'react';
 import { View } from 'react-native';
@@ -35,10 +37,24 @@ const Splash: FC<SplashProps> = ({ navigation: { navigate, replace } }) => {
   const isLoaded = useSelector((state: RootState) => state.appData.loaded);
   const user = useSelector((state: RootState) => state.userDetails);
   const { accessToken, id, email } = user || {};
+  const { showUpdateModal, requestDone } = useShowUpdateAppStore(state => ({
+    showUpdateModal: state.showUpdateModal,
+    requestDone: state.requestDone,
+  }));
 
   useEffect(() => {
     const timer = setTimeout(
       async () => {
+        if (!requestDone) {
+          return;
+        }
+
+        if (showUpdateModal) {
+          // dispatchAction(logout());
+          // clearChatStore();
+          return;
+        }
+
         if (accessToken) {
           const checkResult = await executeApiRequest(checkIsTokenValid);
           if (!checkResult) {
@@ -62,7 +78,14 @@ const Splash: FC<SplashProps> = ({ navigation: { navigate, replace } }) => {
 
     return () => clearTimeout(timer);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [accessToken, getAppData, isFirstTimeUser, navigate]);
+  }, [
+    accessToken,
+    getAppData,
+    isFirstTimeUser,
+    requestDone,
+    showUpdateModal,
+    navigate,
+  ]);
 
   useEffect(() => {
     if (isLoaded && animationFinished) {
@@ -87,6 +110,7 @@ const Splash: FC<SplashProps> = ({ navigation: { navigate, replace } }) => {
           <Logo transform={[{ rotate: '-10deg' }]} />
         </WithPulse>
       </WithFadeIn>
+      <StoreUpdate />
     </View>
   );
 };

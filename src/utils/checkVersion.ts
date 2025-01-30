@@ -1,5 +1,10 @@
-import { COUNTRY_CODE } from '@common/constants';
+import {
+  APP_STORE_FALLBACK_URL,
+  COUNTRY_CODE,
+  PLAY_STORE_FALLBACK_URL,
+} from '@common/constants';
 import * as Sentry from '@sentry/react-native';
+import { getMinAppVersion } from '@services/api/minAppVersion';
 import { Platform } from 'react-native';
 import DeviceInfo from 'react-native-device-info';
 import compare from 'semver-compare';
@@ -54,7 +59,7 @@ const getVersion = async () => {
     version = await getAndroidVersion();
   }
 
-  return !!version ? String(version) : null;
+  return version ? String(version) : null;
 };
 
 const getUpdateUrl = async () => {
@@ -65,14 +70,20 @@ const getUpdateUrl = async () => {
   }
 };
 
-const shouldUpdate = async () => {
-  const version = await getVersion();
+const getFallbackUrl = () => {
+  if (Platform.OS === 'ios') {
+    return APP_STORE_FALLBACK_URL;
+  } else if (Platform.OS === 'android') {
+    return PLAY_STORE_FALLBACK_URL;
+  }
+};
 
+const shouldUpdate = async () => {
+  const version = await getMinAppVersion();
   if (!version || version === 'NaN') {
     return false;
   }
-
   return compare(version, DeviceInfo.getVersion()) > 0;
 };
 
-export { getUpdateUrl, shouldUpdate };
+export { getUpdateUrl, shouldUpdate, getFallbackUrl };

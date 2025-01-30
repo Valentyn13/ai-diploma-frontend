@@ -86,6 +86,7 @@
 		<string>instagram-stories</string>
 		<string>fb</string>
 		<string>facebook-stories</string>
+		<string>itms-apps</string>
 	</array>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
