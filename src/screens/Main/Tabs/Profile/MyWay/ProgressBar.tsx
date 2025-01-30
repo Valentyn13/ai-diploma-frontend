@@ -14,7 +14,7 @@ const ProgressBar: FC<{ progress: number }> = ({ progress }) => (
     <View
       style={{
         height: '100%',
-        width: `${progress}%`,
+        width: `${Math.min(progress, 100)}%`,
         backgroundColor: '#FFB291',
         borderRadius: 10,
         overflow: 'hidden',
