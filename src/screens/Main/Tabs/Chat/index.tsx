@@ -103,7 +103,7 @@ export default function ChatDrawer() {
         }}
         options={{
           drawerLabel: () => (
-            <Text className="text-black text-left font-bold text-md">
+            <Text className="text-black text-left font-semibold text-md">
               שיחה חדשה
             </Text>
           ),

@@ -106,7 +106,7 @@ const Login: FC = () => {
           //className="flex"
           contentContainerStyle={{ flexGrow: 1 }}
           style={{ padding: scale(24) }}>
-          <AppText className="font-bold text-2xl mt-16 text-center text-black">
+          <AppText className="font-semibold text-2xl mt-16 text-center text-black">
             התחבר עם פרטי ההתחברות שלך
           </AppText>
           <View

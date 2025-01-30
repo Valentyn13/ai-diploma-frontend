@@ -85,13 +85,13 @@ const Notifications = ({ navigation }) => {
             labelStyle={{
               color: 'white',
               fontSize: 20,
-              fontWeight: '600',
+              fontWeight: '500',
               marginBottom: 5,
             }}
             style={{
               color: 'white',
               fontSize: 36,
-              fontWeight: '600',
+              fontWeight: '500',
             }}
             mode="time"
             display="spinner"

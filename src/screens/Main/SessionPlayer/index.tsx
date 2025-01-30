@@ -346,7 +346,7 @@ const MeditationPlayer: FC = ({ navigation }) => {
     <Animated.View
       style={[animatedStyle]}
       className="absolute bottom-20 w-full flex-col items-center">
-      <Text className="text-2xl font-bold text-white">{name || title}</Text>
+      <Text className="text-2xl font-semibold text-white">{name || title}</Text>
       <Text className="text-base font-light text-white mb-2">
         {instructor?.name}
       </Text>

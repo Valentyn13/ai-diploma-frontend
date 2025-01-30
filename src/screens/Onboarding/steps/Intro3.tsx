@@ -53,7 +53,7 @@ const IntroRelax = () => {
             fontWeight: '500',
             color: '#160F29',
             textAlign: 'center',
-            fontSize: scale(24),
+            fontSize: scale(23),
             marginTop: scale(360),
           }}>
           {'לנוח, להירגע ולהירדם מ-ה-ר!'}
@@ -62,7 +62,7 @@ const IntroRelax = () => {
           style={{
             color: '#000000',
             textAlign: 'center',
-            fontSize: scale(16),
+            fontSize: scale(15),
             marginTop: scale(10),
           }}>
           {

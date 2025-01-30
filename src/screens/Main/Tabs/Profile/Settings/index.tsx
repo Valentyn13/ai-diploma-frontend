@@ -259,7 +259,7 @@ const Settings = ({ navigation }) => {
             color="#fff"
           />
         </View>
-        <Text className="flex-1 text-3xl font-bold text-center text-black">
+        <Text className="flex-1 text-3xl font-semibold text-center text-black">
           הגדרות
         </Text>
       </View>
@@ -283,7 +283,7 @@ const Settings = ({ navigation }) => {
                   size={20}
                   color="#160f29"
                 />
-                <Text className="text-lg font-medium ml-4 text-left text-black">
+                <Text className="text-lg font-medium ml-4 text-left text-black/80">
                   {title}
                 </Text>
               </View>

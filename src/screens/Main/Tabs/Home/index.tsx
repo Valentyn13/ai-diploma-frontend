@@ -329,7 +329,7 @@ const WelcomeMessage = ({ onPress }) => {
         shadowRadius: 3.84,
         elevation: 5,
       }}>
-      <Text style={{ fontSize: 24, fontWeight: 'bold', textAlign: 'center' }}>
+      <Text style={{ fontSize: 24, fontWeight: '600', textAlign: 'center' }}>
         ברוכים הבאים לרגע
       </Text>
       <Text style={{ fontSize: 18, marginTop: 10, textAlign: 'center' }}>

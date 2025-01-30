@@ -26,13 +26,15 @@ const PrivacyPolicy: React.FC<PrivacyPolicyProps> = ({ navigation }) => {
           color="#fff"
         />
         <View className="mt-6 px-2 items-start">
-          <AppText className="font-bold text-lg text-black">
+          <AppText className="font-semibold text-lg text-black">
             מדיניות פרטיות
           </AppText>
           <AppText className="text-left text-sm text-black">
             {privacyText}
           </AppText>
-          <AppText className="font-bold text-lg text-black">תנאי שימוש</AppText>
+          <AppText className="font-semibold text-lg text-black">
+            תנאי שימוש
+          </AppText>
           <AppText className="text-left text-sm text-black">{tosText}</AppText>
         </View>
       </ScrollView>

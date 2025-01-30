@@ -278,6 +278,7 @@ const Register = ({ navigation }) => {
               black
               style={{
                 fontSize: 18,
+                fontWeight: '500',
                 paddingTop: 8,
                 color: 'blue',
                 textDecorationLine: 'underline',

@@ -57,7 +57,7 @@ const MetricBox: FC<MetricBoxProps> = ({ id, value, title, ...props }) => {
         }}
       />
       <Text className="text-lg text-left text-black mt-2">{title}</Text>
-      <Text className="text-4xl font-semibold text-black text-left my-4">
+      <Text className="text-4xl font-medium text-black text-left my-4">
         {value}
       </Text>
     </View>

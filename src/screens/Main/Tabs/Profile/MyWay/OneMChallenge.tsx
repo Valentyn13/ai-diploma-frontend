@@ -10,7 +10,7 @@ const CHALLANGE_TOTAL = 1000000;
 
 const Title = styled(SubTitle)`
   font-size: 24;
-  font-weight: bold;
+  font-weight: 600;
 `;
 
 const OneMChallenge: FC<{

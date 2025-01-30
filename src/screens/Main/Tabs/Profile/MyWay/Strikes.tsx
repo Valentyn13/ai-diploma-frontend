@@ -130,7 +130,7 @@ const Stat: FC<StatProps> = ({ title, count, icon }) => {
     <View className="flex-1 flex-col items-center">
       <View className="w-8 h-8 mb-2">{icon}</View>
       <Text className="text-sm text-black">{title}</Text>
-      <Text className="text-lg font-bold text-black">{count}</Text>
+      <Text className="text-lg font-medium text-black">{count}</Text>
     </View>
   );
 };

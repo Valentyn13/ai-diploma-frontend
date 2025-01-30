@@ -69,7 +69,7 @@ const ResetPassword: FC<Props> = ({ onSubmit, navigation }) => {
         enableOnAndroid
         className="flex"
         contentContainerStyle={{ flex: 1, padding: scale(24) }}>
-        <AppText className="font-bold text-2xl mt-16 text-center text-black">
+        <AppText className="font-semibold text-2xl mt-16 text-center text-black">
           הזנת סיסמא חדשה
         </AppText>
         <View className="bg-white py-4 px-2 rounded mt-8 flex-row items-center w-full">

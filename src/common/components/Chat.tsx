@@ -4,6 +4,7 @@ import { FlatList, Platform, View } from 'react-native';
 import {
   Bubble,
   BubbleProps,
+  Day,
   GiftedChat,
   IMessage,
   InputToolbar,
@@ -109,6 +110,9 @@ const Chat: FC<ChatComponentProps> = ({
         alwaysShowSend
         inverted={false}
         isTyping={isLoading}
+        renderDay={props => (
+          <Day {...props} textStyle={{ fontWeight: '500' }} />
+        )}
         messages={messages}
         onSend={onSend}
         placeholder="הכנס הודעה..."

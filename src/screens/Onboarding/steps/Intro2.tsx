@@ -42,7 +42,7 @@ const IntroStudy = () => {
             style={{
               fontWeight: '500',
               color: '#160F29',
-              fontSize: scale(24),
+              fontSize: scale(23),
               marginTop: Platform.OS === 'ios' ? scale(70) : scale(60),
             }}>
             {'5 דקות ביום, זה כל הסיפור'}
@@ -55,7 +55,7 @@ const IntroStudy = () => {
             style={{
               color: '#000000',
               textAlign: 'center',
-              fontSize: scale(16),
+              fontSize: scale(15),
               marginTop: scale(20),
             }}>
             {

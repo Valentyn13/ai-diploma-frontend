@@ -43,10 +43,10 @@ const Intro: FC = () => {
       <SafeAreaView className="flex-1" edges={['bottom']}>
         <WithSlideInX delay={300}>
           <WithFadeIn delay={300}>
-            <ElegantText style={{ fontSize: scale(28), fontWeight: '700' }}>
+            <ElegantText style={{ fontSize: scale(28), fontWeight: '600' }}>
               {i18n.t('welcomeTitle')}
             </ElegantText>
-            <ElegantText style={{ fontSize: scale(20), fontWeight: '600' }}>
+            <ElegantText style={{ fontSize: scale(20), fontWeight: '500' }}>
               {i18n.t('welcomeSubtitle')}
             </ElegantText>
           </WithFadeIn>

@@ -46,7 +46,7 @@ const RequestReset = ({ onSendCode, navigation }) => {
         enableOnAndroid
         className="flex"
         contentContainerStyle={{ flex: 1, padding: scale(24) }}>
-        <AppText className="font-bold text-2xl mt-16 text-center text-black">
+        <AppText className="font-semibold text-2xl mt-16 text-center text-black">
           איפוס סיסמא
         </AppText>
         <View className="bg-white py-4 px-2 rounded mt-24 flex-row items-center w-full">

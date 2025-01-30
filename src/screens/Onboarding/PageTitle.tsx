@@ -9,7 +9,9 @@ const PageTitle: FC<{
   <>
     <Wobble seed={title} />
     <View className="absolute top-6 px-4">
-      <Text className="text-center text-2xl font-bold text-black">{title}</Text>
+      <Text className="text-center text-2xl font-medium text-black">
+        {title}
+      </Text>
       <Text className="text-center text-md font-normal text-black mt-3">
         {subTitle}
       </Text>

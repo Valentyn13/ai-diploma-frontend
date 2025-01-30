@@ -43,7 +43,7 @@ const Instructor = () => {
           <View className="px-5 flex-1 mt-8">
             <View className="mb-8">
               <View className="flex flex-row justify-between items-center">
-                <Text className="text-2xl font-bold text-black">
+                <Text className="text-2xl font-semibold text-black">
                   {instructor?.name}
                 </Text>
                 <View className="flex flex-row">

@@ -70,7 +70,7 @@ const PackageItem: React.FC<{
         <View className="flex flex-col justify-center items-start">
           <Text
             className={`text-right text-lg text-[#1E2340] ${
-              selected ? 'font-bold' : 'font-medium'
+              selected ? 'font-semibold' : 'font-medium'
             }`}>
             {title}
           </Text>
@@ -78,12 +78,12 @@ const PackageItem: React.FC<{
         </View>
         <Text
           className={`text-center text-base text-[#1E2340] ${
-            selected ? 'font-bold' : 'font-medium'
+            selected ? 'font-semibold' : 'font-medium'
           }`}>
           {monthPrice.toFixed(2)}
           <Text
             className={`text-xs font-normal leading-5 ${
-              selected ? 'font-bold' : 'font-medium'
+              selected ? 'font-semibold' : 'font-medium'
             }`}>
             ₪/חודש
           </Text>
@@ -272,8 +272,8 @@ const Subscribe: FC = ({ navigation }) => {
 
             <View className="mt-10 self-center w-8/12">
               <Text className="text-white text-center text-lg">
-                בשביל פחות מ<Text className="font-bold">4 שקלים בשבוע</Text>,
-                האפליקציה שלכם לשנה!
+                בשביל פחות מ<Text className="font-semibold">4 שקלים בשבוע</Text>
+                , האפליקציה שלכם לשנה!
               </Text>
             </View>
             <View className="relative flex-1">
@@ -293,7 +293,7 @@ const Subscribe: FC = ({ navigation }) => {
                           <Text
                             className={`text-[#FFC107] ${
                               selectedPlan === 'annual'
-                                ? 'font-bold'
+                                ? 'font-semibold'
                                 : 'font-medium'
                             }`}>
                             ₪187.90
@@ -302,7 +302,7 @@ const Subscribe: FC = ({ navigation }) => {
                           <Text
                             className={`line-through text-[#1E2340] ${
                               selectedPlan === 'annual'
-                                ? 'font-bold'
+                                ? 'font-semibold'
                                 : 'font-medium'
                             }`}>
                             ₪358.90
@@ -338,7 +338,9 @@ const Subscribe: FC = ({ navigation }) => {
                     }`}>
                     נסו את האפליקציה במשך 7 ימים בחינם!{' '}
                     <Text
-                      className={`${Platform.OS === 'ios' ? 'font-bold' : ''}`}>
+                      className={`${
+                        Platform.OS === 'ios' ? 'font-semibold' : ''
+                      }`}>
                       לאחר תקופה זו יתבצע חיוב אוטומטי בסך 187.90 שח עבור שנת
                       שימוש באפליקציה.
                     </Text>{' '}

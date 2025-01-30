@@ -139,7 +139,7 @@ const Details: FC<DetailsProps> = ({ navigation }) => {
                 textAlign: 'center',
                 paddingTop: 60,
                 fontSize: 23,
-                fontWeight: 'bold',
+                fontWeight: '600',
               }}
             />
             <View
@@ -251,7 +251,7 @@ const Details: FC<DetailsProps> = ({ navigation }) => {
                 textAlign: 'center',
                 paddingTop: 60,
                 fontSize: 23,
-                fontWeight: 'bold',
+                fontWeight: '600',
               }}
             />
             <View

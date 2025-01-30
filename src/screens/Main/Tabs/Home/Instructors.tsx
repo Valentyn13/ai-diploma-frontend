@@ -47,7 +47,7 @@ const Instructors = () => {
             color="#fff"
           />
         </View>
-        <Text className="flex-1 text-3xl font-bold text-center text-black">
+        <Text className="flex-1 text-3xl font-semibold text-center text-black">
           המורים שלנו
         </Text>
       </View>
@@ -70,7 +70,7 @@ const Instructors = () => {
               style={{ width: 50, height: 50, borderRadius: 25 }}
             />
             <View>
-              <Text className="text-lg font-bold ml-3 text-left text-black">
+              <Text className="text-lg font-semibold ml-3 text-left text-black">
                 {instructor.name}
               </Text>
               <Text className="text-sm ml-3 text-left text-black">

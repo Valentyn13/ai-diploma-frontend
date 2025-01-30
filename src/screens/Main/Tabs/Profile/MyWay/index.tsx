@@ -20,7 +20,7 @@ import UserMetrics from './UserMetrics';
 
 const Title = styled(SubTitle)`
   font-size: 24;
-  font-weight: bold;
+  font-weight: 600;
 `;
 
 const fetchChallengeProgress = async () => {
