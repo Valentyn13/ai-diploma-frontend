@@ -60,10 +60,9 @@ const StoreUpdate: FC<PropsWithChildren> = () => {
       backdropOpacity={0.5}>
       <View style={styles.container}>
         <View style={styles.card}>
-          <Text style={styles.title}>נדרש עדכון אפליקציה</Text>
+          <Text style={styles.title}>עדכון חדש מחכה לכם!</Text>
           <Text style={styles.subtitle}>
-            גרסה חדשה של Rega זמינה. אנא עדכן את האפליקציה שלך כדי להשתמש בכל
-            התכונות המדהימות שלנו.
+            כדי להמשיך להשתמש באפליקציה, נא לעדכן לגרסה החדשה.
           </Text>
           <View style={styles.buttonWrapper}>
             <TouchableOpacity onPress={updateApp} style={styles.button}>
