@@ -19,11 +19,11 @@ const Personalized = () => {
         { paddingTop: insets.top + EXTRA_TOP_PADDING },
       ]}>
       <View className="h-[96px] flex-row justify-between relative">
-        <View className="p-4">
-          <Text className="text-left text-[#0F1B48] font-medium text-[27px] leading-[27px]">
+        <View className="p-4 flex-1">
+          <Text className="text-left text-[#273051] font-medium text-[27px] leading-[27px]">
             {getTitle()} {user.name ?? ''}
           </Text>
-          <Text className="text-left text-[#666D89] font-medium text-[15px] leading-[17px]">
+          <Text className="text-left text-[#505050] text-[16px] leading-[17px]">
             {getSubtitle()}
           </Text>
         </View>
@@ -48,7 +48,7 @@ const styles = StyleSheet.create({
   scrollView: {
     zIndex: 100,
     flex: 1,
-    height: 252,
+    height: 308,
     overflow: 'visible',
   },
   badgeScrollContainer: {

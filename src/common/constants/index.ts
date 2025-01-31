@@ -10,6 +10,7 @@ import {
   ChatCategories,
   ChatCategoriesEnum,
 } from '@store/useCategorizedChatFlowStore';
+import { Category } from 'types/Category';
 
 // CHAT CATEGORIES CONSTANTS
 import { PersonalizedState } from '../../../types/Personalized';
@@ -1037,6 +1038,12 @@ export const EXPLORE_LINK_BUTTONS: ExploreElement[] = [
     screenNavigation: 'BGMusicPicker',
   },
 ];
+
+export type CategoriesObject = {
+  [key: string]: Category;
+};
+
+export type MeditationCategoryKey = keyof typeof PICK_MEDITATION_CATEGORY_IDS;
 
 export const EMAIL_CHECK_REGEXP =
   /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+\.[a-zA-Z]{2,}$/;

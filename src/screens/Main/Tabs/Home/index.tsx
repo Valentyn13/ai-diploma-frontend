@@ -1,9 +1,18 @@
 import CoursesBanner from '@common/components/Banner/CoursesBanner';
+import ExploreLinks from '@common/components/ExploreLinks';
 import Feeling from '@common/components/Feeling';
 import HorizontalCollection from '@common/components/HorizontalCollection';
 import Personalized from '@common/components/Personalized';
 import Welcome from '@common/components/animation/Welcome';
-import { AMPLITUDE_EVENTS, CATEGORY_NAMES } from '@common/constants';
+import ShowAll from '@common/components/buttons/ShowAll';
+import {
+  AMPLITUDE_EVENTS,
+  CATEGORY_NAMES,
+  CategoriesObject,
+  EXPLORE_LINK_BUTTONS,
+  MeditationCategoryKey,
+  PICK_MEDITATION_CATEGORY_IDS,
+} from '@common/constants';
 //import { usePurchases } from '@common/context/PurchaseContext';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { RootStackParamList } from '@screens/RootNavigator';
@@ -13,14 +22,18 @@ import useFeed from '@services/hooks/useFeed';
 import useLatestChat from '@services/hooks/useLatestChat';
 import { useOnboarding } from '@services/hooks/useOnboarding';
 import { useUser } from '@services/hooks/useUser';
+import { categoriesSelector } from '@store/selectors';
 //import { useUser } from '@services/hooks/useUser';
 import { useSheetStore } from '@store/useSheetStore';
 import { logAmplitudeEvent } from '@utils/amplitude-helpers';
 import { FC, useCallback, useEffect, useMemo, useState } from 'react';
 import { Button, Modal, Text, View } from 'react-native';
 import { CopilotStep, walkthroughable } from 'react-native-copilot';
+import { useSelector } from 'react-redux';
+import { Category } from 'types/Category';
 import { Session } from 'types/Meditation';
 
+import InstructorList from './InstructorList';
 import MichaelCard from './MichaelCard';
 import ParallaxScroll from './ParallaxScroll';
 
@@ -48,6 +61,8 @@ const Feed: FC<FeedProps> = ({ navigation, copilot }) => {
   } = useLatestChat({
     withNavigation: true,
   });
+
+  const categories = useSelector(categoriesSelector) as Category[];
 
   const onForeground = useCallback(() => {
     getAppData();
@@ -103,18 +118,32 @@ const Feed: FC<FeedProps> = ({ navigation, copilot }) => {
   //   };
   // }, [copilotEvents, onStop]);
 
+  const categoriesArrayToObject: CategoriesObject = useMemo(() => {
+    return categories.reduce((acc, category) => {
+      acc[category.id] = category;
+      return acc;
+    }, {} as CategoriesObject);
+  }, [categories]);
+
+  function getMeditationData(id: MeditationCategoryKey) {
+    return categoriesArrayToObject[PICK_MEDITATION_CATEGORY_IDS[id]] || [];
+  }
+
+  const sleep = getMeditationData('sleep');
+
+  const breathe = getMeditationData('breathe');
+
   const MichaelCardConfig = useMemo(() => {
     const isChatsExists = chats.length > 0;
     return {
       title: isChatsExists
-        ? 'המשך שיחה עם מיכאל'
-        : 'לשתף, להתייעץ, או \nסתם לפרוק',
+        ? 'שנמשיך מאיפה שהפסקנו?'
+        : 'לשתף, להתייעץ, או סתם לפרוק',
       subtitle: isChatsExists
         ? `${
             CATEGORY_NAMES[latestChat?.category || '']
           } פגישה ${lastActiveSessionIndex}`
-        : 'מיכאל כאן בשבילך כל הזמן',
-      buttonText: isChatsExists ? 'להמשך שיחה' : 'לשיחה עם מיכאל',
+        : 'מיכאל כאן בשבילך',
       handleButtonPress: isChatsExists ? handleOpenRecentChat : handleOpenChats,
     };
   }, [
@@ -151,6 +180,7 @@ const Feed: FC<FeedProps> = ({ navigation, copilot }) => {
             <Personalized />
             <View className="relative bg-[#FFF7EE]">
               <MichaelCard {...MichaelCardConfig} />
+              <View className="mt-10" />
 
               {/* BY TIME */}
               <CopilotStep
@@ -221,9 +251,29 @@ const Feed: FC<FeedProps> = ({ navigation, copilot }) => {
                   />
                 </View>
 
+                {/* Instructors Carousel */}
+                <CopilotStep
+                  text="פגשו את צוות המורים שלנו שינחו אתכם לאורך הדרך"
+                  order={4}
+                  name="instructors">
+                  <CopilotView
+                    copilot={copilot}
+                    className="flex-1 mt-[28px] mb-4">
+                    <View className="flex flex-row items-center justify-between w-full mb-5 pl-5 pr-3">
+                      <Text className="text-[#414141] text-[20px] font-medium leading-[23px]">
+                        צוות המורים
+                      </Text>
+                      <ShowAll
+                        onPress={() => navigation.navigate('Instructors')}
+                      />
+                    </View>
+                    <InstructorList />
+                  </CopilotView>
+                </CopilotStep>
+
                 {/* RECOMMENDED */}
                 {recommendedCollection.map(({ id, title, items }) => (
-                  <View className="flex-1 mt-[28px] mb-6" key={id}>
+                  <View className="flex-1 mt-[22px]" key={id}>
                     <HorizontalCollection
                       shuffle={id !== 'top-rated' && id !== 'latest-release'}
                       key={id}
@@ -282,6 +332,18 @@ const Feed: FC<FeedProps> = ({ navigation, copilot }) => {
                     </CopilotView>
                   </CopilotStep>
                 </DynamicComposition> */}
+
+                {/* Quick Links */}
+                <View className="mt-[28px] mb-[40px]">
+                  <ExploreLinks
+                    categoryData={{
+                      sleep,
+                      breathe,
+                    }}
+                    onShowAll={onShowAll}
+                    data={EXPLORE_LINK_BUTTONS}
+                  />
+                </View>
               </View>
             </View>
           </View>

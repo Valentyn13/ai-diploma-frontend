@@ -8045,6 +8045,11 @@ react-native-screens@^3.29.0:
     react-freeze "^1.0.0"
     warn-once "^0.1.0"
 
+react-native-simple-default-props@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/react-native-simple-default-props/-/react-native-simple-default-props-1.0.0.tgz#9e510754f840820f227736aaac7edd6a4476fc12"
+  integrity sha512-cvhs3S2Yu5JdGtOdFz4aLstuQZM7Gps4/ZYBSwQd3IYVyvLhiWnXVMsRkod7AdB/SR9gHa0W2jXTao2HPwnNbg==
+
 react-native-size-matters@^0.4.2:
   version "0.4.2"
   resolved "https://registry.yarnpkg.com/react-native-size-matters/-/react-native-size-matters-0.4.2.tgz#4348bdd6fc47383f60326d58ad69870c998a5f9a"

@@ -1,14 +1,13 @@
 import FrequenciesBanner from '@common/components/Banner/FrequenciesBanner';
 import CategoriesSelectionList from '@common/components/CategoriesSelectionList';
-import ExploreLinks from '@common/components/ExploreLinks';
 import HorizontalCollection from '@common/components/HorizontalCollection';
 import SessionsGrid from '@common/components/SessionsGrid';
 import Meditate from '@common/components/animation/Meditate';
 import NotFound from '@common/components/animation/NotFound';
-import ShowAll from '@common/components/buttons/ShowAll';
 import {
   CATEGORIES_TO_SHOW_IN_EXPLORE_CAROUSEL,
-  EXPLORE_LINK_BUTTONS,
+  CategoriesObject,
+  MeditationCategoryKey,
   PICK_MEDITATION_CATEGORY_IDS,
   REGA_INSTRUCTOR_ID,
 } from '@common/constants';
@@ -24,13 +23,11 @@ import { querySessions } from '@utils/category';
 import { shuffleArray } from '@utils/rand';
 import React, { useEffect, useMemo, useState } from 'react';
 import { ActivityIndicator, ScrollView, Text, View } from 'react-native';
-import { CopilotStep, walkthroughable } from 'react-native-copilot';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { walkthroughable } from 'react-native-copilot';
 import { useSelector } from 'react-redux';
 import { Category } from 'types/Category';
 import { Session } from 'types/Meditation';
 
-import InstructorList from '../Home/InstructorList';
 import SearchBar from './SearchBar';
 
 function removeEmojis(text: string) {
@@ -39,14 +36,6 @@ function removeEmojis(text: string) {
     '',
   );
 }
-
-const CopilotView = walkthroughable(View);
-
-type CategoriesObject = {
-  [key: string]: Category;
-};
-
-type MeditationCategoryKey = keyof typeof PICK_MEDITATION_CATEGORY_IDS;
 
 const Explore = ({ navigation, copilot }) => {
   //const [firstCollection, ...collections] = useDiscovery();
@@ -97,10 +86,6 @@ const Explore = ({ navigation, copilot }) => {
   const pocketMeditation = getMeditationData('pocket_meditation');
 
   const focus = getMeditationData('focus');
-
-  const sleep = getMeditationData('sleep');
-
-  const breathe = getMeditationData('breathe');
 
   const categoriesToShowInCarousel = useMemo(() => {
     const forShow = categories.filter(c =>
@@ -184,16 +169,6 @@ const Explore = ({ navigation, copilot }) => {
 
       {!isLoading && searchQuery.length === 0 && (
         <View className="">
-          <View className="my-[24px]">
-            <ExploreLinks
-              categoryData={{
-                sleep,
-                breathe,
-              }}
-              onShowAll={onShowAll}
-              data={EXPLORE_LINK_BUTTONS}
-            />
-          </View>
           {/* <View>
             <HorizontalCollection
               items={firstCollection.items}
@@ -207,7 +182,7 @@ const Explore = ({ navigation, copilot }) => {
 
           {/* Liked Meditations */}
           {favoriteMeditations.length > 0 && (
-            <View className="mt-[28px]">
+            <View className="mt-[4px]">
               <HorizontalCollection
                 items={favoriteMeditations}
                 title={'מדיטציות שאהבת'}
@@ -226,22 +201,6 @@ const Explore = ({ navigation, copilot }) => {
               onShowAll={() => onShowAll(stress.title, stress.meditations)}
             />
           </View>
-
-          {/* Instructors Carousel */}
-          <CopilotStep
-            text="פגשו את צוות המורים שלנו שינחו אתכם לאורך הדרך"
-            order={4}
-            name="instructors">
-            <CopilotView copilot={copilot} className="flex-1 mt-[28px] mb-4">
-              <View className="flex flex-row items-center justify-between w-full mb-5 pl-5 pr-3">
-                <Text className="text-[#414141] text-[20px] font-medium leading-[23px]">
-                  צוות המורים
-                </Text>
-                <ShowAll onPress={() => navigation.navigate('Instructors')} />
-              </View>
-              <InstructorList />
-            </CopilotView>
-          </CopilotStep>
 
           {/* Empover Category */}
           <View className="mt-[28px]">
@@ -300,7 +259,7 @@ const Explore = ({ navigation, copilot }) => {
 
           {/* Categories Carousel */}
           <View className="mb-16 mt-[28px]">
-            <Text className="text-[#414141] text-[20px] mb-[10px] font-medium leading-[23px] pr-3">
+            <Text className="text-[#414141] text-left text-[20px] mb-[10px] font-medium leading-[23px] pl-5">
               קטגוריות נוספות
             </Text>
             <CategoriesSelectionList

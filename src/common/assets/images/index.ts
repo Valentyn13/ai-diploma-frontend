@@ -76,6 +76,16 @@ const BGS: Record<string, string[]> = {
 };
 
 const images: Record<string, any> = {
+  home_back_clouds: require('./home_back_clouds.png'),
+  home_birds: require('./home_birds.png'),
+  home_night_stars: require('./home_night_stars.png'),
+  home_cloud_2: require('./home_cloud_2.png'),
+  home_cloud_3: require('./home_cloud_3.png'),
+  home_cloud_1: require('./home_cloud_1.png'),
+  home_cloud_1_1: require('./home_cloud_1_1.png'),
+  home_sun: require('./home_sun.png'),
+  home_moon: require('./home_moon.png'),
+  home_card_cloud: require('./home_card_cloud.png'),
   explore_bg_music: require('./explore_bg_music.png'),
   explore_breath: require('./explore_breath.png'),
   explore_rega_tools: require('./explore_rega_tools.png'),
@@ -85,6 +95,8 @@ const images: Record<string, any> = {
   notes_agreement: require('./notes_agreement.png'),
   questionnaire: require('./questionnaire.png'),
   michael_2: require('./michael.png'),
+  michael_home: require('./michael_home.png'),
+  home_stars: require('./home_stars.png'),
   michael_chat: require('./michael_chat.png'),
   homeOn: require('./homeOn.png'),
   homeOff: require('./homeOff.png'),
