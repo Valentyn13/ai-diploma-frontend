@@ -1,4 +1,5 @@
 /* eslint-disable handle-callback-err */
+import PeopleCommunitySvgIcon from '@common/assets/icons/PeopleCommunitySvgIcon';
 import { CircleButton } from '@common/components/buttons/CircleButton';
 import {
   CONTACT_EMAIL_SUPPORT,
@@ -69,6 +70,14 @@ const Settings = ({ navigation }) => {
     navigation.reset({
       index: 0,
       routes: [{ name: 'Auth' }],
+    });
+  };
+
+  const onJoinUs = () => {
+    const whatsappUrl = 'https://chat.whatsapp.com/IGDeIhM3NvIFwS2LtOaSW4';
+
+    Linking.openURL(whatsappUrl).catch(err => {
+      Alert.alert('לא ניתן לפתוח וואטסאפ במכשיר שלך');
     });
   };
 
@@ -225,6 +234,12 @@ const Settings = ({ navigation }) => {
       icon: 'whatsapp',
     },
     {
+      title: 'הצטרפו לקהילה',
+      onPress: onJoinUs,
+      icon: 'people-community',
+      isPremium: true,
+    },
+    {
       title: 'מדיניות הפרטיות ותנאי השימוש',
       onPress: () => navigation.navigate('PrivacyPolicy'),
       icon: 'book',
@@ -275,14 +290,23 @@ const Settings = ({ navigation }) => {
             className="flex flex-row items-center py-4 px-5 border-b border-[#513F73]/10">
             <View className="flex flex-row items-center justify-between flex-1">
               <View className="flex flex-row items-center">
-                <Icon
-                  style={{
-                    width: 20,
-                  }}
-                  name={icon}
-                  size={20}
-                  color="#160f29"
-                />
+                {icon === 'people-community' ? (
+                  <PeopleCommunitySvgIcon
+                    style={{ marginRight: -6 }}
+                    height={26}
+                    width={26}
+                    fill="#160f29"
+                  />
+                ) : (
+                  <Icon
+                    style={{
+                      width: 20,
+                    }}
+                    name={icon}
+                    size={20}
+                    color="#160f29"
+                  />
+                )}
                 <Text className="text-lg font-medium ml-4 text-left text-black/80">
                   {title}
                 </Text>
