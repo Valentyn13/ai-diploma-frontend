@@ -1,7 +1,9 @@
 import {
   ERROR_MESSAGES,
+  INCORRECT_PASSWORD,
   LOGIN_ALERT_TITLE,
   LOGIN_DEFAULT_ERROR_MESSAGE,
+  NON_EXISTING_USER,
   USER_EXIST_WITH_THIS_EMAIL_ERROR_MESSAGE,
 } from '@common/constants';
 import api from '@services/api';
@@ -36,11 +38,16 @@ export default () => {
 
       switch (error.trim()) {
         case ERROR_MESSAGES.DUPLICATE_EMAIL:
-          // TODO: Add new message
           Alert.alert(
             LOGIN_ALERT_TITLE,
             USER_EXIST_WITH_THIS_EMAIL_ERROR_MESSAGE,
           );
+          break;
+        case ERROR_MESSAGES.INCORRECT_PASSWORD:
+          Alert.alert(LOGIN_ALERT_TITLE, INCORRECT_PASSWORD);
+          break;
+        case ERROR_MESSAGES.NON_EXISTING_USER:
+          Alert.alert(LOGIN_ALERT_TITLE, NON_EXISTING_USER);
           break;
         default:
           Alert.alert(LOGIN_ALERT_TITLE, LOGIN_DEFAULT_ERROR_MESSAGE);

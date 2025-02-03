@@ -1,10 +1,17 @@
 // ERROR MESSAGES
 export enum ERROR_MESSAGES {
   DUPLICATE_EMAIL = 'DUPLICATE_EMAIL',
+  INCORRECT_PASSWORD = 'INCORRECT_PASSWORD',
+  NON_EXISTING_USER = 'NON_EXISTING_USER',
 }
 
 export const USER_EXIST_WITH_THIS_EMAIL_ERROR_MESSAGE =
   'משתמש עם כתובת דוא"ל זו כבר קיים';
+
+export const INCORRECT_PASSWORD = 'הסיסמה שהזנת שגויה. אנא נסה/י שוב.';
+
+export const NON_EXISTING_USER = 'משתמש זה אינו קיים';
+
 export const EMAIL_ERROR_MESSAGE = 'נא למלא את המייל הנכון';
 
 export const RESET_CODE_ERROR_MESSAGE = 'קוד איפוס לא תקין';
