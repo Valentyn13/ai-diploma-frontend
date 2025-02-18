@@ -173,9 +173,7 @@ const CustomTabBarButton = ({
 
 const TabNavigator = ({ route }) => {
   const navigation = useNavigation();
-  const {
-    user: { hasPassedStarterChat },
-  } = useUser();
+  const hasPassedStarterChat = true;
   const { isStartedChatActivated } = useStarterChatStore(state => ({
     isStartedChatActivated: state.isStartedChatActivated,
   }));

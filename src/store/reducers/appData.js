@@ -12,20 +12,9 @@ const initialState = {
 const appData = (state = initialState, { type, payload }) => {
   switch (type) {
     case actions.setAppData.actionName: {
-      const {
-        courses,
-        categories,
-        instructors,
-        meditationsByCategories,
-        meditationsByTimeOfTheDay,
-      } = payload;
+      const {} = payload;
       return {
         loaded: true,
-        courses,
-        categories,
-        instructors,
-        meditationsByCategories,
-        meditationsByTimeOfTheDay,
       };
     }
     case actions.logout.actionName:

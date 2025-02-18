@@ -8,7 +8,6 @@ import {
 } from '@gorhom/bottom-sheet';
 import { useNavigation } from '@react-navigation/native';
 import { useUser } from '@services/hooks/useUser';
-import { allMeditations } from '@store/selectors';
 import { useSheetStore } from '@store/useSheetStore';
 import React, {
   FC,
@@ -212,7 +211,7 @@ const MeditationPicker = () => {
     user: { sex },
   } = useUser();
   const { hasPremium } = usePurchases();
-  const meditations = useSelector(allMeditations);
+  const meditations = useMemo(() => [], []);
   const navigation = useNavigation();
   const { isOpen, setIsOpen } = useSheetStore(state => state);
   const bottomSheetRef = useRef<BottomSheetModal>(null);

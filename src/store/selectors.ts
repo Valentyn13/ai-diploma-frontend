@@ -47,22 +47,13 @@ const findMeditation = (allMeditations, meditationId) =>
 
 export const allMeditations = createSelector(
   [getCategories, getCourses],
-  (categories, courses) => [
-    ...categories.reduce(
-      (allMeds, category) => [...allMeds, ...mapMeditations(category)],
-      [],
-    ),
-    ...courses.reduce(
-      (allMeds, course) => [...allMeds, ...mapMeditations(course)],
-      [],
-    ),
-  ],
+  (categories, courses) => [],
 );
 
 export const allMeditationsButCourses = createSelector(
   [getCategories, getCourses],
   categories => [
-    ...categories.reduce(
+    ...categories?.reduce(
       (allMeds, category) => [...allMeds, ...mapMeditations(category)],
       [],
     ),
@@ -74,15 +65,15 @@ export const homeMeditationsSelector = createSelector(
   (categories, selectedCategories) => {
     selectedCategories = selectedCategories.map(item => item.toLowerCase());
 
-    let filteredCategories = categories.filter(({ name }) =>
+    let filteredCategories = categories?.filter(({ name }) =>
       selectedCategories.includes(name.toLowerCase()),
     );
 
-    if (filteredCategories.length === 0) {
+    if (filteredCategories?.length === 0) {
       filteredCategories = categories.length > 0 ? [categories[0]] : [];
     }
 
-    return filteredCategories.reduce(
+    return filteredCategories?.reduce(
       (meds, category) => [...meds, ...mapMeditations(category)],
       [],
     );
@@ -151,7 +142,7 @@ export const coursesSelector = createSelector([getCourses], courses => {
 });
 
 export const firstCourseSelector = createSelector([getCourses], courses => {
-  const mappedCourses = courses.map(course => {
+  const mappedCourses = [].map(course => {
     const { _id, name, title, info, subTitle, isCategoryLocked } = course;
     return {
       id: _id,

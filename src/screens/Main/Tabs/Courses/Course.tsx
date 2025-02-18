@@ -18,18 +18,12 @@ const Course = () => {
   const route = useRoute();
 
   const { id, image } = route.params || ({} as any);
-  const allCourses = useSelector(coursesSelector) as any[];
-  const history = useSelector(practiceHistorySelector) as Session[];
+  //const allCourses = useSelector(coursesSelector) as any[];
+  //const history = useSelector(practiceHistorySelector) as Session[];
 
-  const historyIds = useMemo(
-    () => history.map(({ id: medId }) => medId),
-    [history],
-  );
+  const historyIds = useMemo(() => [].map(({ id: medId }) => medId), []);
 
-  const course = useMemo(
-    () => allCourses.find(c => c.id === id),
-    [allCourses, id],
-  );
+  const course = useMemo(() => [].find(c => c.id === id), [id]);
 
   return (
     <SafeAreaView

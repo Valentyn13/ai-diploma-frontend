@@ -1,7 +1,6 @@
 import { LIMIT_MAX_MEDITATIONS_FEED } from '@common/constants';
 import i18n from '@services/localization/i18n';
 import {
-  allMeditations as allMeditationsSelector,
   getMeditationsByCategories,
   getMeditationsByTimeOfTheDay,
   homeMeditationsSelector,
@@ -28,7 +27,7 @@ const useFeed = (): Collection[] => {
   const meditations = useSelector(homeMeditationsSelector) as Session[];
   const latest = useSelector(latestMeditationSelector) as Session[];
   const topRated = useSelector(toptMeditationSelector) as Session[];
-  const allMeditations = useSelector(allMeditationsSelector) as Session[];
+  const allMeditations = useMemo(() => [], []);
   const meditationsByTimeOfTheDay = useSelector(
     getMeditationsByTimeOfTheDay,
   ) as MeditationsByTimeOfTheDay[];

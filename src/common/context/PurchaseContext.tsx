@@ -165,7 +165,7 @@ export const PurchaseProvider: React.FC<PropsWithChildren> = ({ children }) => {
 
   const contextValue: PurchaseContextProps = {
     plans,
-    hasPremium,
+    hasPremium: true,
     purchasing,
     makePurchase,
     restorePurchase,

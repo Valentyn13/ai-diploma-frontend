@@ -46,10 +46,12 @@ const Feed: FC<FeedProps> = ({ navigation, copilot }) => {
   const { getAppData } = useAppData();
 
   const {
-    user: { sex },
+    user: { sex, hasPassedStarterChat },
   } = useUser();
-  const [byTimeCollection, latestCollection, ...collections]: Collection[] =
-    useFeed();
+console.log(hasPassedStarterChat)
+  const byTimeCollection = useMemo(() => {}, []);
+  const latestCollection = useMemo(() => {}, []);
+  const collections = useMemo(() => [], []);
   const { isOldUser, updateIsOldUser } = useOnboarding(navigation);
 
   const {
@@ -62,7 +64,7 @@ const Feed: FC<FeedProps> = ({ navigation, copilot }) => {
     withNavigation: true,
   });
 
-  const categories = useSelector(categoriesSelector) as Category[];
+  const categories = useMemo(() => [], []);
 
   const onForeground = useCallback(() => {
     getAppData();
@@ -82,41 +84,9 @@ const Feed: FC<FeedProps> = ({ navigation, copilot }) => {
 
   const setIsOpen = useSheetStore((state: any) => state.setIsOpen);
 
-  interface Collection {
-    id: string;
-    title: string;
-    items: Session[];
-  }
-
   const [_, topRatedCollection, recommendedCollection] = useMemo(() => {
-    const topRatedCollectionIndex = collections.findIndex(
-      c => c.id === 'top-rated',
-    );
-
-    const modifiedCollections = [...collections];
-    const topRated = modifiedCollections.splice(topRatedCollectionIndex, 1);
-
-    const recommendedCollectionIndex = modifiedCollections.findIndex(
-      c => c.id === 'greeting-general',
-    );
-
-    const recommendedColl = modifiedCollections.splice(
-      recommendedCollectionIndex,
-      1,
-    );
-
-    return [modifiedCollections, topRated, recommendedColl];
-  }, [collections]);
-
-  // const { start, copilotEvents } = useCopilot();
-  // const onStop = useCallback(() => updateIsOldUser(), [updateIsOldUser]);
-
-  // useEffect(() => {
-  //   copilotEvents.on('stop', onStop);
-  //   return () => {
-  //     copilotEvents.off('stop', onStop);
-  //   };
-  // }, [copilotEvents, onStop]);
+    return [[], [], []];
+  }, []);
 
   const categoriesArrayToObject: CategoriesObject = useMemo(() => {
     return categories.reduce((acc, category) => {
@@ -179,7 +149,6 @@ const Feed: FC<FeedProps> = ({ navigation, copilot }) => {
           <View className="relative">
             <Personalized />
             <View className="relative bg-[#FFF7EE]">
-              <MichaelCard {...MichaelCardConfig} />
               <View className="mt-10" />
 
               {/* BY TIME */}
@@ -190,10 +159,13 @@ const Feed: FC<FeedProps> = ({ navigation, copilot }) => {
                 <CopilotView copilot={copilot} className="flex-1 mt-[40px]">
                   <HorizontalCollection
                     key="by-time"
-                    title={byTimeCollection.title}
-                    items={byTimeCollection.items}
+                    title={byTimeCollection?.title}
+                    items={byTimeCollection?.items}
                     onShowAll={() => {
-                      onShowAll(byTimeCollection.title, byTimeCollection.items);
+                      onShowAll(
+                        byTimeCollection?.title,
+                        byTimeCollection?.items,
+                      );
                     }}
                   />
                 </CopilotView>
@@ -242,17 +214,17 @@ const Feed: FC<FeedProps> = ({ navigation, copilot }) => {
                 <View className="flex-1">
                   <HorizontalCollection
                     shuffle={false}
-                    key={latestCollection.id}
-                    title={latestCollection.title}
-                    items={latestCollection.items}
+                    key={latestCollection?.id}
+                    title={latestCollection?.title}
+                    items={latestCollection?.items}
                     onShowAll={() => {
-                      onShowAll(latestCollection.title, latestCollection.items);
+                      onShowAll(latestCollection?.title, latestCollection?.items);
                     }}
                   />
                 </View>
 
                 {/* Instructors Carousel */}
-                <CopilotStep
+                {/* <CopilotStep
                   text="פגשו את צוות המורים שלנו שינחו אתכם לאורך הדרך"
                   order={4}
                   name="instructors">
@@ -269,7 +241,7 @@ const Feed: FC<FeedProps> = ({ navigation, copilot }) => {
                     </View>
                     <InstructorList />
                   </CopilotView>
-                </CopilotStep>
+                </CopilotStep> */}
 
                 {/* RECOMMENDED */}
                 {recommendedCollection.map(({ id, title, items }) => (

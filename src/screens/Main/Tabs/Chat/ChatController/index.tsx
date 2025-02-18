@@ -16,11 +16,11 @@ import UserInsightView from './UserInsightView';
 
 const ChatController = () => {
   const navigation = useNavigation<any>();
-  const { hasPremium } = usePurchases();
   const {
-    user: { hasPassedStarterChat, id: userId },
+    user: { id: userId },
   } = useUser();
 
+  const hasPassedStarterChat = true
   const {
     currentStep,
     selectedCategory,
@@ -56,10 +56,7 @@ const ChatController = () => {
   const { latestChat, lastActiveSessionIndex, handleOpenRecentChat } =
     useLatestChat({ withNavigation: false });
 
-  const shouldShowPaywall = useMemo(
-    () => !hasPremium && !hasPassedStarterChat && !!userId,
-    [hasPremium, hasPassedStarterChat, userId],
-  );
+  const shouldShowPaywall = useMemo(() => false, []);
 
   const categories: ChatTypeData[] = useMemo(() => {
     return CHAT_TYPES.map(chatType => {

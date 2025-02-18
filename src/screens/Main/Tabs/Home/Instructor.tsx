@@ -3,7 +3,6 @@ import SessionsGrid from '@common/components/SessionsGrid';
 import { CircleButton } from '@common/components/buttons/CircleButton';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import useInstructor from '@services/hooks/useInstructor';
-import { allMeditations as allMeditationsSelector } from '@store/selectors';
 import React, { useMemo } from 'react';
 import { Linking, Text, View } from 'react-native';
 import { useSelector } from 'react-redux';
@@ -17,7 +16,7 @@ const Instructor = () => {
     x => !!x && x._id === instructorId,
   );
 
-  const allMeditations = useSelector(allMeditationsSelector);
+  const allMeditations = useMemo(() => [], []);
 
   const meditations = useMemo(
     () =>

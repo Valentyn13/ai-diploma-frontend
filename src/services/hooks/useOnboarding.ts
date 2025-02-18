@@ -34,7 +34,7 @@ export const useOnboarding = (navigation: any) => {
   }, []);
 
   useEffect(() => {
-    if (!isOldUser && !playedFirst && firstCourse.meditations.length) {
+    if (!isOldUser && !playedFirst && firstCourse?.meditations?.length) {
       navigation.replace('Main', {
         screen: 'MeditationPlayer',
         params: {

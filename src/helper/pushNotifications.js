@@ -1,17 +1,9 @@
 import messaging from '@react-native-firebase/messaging';
-import logger from '@utils/logger';
 import { Platform } from 'react-native';
 import PushNotification, { Importance } from 'react-native-push-notification';
 
 const getFcmToken = async () => {
-  try {
-    const fcmToken = await messaging().getToken();
-    logger.log('got fcm token', fcmToken);
-    return fcmToken;
-  } catch (error) {
-    logger.error('failed to get fcm token', error);
-    return null;
-  }
+  return null;
 };
 
 async function requestUserPermission() {

@@ -20,18 +20,13 @@ import { scale } from 'react-native-size-matters';
 import { TouchableOpacity, View } from 'react-native-ui-lib';
 import { useSelector } from 'react-redux';
 
-import { SOCIAL_ICONS } from './Icons';
+//import { SOCIAL_ICONS } from './Icons';
 
 type PreLoginProps = NativeStackScreenProps<
   RootStackParamList,
   'Auth',
   'PreLogin'
 >;
-
-// type ProfileScreenProps = CompositeScreenProps<
-//   NativeStackScreenProps<RootStackParamList, 'Main'>,
-//   NativeStackScreenProps<RootStackParamList, 'Auth', 'PreLogin'>
-// >;
 
 const PreLogin: FC<PreLoginProps> = ({ navigation: { navigate } }) => {
   const { isLoading, setIsLoading } = useLoginStore(state => state);
@@ -163,7 +158,7 @@ const PreLogin: FC<PreLoginProps> = ({ navigation: { navigate } }) => {
             />
             <Text className="text-center text-black text-lg">או</Text>
 
-            <View
+            {/* <View
               row
               style={{
                 gap: 8,
@@ -196,7 +191,7 @@ const PreLogin: FC<PreLoginProps> = ({ navigation: { navigate } }) => {
                   </TouchableOpacity>
                 );
               })}
-            </View>
+            </View> */}
           </View>
 
           <View className="flex-col items-center gap-1">

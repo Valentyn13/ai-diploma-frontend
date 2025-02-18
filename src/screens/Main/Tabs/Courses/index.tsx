@@ -68,7 +68,7 @@ const CourseItem = ({ item, index, onPress }) => {
 };
 
 const Courses: FC<CoursesProps> = ({ navigation }) => {
-  const courses = useSelector(coursesSelector) as Course[];
+  const courses = []
 
   const renderItem = ({ item, index }) => (
     <CourseItem

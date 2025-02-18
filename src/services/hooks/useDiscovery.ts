@@ -1,8 +1,5 @@
 import i18n from '@services/localization/i18n';
-import {
-  allMeditations as allMeditationsSelector,
-  getMeditationsByCategories,
-} from '@store/selectors';
+import { getMeditationsByCategories } from '@store/selectors';
 import { getRandomElements } from '@utils/rand';
 import { useCallback, useMemo } from 'react';
 import { useSelector } from 'react-redux';
@@ -18,7 +15,7 @@ interface Collection {
 
 const useDiscovery = (): Collection[] => {
   const feedCollections = useFeed();
-  const allMeditations = useSelector(allMeditationsSelector) as Session[];
+  const allMeditations = useMemo(() => [], []);
   const meditationByCategories = useSelector(
     getMeditationsByCategories,
   ) as MeditationByPredefinedCategories[];

@@ -145,7 +145,7 @@ export default ({
 
         if (status === 200 || status === 201) {
           if (token && token.accessToken) {
-            console.log('setting token');
+            console.log('setting token 1');
             setAuthHeader(token.accessToken);
             storeToken(token.accessToken);
           }

@@ -1,6 +1,5 @@
 import { CircleButton } from '@common/components/buttons/CircleButton';
 import { useNavigation } from '@react-navigation/native';
-import { allMeditations as allMeditationsSelector } from '@store/selectors';
 import { shuffleArray } from '@utils/rand';
 import React, { useCallback, useMemo } from 'react';
 import {
@@ -22,7 +21,7 @@ const Instructors = () => {
     [instructors],
   );
 
-  const allMeditations = useSelector(allMeditationsSelector);
+  const allMeditations = useMemo(() => [], []);
 
   const getSessionsByInstructor = useCallback(
     (id: string) => {

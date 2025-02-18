@@ -18,7 +18,6 @@ import {
   categoriesSelector,
   favoriteMeditationsSelector,
 } from '@store/selectors';
-import { allMeditations } from '@store/selectors';
 import { querySessions } from '@utils/category';
 import { shuffleArray } from '@utils/rand';
 import React, { useEffect, useMemo, useState } from 'react';
@@ -42,9 +41,9 @@ const Explore = ({ navigation, copilot }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [searchQuery, setSearchQuery] = useDebouncedState('', 500);
   const { navigate } = useNavigation();
-  const instructors = useSelector((state: any) => state.appData.instructors);
-  const categories = useSelector(categoriesSelector) as Category[];
-  const allAppMeditations = useSelector(allMeditations);
+  const instructors = useMemo(() => [], []);
+  const categories = useMemo(() => [], []);
+  const allAppMeditations = useMemo(() => [], []);
   const regaInstructor = instructors.find(
     i => !!i && i._id === REGA_INSTRUCTOR_ID,
   );

@@ -4,10 +4,6 @@ import { CircleButton } from '@common/components/buttons/CircleButton';
 import { CATEGORY_COLOR, MEDITATIONS_IMAGES_URL } from '@common/constants';
 import { usePurchases } from '@common/context/PurchaseContext';
 import { useNavigation, useRoute } from '@react-navigation/native';
-import {
-  allMeditations as allMeditationsSelector,
-  meditationInstructor,
-} from '@store/selectors';
 import meditationTime from '@utils/time';
 import React, { useCallback, useMemo } from 'react';
 import {
@@ -27,8 +23,8 @@ const SessionModal = ({ navigation }) => {
   const { hasPremium } = usePurchases();
   const { goBack } = useNavigation();
   const { id } = route.params || ({} as any);
-  const allMeditations = useSelector(allMeditationsSelector) as Session[];
-  const instructor = useSelector(state => meditationInstructor(state, id));
+  const allMeditations = useMemo(() => [], []);
+  const instructor = useMemo(() => {}, []);
 
   const meditation = useMemo(
     () => allMeditations.find(m => m.id === id),

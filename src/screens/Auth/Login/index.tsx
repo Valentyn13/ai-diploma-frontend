@@ -135,7 +135,7 @@ const Login: FC = () => {
               className="w-5/6 mx-5 text-2xl text-right text-black"
             />
           </View>
-          <TouchableOpacity
+          {/* <TouchableOpacity
             className="flex items-end"
             onPress={() => {
               navigation.navigate('Auth', { screen: 'ForgotPassword' });
@@ -143,7 +143,7 @@ const Login: FC = () => {
             <Text className="text-black underline text-sm mt-5">
               שכחתי סיסמא
             </Text>
-          </TouchableOpacity>
+          </TouchableOpacity> */}
         </KeyboardAvoidingView>
       </ScrollView>
 

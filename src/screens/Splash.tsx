@@ -88,7 +88,7 @@ const Splash: FC<SplashProps> = ({ navigation: { navigate, replace } }) => {
   ]);
 
   useEffect(() => {
-    if (isLoaded && animationFinished) {
+    if (animationFinished) {
       replace('Main');
     }
   }, [isLoaded, animationFinished, replace]);
