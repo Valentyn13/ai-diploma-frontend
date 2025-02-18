@@ -63,7 +63,7 @@ public class MainApplication extends Application implements ReactApplication {
 //     ReactNativeFlipper.initializeFlipper(this, getReactNativeHost().getReactInstanceManager());
 
     I18nUtil sharedI18nUtilInstance = I18nUtil.getInstance();
-    sharedI18nUtilInstance.allowRTL(getApplicationContext(), true);
-    sharedI18nUtilInstance.forceRTL(getApplicationContext(), true);
+    sharedI18nUtilInstance.allowRTL(getApplicationContext(), false);
+    sharedI18nUtilInstance.forceRTL(getApplicationContext(), false);
   }
 }
