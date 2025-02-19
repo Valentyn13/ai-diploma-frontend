@@ -28,11 +28,7 @@ const AppHeader = () => {
             width: 40,
             height: 40,
           }}
-          onPress={() =>
-            navigation.navigate('Main', {
-              screen: 'Notifications',
-            })
-          }>
+          onPress={() => console.log('Notifications')}>
           <Icon
             name="search-outline"
             size={24}
@@ -47,11 +43,7 @@ const AppHeader = () => {
             width: 40,
             height: 40,
           }}
-          onPress={() =>
-            navigation.navigate('Main', {
-              screen: 'Notifications',
-            })
-          }>
+          onPress={() => console.log('Notifications')}>
           <Icon
             name="notifications-outline"
             size={24}

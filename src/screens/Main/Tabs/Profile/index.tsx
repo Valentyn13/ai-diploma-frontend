@@ -4,7 +4,6 @@ import React from 'react';
 
 import Details from './Details';
 import MyWay from './MyWay';
-import Notifications from './Notifications';
 import Settings from './Settings';
 
 const DetailsStack = createNativeStackNavigator();
@@ -19,7 +18,6 @@ const SettingsNavigator: React.FC = () => {
       }}>
       <DetailsStack.Screen name="Settings" component={Settings} />
       <DetailsStack.Screen name="PrivacyPolicy" component={PrivacyPolicy} />
-      <DetailsStack.Screen name="Notifications" component={Notifications} />
       <ProfileStack.Screen
         name="Details"
         component={Details}

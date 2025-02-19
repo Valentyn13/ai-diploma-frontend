@@ -1,13 +1,11 @@
 import Divider from '@common/components/Divider';
-import { SubTitle } from '@common/components/Styled';
 import { CircleButton } from '@common/components/buttons/CircleButton';
 import { useNavigation } from '@react-navigation/native';
 import { stringToDate } from '@utils/string';
 import React, { useEffect, useState } from 'react';
-import { View } from 'react-native';
+import { Text, View } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import { useSelector } from 'react-redux';
-import styled from 'styled-components';
 
 import Badges from './Badges';
 import Card from './Card';
@@ -16,11 +14,6 @@ import OneMChallenge from './OneMChallenge';
 import Quote from './Quote';
 import Strikes from './Strikes';
 import UserMetrics from './UserMetrics';
-
-const Title = styled(SubTitle)`
-  font-size: 24;
-  font-weight: 600;
-`;
 
 const fetchChallengeProgress = async () => {
   let practivedMinutes = 202000;
@@ -83,7 +76,7 @@ const MyWay = () => {
           />
           <Divider className="mb-6 mt-4" />
 
-          <Title className="mb-5" t="הרגעים שלי" />
+          <Text className="mb-5 font-bold text-2xl"> הרגעים שלי</Text>
           <Card>
             <UserMetrics />
             <Divider className="b-[#160F29] border-opacity-30 w-1/2 self-center" />
@@ -92,7 +85,7 @@ const MyWay = () => {
           <Divider className="mb-6 mt-4" />
         </View>
         <View className="px-5">
-          <Title className="mb-5" t="המסלול שלי" />
+          <Text className="mb-5 font-bold text-2xl">המסלול שלי</Text>
           <Card>
             <Strikes dates={dates} />
           </Card>

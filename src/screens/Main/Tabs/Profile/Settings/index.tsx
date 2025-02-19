@@ -206,11 +206,6 @@ const Settings = ({ navigation }) => {
       icon: 'user-large',
     },
     {
-      title: 'התראות',
-      onPress: () => navigation.navigate('Notifications'),
-      icon: 'bullhorn',
-    },
-    {
       title: 'פנו אלינו',
       onPress: onContactUs,
       onLongPress: () => {

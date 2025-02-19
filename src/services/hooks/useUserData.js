@@ -15,7 +15,7 @@ export default () => {
 
   const { fetch: fetchProfile } = profileApi;
 
-  const getUserData = useCallback(() => {
+  const getUserData = useCallback(async () => {
     fetchProfile();
   }, [fetchProfile]);
 

@@ -1,17 +1,10 @@
-import { SubTitle } from '@common/components/Styled';
 import ProgressBar from '@screens/Main/Tabs/Profile/MyWay/ProgressBar';
 import React, { FC, useMemo } from 'react';
 import { Text, View } from 'react-native';
-import styled from 'styled-components';
 
 import Card from './Card';
 
 const CHALLANGE_TOTAL = 1000000;
-
-const Title = styled(SubTitle)`
-  font-size: 24;
-  font-weight: 600;
-`;
 
 const OneMChallenge: FC<{
   totalMinutesPracticed: number;
@@ -29,7 +22,9 @@ const OneMChallenge: FC<{
 
   return (
     <View>
-      <Title className="mb-4" t="אתגר #מיליוןדקות של מדיטציה" />
+      <Text className="mb-5 font-bold text-2xl">
+        אתגר #מיליוןדקות של מדיטציה
+      </Text>
       <Card>
         <View className="flex-row justify-between mb-4">
           <Text className="text-black">

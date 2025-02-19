@@ -17,12 +17,18 @@ export default () => {
 
   const getAppData = useCallback(() => {
     console.log('===========FETCHING APP DATA========');
-    fetchPollData();
-    fetchLatestActiveSession();
-    fetchChats()
-      .then(() => setLoadSuccess(true))
+    Promise.all([
+      fetchPollData(),
+      fetchLatestActiveSession(),
+      getUserData(),
+      fetchChats(),
+    ])
+      .then(data => {
+        console.log(data);
+        setLoadSuccess(true);
+      })
       .catch(err => console.error(err));
-  }, [fetchChats]);
+  }, [fetchChats, fetchLatestActiveSession, fetchPollData, getUserData]);
 
   useEffect(() => {
     if (loadSuccess) {
