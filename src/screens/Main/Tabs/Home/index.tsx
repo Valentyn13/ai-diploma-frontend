@@ -13,7 +13,6 @@ import {
   MeditationCategoryKey,
   PICK_MEDITATION_CATEGORY_IDS,
 } from '@common/constants';
-//import { usePurchases } from '@common/context/PurchaseContext';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { RootStackParamList } from '@screens/RootNavigator';
 import useAppData from '@services/hooks/useAppData';
@@ -42,13 +41,12 @@ type FeedProps = NativeStackScreenProps<RootStackParamList, 'Main'>;
 const CopilotView = walkthroughable(View);
 
 const Feed: FC<FeedProps> = ({ navigation, copilot }) => {
-  // const { hasPremium } = usePurchases();
   const { getAppData } = useAppData();
 
   const {
-    user: { sex, hasPassedStarterChat },
+    user: { sex },
   } = useUser();
-console.log(hasPassedStarterChat)
+
   const byTimeCollection = useMemo(() => {}, []);
   const latestCollection = useMemo(() => {}, []);
   const collections = useMemo(() => [], []);

@@ -2,7 +2,6 @@ import { getCategoryImg } from '@common/assets/images/index';
 import ParallaxScrollView from '@common/components/ParallaxScrollView';
 import { CircleButton } from '@common/components/buttons/CircleButton';
 import { CATEGORY_COLOR, MEDITATIONS_IMAGES_URL } from '@common/constants';
-import { usePurchases } from '@common/context/PurchaseContext';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import meditationTime from '@utils/time';
 import React, { useCallback, useMemo } from 'react';
@@ -15,12 +14,10 @@ import {
   View,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome6';
-import { useSelector } from 'react-redux';
-import { Session } from 'types/Meditation';
 
 const SessionModal = ({ navigation }) => {
   const route = useRoute();
-  const { hasPremium } = usePurchases();
+  const hasPremium = true;
   const { goBack } = useNavigation();
   const { id } = route.params || ({} as any);
   const allMeditations = useMemo(() => [], []);

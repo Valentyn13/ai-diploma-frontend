@@ -1,6 +1,5 @@
 import { getCategoryImg } from '@common/assets/images/index';
 import { CATEGORY_COLOR, MEDITATIONS_IMAGES_URL } from '@common/constants';
-import { usePurchases } from '@common/context/PurchaseContext';
 import theme from '@common/theme';
 import { useNavigation } from '@react-navigation/native';
 import { useAmplitude } from '@services/hooks/useAmplitude';
@@ -57,11 +56,10 @@ const SessionCard: FC<MeditationItemProps> = memo(
     const { navigate } = useNavigation();
     const amplitudeInstance = useAmplitude();
     const instructor = useSelector(state => meditationInstructor(state, id));
-    const { hasPremium } = usePurchases();
     const isNew = useMemo(() => isRecent({ createdAt }), [createdAt]);
 
     const navigateToPlayer = useCallback(() => {
-      if (!hasPremium && isCategoryLocked) {
+      if (isCategoryLocked) {
         // @ts-ignore TODO: fix this
         navigate('Subscribe');
       } else {
@@ -77,7 +75,6 @@ const SessionCard: FC<MeditationItemProps> = memo(
         });
       }
     }, [
-      hasPremium,
       isCategoryLocked,
       navigate,
       name,

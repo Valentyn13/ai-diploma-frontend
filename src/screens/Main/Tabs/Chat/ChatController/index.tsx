@@ -1,5 +1,4 @@
 import { AMPLITUDE_EVENTS, CHAT_TYPES, ChatTypeData } from '@common/constants';
-import { usePurchases } from '@common/context/PurchaseContext';
 import { useNavigation } from '@react-navigation/native';
 import { useLogViewedScreenEvent } from '@services/hooks/amplitude';
 import useLatestChat from '@services/hooks/useLatestChat';
@@ -17,10 +16,8 @@ import UserInsightView from './UserInsightView';
 const ChatController = () => {
   const navigation = useNavigation<any>();
   const {
-    user: { id: userId },
+    user: { id: userId, hasPassedStarterChat },
   } = useUser();
-
-  const hasPassedStarterChat = true
   const {
     currentStep,
     selectedCategory,

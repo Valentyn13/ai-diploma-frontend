@@ -46,6 +46,7 @@ const API: { [key: string]: IApi } = {
   profile: {
     url: `${USER_API}/profile`,
     method: 'get',
+    setAuthToken: true,
   },
   syncUserPreferences: {
     url: `${USER_API}/preferences/:userId`,

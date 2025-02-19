@@ -14,7 +14,6 @@ import {
   UNSUBSCRIBE_CONFIRM_MESSAGE,
   UNSUBSCRIBE_CONFIRM_TITLE,
 } from '@common/constants';
-import { usePurchases } from '@common/context/PurchaseContext';
 import Clipboard from '@react-native-clipboard/clipboard';
 import { useAmplitude } from '@services/hooks/useAmplitude';
 import { useClearChatStore } from '@services/hooks/useClearChatStore';
@@ -42,7 +41,6 @@ import Icon from 'react-native-vector-icons/FontAwesome6';
 import { useDispatch } from 'react-redux';
 
 const Settings = ({ navigation }) => {
-  const { hasPremium } = usePurchases();
   const { clearChatStore } = useClearChatStore();
   const dispatch = useDispatch();
   const {
@@ -220,7 +218,7 @@ const Settings = ({ navigation }) => {
           id,
           name,
           email,
-          hasPremium,
+          hasPremium: true,
           appVersion: DeviceInfo.getVersion(),
           platform: Platform.OS,
         };

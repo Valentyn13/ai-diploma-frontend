@@ -1,4 +1,4 @@
-import { usePurchases } from '@common/context/PurchaseContext';
+
 import {
   BottomSheetBackdrop,
   BottomSheetFlatList,
@@ -210,7 +210,6 @@ const MeditationPicker = () => {
   const {
     user: { sex },
   } = useUser();
-  const { hasPremium } = usePurchases();
   const meditations = useMemo(() => [], []);
   const navigation = useNavigation();
   const { isOpen, setIsOpen } = useSheetStore(state => state);

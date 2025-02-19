@@ -1,19 +1,14 @@
 import CourseMeditations from '@common/components/CourseMeditations';
 import ParallaxScrollView from '@common/components/ParallaxScrollView';
 import { CircleButton } from '@common/components/buttons/CircleButton';
-import { usePurchases } from '@common/context/PurchaseContext';
 import Theme from '@common/theme';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import i18n from '@services/localization/i18n';
-import { coursesSelector, practiceHistorySelector } from '@store/selectors';
 import React, { useMemo } from 'react';
 import { Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { useSelector } from 'react-redux';
-import { Session } from 'types/Meditation';
 
 const Course = () => {
-  const { hasPremium } = usePurchases();
   const navigation = useNavigation();
   const route = useRoute();
 
@@ -82,7 +77,7 @@ const Course = () => {
           history={historyIds}
           items={course?.meditations || []}
           isCategoryLocked={course?.isCategoryLocked}
-          hasPremium={hasPremium}
+          hasPremium={true}
         />
       </ParallaxScrollView>
     </SafeAreaView>

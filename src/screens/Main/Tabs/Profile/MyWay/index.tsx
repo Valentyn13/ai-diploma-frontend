@@ -2,7 +2,6 @@ import Divider from '@common/components/Divider';
 import { SubTitle } from '@common/components/Styled';
 import { CircleButton } from '@common/components/buttons/CircleButton';
 import { useNavigation } from '@react-navigation/native';
-import { getChallengeProgress } from '@services/api/challenge';
 import { stringToDate } from '@utils/string';
 import React, { useEffect, useState } from 'react';
 import { View } from 'react-native';
@@ -27,7 +26,7 @@ const fetchChallengeProgress = async () => {
   let practivedMinutes = 202000;
 
   try {
-    const progress = await getChallengeProgress();
+    const progress = 343444;
     practivedMinutes = progress;
   } catch (error) {
     console.error('error fetching challenge progress', error);

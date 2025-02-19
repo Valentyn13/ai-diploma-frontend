@@ -3,7 +3,6 @@ import { createStackNavigator } from '@react-navigation/stack';
 import AuthNavigator from '@screens/Auth/AuthNavigator';
 import MainNavigator from '@screens/Main/MainNavigator';
 import Splash from '@screens/Splash';
-import useSyncUserData from '@services/hooks/useSyncUserData';
 import React from 'react';
 
 import OnBoarding from './Onboarding/OnBoarding';
@@ -27,8 +26,6 @@ const linking = {
 };
 
 const Navigator = () => {
-  useSyncUserData();
-
   return (
     <NavigationContainer linking={linking}>
       <RootStack.Navigator

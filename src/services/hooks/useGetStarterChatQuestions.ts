@@ -16,6 +16,7 @@ const useGetStarterChatQuestions = () => {
       const data = await getStarterChatQuestions();
       setStarterChatQuestions(data);
     } catch (error) {
+      console.log('Error loading chats: ', error);
     } finally {
       setLoadingState(false);
     }

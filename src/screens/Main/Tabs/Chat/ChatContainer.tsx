@@ -1,6 +1,5 @@
 import Chat from '@common/components/Chat';
 import { AMPLITUDE_EVENTS } from '@common/constants';
-import { usePurchases } from '@common/context/PurchaseContext';
 import theme from '@common/theme';
 import { useNavigation } from '@react-navigation/native';
 import { useChat } from '@services/hooks/useChat';
@@ -54,8 +53,6 @@ export default function ChatContainer() {
     user: { id: userId, name, sex },
   } = useUser();
 
-  const { hasPremium } = usePurchases();
-
   const { chat, loading, error } = useChatSession(currentChatId);
 
   const {
@@ -68,7 +65,7 @@ export default function ChatContainer() {
     userId,
     chatId: currentChatId,
   });
-  const shouldShowPaywall = useMemo(() => !hasPremium, [hasPremium]);
+  const shouldShowPaywall = useMemo(() => false, []);
   const messagesToShowInChat = useMemo(
     () =>
       messages.length

@@ -1,26 +1,34 @@
 import { setAppData } from '@store/actions';
-import { useCallback, useEffect } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 
+import useUserData from '../hooks/useUserData';
 import useChats from './useChats';
 import useGetStarterChatQuestions from './useGetStarterChatQuestions';
 import useLatestActiveSession from './useLatestActiveSession';
 
 export default () => {
   const dispatch = useDispatch();
-  const { fetchData } = useChats();
+  const { fetchData: fetchChats } = useChats();
   const { fetchPollData } = useGetStarterChatQuestions();
   const { fetchLatestActiveSession } = useLatestActiveSession();
+  const { getUserData } = useUserData();
+  const [loadSuccess, setLoadSuccess] = useState(false);
 
   const getAppData = useCallback(() => {
-    // fetchPollData();
-    // fetchLatestActiveSession();
-    fetchData();
-  }, [fetchData]);
+    console.log('===========FETCHING APP DATA========');
+    fetchPollData();
+    fetchLatestActiveSession();
+    fetchChats()
+      .then(() => setLoadSuccess(true))
+      .catch(err => console.error(err));
+  }, [fetchChats]);
 
   useEffect(() => {
-    dispatch(setAppData({}));
-  }, [dispatch]);
+    if (loadSuccess) {
+      dispatch(setAppData({}));
+    }
+  }, [dispatch, loadSuccess]);
 
   return {
     getAppData,

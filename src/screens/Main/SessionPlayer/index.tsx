@@ -10,7 +10,6 @@ import {
   OLD_ASSETS_URL,
   VIDEO_URL,
 } from '@common/constants';
-import { usePurchases } from '@common/context/PurchaseContext';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useRoute } from '@react-navigation/native';
 import { useAmplitude } from '@services/hooks/useAmplitude';
@@ -164,13 +163,13 @@ const MeditationPlayer: FC = ({ navigation }) => {
     amplitudeInstance.logEvent('MEDITATION_STOP', { categoryName });
     amplitudeInstance.uploadEvents();
     // @ts-ignore
-    if (route.params?.isFirstTime && !hasPremium) {
+    if (route.params?.isFirstTime) {
       // @ts-ignore
       navigation.replace('Subscribe', {
         isFirstTime: true,
       });
       // @ts-ignore
-    } else if (route.params?.isFirstTime && hasPremium) {
+    } else if (route.params?.isFirstTime) {
       await AsyncStorage.setItem(KEY_PLAYED_FIRST, true.toString());
       navigation.replace('Main', {
         screen: 'Home',
