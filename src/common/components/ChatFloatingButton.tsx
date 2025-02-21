@@ -51,8 +51,8 @@ const ChatFloatingButton: FC<ChatFloatingButtonProps> = ({
             </Text>
           </View>
         </View>
-        <View className="absolute m-auto left-0 right-0">
-          <Icon name="chevron-left" color={'white'} size={21} />
+        <View className="absolute right-0">
+          <Icon name="chevron-right" color={'white'} size={21} />
         </View>
       </View>
     </TouchableHighlight>

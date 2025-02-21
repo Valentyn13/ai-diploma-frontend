@@ -80,8 +80,7 @@ const ChatItem = ({
       onPress={handleOnChatPress}
       className="mt-[18px] pb-[18px] border-b border-[#00000024]">
       <View className="flex flex-row items-center">
-        <View className="flex flex-1 flex-row gap-[30px] items-center">
-          <IconAwesome name="chevron-left" size={17} color="#222222" />
+        <View className="flex flex-1 flex-row items-center pl-[20px]">
           <View className="items-start flex-1">
             <Text
               numberOfLines={1}
@@ -187,7 +186,7 @@ const ChatsList = ({ chats, category }: ChatListType) => {
           </View>
         )}
         renderStickyHeader={() => (
-          <View className="absolute right-5 top-5 z-10">
+          <View className="absolute left-5 top-5 z-10">
             <CircleButton
               size={40}
               icon="chevron-left"

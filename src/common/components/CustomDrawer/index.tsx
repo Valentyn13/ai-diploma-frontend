@@ -85,9 +85,22 @@ const CustomDrawer = ({ isDrawerOpen, toggleDrawer }: CustomDrawerProps) => {
       style={[
         StyleSheet.absoluteFill,
         rBgStyle,
-        { width: DRAWER_WIDTH, zIndex: 10 },
+        {
+          width: DRAWER_WIDTH,
+          zIndex: 10,
+          transform: [{ translateX: -WINDOW_WIDTH }],
+        },
       ]}
-      className="flex flex-row justify-start">
+      className="flex flex-row justify-end">
+      <TouchableWithoutFeedback
+        style={{
+          width: CLOSE_AREA_WIDTH,
+        }}
+        className="bg-transparent h-full"
+        onPress={() => {
+          toggleDrawer(false);
+        }}
+      />
       <Animated.View
         style={[
           rTranslateXStyle,
@@ -102,15 +115,6 @@ const CustomDrawer = ({ isDrawerOpen, toggleDrawer }: CustomDrawerProps) => {
           renderItem={renderItem}
         />
       </Animated.View>
-      <TouchableWithoutFeedback
-        style={{
-          width: CLOSE_AREA_WIDTH,
-        }}
-        className="bg-transparent h-full"
-        onPress={() => {
-          toggleDrawer(false);
-        }}
-      />
     </Animated.View>
   );
 };

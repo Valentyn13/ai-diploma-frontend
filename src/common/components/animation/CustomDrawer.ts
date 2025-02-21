@@ -6,11 +6,11 @@ const WINDOW_WIDTH = Dimensions.get('window').width;
 export const bgDrawerExiting = values => {
   'worklet';
   const animations = {
-    transform: [{ translateX: withTiming(WINDOW_WIDTH, { duration: 150 }) }],
+    transform: [{ translateX: withTiming(0, { duration: 150 }) }],
     opacity: withTiming(0, { duration: 250 }),
   };
   const initialValues = {
-    transform: [{ translateX: 0 }],
+    transform: [{ translateX: -WINDOW_WIDTH }],
     opacity: 1,
   };
 

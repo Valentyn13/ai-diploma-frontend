@@ -40,6 +40,13 @@ const ChatType: FC<ChatTypeData> = ({
       );
       return;
     }
+
+    if (!sessionCount) {
+      setCurrentChatId(null);
+      setCurrentStep('chat');
+      logAmplitudeEvent(AMPLITUDE_EVENTS.CHATS.SELECTED_CHAT_CATEGORY(type));
+      return;
+    }
     logAmplitudeEvent(AMPLITUDE_EVENTS.CHATS.SELECTED_CHAT_CATEGORY(type));
     setCurrentStep('list');
   };

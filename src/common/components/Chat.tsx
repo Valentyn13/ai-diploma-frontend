@@ -27,11 +27,9 @@ interface ChatComponentProps {
 const CustomInputToolbar = (props: InputToolbarProps<IMessage>) => (
   <InputToolbar
     {...props}
-    containerStyle={{ justifyContent: 'flex-end', paddingBottom: 0 }}
+    containerStyle={{ paddingBottom: 0 }}
     // @ts-ignore
     textInputStyle={{
-      textAlign: 'right',
-      direction: 'rtl',
       color: 'black',
       lineHeight: 20,
     }}
@@ -63,7 +61,7 @@ const CustomSend = ({
     {...props}
     containerStyle={{ justifyContent: 'center' }}
     disabled={isLoading || !props.text}>
-    <View className="rotate-[228deg] mr-4">
+    <View className="rotate-[45deg] mr-4">
       <Icon
         name="send"
         color={isLoading || !props.text ? '#D0D0D0' : theme.colors.primary}
@@ -115,7 +113,7 @@ const Chat: FC<ChatComponentProps> = ({
         )}
         messages={messages}
         onSend={onSend}
-        placeholder="הכנס הודעה..."
+        placeholder="Write a message..."
         user={{ _id: 'USER' }}
         renderSend={props => (
           <CustomSend {...props} isLoading={disableUserInput} />

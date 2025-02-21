@@ -3,7 +3,7 @@ import { AMPLITUDE_EVENTS } from '@common/constants';
 import { useCategorizedChatFlowStore } from '@store/useCategorizedChatFlowStore';
 import { useChatsStore } from '@store/useChatsStore';
 import { logAmplitudeEvent } from '@utils/amplitude-helpers';
-import React, { FC } from 'react';
+import React, { FC, useMemo } from 'react';
 import { Image, Text, TouchableOpacity, View } from 'react-native';
 import Icon from 'react-native-vector-icons/Feather';
 
@@ -28,6 +28,7 @@ const ChatHeader: FC<{
   toggleDrawer: (isOpen: boolean) => void;
 }> = ({ title, avatarSrc, toggleDrawer }) => {
   const {
+    chats,
     isLeaveModalVisible,
     navCallback,
     isSessionStarted,
@@ -35,6 +36,7 @@ const ChatHeader: FC<{
     setIsLeaveModalVisible,
     setSessionStarted,
   } = useChatsStore(state => ({
+    chats: state.chats,
     isLeaveModalVisible: state.isLeaveModalVisible,
     navCallback: state.navCallback,
     isSessionStarted: state.isSessionStarted,
@@ -64,6 +66,16 @@ const ChatHeader: FC<{
     }
   };
 
+  const chatsToShowLength = useMemo(() => {
+    const chatsInSelectedCategory = chats.filter(chat => {
+      if (!selectedCategory && !chat.category) {
+        return true;
+      }
+      return chat.category === selectedCategory;
+    })
+    return chatsInSelectedCategory.length;
+  }, [chats, selectedCategory]);
+
   const handleGoBack = () => {
     logAmplitudeEvent(AMPLITUDE_EVENTS.CHATS.PRESSED_BACK_BUTTON('chat'));
 
@@ -73,10 +85,21 @@ const ChatHeader: FC<{
         setNavCallback(() => setCurrentStep('selection'));
         return;
       }
+
+      if (!chatsToShowLength) {
+        setNavCallback(() => setCurrentStep('selection'));
+        return;
+      }
+
       setNavCallback(() => setCurrentStep('list'));
       return;
     }
     if (!selectedCategory) {
+      setCurrentStep('selection');
+      return;
+    }
+
+    if (!chatsToShowLength) {
       setCurrentStep('selection');
       return;
     }
@@ -89,19 +112,20 @@ const ChatHeader: FC<{
   };
 
   return (
-    <View className="bg-[#FFF8EE] w-full flex-row justify-between items-center p-2 border-b border-gray-200">
-      <View className="flex-row items-center">
-        <TouchableOpacity className="p-2" onPress={handleToggleDrawer}>
-          <Icon color="#000" name="menu" size={30} />
-        </TouchableOpacity>
-        <View className="flex-row items-center ml-6">
-          <Image source={avatarSrc} className="w-8 h-8 rounded-full" />
-          <Text className="text-black text-xl ml-2">{title}</Text>
-          <GlitterIcon className="w-6 h-6 ml-1" />
+    <View className="bg-[#FFF8EE] w-full flex-row items-center p-2 border-b border-gray-200">
+      <View className="flex-row w-full justify-between">
+        <GoBackButton onPress={handleGoBack} />
+        <View className="flex-row">
+          <View className="flex-row items-center mr-4">
+            <Image source={avatarSrc} className="w-8 h-8 rounded-full" />
+            <Text className="text-black text-xl ml-2">{title}</Text>
+            <GlitterIcon className="w-6 h-6 ml-1" />
+          </View>
+          <TouchableOpacity className="p-2" onPress={handleToggleDrawer}>
+            <Icon color="#000" name="menu" size={30} />
+          </TouchableOpacity>
         </View>
       </View>
-      <GoBackButton onPress={handleGoBack} />
-
       <ConfirmationModal
         type="leave"
         visible={isLeaveModalVisible}
