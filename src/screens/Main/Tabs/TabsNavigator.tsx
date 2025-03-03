@@ -32,7 +32,7 @@ import Home from './Home';
 import Profile from './Profile';
 
 const Tab = createBottomTabNavigator();
-const TABS = { Home, Explore, Chat: ChatController, Courses, Profile };
+const TABS = { Home, Chat: ChatController, Courses, Profile };
 
 const HomeIcon = (props: SvgProps) => (
   <Svg fill="none" {...props}>
@@ -93,7 +93,7 @@ const ChatIcon = props => (
 
 const ICONS = {
   home: HomeIcon,
-  explore: ExploreIcon,
+  //explore: ExploreIcon,
   chat: ChatIcon,
   courses: CoursesIcon,
   profile: ProfileIcon,

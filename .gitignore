@@ -34,7 +34,7 @@ local.properties
 *.keystore
 !debug.keystore
 !rega.keystore
-
+.yarn/
 # node.js
 #
 node_modules/
