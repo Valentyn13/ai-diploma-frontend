@@ -40,7 +40,7 @@ const useChats = () => {
     } finally {
       setIsChatsLoading(false);
     }
-  }, [setChats, setIsChatsLoading, user.id]);
+  }, [executeApiRequest, setChats, setIsChatsLoading, user.id]);
   return { chats, loading: isChatsLoading, error, fetchData };
 };
 

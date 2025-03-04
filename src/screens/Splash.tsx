@@ -42,7 +42,7 @@ const Splash: FC<SplashProps> = ({ navigation: { navigate, replace } }) => {
         if (accessToken) {
           const checkResult = await executeApiRequest(checkIsTokenValid);
           if (!checkResult) {
-            console.log('Token is invalid_________');
+            console.log('Token is invalid');
             dispatchAction(logout());
             clearChatStore();
             replace('Auth');
