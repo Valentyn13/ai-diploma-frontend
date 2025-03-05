@@ -1,5 +1,5 @@
 import theme from '@common/theme';
-import { FC, useEffect, useRef } from 'react';
+import { FC, useRef } from 'react';
 import { FlatList, Platform, View } from 'react-native';
 import {
   Bubble,
@@ -20,8 +20,6 @@ interface ChatComponentProps {
   onSend: (messages: IMessage[]) => void;
   isLoading: boolean;
   disableUserInput: boolean;
-  shouldShowPaywall: boolean;
-  navigation: any;
 }
 
 const CustomInputToolbar = (props: InputToolbarProps<IMessage>) => (
@@ -76,22 +74,9 @@ const Chat: FC<ChatComponentProps> = ({
   onSend,
   isLoading,
   disableUserInput,
-  shouldShowPaywall,
-  navigation,
 }) => {
   const ref = useRef<FlatList<IMessage>>(null);
   const insets = useSafeAreaInsets();
-
-  useEffect(() => {
-    if (shouldShowPaywall) {
-      navigation.navigate('Main', {
-        screen: 'Subscribe',
-        params: {
-          isFromChatScreen: true,
-        },
-      });
-    }
-  }, [shouldShowPaywall, navigation]);
 
   return (
     <View className="w-full flex-1 bg-[#FFF7EA]">

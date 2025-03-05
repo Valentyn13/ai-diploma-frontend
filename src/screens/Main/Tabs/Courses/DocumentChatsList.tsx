@@ -16,15 +16,24 @@ const numColumns = 3;
 
 type GridItemPros = {
   item: DocumentChat;
+  setCurrentChatId: (chatId: string | null) => void;
   setCurrentStep: (step: DocumentChatSteps) => void;
 };
 
-const GridItem = ({ item, setCurrentStep }: GridItemPros) => {
+const GridItem = ({ item, setCurrentChatId, setCurrentStep }: GridItemPros) => {
+  const lastElement = item._id === 'new';
+
   const onElementPress = () => {
+    if (lastElement) {
+      setCurrentChatId(null);
+    } else {
+      setCurrentChatId(item._id);
+    }
+
     setCurrentStep('chat');
   };
 
-  if (item._id === 'new') {
+  if (lastElement) {
     return (
       <TouchableOpacity
         onPress={onElementPress}
@@ -55,12 +64,21 @@ const GridItem = ({ item, setCurrentStep }: GridItemPros) => {
 
 type GridScreenProps = {
   data: DocumentChat[];
+  setCurrentChatId: (chatId: string | null) => void;
   setCurrentStep: (step: DocumentChatSteps) => void;
 };
 
-const GridScreen = ({ data, setCurrentStep }: GridScreenProps) => {
+const GridScreen = ({
+  data,
+  setCurrentChatId,
+  setCurrentStep,
+}: GridScreenProps) => {
   const renderItem = ({ item }: { item: DocumentChat }) => (
-    <GridItem item={item} setCurrentStep={setCurrentStep} />
+    <GridItem
+      item={item}
+      setCurrentChatId={setCurrentChatId}
+      setCurrentStep={setCurrentStep}
+    />
   );
 
   return (
@@ -82,6 +100,7 @@ const DocumentChatsList = () => {
     documentChats,
     setChats,
     addChat,
+    setCurrentChatId,
     deleteChat,
     reset,
     setCurrentStep,
@@ -89,6 +108,7 @@ const DocumentChatsList = () => {
     documentChats: state.documentChats,
     setCurrentStep: state.setCurrentStep,
     setChats: state.setChats,
+    setCurrentChatId: state.setCurrentChatId,
     addChat: state.addChat,
     deleteChat: state.deleteChat,
     reset: state.reset,
@@ -106,6 +126,7 @@ const DocumentChatsList = () => {
         Document Chats
       </Text>
       <GridScreen
+        setCurrentChatId={setCurrentChatId}
         data={normalizedDataToRenderWithNewLastElement}
         setCurrentStep={setCurrentStep}
       />

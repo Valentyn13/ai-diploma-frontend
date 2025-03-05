@@ -1,7 +1,6 @@
 import Chat from '@common/components/Chat';
 import { AMPLITUDE_EVENTS } from '@common/constants';
 import theme from '@common/theme';
-import { useNavigation } from '@react-navigation/native';
 import { useChat } from '@services/hooks/useChat';
 import useChatSession from '@services/hooks/useChatSession';
 import useOverrideBackGesture from '@services/hooks/useOverrideBackGesture';
@@ -19,8 +18,6 @@ import { ActivityIndicator, Text, View } from 'react-native';
 import { IMessage } from 'react-native-gifted-chat';
 
 export default function ChatContainer() {
-  const navigation = useNavigation();
-
   const {
     chats,
     currentChatId,
@@ -65,7 +62,7 @@ export default function ChatContainer() {
     userId,
     chatId: currentChatId,
   });
-  const shouldShowPaywall = useMemo(() => false, []);
+
   const messagesToShowInChat = useMemo(
     () =>
       messages.length
@@ -149,8 +146,6 @@ export default function ChatContainer() {
       messages={messagesToShowInChat}
       onSend={onSend}
       isLoading={isMessageLoading}
-      shouldShowPaywall={shouldShowPaywall}
-      navigation={navigation}
     />
   );
 }

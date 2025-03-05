@@ -20,28 +20,18 @@ export const createDocumentChat = async ({
 }: CreateDocumentChatRequestDto) => {
   const jwtToken = await getToken();
 
-  const response = await fetch(
-    `${baseURL}document-chats/create/sse?userId=${userId}`,
-    {
-      method: 'POST',
-      headers: {
-        'content-type': 'application/json',
-        Authorization: `Bearer ${jwtToken}`,
-      },
-      body: JSON.stringify({
-        document,
-        input,
-        chatName,
-      }),
+  return fetch(`${baseURL}document-chats/create/sse?userId=${userId}`, {
+    method: 'POST',
+    headers: {
+      'content-type': 'application/json',
+      Authorization: `Bearer ${jwtToken}`,
     },
-  );
-
-  if (!response.ok) {
-    console.warn(response);
-  }
-
-  const data = await response.json();
-  return data;
+    body: JSON.stringify({
+      document,
+      input,
+      chatName,
+    }),
+  });
 };
 
 export const fetchAllDocumentChats = async (userId: string) => {
@@ -78,19 +68,17 @@ export const deleteChat = async (chatId: string) => {
   });
 };
 
-export const streamAiResponse = async (
+export const streamDocumentResponse = async (
   chatId: string,
   message: Message,
-  chatCategory: ChatCategories = null,
   setAccumulatedText: (value: SetStateAction<string>) => void,
   setDisableUserInput: (value: SetStateAction<boolean>) => void,
 ) => {
+  console.log('Starting stream, send message');
   setAccumulatedText('');
   const jwtToken = await getToken();
   const response = await fetch(
-    `${baseURL}chats/message/sse/${chatId}?chatType=${
-      chatCategory ? chatCategory : ''
-    }`,
+    `${baseURL}document-chats/message/sse/${chatId}`,
     {
       method: 'POST',
       reactNative: {

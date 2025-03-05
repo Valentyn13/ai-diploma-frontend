@@ -22,6 +22,7 @@ const useDocumentChats = () => {
 
   const fetchData = useCallback(async () => {
     if (!user.id) {
+      console.log('NO')
       setChats([]);
       return;
     }
