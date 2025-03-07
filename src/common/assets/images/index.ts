@@ -76,6 +76,9 @@ const BGS: Record<string, string[]> = {
 };
 
 const images: Record<string, any> = {
+  pdf1: require('./pdf1.png'),
+  pdf2: require('./pdf2.png'),
+  pdf_find: require('./pdf-find.png'),
   home_back_clouds: require('./home_back_clouds.png'),
   home_birds: require('./home_birds.png'),
   home_night_stars: require('./home_night_stars.png'),

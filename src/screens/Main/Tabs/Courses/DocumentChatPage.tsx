@@ -1,55 +1,31 @@
-import Chat from '@common/components/Chat';
+import image from '@common/assets/images';
 import { CircleButton } from '@common/components/buttons/CircleButton';
-import { useDocumentChatSession } from '@services/hooks/useDocumentChatSession';
-import useLoadDocumentChat from '@services/hooks/useLoadDocumentChats';
-import { useUser } from '@services/hooks/useUser';
 import {
   DocumentChat as DocumentChatType,
   useDocumentChatStore,
 } from '@store/useDocumentChatsStore';
-import { mapIMessageToMessage, mapMessageToIMessage } from '@utils/chat';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { Text, TouchableOpacity, View } from 'react-native';
 import DocumentPicker, {
   DocumentPickerResponse,
   types,
 } from 'react-native-document-picker';
-import RNFS from 'react-native-fs';
-import { IMessage } from 'react-native-gifted-chat';
+import FastImage from 'react-native-fast-image';
+
+import DocumentChatContainer from './DocumentChatContainer';
 
 type DocumentChatProps = {
   selectedChat: DocumentChatType | null | undefined;
 };
 
 const DocumentChatPage = ({ selectedChat }: DocumentChatProps) => {
-  const {
-    user: { id: userId },
-  } = useUser();
-
-  const { currentChatId, deleteChat, setCurrentStep } = useDocumentChatStore(
-    state => ({
-      currentChatId: state.currentChatId,
-      setCurrentStep: state.setCurrentStep,
-      deleteChat: state.deleteChat,
-    }),
-  );
-
-  const {
-    messages,
-    isMessageLoading,
-    disableUserInput,
-    addMessage,
-    updateMessages,
-  } = useDocumentChatSession({
-    userId,
-    chatId: currentChatId,
-  });
-
-  const { chat, loading, error } = useLoadDocumentChat(currentChatId);
-
   const [documentResponse, setDocumentResponse] = useState<
     DocumentPickerResponse[] | null
   >(null);
+
+  const { setCurrentStep } = useDocumentChatStore(state => ({
+    setCurrentStep: state.setCurrentStep,
+  }));
 
   const selectDocument = async () => {
     try {
@@ -69,45 +45,13 @@ const DocumentChatPage = ({ selectedChat }: DocumentChatProps) => {
     }
   };
 
-  const uploadSelectedDocument = async (msgs: IMessage[] = []) => {
-    if (!currentChatId && !documentResponse) {
-      console.log('No document selected, cannot create a chat');
-      return;
-    }
-    const msg = mapIMessageToMessage(msgs[0]);
-    try {
-      if (!currentChatId) {
-        if (!documentResponse) {
-          console.warn('No document selected');
-          return;
-        }
-
-        const file = documentResponse[0];
-        const pickedDocumentBase64 = await RNFS.readFile(file.uri, 'base64');
-        addMessage({
-          msg,
-          chatName: file.name || 'document.pdf',
-          document: pickedDocumentBase64,
-        });
-      } else {
-        addMessage({
-          msg,
-        });
-      }
-    } catch (e) {
-      console.log(e);
-    }
+  const viewDocument = async () => {
+    console.log('view document');
   };
 
   const onGoBack = () => {
     setCurrentStep('list');
   };
-
-  useEffect(() => {
-    const iMessagesFromIncomingChatMessages =
-      chat.messages.map(mapMessageToIMessage);
-    updateMessages(iMessagesFromIncomingChatMessages);
-  }, [chat, updateMessages]);
 
   return (
     <View className="flex-1">
@@ -118,15 +62,18 @@ const DocumentChatPage = ({ selectedChat }: DocumentChatProps) => {
         size={35}
         icon="chevron-left"
       />
-      {!selectedChat && (
-        <View>
-          <Text className="text-2xl font-semibold text-left p-4 text-black">
-            Select documenet
-          </Text>
+
+      <View className="p-4">
+        {!selectedChat && (
           <TouchableOpacity onPress={selectDocument}>
-            <View className=" justify-center items-center">
-              <View className="p-4 border border-teal-600">
-                <Text>
+            <View>
+              <View className="flex-row relative items-center p-2 border rounded-[20px] border-teal-600">
+                <FastImage
+                  className="w-[90px] h-[90px]"
+                  resizeMode="cover"
+                  source={image('pdf_find')}
+                />
+                <Text className="text-[16px] text-gray-600">
                   {documentResponse
                     ? documentResponse[0].name
                     : 'Select document'}
@@ -134,14 +81,30 @@ const DocumentChatPage = ({ selectedChat }: DocumentChatProps) => {
               </View>
             </View>
           </TouchableOpacity>
-        </View>
-      )}
-      <Chat
-        disableUserInput={disableUserInput}
-        messages={messages}
-        onSend={uploadSelectedDocument}
-        isLoading={isMessageLoading}
-      />
+        )}
+        {selectedChat && (
+          <TouchableOpacity onPress={viewDocument}>
+            <View>
+              <View className="flex-row relative items-center p-2 border rounded-[20px] border-teal-600">
+                {/* <Gradient seed={'pseudo'} angle={45} /> */}
+                {/* <Gradient colors={GRADIENTS['minutes']} angle={45} /> */}
+                <FastImage
+                  className="w-[90px] h-[90px]"
+                  resizeMode="cover"
+                  source={image('pdf1')}
+                />
+                <View>
+                  <Text>Preview document</Text>
+                  <Text className="text-[16px] text-gray-600">
+                    {selectedChat.chatName}
+                  </Text>
+                </View>
+              </View>
+            </View>
+          </TouchableOpacity>
+        )}
+      </View>
+      <DocumentChatContainer documentResponse={documentResponse} />
     </View>
   );
 };

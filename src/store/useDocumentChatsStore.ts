@@ -1,7 +1,7 @@
 import { Message } from 'types/Chat';
 import { create } from 'zustand';
 
-export type DocumentChatSteps = 'list' | 'chat';
+export type DocumentChatSteps = 'list' | 'categories' | 'chat';
 
 export type DocumentChat = {
   _id: string;
