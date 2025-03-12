@@ -3,11 +3,15 @@ import { create } from 'zustand';
 
 export type DocumentChatSteps = 'list' | 'categories' | 'chat';
 
+export type DocumentChatCategories = 'general' | 'medicine' | 'engineering';
+
 export type DocumentChat = {
   _id: string;
   userId: string;
   messages: Message[];
   chatName: string;
+  category: DocumentChatCategories;
+  cachedFilePath: string;
 };
 
 type State = {
@@ -15,9 +19,11 @@ type State = {
   currentStep: DocumentChatSteps;
   currentChatId: string | null;
   isAllChatsLoading: boolean;
+  currentCategory: DocumentChatCategories | null;
 };
 
 type Actions = {
+  setCategory: (category: DocumentChatCategories) => void;
   setChats: (chats: DocumentChat[]) => void;
   addChat: (chat: DocumentChat) => void;
   deleteChat: (chatId: string) => void;
@@ -29,8 +35,9 @@ type Actions = {
 
 const initialValues: State = {
   currentChatId: null,
+  currentCategory: 'general',
   documentChats: [],
-  currentStep: 'list',
+  currentStep: 'categories',
   isAllChatsLoading: false,
 };
 
@@ -38,6 +45,11 @@ type DocumentChatState = State & Actions;
 
 export const useDocumentChatStore = create<DocumentChatState>()(set => ({
   ...initialValues,
+  setCategory: (category: DocumentChatCategories) =>
+    set(state => ({
+      ...state,
+      currentCategory: category,
+    })),
   setChats: (chats: DocumentChat[]) =>
     set(state => ({
       ...state,

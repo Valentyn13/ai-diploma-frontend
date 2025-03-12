@@ -2,6 +2,7 @@ import { useDocumentChatStore } from '@store/useDocumentChatsStore';
 import React, { FC, useMemo } from 'react';
 import { SafeAreaView } from 'react-native';
 
+import DocumentChatCategoriesPage from './DocumentChatCategoriesPage';
 import DocumentChatPage from './DocumentChatPage';
 import DocumentChatsList from './DocumentChatsList';
 
@@ -28,6 +29,7 @@ const Courses: FC<CoursesProps> = () => {
 
   return (
     <SafeAreaView className="flex-1 bg-primary-bg">
+      {currentStep === 'categories' && <DocumentChatCategoriesPage />}
       {currentStep === 'list' && <DocumentChatsList />}
       {currentStep === 'chat' && (
         <DocumentChatPage selectedChat={selectedChat} />

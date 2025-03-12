@@ -1,5 +1,5 @@
 import { baseURL } from '@common/config';
-import { ChatCategories } from '@store/useCategorizedChatFlowStore';
+import { DocumentChatCategories } from '@store/useDocumentChatsStore';
 import { checkResponseOkStatus } from '@utils/checkResponseOkStatus';
 import { getToken } from '@utils/tokenHolder';
 import { SetStateAction } from 'react';
@@ -10,6 +10,8 @@ type CreateDocumentChatRequestDto = {
   document: string;
   input: string;
   chatName: string;
+  cachedPath: string;
+  category: DocumentChatCategories;
 };
 
 export const createDocumentChat = async ({
@@ -17,6 +19,8 @@ export const createDocumentChat = async ({
   document,
   input,
   chatName,
+  cachedPath,
+  category,
 }: CreateDocumentChatRequestDto) => {
   const jwtToken = await getToken();
 
@@ -30,6 +34,8 @@ export const createDocumentChat = async ({
       document,
       input,
       chatName,
+      cachedPath,
+      category,
     }),
   });
 };
@@ -56,7 +62,7 @@ export const fetchDocumentChat = async (chatId: string) => {
   });
 };
 
-export const deleteChat = async (chatId: string) => {
+export const deleteDocumentChat = async (chatId: string) => {
   const jwtToken = await getToken();
 
   return fetch(`${baseURL}document-chats/${chatId}`, {

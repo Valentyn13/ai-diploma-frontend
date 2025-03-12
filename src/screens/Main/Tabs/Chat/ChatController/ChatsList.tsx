@@ -18,7 +18,6 @@ import { FlatList, Text, TouchableHighlight, View } from 'react-native';
 import { Source } from 'react-native-fast-image';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import IconFeather from 'react-native-vector-icons/Feather';
-import IconAwesome from 'react-native-vector-icons/FontAwesome6';
 import { ChatForDrawer } from 'types/Chat';
 
 const BG_IMAGES: Record<Partial<ChatCategoriesEnum>, Source> = {

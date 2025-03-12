@@ -23,10 +23,13 @@ type Props = {
 export const useDocumentChatSession = ({ userId, chatId }: Props) => {
   const { executeApiRequest } = useRequestWithReauth();
 
-  const { addChat, setCurrentChatId } = useDocumentChatStore(state => ({
-    addChat: state.addChat,
-    setCurrentChatId: state.setCurrentChatId,
-  }));
+  const { currentCategory, addChat, setCurrentChatId } = useDocumentChatStore(
+    state => ({
+      currentCategory: state.currentCategory,
+      addChat: state.addChat,
+      setCurrentChatId: state.setCurrentChatId,
+    }),
+  );
 
   const [messages, setMessages] = useState<IMessage[]>([]);
   const [isMessageLoading, setIsMessageLoading] = useState(false);
@@ -61,7 +64,9 @@ export const useDocumentChatSession = ({ userId, chatId }: Props) => {
     msg,
     chatName,
     document,
+    cachedPath,
   }: {
+    cachedPath?: string;
     msg: Message;
     chatName?: string;
     document?: string;
@@ -78,6 +83,8 @@ export const useDocumentChatSession = ({ userId, chatId }: Props) => {
           input: msg.content,
           chatName,
           document,
+          cachedPath,
+          category: currentCategory,
         })) as DocumentChat | null;
 
         if (!newChat) {
@@ -96,6 +103,8 @@ export const useDocumentChatSession = ({ userId, chatId }: Props) => {
           messages: newChat.messages,
           chatName: newChat.chatName,
           userId: newChat.userId,
+          category: currentCategory,
+          cachedFilePath: newChat.cachedFilePath,
         });
 
         const lastMessage = newChat.messages[newChat.messages.length - 1];

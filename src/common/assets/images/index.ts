@@ -76,6 +76,7 @@ const BGS: Record<string, string[]> = {
 };
 
 const images: Record<string, any> = {
+  doc: require('./doc.jpg'),
   pdf1: require('./pdf1.png'),
   pdf2: require('./pdf2.png'),
   pdf_find: require('./pdf-find.png'),

@@ -1,3 +1,4 @@
+import { CircleButton } from '@common/components/buttons/CircleButton';
 import {
   DocumentChat,
   DocumentChatSteps,
@@ -96,32 +97,37 @@ const GridScreen = ({
 };
 
 const DocumentChatsList = () => {
-  const {
-    documentChats,
-    setChats,
-    addChat,
-    setCurrentChatId,
-    deleteChat,
-    reset,
-    setCurrentStep,
-  } = useDocumentChatStore(state => ({
-    documentChats: state.documentChats,
-    setCurrentStep: state.setCurrentStep,
-    setChats: state.setChats,
-    setCurrentChatId: state.setCurrentChatId,
-    addChat: state.addChat,
-    deleteChat: state.deleteChat,
-    reset: state.reset,
-  }));
+  const { documentChats, currentCategory, setCurrentChatId, setCurrentStep } =
+    useDocumentChatStore(state => ({
+      currentCategory: state.currentCategory,
+      documentChats: state.documentChats,
+      setCurrentStep: state.setCurrentStep,
+      setCurrentChatId: state.setCurrentChatId,
+    }));
+
+  const onGoBack = () => {
+    setCurrentStep('categories');
+  };
 
   const normalizedDataToRenderWithNewLastElement = useMemo(() => {
+    const filteredChats = documentChats.filter(
+      chat => chat.category === currentCategory,
+    );
     return [
-      ...documentChats,
+      ...filteredChats,
       { _id: 'new', chatName: 'New Chat', messages: [], userId: '1' },
     ];
-  }, [documentChats]);
+  }, [documentChats, currentCategory]);
+
   return (
     <View>
+      <CircleButton
+        backgroundColor="#00000060"
+        color="#fff"
+        onPress={onGoBack}
+        size={40}
+        icon="chevron-left"
+      />
       <Text className="font-bold text-2xl text-black mb-[30px]">
         Document Chats
       </Text>

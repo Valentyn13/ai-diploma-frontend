@@ -58,6 +58,7 @@ const DocumentChatContainer = ({
           msg,
           chatName: file.name || 'document.pdf',
           document: pickedDocumentBase64,
+          cachedPath: file.uri,
         });
       } else {
         addMessage({

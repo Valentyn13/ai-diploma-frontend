@@ -1,11 +1,22 @@
+import ThreeDotsIcon from '@common/assets/icons/ThreeDotsIcon';
+import TrashSvgIcon from '@common/assets/icons/TrashSvgIcon';
 import image from '@common/assets/images';
 import { CircleButton } from '@common/components/buttons/CircleButton';
+import {
+  BottomSheetBackdrop,
+  BottomSheetBackdropProps,
+  BottomSheetFlatList,
+  BottomSheetModal,
+  BottomSheetView,
+  TouchableOpacity as TouchableOpacityBottomSheet,
+} from '@gorhom/bottom-sheet';
+import { deleteDocumentChat } from '@services/api/documentChats';
 import {
   DocumentChat as DocumentChatType,
   useDocumentChatStore,
 } from '@store/useDocumentChatsStore';
-import { useState } from 'react';
-import { Text, TouchableOpacity, View } from 'react-native';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import DocumentPicker, {
   DocumentPickerResponse,
   types,
@@ -22,9 +33,12 @@ const DocumentChatPage = ({ selectedChat }: DocumentChatProps) => {
   const [documentResponse, setDocumentResponse] = useState<
     DocumentPickerResponse[] | null
   >(null);
-
-  const { setCurrentStep } = useDocumentChatStore(state => ({
+  const [isOpen, setIsOpen] = useState(false);
+  const bottomSheetRef = useRef<BottomSheetModal>(null);
+  const snapPoints = useMemo(() => ['20%', 380], []);
+  const { setCurrentStep, deleteChat } = useDocumentChatStore(state => ({
     setCurrentStep: state.setCurrentStep,
+    deleteChat: state.deleteChat,
   }));
 
   const selectDocument = async () => {
@@ -45,6 +59,17 @@ const DocumentChatPage = ({ selectedChat }: DocumentChatProps) => {
     }
   };
 
+  const deleteDocumentChatPress = async () => {
+    if (selectedChat?._id) {
+      deleteDocumentChat(selectedChat?._id);
+      deleteChat(selectedChat?._id);
+      setIsOpen(false);
+      setCurrentStep('list');
+    } else {
+      console.log('No chat selected, CANNOT DELETE');
+    }
+  };
+
   const viewDocument = async () => {
     console.log('view document');
   };
@@ -53,15 +78,63 @@ const DocumentChatPage = ({ selectedChat }: DocumentChatProps) => {
     setCurrentStep('list');
   };
 
+  const openSettings = () => {
+    setIsOpen(true);
+  };
+
+  const handleSheetChanges = useCallback(
+    (index: number) => {
+      if (index === -1) {
+        setIsOpen(false);
+      }
+    },
+    [setIsOpen],
+  );
+
+  const renderBackdrop = useCallback(
+    (props: BottomSheetBackdropProps) => (
+      <BottomSheetBackdrop
+        {...props}
+        opacity={0.1}
+        enableTouchThrough={false}
+        appearsOnIndex={0}
+        disappearsOnIndex={-1}
+        style={[
+          { backgroundColor: 'rgba(0, 0, 0, 1)' },
+          StyleSheet.absoluteFillObject,
+        ]}
+      />
+    ),
+    [],
+  );
+
+  useEffect(() => {
+    if (isOpen) {
+      bottomSheetRef.current?.present();
+    } else {
+      bottomSheetRef.current?.close();
+    }
+  }, [isOpen]);
+
   return (
     <View className="flex-1">
-      <CircleButton
-        backgroundColor="#00000060"
-        color="#fff"
-        onPress={onGoBack}
-        size={35}
-        icon="chevron-left"
-      />
+      <View className="flex-row p-4 items-center justify-between">
+        <CircleButton
+          backgroundColor="#00000060"
+          color="#fff"
+          onPress={onGoBack}
+          size={35}
+          icon="chevron-left"
+        />
+        <TouchableOpacity className="p-[2px]" onPress={openSettings}>
+          <View
+            style={{
+              transform: [{ rotate: '90deg' }],
+            }}>
+            <ThreeDotsIcon />
+          </View>
+        </TouchableOpacity>
+      </View>
 
       <View className="p-4">
         {!selectedChat && (
@@ -86,8 +159,6 @@ const DocumentChatPage = ({ selectedChat }: DocumentChatProps) => {
           <TouchableOpacity onPress={viewDocument}>
             <View>
               <View className="flex-row relative items-center p-2 border rounded-[20px] border-teal-600">
-                {/* <Gradient seed={'pseudo'} angle={45} /> */}
-                {/* <Gradient colors={GRADIENTS['minutes']} angle={45} /> */}
                 <FastImage
                   className="w-[90px] h-[90px]"
                   resizeMode="cover"
@@ -105,6 +176,24 @@ const DocumentChatPage = ({ selectedChat }: DocumentChatProps) => {
         )}
       </View>
       <DocumentChatContainer documentResponse={documentResponse} />
+      <BottomSheetModal
+        backdropComponent={renderBackdrop}
+        onChange={handleSheetChanges}
+        containerStyle={{ backgroundColor: 'rgba(0, 0, 0, 0.5)' }}
+        handleStyle={{ backgroundColor: '#FFF8EE' }}
+        enablePanDownToClose
+        ref={bottomSheetRef}
+        snapPoints={snapPoints}
+        index={1}>
+        <BottomSheetView>
+          <TouchableOpacityBottomSheet onPress={deleteDocumentChatPress}>
+            <View className="flex-row items-center p-2 bg-green-100">
+              <TrashSvgIcon />
+              <Text>Delete chat</Text>
+            </View>
+          </TouchableOpacityBottomSheet>
+        </BottomSheetView>
+      </BottomSheetModal>
     </View>
   );
 };
