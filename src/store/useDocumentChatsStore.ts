@@ -12,6 +12,7 @@ export type DocumentChat = {
   chatName: string;
   category: DocumentChatCategories;
   cachedFilePath: string;
+  document: string;
 };
 
 type State = {

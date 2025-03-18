@@ -16,12 +16,13 @@ import {
   useDocumentChatStore,
 } from '@store/useDocumentChatsStore';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { Modal, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import DocumentPicker, {
   DocumentPickerResponse,
   types,
 } from 'react-native-document-picker';
 import FastImage from 'react-native-fast-image';
+import Pdf from 'react-native-pdf';
 
 import DocumentChatContainer from './DocumentChatContainer';
 
@@ -34,6 +35,7 @@ const DocumentChatPage = ({ selectedChat }: DocumentChatProps) => {
     DocumentPickerResponse[] | null
   >(null);
   const [isOpen, setIsOpen] = useState(false);
+  const [modalOpen, setModalOpen] = useState(false);
   const bottomSheetRef = useRef<BottomSheetModal>(null);
   const snapPoints = useMemo(() => ['20%', 380], []);
   const { setCurrentStep, deleteChat } = useDocumentChatStore(state => ({
@@ -71,6 +73,7 @@ const DocumentChatPage = ({ selectedChat }: DocumentChatProps) => {
   };
 
   const viewDocument = async () => {
+    setModalOpen(true);
     console.log('view document');
   };
 
@@ -194,6 +197,9 @@ const DocumentChatPage = ({ selectedChat }: DocumentChatProps) => {
           </TouchableOpacityBottomSheet>
         </BottomSheetView>
       </BottomSheetModal>
+      {/* <Modal visible={modalOpen}>
+        <Pdf source={{ uri: selectedChat?.document }} />
+      </Modal> */}
     </View>
   );
 };

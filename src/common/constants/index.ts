@@ -40,7 +40,7 @@ export const BG_TRACKS = [
     emoji: '🌊',
   },
   { id: 'birds', name: 'ציפורים', asset: 'birds.mp3', emoji: '🐦' },
-  { id: 'waves', name: 'גלים', asset: 'waves.mp3', emoji: '🌊' },
+  { id: 'waves', name: 'גלים', asset: 'waves.mp3', emoji: '💦' },
   { id: 'bowls', name: 'קערות', asset: 'bowls.mp3', emoji: '🥣' },
   { id: 'rain', name: 'גשם', asset: 'rain.mp3', emoji: '🌧' },
 ] as const;
@@ -886,7 +886,8 @@ export const TIME_SLOTS = [1, 10, 20, 60];
 export const BGS_ASSETS_URL = 'https://d137rfe7jg135q.cloudfront.net/bgs/';
 export const MEDITATIONS_IMAGES_URL =
   'https://d137rfe7jg135q.cloudfront.net/sessions/meditations/';
-export const SOUNDS_URL = 'https://d137rfe7jg135q.cloudfront.net/sounds/';
+export const SOUNDS_URL =
+  'https://pdf-files-for-ai.s3.eu-north-1.amazonaws.com/music/';
 export const ASSETS_URL = 'https://d137rfe7jg135q.cloudfront.net/';
 export const VIDEO_URL = `${ASSETS_URL}videos/`;
 export const OLD_ASSETS_URL =

@@ -62,29 +62,24 @@ export const useDocumentChatSession = ({ userId, chatId }: Props) => {
 
   const addMessage = async ({
     msg,
-    chatName,
-    document,
-    cachedPath,
+    data,
   }: {
-    cachedPath?: string;
     msg: Message;
-    chatName?: string;
-    document?: string;
+    data?: FormData;
   }) => {
     const message = mapMessageToIMessage(msg);
     setMessages(prevItems => [...prevItems, message]);
-    console.log('chatId into function', chatId);
+
     if (!chatId) {
       try {
         setIsMessageLoading(true);
         setDisableUserInput(true);
+
+        data?.append('category', currentCategory);
+        data?.append('input', msg.content);
         const newChat = (await executeApiRequest(createDocumentChat, {
           userId,
-          input: msg.content,
-          chatName,
-          document,
-          cachedPath,
-          category: currentCategory,
+          data: data as FormData,
         })) as DocumentChat | null;
 
         if (!newChat) {

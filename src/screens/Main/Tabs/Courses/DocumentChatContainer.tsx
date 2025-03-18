@@ -53,12 +53,20 @@ const DocumentChatContainer = ({
         }
 
         const file = documentResponse[0];
-        const pickedDocumentBase64 = await RNFS.readFile(file.uri, 'base64');
+        const formData = new FormData();
+
+        formData.append('file', {
+          uri: file.uri,
+          name: file.name,
+          type: file.type,
+        });
+
+        formData.append('chatName', file.name || 'document.pdf');
+        formData.append('cachedPath', file.uri);
+
         addMessage({
           msg,
-          chatName: file.name || 'document.pdf',
-          document: pickedDocumentBase64,
-          cachedPath: file.uri,
+          data: formData,
         });
       } else {
         addMessage({

@@ -1,5 +1,4 @@
 import { baseURL } from '@common/config';
-import { DocumentChatCategories } from '@store/useDocumentChatsStore';
 import { checkResponseOkStatus } from '@utils/checkResponseOkStatus';
 import { getToken } from '@utils/tokenHolder';
 import { SetStateAction } from 'react';
@@ -7,36 +6,22 @@ import { Message } from 'types/Chat';
 
 type CreateDocumentChatRequestDto = {
   userId: string;
-  document: string;
-  input: string;
-  chatName: string;
-  cachedPath: string;
-  category: DocumentChatCategories;
+  data: FormData;
 };
 
 export const createDocumentChat = async ({
   userId,
-  document,
-  input,
-  chatName,
-  cachedPath,
-  category,
+  data,
 }: CreateDocumentChatRequestDto) => {
   const jwtToken = await getToken();
 
   return fetch(`${baseURL}document-chats/create/sse?userId=${userId}`, {
     method: 'POST',
     headers: {
-      'content-type': 'application/json',
+      'content-type': 'multipart/form-data',
       Authorization: `Bearer ${jwtToken}`,
     },
-    body: JSON.stringify({
-      document,
-      input,
-      chatName,
-      cachedPath,
-      category,
-    }),
+    body: data,
   });
 };
 
