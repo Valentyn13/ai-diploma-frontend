@@ -10,6 +10,7 @@ import {
   BottomSheetView,
   TouchableOpacity as TouchableOpacityBottomSheet,
 } from '@gorhom/bottom-sheet';
+import { useNavigation } from '@react-navigation/native';
 import { deleteDocumentChat } from '@services/api/documentChats';
 import {
   DocumentChat as DocumentChatType,
@@ -31,6 +32,7 @@ type DocumentChatProps = {
 };
 
 const DocumentChatPage = ({ selectedChat }: DocumentChatProps) => {
+  const navigation = useNavigation();
   const [documentResponse, setDocumentResponse] = useState<
     DocumentPickerResponse[] | null
   >(null);
@@ -73,7 +75,12 @@ const DocumentChatPage = ({ selectedChat }: DocumentChatProps) => {
   };
 
   const viewDocument = async () => {
-    setModalOpen(true);
+    console.log(selectedChat?.document)
+    if (selectedChat?.document) {
+      navigation.navigate('WebView', {
+        uri: `https://docs.google.com/gview?embedded=true&url=${selectedChat?.document}`,
+      });
+    }
     console.log('view document');
   };
 
