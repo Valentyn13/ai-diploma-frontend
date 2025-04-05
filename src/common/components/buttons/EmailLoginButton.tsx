@@ -31,7 +31,7 @@ export const EmailLoginButton: React.FC<{ onPress: () => void }> = ({
       }}
     />
     <Text className="text-[#273051] text-lg text-center font-semibold">
-      התחברו עם אימייל
+      Увійти через пошту
     </Text>
   </TouchableOpacity>
 );

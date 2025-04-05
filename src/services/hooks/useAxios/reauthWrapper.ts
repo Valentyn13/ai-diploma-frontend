@@ -32,7 +32,7 @@ export const useRequestWithReauth = () => {
     ): Promise<R | null> => {
       try {
         const response = await callback(...args);
-
+        console.log(response);
         if (!response.ok && response.status !== 401) {
           return null;
         }
@@ -60,6 +60,8 @@ export const useRequestWithReauth = () => {
 
         return result;
       } catch (error) {
+        console.log('catch')
+        console.log(error)
         return null;
       }
     },

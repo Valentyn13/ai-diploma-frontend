@@ -5,7 +5,6 @@ import { CircleButton } from '@common/components/buttons/CircleButton';
 import {
   BottomSheetBackdrop,
   BottomSheetBackdropProps,
-  BottomSheetFlatList,
   BottomSheetModal,
   BottomSheetView,
   TouchableOpacity as TouchableOpacityBottomSheet,
@@ -17,13 +16,12 @@ import {
   useDocumentChatStore,
 } from '@store/useDocumentChatsStore';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { Modal, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import DocumentPicker, {
   DocumentPickerResponse,
   types,
 } from 'react-native-document-picker';
 import FastImage from 'react-native-fast-image';
-import Pdf from 'react-native-pdf';
 
 import DocumentChatContainer from './DocumentChatContainer';
 
@@ -75,10 +73,11 @@ const DocumentChatPage = ({ selectedChat }: DocumentChatProps) => {
   };
 
   const viewDocument = async () => {
-    console.log(selectedChat?.document)
     if (selectedChat?.document) {
       navigation.navigate('WebView', {
-        uri: `https://docs.google.com/gview?embedded=true&url=${selectedChat?.document}`,
+        uri: `https://docs.google.com/gview?embedded=true&url=${encodeURIComponent(
+          selectedChat.document,
+        )}`,
       });
     }
     console.log('view document');
@@ -204,9 +203,6 @@ const DocumentChatPage = ({ selectedChat }: DocumentChatProps) => {
           </TouchableOpacityBottomSheet>
         </BottomSheetView>
       </BottomSheetModal>
-      {/* <Modal visible={modalOpen}>
-        <Pdf source={{ uri: selectedChat?.document }} />
-      </Modal> */}
     </View>
   );
 };

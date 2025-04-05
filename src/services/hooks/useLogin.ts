@@ -9,16 +9,11 @@ import {
 import api from '@services/api';
 import { login, setLoder } from '@store/actions';
 import { useLoginStore } from '@store/useLoginStore';
-import { applelogin } from '@utils/apple';
-import { fbLogin } from '@utils/facebook';
-import { googleSignIn } from '@utils/google';
-import logger from '@utils/logger';
 import { handleSentryException } from '@utils/sentry-helpers';
 import { useCallback, useEffect } from 'react';
 import { Alert } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { getFcmToken } from '../../helper/pushNotifications';
 import useAxios from './useAxios';
 import { useUser } from './useUser';
 
@@ -64,24 +59,6 @@ export default () => {
     shouldDispatch: () => false,
   });
 
-  const facebookLoginApi = useAxios({
-    api: api.facebook,
-    setToken: true,
-    shouldDispatch: () => false,
-  });
-
-  const googleLoginApi = useAxios({
-    api: api.google,
-    setToken: true,
-    shouldDispatch: () => false,
-  });
-
-  const appleLoginApi = useAxios({
-    api: api.apple,
-    setToken: true,
-    shouldDispatch: () => false,
-  });
-
   const register = useAxios({
     api: api.register,
     setToken: true,
@@ -103,76 +80,6 @@ export default () => {
   const loginWithEmail = (email, password, fcmToken) => {
     const { fetch } = emailLogin;
     return fetch({ email, password, fcmToken });
-  };
-
-  const loginWithGoogle = async () => {
-    try {
-      const fcmToken = await getFcmToken();
-      const res = await googleSignIn();
-
-      const { fetch } = googleLoginApi;
-      const { sex } = user;
-      const { selectedCategories } = preferences;
-
-      await fetch({
-        access_token: res.idToken,
-        name: res.user.givenName,
-        email: res.user.email,
-        sub: res.user.id,
-        sex: sex || 'M',
-        categories: selectedCategories || [],
-        fcmToken,
-      });
-    } catch (error) {
-      logger.error(error);
-      handleError();
-    }
-  };
-
-  const loginWithFacebook = async () => {
-    const fcmToken = await getFcmToken();
-
-    try {
-      const accessToken = await fbLogin();
-      const { fetch } = facebookLoginApi;
-      const { sex } = user;
-      const { selectedCategories } = preferences;
-
-      fetch({
-        access_token: accessToken,
-        sex: sex || 'M',
-        categories: selectedCategories || [],
-        fcmToken,
-      });
-    } catch (error) {
-      logger.error(error);
-      handleError();
-    }
-  };
-
-  const loginWithApple = async () => {
-    const fcmToken = await getFcmToken();
-
-    try {
-      const res = await applelogin();
-      const { fetch } = appleLoginApi;
-
-      const { sex } = user;
-      const { selectedCategories } = preferences;
-
-      fetch({
-        access_token: res.identityToken,
-        sex: sex || 'M',
-        categories: selectedCategories || [],
-        email: res.email,
-        sub: res.sub,
-        name: res.givenName,
-        fcmToken,
-      });
-    } catch (error) {
-      logger.error(error);
-      handleError();
-    }
   };
 
   const signUp = (email, password, name, fcmToken) => {
@@ -266,72 +173,6 @@ export default () => {
   }, [emailLoginData, emailLoginCompleted, dispatchLogin]);
 
   const {
-    completed: fbLoginCompleted,
-    data: fbLoginData,
-    error: fbError,
-  } = facebookLoginApi;
-
-  useEffect(() => {
-    if (fbLoginCompleted) {
-      if (fbLoginData?.user) {
-        dispatchLogin(fbLoginData);
-      } else {
-        handleSentryException({
-          src: 'Login Screen',
-          error: new Error(
-            'Missing FB Login Data' + ' | ' + JSON.stringify(fbLoginData),
-          ),
-        });
-      }
-    }
-  }, [fbLoginCompleted, fbLoginData, dispatchLogin]);
-
-  const {
-    completed: googleLoginCompleted,
-    data: googleLoginData,
-    error: googleError,
-  } = googleLoginApi;
-
-  useEffect(() => {
-    if (googleLoginCompleted) {
-      if (googleLoginData?.user) {
-        dispatchLogin(googleLoginData);
-      } else {
-        handleSentryException({
-          src: 'Login Screen',
-          error: new Error(
-            'Missing Google Login Data' +
-              ' | ' +
-              JSON.stringify(googleLoginData),
-          ),
-        });
-      }
-    }
-  }, [dispatchLogin, googleLoginCompleted, googleLoginData]);
-
-  // appleLoin
-  const {
-    completed: appleLoginCompleted,
-    data: appleLoginData,
-    error: appleError,
-  } = appleLoginApi;
-
-  useEffect(() => {
-    if (appleLoginCompleted) {
-      if (appleLoginData?.user) {
-        dispatchLogin(appleLoginData);
-      } else {
-        handleSentryException({
-          src: 'Login Screen',
-          error: new Error(
-            'Missing Apple Login Data' + ' | ' + JSON.stringify(appleLoginData),
-          ),
-        });
-      }
-    }
-  }, [appleLoginCompleted, appleLoginData, dispatchLogin]);
-
-  const {
     completed: registerCompleted,
     data: registerData,
     error: registerError,
@@ -353,29 +194,18 @@ export default () => {
   }, [registerCompleted, registerData, dispatchLogin]);
 
   useEffect(() => {
-    const possibleError =
-      emailError || fbError || googleError || appleError || registerError;
+    const possibleError = emailError || registerError;
     if (possibleError) {
       handleError(possibleError);
     }
-  }, [
-    emailError,
-    fbError,
-    googleError,
-    appleError,
-    registerError,
-    handleError,
-  ]);
+  }, [emailError, registerError, handleError]);
 
   return {
     loginWithEmail,
-    loginWithFacebook,
-    loginWithGoogle,
     signUp,
     resetPassword,
     resetPasswordCompleted,
     resetPasswordError,
     forgotPassword,
-    loginWithApple,
   };
 };

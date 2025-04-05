@@ -136,7 +136,7 @@ const Register = ({ navigation }) => {
           color="#fff"
           onPress={navigation.goBack}
           size={40}
-          icon="chevron-right"
+          icon="chevron-left"
         />
       </View>
       <KeyboardAwareScrollView
@@ -146,8 +146,8 @@ const Register = ({ navigation }) => {
         }}
         extraScrollHeight={40}
         keyboardOpeningTime={0}>
-        <AppText style={{ color: '#000', fontSize: 18, marginTop: scale(50) }}>
-          הרשמה
+        <AppText style={{ color: '#000', fontSize: 20, marginTop: scale(50) }}>
+          Реєстрація
         </AppText>
         <AppText
           style={{
@@ -157,7 +157,7 @@ const Register = ({ navigation }) => {
             color: '#000000',
           }}>
           {
-            'עוד רגע והחשבון שלך מוכן\nכל שנשאר זה למלא את הפרטים הדרושים,\nולאחר מכן נוכל להתחיל בחוויית רגע'
+            '«Все, що залишилося, це заповнити необхідні дані, тоді ми зможемо почати досліджувати світ разом»'
           }
         </AppText>
         <View
@@ -176,7 +176,7 @@ const Register = ({ navigation }) => {
           <AppTextInput
             onChangeText={text => setName(text)}
             returnKeyType="done"
-            placeholder="שם פרטי"
+            placeholder="Ім'я"
             style={{
               width: '90%',
               marginHorizontal: 20,
@@ -202,7 +202,7 @@ const Register = ({ navigation }) => {
             onChangeText={text => setEmail(text)}
             returnKeyType="done"
             keyboardType="email-address"
-            placeholder="אימייל"
+            placeholder="Пошта"
             style={{
               width: '90%',
               marginHorizontal: 20,
@@ -228,7 +228,7 @@ const Register = ({ navigation }) => {
             onChangeText={text => setPassword(text)}
             returnKeyType="done"
             secureTextEntry
-            placeholder="סיסמא"
+            placeholder="Пароль"
             style={{
               width: '90%',
               marginHorizontal: 20,
@@ -254,7 +254,7 @@ const Register = ({ navigation }) => {
             onChangeText={text => setVerifyPassword(text)}
             returnKeyType="done"
             secureTextEntry
-            placeholder="וידוא סיסמא"
+            placeholder="Підтвердження пароля"
             style={{
               width: '90%',
               marginHorizontal: 20,
@@ -290,12 +290,12 @@ const Register = ({ navigation }) => {
                 textDecorationLine: 'underline',
                 textAlign: 'left',
               }}>
-              מדיניות הפרטיות ותנאי השימוש
+             Політика конфіденційності та умови використання
             </AppText>
           </TouchableOpacity>
         </View>
         <View className="w-full" style={{ marginTop: scale(40) }}>
-          <AppButton onPress={onContinue}>הרשמה</AppButton>
+          <AppButton onPress={onContinue}>Реєстрація</AppButton>
         </View>
         {loader && (
           <ActivityIndicator

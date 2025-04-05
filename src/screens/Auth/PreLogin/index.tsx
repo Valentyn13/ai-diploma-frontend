@@ -7,12 +7,9 @@ import Theme from '@common/theme';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { RootStackParamList } from '@screens/RootNavigator';
 import useAppData from '@services/hooks/useAppData';
-import useLogin from '@services/hooks/useLogin';
 import { useUser } from '@services/hooks/useUser';
 import { firstCourseSelector } from '@store/selectors';
 import { useLoginStore } from '@store/useLoginStore';
-import alert from '@utils/alert';
-import logger from '@utils/logger';
 import React, { FC, useEffect } from 'react';
 import { ActivityIndicator, Dimensions, Text } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
@@ -30,7 +27,6 @@ type PreLoginProps = NativeStackScreenProps<
 
 const PreLogin: FC<PreLoginProps> = ({ navigation: { navigate } }) => {
   const { isLoading, setIsLoading } = useLoginStore(state => state);
-  const { loginWithApple, loginWithFacebook, loginWithGoogle } = useLogin();
   const { getAppData } = useAppData();
   const {
     user: { accessToken },
@@ -52,33 +48,6 @@ const PreLogin: FC<PreLoginProps> = ({ navigation: { navigate } }) => {
       navigate('Main', { screen: 'Home' });
     }
   }, [appDataLoaded, firstCourse, navigate]);
-
-  const loginWith = async (provider: string) => {
-    setIsLoading(true);
-
-    try {
-      switch (provider) {
-        case 'facebook':
-          await loginWithFacebook();
-          break;
-        case 'google':
-          await loginWithGoogle();
-          break;
-        case 'apple':
-          await loginWithApple();
-          break;
-      }
-    } catch (error) {
-      logger.error(error);
-      alert(
-        'היי אנחנו חווים תקלה בהתחברות דרך ערוץ זה, אנא נסו שנית או בחרו ערוץ התחברות אחר',
-      );
-
-      setIsLoading(false);
-    }
-
-    setIsLoading(false);
-  };
 
   const insets = useSafeAreaInsets();
   const { width } = Dimensions.get('screen');
@@ -156,46 +125,13 @@ const PreLogin: FC<PreLoginProps> = ({ navigation: { navigate } }) => {
             <EmailLoginButton
               onPress={() => navigate('Auth', { screen: 'Login' })}
             />
-            <Text className="text-center text-black text-lg">או</Text>
-
-            {/* <View
-              row
-              style={{
-                gap: 8,
-              }}>
-              {['facebook', 'google', 'apple'].map(provider => {
-                const SocialIcon = SOCIAL_ICONS[provider];
-
-                return (
-                  <TouchableOpacity
-                    key={provider}
-                    center
-                    style={{
-                      backgroundColor: '#FFF',
-                      flex: 1,
-                      borderRadius: 100,
-                      height: 64,
-                      width: width / 3.5,
-                      alignItems: 'center',
-                      shadowColor: '#000',
-                      shadowOffset: {
-                        width: 0,
-                        height: 1,
-                      },
-                      shadowOpacity: 0.22,
-                      shadowRadius: 2.22,
-                      elevation: 3,
-                    }}
-                    onPress={() => loginWith(provider)}>
-                    <SocialIcon />
-                  </TouchableOpacity>
-                );
-              })}
-            </View> */}
+            <Text className="text-center text-black text-lg">або</Text>
           </View>
 
           <View className="flex-col items-center gap-1">
-            <Text className="text-center text-black text-md">חדשים פה?</Text>
+            <Text className="text-center text-black text-md">
+              Немає акаунту?
+            </Text>
             <TouchableOpacity onPress={() => navigate('Register')}>
               <AppText
                 style={{
@@ -204,7 +140,7 @@ const PreLogin: FC<PreLoginProps> = ({ navigation: { navigate } }) => {
                   textDecorationLine: 'underline',
                   color: 'black',
                 }}>
-                הירשמו
+                Зареєструватися
               </AppText>
             </TouchableOpacity>
           </View>

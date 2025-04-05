@@ -55,9 +55,13 @@ const PickExperience = () => {
   );
 
   const experienceLevels = [
-    { key: 'Beginner', label: 'אמממ... מה זה מדיטציה?', emoji: '🤔' },
-    { key: 'Intermediate', label: 'פה ושם, אבל לא באופן קבוע', emoji: '🤷‍♂️' },
-    { key: 'Master', label: 'הרבה, אני ממש זן מאסטר!', emoji: '🧘‍♂️' },
+    { key: 'Beginner', label: 'Я новачок', emoji: '🤔' },
+    {
+      key: 'Intermediate',
+      label: 'Я користувач середнього рівня',
+      emoji: '🤷‍♂️',
+    },
+    { key: 'Master', label: 'Я ШІ-гуру', emoji: '🧘‍♂️' },
   ];
 
   return (
@@ -69,8 +73,8 @@ const PickExperience = () => {
         alignItems: 'center',
       }}>
       <PageTitle
-        title="כמה נסיון יש לך בעולם המיינדפולנס?"
-        subTitle={'הבחירה כאן תאפשר לך לקבל תוכן מותאם לרמה שלך'}
+        title="Який у вас достід користування ШІ?"
+        subTitle={'Виберіть один з варіантів нижче'}
       />
       <View className="relative items-center mt-4">
         <Image

@@ -8,7 +8,6 @@ import { mapIMessageToMessage, mapMessageToIMessage } from '@utils/chat';
 import { useEffect } from 'react';
 import { ActivityIndicator, Text, View } from 'react-native';
 import { DocumentPickerResponse } from 'react-native-document-picker';
-import RNFS from 'react-native-fs';
 import { IMessage } from 'react-native-gifted-chat';
 
 type DocumentChatContainerProps = {

@@ -56,18 +56,16 @@ const IntroRelax = () => {
             fontSize: scale(23),
             marginTop: scale(360),
           }}>
-          {'לנוח, להירגע ולהירדם מ-ה-ר!'}
+          {'Відпочинь, розслабся, поділись своїми думками і засинай!'}
         </AppText>
         <AppText
           style={{
             color: '#000000',
             textAlign: 'center',
             fontSize: scale(15),
-            marginTop: scale(10),
+            marginTop: scale(30),
           }}>
-          {
-            'בעזרת מיינדפולנס תוכלו להירדם\nמהר ועמוק יותר.\n\nאם אתם מתקשים להירדם,\nעברו לאיזור המתאים באפליקציה,\nנסו את התרגולים וראו בעצמכם.'
-          }
+          {'Зміни вже близько, треба тільки почати!!!'}
         </AppText>
       </View>
     </SafeAreaView>

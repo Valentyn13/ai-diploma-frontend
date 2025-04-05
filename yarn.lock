@@ -5608,13 +5608,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"crypto-js@npm:4.2.0":
-  version: 4.2.0
-  resolution: "crypto-js@npm:4.2.0"
-  checksum: 10c0/8fbdf9d56f47aea0794ab87b0eb9833baf80b01a7c5c1b0edc7faf25f662fb69ab18dc2199e2afcac54670ff0cd9607a9045a3f7a80336cccd18d77a55b9fdf0
-  languageName: node
-  linkType: hard
-
 "css-color-keywords@npm:^1.0.0":
   version: 1.0.0
   resolution: "css-color-keywords@npm:1.0.0"
@@ -11280,20 +11273,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-native-pdf@npm:^6.7.7":
-  version: 6.7.7
-  resolution: "react-native-pdf@npm:6.7.7"
-  dependencies:
-    crypto-js: "npm:4.2.0"
-    deprecated-react-native-prop-types: "npm:^2.3.0"
-  peerDependencies:
-    react: "*"
-    react-native: "*"
-    react-native-blob-util: ">=0.13.7"
-  checksum: 10c0/b8e62293e58b67dbc415b0ee65ebe1cfbfbb235259466b3fa535d65640bab62395c8bcba305717e801ae91b98d1220ef11d6c47177014ea1e68eb5e1efcaded5
-  languageName: node
-  linkType: hard
-
 "react-native-permissions@npm:^4.1.5":
   version: 4.1.5
   resolution: "react-native-permissions@npm:4.1.5"
@@ -11941,7 +11920,6 @@ __metadata:
     react-native-keyboard-aware-scroll-view: "npm:^0.9.5"
     react-native-modal: "npm:^13.0.1"
     react-native-pager-view: "npm:^6.2.3"
-    react-native-pdf: "npm:^6.7.7"
     react-native-permissions: "npm:^4.1.5"
     react-native-polyfill-globals: "npm:^3.1.0"
     react-native-purchases: "npm:^7.5.0"

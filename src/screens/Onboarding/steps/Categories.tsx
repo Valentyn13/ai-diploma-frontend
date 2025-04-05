@@ -70,8 +70,8 @@ const Intro = () => {
   return (
     <View className="flex-1 bg-primary-bg justify-center items-center">
       <PageTitle
-        title="במה רגע יכולה לעזור לך?"
-        subTitle="ניתן לבחור עד 3 נושאים"
+        title="Чим ми можемо тобі допомогти?"
+        subTitle="Ви можете вибрати до 3 тем"
       />
       <View className="flex flex-row flex-wrap gap-2 items-center justify-center">
         {CATEGORIES.map((item, index) => (

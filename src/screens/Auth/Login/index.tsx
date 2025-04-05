@@ -18,11 +18,9 @@ import {
   KeyboardAvoidingView,
   Platform,
   ScrollView,
-  Text,
   TextInput,
   View,
 } from 'react-native';
-import { TouchableOpacity } from 'react-native-gesture-handler';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { scale } from 'react-native-size-matters';
 import { useSelector } from 'react-redux';
@@ -90,13 +88,13 @@ const Login: FC = () => {
 
   return (
     <SafeAreaView className="flex-1 bg-primary-bg p-4">
-      <View className="left-0 top-0 z-10">
+      <View className="-0 top-0 z-10">
         <CircleButton
           backgroundColor="#00000060"
           color="#fff"
           onPress={navigation.goBack}
           size={40}
-          icon="chevron-right"
+          icon="chevron-left"
         />
       </View>
       <ScrollView ref={scrollViewRef} showsVerticalScrollIndicator={false}>
@@ -107,7 +105,7 @@ const Login: FC = () => {
           contentContainerStyle={{ flexGrow: 1 }}
           style={{ padding: scale(24) }}>
           <AppText className="font-semibold text-2xl mt-16 text-center text-black">
-            התחבר עם פרטי ההתחברות שלך
+            Увійдіть, використовуючи дані для входу
           </AppText>
           <View
             style={{ backgroundColor: 'white' }}
@@ -118,7 +116,7 @@ const Login: FC = () => {
               placeholderTextColor="grey"
               keyboardType="email-address"
               returnKeyType="done"
-              placeholder="אימייל"
+              placeholder="Eлектронна пошта"
               className="w-5/6 mx-5 text-2xl text-right text-black"
             />
           </View>
@@ -131,24 +129,15 @@ const Login: FC = () => {
               secureTextEntry
               placeholderTextColor="grey"
               returnKeyType="done"
-              placeholder="סיסמא"
+              placeholder="Пароль"
               className="w-5/6 mx-5 text-2xl text-right text-black"
             />
           </View>
-          {/* <TouchableOpacity
-            className="flex items-end"
-            onPress={() => {
-              navigation.navigate('Auth', { screen: 'ForgotPassword' });
-            }}>
-            <Text className="text-black underline text-sm mt-5">
-              שכחתי סיסמא
-            </Text>
-          </TouchableOpacity> */}
         </KeyboardAvoidingView>
       </ScrollView>
 
       <View className="w-10/12 mx-auto">
-        <AppButton onPress={onContinue}>התחברות</AppButton>
+        <AppButton onPress={onContinue}>Вхід</AppButton>
       </View>
       {loader && (
         <ActivityIndicator

@@ -6,7 +6,6 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { scale } from 'react-native-size-matters';
 
 import { privacyText } from './privacy';
-import { tosText } from './tos';
 
 interface PrivacyPolicyProps {
   navigation: any;
@@ -20,22 +19,18 @@ const PrivacyPolicy: React.FC<PrivacyPolicyProps> = ({ navigation }) => {
         contentContainerStyle={{ padding: scale(12) }}>
         <CircleButton
           size={40}
-          icon="chevron-down"
+          icon="chevron-left"
           onPress={navigation.goBack}
           backgroundColor="#00000060"
           color="#fff"
         />
         <View className="mt-6 px-2 items-start">
           <AppText className="font-semibold text-lg text-black">
-            מדיניות פרטיות
+            Політика конфіденційності
           </AppText>
           <AppText className="text-left text-sm text-black">
             {privacyText}
           </AppText>
-          <AppText className="font-semibold text-lg text-black">
-            תנאי שימוש
-          </AppText>
-          <AppText className="text-left text-sm text-black">{tosText}</AppText>
         </View>
       </ScrollView>
     </SafeAreaView>

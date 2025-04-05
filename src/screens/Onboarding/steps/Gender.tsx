@@ -44,8 +44,8 @@ const Gender = () => {
         alignItems: 'center',
       }}>
       <PageTitle
-        title="עוד רגע מתחילים"
-        subTitle={'לפני הכניסה לאפליקציה,\nנשמח לדעת כיצד לפנות אלייך?'}
+        title="Вже зовсім скоро, залишилось декілька кроків!"
+        subTitle={'Підкажіть якої ви статі, як до вас звертатися?'}
       />
 
       <View style={{ alignItems: 'center', width: '90%', marginBottom: 30 }}>
@@ -65,7 +65,7 @@ const Gender = () => {
             style={{
               color: sex === 'F' ? 'white' : 'black',
             }}>
-            נקבה ♀️
+            Жіночої ♀️
           </Text>
         </TouchableOpacity>
         <TouchableOpacity
@@ -85,7 +85,7 @@ const Gender = () => {
             style={{
               color: sex === 'M' ? 'white' : 'black',
             }}>
-            זכר ♂️
+            Чоловічої ♂️
           </Text>
         </TouchableOpacity>
       </View>

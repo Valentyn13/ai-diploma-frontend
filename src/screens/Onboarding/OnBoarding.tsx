@@ -105,7 +105,7 @@ const OnBoarding = ({ navigation: { navigate } }) => {
                 onStart();
               }
             }}
-            title="הבא"
+            title="Далі"
           />
         </View>
       </SafeAreaView>
