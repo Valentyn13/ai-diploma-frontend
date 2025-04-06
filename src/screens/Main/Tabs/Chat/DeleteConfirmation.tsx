@@ -10,15 +10,15 @@ type Props = {
   onCancel: () => void;
 };
 
-const LEAVE_CHAT_TITLE = 'עדיין לא סיימנו את השיחה';
-const LEAVE_CHAT_DESCRIPTION = 'בטוח/ה שברצונך לצאת?';
-const LEAVE_CHAT_CONFIRM_BUTTON = 'אני רוצה לצאת';
-const LEAVE_CHAT_CANCEL_BUTTON = 'המשך שיחה';
+const LEAVE_CHAT_TITLE = 'Ми ще не закінчили розмову';
+const LEAVE_CHAT_DESCRIPTION = 'Ви впевнені, що хочете вийти?';
+const LEAVE_CHAT_CONFIRM_BUTTON = 'Я хочу вийт';
+const LEAVE_CHAT_CANCEL_BUTTON = 'Продовжити розмову';
 
-const DELETE_CHAT_TITLE = 'מחק צ׳אט';
-const DELETE_CHAT_DESCRIPTION = 'האם ברצונך למחוק את השיחה?';
-const DELETE_CHAT_CONFIRM_BUTTON = 'כן';
-const DELETE_CHAT_CANCEL_BUTTON = 'לא';
+const DELETE_CHAT_TITLE = 'Видалити чат';
+const DELETE_CHAT_DESCRIPTION = 'Ви бажаєте видалити чат?';
+const DELETE_CHAT_CONFIRM_BUTTON = 'Так';
+const DELETE_CHAT_CANCEL_BUTTON = 'НІ';
 
 const ConfirmationModal: FC<Props> = ({
   type,

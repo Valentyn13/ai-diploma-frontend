@@ -21,7 +21,7 @@ const ChatView = () => {
     <View className="flex flex-1 relative">
       <ChatHeader
         toggleDrawer={setIsDrawerOpen}
-        title="מיכאל"
+        title="Майкл"
         avatarSrc={image('michael_chat')}
         navigation={navigation}
       />

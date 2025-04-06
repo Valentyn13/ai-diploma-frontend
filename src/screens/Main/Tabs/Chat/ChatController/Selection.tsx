@@ -67,7 +67,7 @@ const ChatType: FC<ChatTypeData> = ({
         {sessionCount && (
           <View className="bg-transparent border border-[#00000024] rounded-[57px] py-[2px] px-[4px]">
             <Text className="text-[16px] text-[#3F3F3F] text-left">
-              {sessionCount} מפגשים נעשו
+              Чатів: {sessionCount}
             </Text>
           </View>
         )}
@@ -96,11 +96,8 @@ const Selection: FC<SelectionProps> = ({
   return (
     <View className="relative px-[16px] pt-[16px] flex flex-1 bg-[#FFF7EE]">
       <View>
-        <View className="flex flex-row justify-between">
-          <Text className="text-2xl text-[#273051] font-semibold">ליווי</Text>
-        </View>
         <Text className="text-base text-[#585858] mb-[15px] text-left">
-          בחרו את התחום שברצונכם לחקור ולהעמיק בו:
+          Виберіть тему, на яку хочете поспілкуватися або заглибитися
         </Text>
       </View>
       <View />

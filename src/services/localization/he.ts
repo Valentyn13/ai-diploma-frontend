@@ -41,11 +41,10 @@ export default {
   female: 'נקבה',
 
   // Tabs
-  home: 'בית',
-  courses: 'קורסים',
-  profile: 'פרופיל',
-  explore: 'גלו עוד',
-  chat: 'ליווי',
+  home: 'Головна',
+  courses: 'Документи',
+  profile: 'Профіль',
+  chat: 'Чати',
 
   categories: 'נושאים',
   recommended: 'מומלץ עבורך',

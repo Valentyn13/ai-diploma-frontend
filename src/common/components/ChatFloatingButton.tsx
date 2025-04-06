@@ -39,15 +39,15 @@ const ChatFloatingButton: FC<ChatFloatingButtonProps> = ({
               source={image(image_name)}
             />
           </View>
-          <View className="flex-1 pl-[20px]">
+          <View className="flex-1 pl-[10px]">
             <Text className="text-[#FFFFFF] mb-0.5 text-base font-medium text-left">
-              המשך שיחה
+              Продовжити розмову
             </Text>
             <Text
               numberOfLines={1}
               className="text-[#FFFFFF] text-[14px] w-[85%] text-left">
               {/* TODO: add proper banner text for last categories */}
-              {`${CATEGORY_NAMES[categoryName]} פגישה ${lastActiveSessionIndex}`}
+              {`${lastActiveSessionIndex} чат з категорії ${CATEGORY_NAMES[categoryName]}`}
             </Text>
           </View>
         </View>

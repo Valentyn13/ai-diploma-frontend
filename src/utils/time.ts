@@ -101,38 +101,38 @@ export function getReadableTimeDifference(pastDateStr: string): string {
   const years = now.getFullYear() - pastDate.getFullYear();
 
   if (seconds < 60) {
-    return seconds === 1 ? 'לפני שנייה' : `לפני ${seconds} שניות`;
+    return seconds === 1 ? '1 секунду тому' : `${seconds} секунд тому`;
   } else if (minutes < 60) {
-    return minutes === 1 ? 'לפני דקה' : `לפני ${minutes} דקות`;
+    return minutes === 1 ? '1 хвилину тому' : `${minutes} хвилин тому`;
   } else if (hours < 24) {
     return hours === 1
-      ? 'לפני שעה'
+      ? '1 годину тому'
       : hours === 2
-      ? 'לפני שעתיים'
-      : `לפני ${hours} שעות`;
+      ? '2 години тому'
+      : `${hours} годин тому`;
   } else if (days < 7) {
     return days === 1
-      ? 'אתמול'
+      ? 'Вчора'
       : days === 2
-      ? 'לפני יומיים'
-      : `לפני ${days} ימים`;
+      ? '2 дні тому'
+      : `${days} днів тому`;
   } else if (weeks < 4) {
     return weeks === 1
-      ? 'לפני שבוע'
+      ? '1 тиждень тому'
       : weeks === 2
-      ? 'לפני שבועיים'
-      : `לפני ${weeks} שבועות`;
+      ? '2 тижні тому'
+      : `${weeks} тижнів тому`;
   } else if (months < 12) {
     return months === 1
-      ? 'לפני חודש'
+      ? '1 місяць тому'
       : months === 2
-      ? 'לפני חודשיים'
-      : `לפני ${months} חודשים`;
+      ? '2 місяці тому'
+      : `${months} місяців тому`;
   } else {
     return years === 1
-      ? 'לפני שנה'
+      ? '1 рік тому'
       : years === 2
-      ? 'לפני שנתיים'
-      : `לפני ${years} שנים`;
+      ? '2 роки тому'
+      : `${years} років тому`;
   }
 }

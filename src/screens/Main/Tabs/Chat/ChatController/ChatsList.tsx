@@ -179,7 +179,7 @@ const ChatsList = ({ chats, category }: ChatListType) => {
             </Text>
             {category.sessionCount !== 0 && (
               <Text className="text-[20px] text-[#273051] mt-[6px]">
-                מפגש {category.sessionCount}
+                Чатів в категорії {category.sessionCount}
               </Text>
             )}
           </View>
@@ -203,17 +203,17 @@ const ChatsList = ({ chats, category }: ChatListType) => {
               underlayColor={'#364373'}
               className="h-[50px] flex justify-center items-center bg-[#273051] rounded-[8px]">
               <Text className="text-base font-semibold text-[#FFFFFF]">
-                התחל מפגש
+                Створити чат
               </Text>
             </TouchableHighlight>
           </View>
           {chats.length ? (
             <Text className="text-lg text-[#0000008F] mt-[20px] text-left">
-              מפגשים קודמים
+              Попередні чати
             </Text>
           ) : (
             <Text className="text-xl text-[#0000008F] mt-[50px] text-center">
-              אין פגישות קודמות
+              Немає попередніх чатів
             </Text>
           )}
           <FlatList

@@ -135,7 +135,7 @@ export default function ChatContainer() {
   if (error) {
     return (
       <View className="flex-1 justify-center items-center bg-[#FFF7EA] w-full h-full">
-        <Text>אירעה שגיאה</Text>
+        <Text>Сталася помилка</Text>
       </View>
     );
   }

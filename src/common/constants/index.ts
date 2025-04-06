@@ -899,12 +899,11 @@ export const PLAY_STORE_FALLBACK_URL =
 export const APP_STORE_FALLBACK_URL =
   'https://apps.apple.com/ua/app/rega-%D7%A8%D7%92%D7%A2/id1549517842';
 
-export const FREE_CHAT_TITLE = 'צ׳אט חופשי';
-export const SELF_DEV_TITLE = 'פיתוח עצמי';
-export const NEGATIVE_THOUGHTS_TITLE = 'ניהול דפוסי חשיבה שליליים';
-export const ANXIETY_TITLE = 'חרדה: הבנה והתמודדות';
-export const BAD_HABITS_TITLE = 'שחרור מהרגלים רעים';
-
+export const FREE_CHAT_TITLE = 'Звичайний чат';
+export const SELF_DEV_TITLE = 'Саморозвиток';
+export const NEGATIVE_THOUGHTS_TITLE = 'Керування негативними емоціями';
+export const ANXIETY_TITLE = 'Тривога: розуміння та подолання';
+export const BAD_HABITS_TITLE = 'Звільнення від шкідливих звичок';
 export type ChatTypeData = {
   id: number;
   type: ChatCategories;
@@ -920,7 +919,7 @@ export const CHAT_TYPES: ChatTypeData[] = [
     type: null,
     title: FREE_CHAT_TITLE,
     description:
-      'לשתף, להתייעץ או סתם לפרוק... זה המקום לדבר עם מיכאל על כל נושא שתרצו. כאן גם תמצאו את כל השיחות הקודמות שלכם.',
+      'Поділитися, порадитися або просто висловитися... це місце, де можна поговорити з Майклом на будь-яку тему. Тут ви також знайдете всі ваші попередні розмови.',
     sessionCount: 0,
     bgColor: '#1476773D',
   },
@@ -929,7 +928,7 @@ export const CHAT_TYPES: ChatTypeData[] = [
     type: ChatCategoriesEnum.SELF_DEV,
     title: SELF_DEV_TITLE,
     description:
-      'מרגישים תקועים ולא מצליחים להתקדם? במפגשים שלנו יחד נוכל לצמוח ולהגשים את המטרות שתמיד חלמתם להגשים.',
+      'Відчуваєте, що застрягли та не можете рухатися вперед? На наших спільних зустрічах ми можемо рости та досягати цілей, про які ви завжди мріяли',
     sessionCount: 0,
     bgColor: '#FFE3C5',
   },
@@ -938,7 +937,7 @@ export const CHAT_TYPES: ChatTypeData[] = [
     type: ChatCategoriesEnum.NEGATIVE,
     title: NEGATIVE_THOUGHTS_TITLE,
     description:
-      'בוא נזהה וננהל יחד את דפוסי החשיבה השליליים שלך, נבין את השפעתם על התחושות וההתנהגות, ונלמד כיצד להפוך אותם לדפוסים בריאים ומקדמים.',
+      'Давайте разом визначимо ваші негативні моделі мислення та керувати ними, зрозуміємо їхній вплив на почуття та поведінку та навчимося перетворювати їх на здорові та сприятливі думки',
     sessionCount: 0,
     bgColor: '#D4E4FE',
   },
@@ -947,7 +946,7 @@ export const CHAT_TYPES: ChatTypeData[] = [
     type: ChatCategoriesEnum.ANXIETY,
     title: ANXIETY_TITLE,
     description:
-      'גלו את שורשי החרדה שלכם ולמדו כלים מעשיים להתמודדות יעילה. יחד נעבוד על הבנה עמוקה יותר והשגת רוגע נפשי.',
+      'Відкрийте причини своєї тривоги та вивчіться бороти її. Разом ми працюватимемо над глибшим розумінням і досягненням вашого душевного спокою',
     sessionCount: 0,
     bgColor: '#F9D8D7',
   },
@@ -956,7 +955,7 @@ export const CHAT_TYPES: ChatTypeData[] = [
     type: ChatCategoriesEnum.BAD_HABITS,
     title: BAD_HABITS_TITLE,
     description:
-      'שחרור מהרגלים רעים דורש זמן ולעיתים עזרה. אם אתם זקוקים לתמיכה כדי להיפטר מהם, אני כאן ללוות אתכם בתהליך ולסייע לכם לצעוד לעבר שינוי חיובי.',
+      'Позбавлення від шкідливих звичок потребує часу, але це можливо. Якщо вам потрібна підтримка, щоб позбутися їх, я тут, щоб супроводжувати вас у цьому процесі та допомогти вам зробити крок до позитивних змін',
     sessionCount: 0,
     bgColor: '#E8E6F3',
   },
@@ -965,10 +964,10 @@ export const CHAT_TYPES: ChatTypeData[] = [
 export const REGA_INSTRUCTOR_ID = '648af8fb0e66f2955d2ecbc8';
 
 export const CATEGORY_NAMES: Record<ChatCategoriesEnum | '', string> = {
-  [ChatCategoriesEnum.BAD_HABITS]: 'הרגלים רעים',
-  [ChatCategoriesEnum.ANXIETY]: 'חרדה',
-  [ChatCategoriesEnum.NEGATIVE]: 'מחשבות שליליות',
-  [ChatCategoriesEnum.SELF_DEV]: 'פיתוח עצמי',
+  [ChatCategoriesEnum.BAD_HABITS]: 'Погані звички',
+  [ChatCategoriesEnum.ANXIETY]: 'Тривога',
+  [ChatCategoriesEnum.NEGATIVE]: 'Негативні думки',
+  [ChatCategoriesEnum.SELF_DEV]: 'Саморозвиток',
   '': '',
 };
 

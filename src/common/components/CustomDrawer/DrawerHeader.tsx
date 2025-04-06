@@ -52,7 +52,7 @@ const DrawerListHeader = () => {
       underlayColor="#00000015"
       className="py-[16px] px-[12px]">
       <Text className="text-black text-left font-semibold text-md">
-        שיחה חדשה
+        Новий чат
       </Text>
     </TouchableHighlight>
   );

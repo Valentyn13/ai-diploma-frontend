@@ -98,7 +98,7 @@ const Chat: FC<ChatComponentProps> = ({
         )}
         messages={messages}
         onSend={onSend}
-        placeholder="Write a message..."
+        placeholder="Ваше повідомлення..."
         user={{ _id: 'USER' }}
         renderSend={props => (
           <CustomSend {...props} isLoading={disableUserInput} />
