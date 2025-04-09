@@ -20,7 +20,7 @@ const Personalized = () => {
       ]}>
       <View className="h-[96px] flex-row justify-between relative">
         <View className="p-4 flex-1">
-          <Text className="text-left text-[#273051] font-medium text-[27px] leading-[27px]">
+          <Text className="text-left text-[#273051] font-medium text-[20px] leading-[27px]">
             {getTitle()} {user.name ?? ''}
           </Text>
           <Text className="text-left text-[#505050] text-[16px] leading-[17px]">

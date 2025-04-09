@@ -4,7 +4,7 @@ import { Text, View } from 'react-native';
 
 import Card from './Card';
 
-const CHALLANGE_TOTAL = 1000000;
+const CHALLANGE_TOTAL = 1500;
 
 const OneMChallenge: FC<{
   totalMinutesPracticed: number;

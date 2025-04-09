@@ -1,98 +1,68 @@
-import { getCategoryImg } from '@common/assets/images/index';
-import { CATEGORY_COLOR, MEDITATIONS_IMAGES_URL } from '@common/constants';
+import images from '@common/assets/images';
+import { CATEGORY_COLOR } from '@common/constants';
 import theme from '@common/theme';
 import { useNavigation } from '@react-navigation/native';
-import { useAmplitude } from '@services/hooks/useAmplitude';
-import { meditationInstructor } from '@store/selectors';
-import { logEvent } from '@utils/analytics';
-import { isRecent } from '@utils/session';
+import {
+  ChatCategories,
+  useCategorizedChatFlowStore,
+} from '@store/useCategorizedChatFlowStore';
+import { useDocumentChatStore } from '@store/useDocumentChatsStore';
 import meditationTime from '@utils/time';
-import React, { FC, memo, useCallback, useMemo } from 'react';
-import { ImageBackground, Pressable, Text, View } from 'react-native';
+import React, { FC, memo, useCallback } from 'react';
+import { ImageBackground, Text, TouchableOpacity, View } from 'react-native';
 import FastImage from 'react-native-fast-image';
 import IconFontAwesome from 'react-native-vector-icons/FontAwesome6';
-import { useSelector } from 'react-redux';
-import { EnrichedSession } from 'types/Meditation';
 
 interface MeditationItemProps {
-  item: EnrichedSession;
+  item: {
+    id: string;
+    name: string;
+    duration: number;
+    categoryName: string;
+    image?: string;
+  };
   width?: number;
   height?: number;
   index: number;
 }
 
-const Indicator: FC = () => (
-  <View
-    style={{
-      position: 'absolute',
-      top: -4,
-      right: -4,
-      backgroundColor: '#F62C36',
-      borderRadius: 10,
-      width: 12,
-      height: 12,
-    }}
-  />
-);
-
 const SessionCard: FC<MeditationItemProps> = memo(
   ({
-    item: {
-      id,
-      name,
-      url,
-      duration,
-      categoryName,
-      animation,
-      thumbnail,
-      isCategoryLocked,
-      image,
-      createdAt,
-    },
+    item: { id, name, image, duration, categoryName },
     width = theme.dimens.winWidth / 2 - 28,
     height = 230,
-    index,
   }) => {
     const { navigate } = useNavigation();
-    const amplitudeInstance = useAmplitude();
-    const instructor = useSelector(state => meditationInstructor(state, id));
-    const isNew = useMemo(() => isRecent({ createdAt }), [createdAt]);
-
-    const navigateToPlayer = useCallback(() => {
-      if (isCategoryLocked) {
-        // @ts-ignore TODO: fix this
-        navigate('Subscribe');
+    const { setCurrentCategory, setCurrentStep } = useDocumentChatStore(
+      state => ({
+        setCurrentStep: state.setCurrentStep,
+        setCurrentCategory: state.setCategory,
+      }),
+    );
+    const { setCurrentCategory: setChatCategory, setCurrentStep: setChatStep } =
+      useCategorizedChatFlowStore(state => ({
+        setCurrentCategory: state.setSelectedCategory,
+        setCurrentStep: state.setCurrentStep,
+      }));
+    const onCardPress = useCallback(() => {
+      if (id === 'medicine' || id === 'engineering' || id === 'law') {
+        setCurrentCategory(id);
+        setCurrentStep('list');
+        navigate('Courses');
       } else {
-        amplitudeInstance.logEvent('MEDITATION_CLICKED');
-        amplitudeInstance.logEvent('MEDITATION_PLAY');
-        logEvent('MEDITATION_CLICKED', { id, name });
-        logEvent('MEDITATION_PLAY', { id, name });
-        amplitudeInstance.uploadEvents();
-        // @ts-ignore TODO: fix this
-        navigate('MeditationPlayer', {
-          item: { id, name, categoryName, url, animation },
-          index,
-        });
+        console.log(id)
+        setChatCategory(id as ChatCategories);
+        setChatStep('list');
+        navigate('Chat');
       }
     }, [
-      isCategoryLocked,
-      navigate,
-      name,
-      amplitudeInstance,
-      categoryName,
       id,
-      url,
-      animation,
-      index,
+      navigate,
+      setChatCategory,
+      setChatStep,
+      setCurrentCategory,
+      setCurrentStep,
     ]);
-
-    const navigateToModal = useCallback(() => {
-      amplitudeInstance.logEvent('MEDITATION_MODAL_CLICKED', { id, name });
-      logEvent('MEDITATION_MODAL_CLICKED', { id, name });
-      amplitudeInstance.uploadEvents();
-      // @ts-ignore TODO: fix this
-      navigate('SessionModal', { id });
-    }, [amplitudeInstance, id, name, navigate]);
 
     return (
       <View
@@ -100,8 +70,8 @@ const SessionCard: FC<MeditationItemProps> = memo(
           width,
           height,
         }}>
-        <Pressable
-          onPress={navigateToPlayer}
+        <TouchableOpacity
+          onPress={onCardPress}
           className="flex-1 overflow-hidden"
           style={{
             borderRadius: 8,
@@ -114,27 +84,14 @@ const SessionCard: FC<MeditationItemProps> = memo(
             className="flex-1 items-center justify-center"
             resizeMode="cover"
             source={{
-              uri: image
-                ? `${MEDITATIONS_IMAGES_URL}${image}`
-                : getCategoryImg(categoryName, index, thumbnail),
+              uri: image,
             }}>
-            {!hasPremium && isCategoryLocked ? (
-              <View className="bg-black/50 rounded-full p-1 w-6 h-6 flex justify-center items-center absolute bottom-2 left-2">
-                <IconFontAwesome name="lock" size={12} color="#fff" />
-              </View>
-            ) : (
-              <View className="flex-row bg-black/50 rounded-full px-2 py-1 absolute bottom-2 left-2 items-center">
-                <IconFontAwesome name="play" size={12} color="#fff" />
-                <Text className="ml-2 text-white font-light">
-                  {meditationTime(duration)}
-                </Text>
-              </View>
-            )}
+            <View className="flex-row bg-black/50 rounded-full px-2 py-1 absolute bottom-2 left-2 items-center">
+              <IconFontAwesome name="play" size={12} color="#fff" />
+            </View>
           </ImageBackground>
-        </Pressable>
-        <Pressable
-          onPress={navigateToModal}
-          className="flex flex-col items-start justify-start py-1 px-2 h-16">
+        </TouchableOpacity>
+        <View className="flex flex-col items-start justify-start py-1 px-2 h-16">
           <Text
             numberOfLines={1}
             ellipsizeMode="tail"
@@ -143,21 +100,15 @@ const SessionCard: FC<MeditationItemProps> = memo(
           </Text>
           <View className="flex flex-row items-center mt-[4px]">
             {/*  */}
-            {instructor?.image ? (
-              <FastImage
-                className="h-[24px] w-[24px] rounded-full"
-                source={{ uri: instructor.image }}
-              />
-            ) : (
-              <IconFontAwesome color="#000" name="user-large" size={10} />
-            )}
-
+            <FastImage
+              className="h-[24px] w-[24px] rounded-full"
+              source={images('michael_home')}
+            />
             <Text className="text-[#505050] text-[13px] leading-[15px] ml-1">
-              {instructor?.name ?? ''}
+              Майкл
             </Text>
           </View>
-        </Pressable>
-        {isNew && <Indicator />}
+        </View>
       </View>
     );
   },

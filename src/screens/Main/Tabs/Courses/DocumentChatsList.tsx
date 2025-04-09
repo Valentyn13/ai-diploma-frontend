@@ -1,6 +1,12 @@
+import Gradient from '@common/components/Gradient';
 import { CircleButton } from '@common/components/buttons/CircleButton';
 import {
+  DOCUMENT_CHAT_CATEGORY_IMAGES,
+  DOCUMENT_CHAT_CATEGORY_TITLES,
+} from '@common/constants';
+import {
   DocumentChat,
+  DocumentChatCategories,
   DocumentChatSteps,
   useDocumentChatStore,
 } from '@store/useDocumentChatsStore';
@@ -8,12 +14,13 @@ import { useMemo } from 'react';
 import {
   Dimensions,
   FlatList,
+  ImageBackground,
   Text,
   TouchableOpacity,
   View,
 } from 'react-native';
 
-const numColumns = 3;
+const numColumns = 2;
 
 type GridItemPros = {
   item: DocumentChat;
@@ -23,6 +30,10 @@ type GridItemPros = {
 
 const GridItem = ({ item, setCurrentChatId, setCurrentStep }: GridItemPros) => {
   const lastElement = item._id === 'new';
+
+  const { currentCategory } = useDocumentChatStore(state => ({
+    currentCategory: state.currentCategory,
+  }));
 
   const onElementPress = () => {
     if (lastElement) {
@@ -42,7 +53,7 @@ const GridItem = ({ item, setCurrentChatId, setCurrentStep }: GridItemPros) => {
           height: Dimensions.get('window').width / numColumns - 10,
         }}
         className={
-          'flex-1 m-1 bg-blue-200 items-center justify-center rounded-xl'
+          'flex-1 m-1 bg-[#E8E6F3] items-center justify-center rounded-xl'
         }>
         <Text className={'text-lg font-bold text-black text-[30px]'}>+</Text>
       </TouchableOpacity>
@@ -56,9 +67,20 @@ const GridItem = ({ item, setCurrentChatId, setCurrentStep }: GridItemPros) => {
         height: Dimensions.get('window').width / numColumns - 10,
       }}
       className={
-        'flex-1 m-1 bg-blue-200 items-center justify-center rounded-xl'
+        'flex-1 m-1 relative overflow-hidden rounded-xl items-center justify-center'
       }>
-      <Text className={'text-lg font-bold'}>{item.chatName}</Text>
+      <ImageBackground
+        className="absolute w-full h-full opacity-40 "
+        resizeMode="cover"
+        source={{
+          uri: DOCUMENT_CHAT_CATEGORY_IMAGES[
+            currentCategory as NonNullable<DocumentChatCategories>
+          ],
+        }}
+      />
+      <View className="p-4">
+        <Text className={'text-lg font-bold text-black'}>{item.chatName}</Text>
+      </View>
     </TouchableOpacity>
   );
 };
@@ -115,22 +137,33 @@ const DocumentChatsList = () => {
     );
     return [
       ...filteredChats,
-      { _id: 'new', chatName: 'New Chat', messages: [], userId: '1' },
+      {
+        _id: 'new',
+        chatName: 'New Chat',
+        messages: [],
+        userId: '1',
+        cachedFilePath: '',
+        document: '',
+        category: 'engineering',
+      } as DocumentChat,
     ];
   }, [documentChats, currentCategory]);
 
   return (
-    <View>
-      <CircleButton
-        backgroundColor="#00000060"
-        color="#fff"
-        onPress={onGoBack}
-        size={40}
-        icon="chevron-left"
-      />
-      <Text className="font-bold text-2xl text-black mb-[30px]">
-        Document Chats
-      </Text>
+    <View className="p-4">
+      <View className="flex-row justify-between items-center mb-8">
+        <CircleButton
+          backgroundColor="#00000060"
+          color="#fff"
+          onPress={onGoBack}
+          size={40}
+          icon="chevron-left"
+        />
+        <Text className="font-bold text-2xl text-black">
+          {DOCUMENT_CHAT_CATEGORY_TITLES[currentCategory || 'default']}
+        </Text>
+      </View>
+
       <GridScreen
         setCurrentChatId={setCurrentChatId}
         data={normalizedDataToRenderWithNewLastElement}

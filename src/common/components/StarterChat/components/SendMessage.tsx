@@ -13,7 +13,7 @@ const SendMessage = ({
     {...props}
     containerStyle={{ justifyContent: 'center' }}
     disabled={isLoading || !props.text}>
-    <View className="rotate-[228deg] mr-4">
+    <View className="rotate-[45deg] mr-4">
       <Icon
         name="send"
         color={isLoading || !props.text ? '#D0D0D0' : theme.colors.primary}

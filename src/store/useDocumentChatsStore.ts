@@ -3,7 +3,7 @@ import { create } from 'zustand';
 
 export type DocumentChatSteps = 'list' | 'categories' | 'chat';
 
-export type DocumentChatCategories = 'general' | 'medicine' | 'engineering';
+export type DocumentChatCategories = 'law' | 'medicine' | 'engineering';
 
 export type DocumentChat = {
   _id: string;
@@ -36,7 +36,7 @@ type Actions = {
 
 const initialValues: State = {
   currentChatId: null,
-  currentCategory: 'general',
+  currentCategory: 'law',
   documentChats: [],
   currentStep: 'categories',
   isAllChatsLoading: false,

@@ -1097,15 +1097,15 @@ export const usePersonalized = () => {
     const periodTime = getPeriodOfDay();
 
     if (periodTime === 'morning') {
-      return 'בוקר טוב';
+      return 'Добрий ранок ';
     } else if (periodTime === 'noon') {
-      return 'צהריים טובים';
+      return ' Доброго дня';
     } else if (periodTime === 'afternoon') {
-      return 'אחר צהריים טובים';
+      return 'Добрый день  ';
     } else if (periodTime === 'evening') {
-      return 'ערב טוב';
+      return 'Добрий вечір';
     } else {
-      return 'לילה טוב';
+      return 'На добраніч';
     }
   };
 
@@ -1113,21 +1113,23 @@ export const usePersonalized = () => {
     const periodTime = getPeriodOfDay();
 
     if (periodTime === 'morning') {
-      return user.sex === 'M'
-        ? 'התחל את היום בצורה נכונה'
-        : 'התחילי את היום בצורה נכונה';
+      return user.sex === 'M' ? 'Почни день правильно' : 'Почни день правильно';
     } else if (periodTime === 'noon') {
-      return user.sex === 'M' ? 'קח לך רגע לעצמך' : 'קחי לך רגע לעצמך';
+      return user.sex === 'M'
+        ? 'Знайди хвилинку для себе'
+        : 'Знайди хвилинку для себе';
     } else if (periodTime === 'afternoon') {
       return user.sex === 'M'
-        ? 'הפסקה קטנה באמצע היום'
-        : 'הפסקה קטנה באמצע היום';
+        ? 'Невелика перерва посеред дня'
+        : 'Невелика перерва посеред дня';
     } else if (periodTime === 'evening') {
-      return user.sex === 'M' ? 'סיים את היום בטוב' : 'סיימי את היום בטוב';
+      return user.sex === 'M'
+        ? 'Завершуй день на хорошій ноті'
+        : 'Завершуй день на хорошій ноті';
     } else {
       return user.sex === 'M'
-        ? 'הירגע לקראת שינה עמוקה ושלווה'
-        : 'הירגעי לקראת שינה עמוקה ושלווה';
+        ? 'Розслабся перед глибоким і спокійним сном'
+        : 'Розслабся перед глибоким і спокійним сном';
     }
   };
 
@@ -1148,10 +1150,16 @@ export const usePersonalized = () => {
       const aPriority = priorityKeys.indexOf(a.key);
       const bPriority = priorityKeys.indexOf(b.key);
 
-      if (aPriority !== -1 && bPriority !== -1) return aPriority - bPriority;
+      if (aPriority !== -1 && bPriority !== -1) {
+        return aPriority - bPriority;
+      }
 
-      if (aPriority !== -1) return -1;
-      if (bPriority !== -1) return 1;
+      if (aPriority !== -1) {
+        return -1;
+      }
+      if (bPriority !== -1) {
+        return 1;
+      }
 
       return 0;
     });

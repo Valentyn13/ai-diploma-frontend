@@ -17,17 +17,20 @@ const PrivacyPolicy: React.FC<PrivacyPolicyProps> = ({ navigation }) => {
       <ScrollView
         className="flex-1 bg-primary-bg"
         contentContainerStyle={{ padding: scale(12) }}>
-        <CircleButton
-          size={40}
-          icon="chevron-left"
-          onPress={navigation.goBack}
-          backgroundColor="#00000060"
-          color="#fff"
-        />
-        <View className="mt-6 px-2 items-start">
-          <AppText className="font-semibold text-lg text-black">
+        <View className="flex-row justify-between items-center">
+          <CircleButton
+            size={40}
+            icon="chevron-left"
+            onPress={navigation.goBack}
+            backgroundColor="#00000060"
+            color="#fff"
+          />
+          <AppText className="font-semibold text-[22px] text-black">
             Політика конфіденційності
           </AppText>
+        </View>
+
+        <View className="mt-6 px-2 items-start">
           <AppText className="text-left text-sm text-black">
             {privacyText}
           </AppText>

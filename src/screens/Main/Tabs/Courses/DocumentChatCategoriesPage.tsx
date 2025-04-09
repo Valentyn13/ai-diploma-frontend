@@ -1,40 +1,34 @@
+import { DOCUMENT_CHAT_CATEGORIES } from '@common/constants';
+import { useDocumentChatStore } from '@store/useDocumentChatsStore';
 import { FlatList, View } from 'react-native';
 
-import { renderDocumentChatCategoryListItem } from './DocumentChatCategoryList';
-
-const categories = [
-  {
-    name: 'general',
-    subTitle: 'Some subtitle with medicine',
-    title: 'General',
-    info: 'Some info about medicine, viery interesting and cool',
-    image:
-      'https://img.freepik.com/free-photo/3d-abstract-wave-pattern-background_53876-104422.jpg',
-  },
-  {
-    name: 'medicine',
-    subTitle: 'Some subtitle with math',
-    title: 'Medicine',
-    info: 'Some info about math, viery interesting and cool',
-    image:
-      'https://img.freepik.com/free-photo/3d-abstract-wave-pattern-background_53876-104422.jpg',
-  },
-  {
-    name: 'engineering',
-    subTitle: 'Some subtitle with math',
-    title: 'Engineering',
-    info: 'Some info about math, viery interesting and cool',
-    image:
-      'https://img.freepik.com/free-photo/3d-abstract-wave-pattern-background_53876-104422.jpg',
-  },
-];
+import {
+  DocumentChatCategoryWithCount,
+  renderDocumentChatCategoryListItem,
+} from './DocumentChatCategoryList';
 
 const DocumentChatCategoriesPage = () => {
+  const { documentChats } = useDocumentChatStore(state => ({
+    documentChats: state.documentChats,
+  }));
+
+  const documentChatsCategoriesWithChatCount: DocumentChatCategoryWithCount[] =
+    DOCUMENT_CHAT_CATEGORIES.map(category => {
+      const chatCount = documentChats.filter(
+        chat => chat.category === category.name,
+      ).length;
+
+      return {
+        ...category,
+        chatCount,
+      };
+    });
+  console.log(documentChats);
   return (
     <View className="flex-1 p-4">
       <FlatList
         showsVerticalScrollIndicator={false}
-        data={categories}
+        data={documentChatsCategoriesWithChatCount}
         keyExtractor={item => item.name}
         renderItem={renderDocumentChatCategoryListItem}
       />

@@ -1,6 +1,4 @@
 import image from '@common/assets/images';
-import { AMPLITUDE_EVENTS } from '@common/constants';
-import { useLogViewedScreenEvent } from '@services/hooks/amplitude';
 import { InsightSteps } from '@store/useStarterChatStore';
 import { useState } from 'react';
 import { View } from 'react-native';
@@ -10,25 +8,19 @@ import StarterChatHeader from './StarterChatHeader';
 
 type Props = {
   setStep: (step: InsightSteps) => void;
-  shouldShowPaywall: boolean;
 };
 
-const UserPoll = ({ setStep, shouldShowPaywall }: Props) => {
+const UserPoll = ({ setStep }: Props) => {
   const [isPollEnded, setIsPollEnded] = useState<boolean>(false);
 
   const handlePollState = (isEnded: boolean) => {
     setIsPollEnded(isEnded);
   };
 
-  useLogViewedScreenEvent(
-    AMPLITUDE_EVENTS.STARTER_CHAT.VIEWED_STARTER_CHAT_SCREEN,
-    { shouldIgnore: shouldShowPaywall },
-  );
-
   return (
     <View className="flex flex-1 relative">
       <StarterChatHeader
-        title="מיכאל"
+        title="Майкл"
         avatarSrc={image('michael_chat')}
         setIsPollEnded={handlePollState}
       />

@@ -116,7 +116,7 @@ const ChatController = () => {
             handleOpenRecentChat={handleOpenRecentChat}
           />
         ) : (
-          <UserInsightView shouldShowPaywall={shouldShowPaywall} />
+          <UserInsightView />
         )
       ) : null}
       {currentStep === 'list' && (

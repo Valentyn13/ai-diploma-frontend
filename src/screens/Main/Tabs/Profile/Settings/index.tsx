@@ -1,20 +1,11 @@
-/* eslint-disable handle-callback-err */
 import PeopleCommunitySvgIcon from '@common/assets/icons/PeopleCommunitySvgIcon';
 import { CircleButton } from '@common/components/buttons/CircleButton';
 import {
-  CONTACT_EMAIL_SUPPORT,
-  CONTACT_WATSAPP_SUPPORT,
-  COPIED_DATA_MESSAGE_CONTACT_SUPPORT_WITH,
-  COPIED_DATA_TITLE,
   DELETE_DATA_CONFIRM_MESSAGE,
   DELETE_DATA_CONFIRM_TITLE,
   LOGOUT_CONFIRM_MESSAGE,
   LOGOUT_CONFIRM_TITLE,
-  UNABLE_TO_OPEN_APP,
-  UNSUBSCRIBE_CONFIRM_MESSAGE,
-  UNSUBSCRIBE_CONFIRM_TITLE,
 } from '@common/constants';
-import Clipboard from '@react-native-clipboard/clipboard';
 import { useAmplitude } from '@services/hooks/useAmplitude';
 import { useClearChatStore } from '@services/hooks/useClearChatStore';
 import useDeleteData from '@services/hooks/useDeleteData';
@@ -29,14 +20,11 @@ import React from 'react';
 import {
   Alert,
   FlatList,
-  Linking,
-  Platform,
   SafeAreaView,
   Text,
   TouchableOpacity,
   View,
 } from 'react-native';
-import DeviceInfo from 'react-native-device-info';
 import Icon from 'react-native-vector-icons/FontAwesome6';
 import { useDispatch } from 'react-redux';
 
@@ -46,7 +34,7 @@ const Settings = ({ navigation }) => {
   const {
     user: { name, email, id },
   } = useUser();
-  const { DeleteUserData, cancelSubscription } = useDeleteData();
+  const { DeleteUserData } = useDeleteData();
 
   const amplitudeInstance = useAmplitude();
 
@@ -63,47 +51,10 @@ const Settings = ({ navigation }) => {
     googleSignOut();
     clearSentryUser();
     clearAmplitudeUser();
-    // applelogout();
 
     navigation.reset({
       index: 0,
       routes: [{ name: 'Auth' }],
-    });
-  };
-
-  const onJoinUs = () => {
-    const whatsappUrl = 'https://chat.whatsapp.com/IGDeIhM3NvIFwS2LtOaSW4';
-
-    Linking.openURL(whatsappUrl).catch(err => {
-      Alert.alert('לא ניתן לפתוח וואטסאפ במכשיר שלך');
-    });
-  };
-
-  const onContactUs = () => {
-    const whatsappNumber = '+972532424833';
-    const whatsappUrl = `whatsapp://send?phone=${whatsappNumber}&text=${encodeURIComponent(
-      'היי, רציתי לשאול שאלה',
-    )}`;
-
-    const instagramUrl = 'https://www.instagram.com/rega.app';
-    const instagramDMUrl = 'instagram://direct_message?username=rega.app';
-
-    const emailAddress = 'hello@rega-app.com';
-    const emailSubject = 'היי, רציתי לשאול שאלה';
-    const emailBody = '';
-
-    const emailUrl = `mailto:${emailAddress}?subject=${encodeURIComponent(
-      emailSubject,
-    )}&body=${encodeURIComponent(emailBody)}`;
-
-    Linking.openURL(whatsappUrl).catch(err => {
-      Linking.openURL(instagramDMUrl).catch(err => {
-        Linking.openURL(instagramUrl).catch(err => {
-          Linking.openURL(emailUrl).catch(err =>
-            Alert.alert(UNABLE_TO_OPEN_APP, CONTACT_EMAIL_SUPPORT),
-          );
-        });
-      });
     });
   };
 
@@ -113,55 +64,20 @@ const Settings = ({ navigation }) => {
       DELETE_DATA_CONFIRM_MESSAGE,
       [
         {
-          text: 'ביטול',
-          onPress: () => {},
-          style: 'cancel',
-        },
-        {
-          text: 'מחיקה',
+          text: 'Так',
           onPress: () => {
             DeleteUserData();
           },
           style: 'destructive',
         },
+        {
+          text: 'Ні',
+          onPress: () => {},
+          style: 'cancel',
+        },
       ],
       { cancelable: true },
     );
-  };
-
-  const cancelSubscriptionPrompt = () => {
-    if (Platform.OS === 'android') {
-      const url = 'https://play.google.com/store/account/subscriptions';
-      Linking.openURL(url).catch(err => {
-        Alert.alert(UNABLE_TO_OPEN_APP, CONTACT_WATSAPP_SUPPORT);
-      });
-    } else {
-      Alert.prompt(
-        UNSUBSCRIBE_CONFIRM_TITLE,
-        UNSUBSCRIBE_CONFIRM_MESSAGE,
-        [
-          {
-            text: 'ביטול',
-            onPress: () => console.log('Cancelled'),
-            style: 'cancel',
-          },
-          {
-            text: 'אישור',
-            onPress: reason => {
-              cancelSubscription(reason);
-              const url = 'https://apps.apple.com/account/subscriptions';
-
-              Linking.openURL(url).catch(err => {
-                Alert.alert(UNABLE_TO_OPEN_APP, CONTACT_WATSAPP_SUPPORT);
-              });
-            },
-            style: 'destructive',
-          },
-        ],
-        'plain-text',
-        'אני רוצה לבטל את הרישום כי ',
-      );
-    }
   };
 
   const logoutConfirm = () => {
@@ -170,14 +86,14 @@ const Settings = ({ navigation }) => {
       LOGOUT_CONFIRM_MESSAGE,
       [
         {
-          text: 'התנתק',
+          text: 'Так',
           onPress: () => {
             onLogout();
           },
           style: 'destructive',
         },
         {
-          text: 'ביטול',
+          text: 'Ні',
           onPress: () => {},
           style: 'cancel',
           isPreferred: true,
@@ -189,7 +105,7 @@ const Settings = ({ navigation }) => {
 
   const list = [
     {
-      title: 'הגדרות משתמש',
+      title: 'Налаштування користувача',
       onPress: () =>
         navigation.navigate('Main', {
           screen: 'Tabs',
@@ -206,50 +122,18 @@ const Settings = ({ navigation }) => {
       icon: 'user-large',
     },
     {
-      title: 'פנו אלינו',
-      onPress: onContactUs,
-      onLongPress: () => {
-        const data = {
-          id,
-          name,
-          email,
-          hasPremium: true,
-          appVersion: DeviceInfo.getVersion(),
-          platform: Platform.OS,
-        };
-        Clipboard.setString(JSON.stringify(data));
-
-        Alert.alert(
-          COPIED_DATA_TITLE,
-          COPIED_DATA_MESSAGE_CONTACT_SUPPORT_WITH,
-        );
-      },
-      icon: 'whatsapp',
-    },
-    {
-      title: 'הצטרפו לקהילה',
-      onPress: onJoinUs,
-      icon: 'people-community',
-      isPremium: true,
-    },
-    {
-      title: 'מדיניות הפרטיות ותנאי השימוש',
+      title: 'Політика конфіденційності',
       onPress: () => navigation.navigate('PrivacyPolicy'),
       icon: 'book',
     },
 
     {
-      title: 'מחיקת נתונים',
+      title: 'Видалення даних',
       onPress: deleteDataConfirm,
       icon: 'trash',
     },
     {
-      title: 'ביטול מנוי',
-      onPress: cancelSubscriptionPrompt,
-      icon: 'ban',
-    },
-    {
-      title: 'התנתקות',
+      title: 'Вихід з акаунту',
       onPress: logoutConfirm,
       icon: 'right-from-bracket',
     },
@@ -258,17 +142,17 @@ const Settings = ({ navigation }) => {
   return (
     <SafeAreaView className="relative w-full h-full flex-1 bg-[#FFF8EE]">
       <View className="relative p-5 flex flex-row items-center">
-        <View className="absolute top-5 left-5 z-10">
+        <View>
           <CircleButton
             size={40}
-            icon="chevron-right"
+            icon="chevron-left"
             onPress={navigation.goBack}
             backgroundColor="#00000060"
             color="#fff"
           />
         </View>
         <Text className="flex-1 text-3xl font-semibold text-center text-black">
-          הגדרות
+          Налаштування
         </Text>
       </View>
       <View className="w-full border-b border-[#513F73]/10" />
@@ -308,8 +192,8 @@ const Settings = ({ navigation }) => {
           </TouchableOpacity>
         )}
       />
-      <Text className="text-center text-sm mt-2 mb-1 text-gray-500">
-        גרסה נוכחית {DeviceInfo.getVersion()}
+      <Text className="text-center text-sm mt-2 mb-4 text-gray-500">
+        Версія додатку 1.0.0
       </Text>
     </SafeAreaView>
   );

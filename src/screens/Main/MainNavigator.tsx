@@ -10,7 +10,6 @@ import MeditationPlayer from './SessionPlayer';
 import BgPlayer from './SessionPlayer/BgPlayer';
 import Subscribe from './Subscribe';
 import Tabs from './Tabs';
-import Course from './Tabs/Courses/Course';
 import SessionModal from './Tabs/Courses/SessionModal';
 import Instructor from './Tabs/Home/Instructor';
 import Instructors from './Tabs/Home/Instructors';
@@ -45,7 +44,6 @@ export default () => {
         }}>
         <MainStack.Screen name="Tabs" component={Tabs} />
         <MainStack.Screen name="Instructors" component={Instructors} />
-        <MainStack.Screen name="Course" component={Course} />
         <MainStack.Screen
           name="Instructor"
           component={Instructor}

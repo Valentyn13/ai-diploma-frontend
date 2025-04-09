@@ -48,7 +48,7 @@ const StarterChat: FC<ChatComponentProps> = ({
         isTyping={isLoading}
         messages={messages}
         onSend={onSend}
-        placeholder="הכנס הודעה..."
+        placeholder="Ваше повідомлення..."
         user={{ _id: 'USER' }}
         renderSend={props => (
           <SendMessage {...props} isLoading={disableUserInput} />

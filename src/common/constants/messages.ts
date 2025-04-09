@@ -54,10 +54,10 @@ export const PRACTICE_PLAYER_ERROR_MESSAGE = 'אנא נסו שנית';
 export const UNABLE_TO_OPEN_APP = 'לא ניתן לפתוח את האפליקציה';
 
 // MESSAGES
-export const LOGOUT_CONFIRM_TITLE = 'התנתקות';
+export const LOGOUT_CONFIRM_TITLE = 'Вихід з акаунту';
 
 export const LOGOUT_CONFIRM_MESSAGE =
-  'חבל לנו לראות אותך עוזב אותנו, האם אתם בטוחים?';
+  'Нам шкода, що ви залишаєте нас, ви впевнені?';
 
 export const COPIED_DATA_TITLE = 'הנתונים הועתקו';
 
@@ -78,10 +78,10 @@ export const PASSWORD_CHANGED_SUCCESSFULLY_MESSAGE = 'הסיסמא שונתה ב
 export const CONTACT_EMAIL_SUPPORT =
   'אנא צרו קשר עם התמיכה במייל hello@rega-app.com, תודה';
 
-export const DELETE_DATA_CONFIRM_TITLE = 'מחיקת נתונים';
+export const DELETE_DATA_CONFIRM_TITLE = 'Видалити дані';
 
 export const DELETE_DATA_CONFIRM_MESSAGE =
-  'האם אתם בטוחים שאתם רוצים למחוק את הנתונים שלכם?';
+  'Ви впевнені, що хочете видалити свій обліковий запис?';
 
 export const UNSUBSCRIBE_CONFIRM_TITLE = 'ביטול מנוי';
 

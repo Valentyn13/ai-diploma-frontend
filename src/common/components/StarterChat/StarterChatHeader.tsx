@@ -1,5 +1,7 @@
+import { useStarterChatStore } from '@store/useStarterChatStore';
 import { Image, Text, View } from 'react-native';
 
+import { CircleButton } from '../buttons/CircleButton';
 import GlitterIcon from '../common/Glitter';
 
 type Props = {
@@ -9,20 +11,13 @@ type Props = {
 };
 
 const StarterChatHeader = ({ avatarSrc, title, setIsPollEnded }: Props) => {
-  // const { resetStarterChat } = useStarterChatStore(state => ({
-  //   resetStarterChat: state.resetStarterChat,
-  // }));
+  const { resetStarterChat } = useStarterChatStore(state => ({
+    resetStarterChat: state.resetStarterChat,
+  }));
 
   return (
     <View className="bg-[#FFF8EE] w-full flex-row justify-between items-center p-2 border-b border-gray-200">
-      <View className="flex-row items-center">
-        <View className="flex-row items-center ml-6">
-          <Image source={avatarSrc} className="w-8 h-8 rounded-full" />
-          <Text className="text-black font-normal text-xl ml-2">{title}</Text>
-          <GlitterIcon className="w-6 h-6 ml-1" />
-        </View>
-      </View>
-      {/* <CircleButton
+      <CircleButton
         backgroundColor="#00000060"
         color="#fff"
         onPress={() => {
@@ -31,7 +26,14 @@ const StarterChatHeader = ({ avatarSrc, title, setIsPollEnded }: Props) => {
         }}
         size={40}
         icon="rotate-right"
-      /> */}
+      />
+      <View className="flex-row items-center">
+        <View className="flex-row items-center ml-6">
+          <Image source={avatarSrc} className="w-8 h-8 rounded-full" />
+          <Text className="text-black font-normal text-xl ml-2">{title}</Text>
+          <GlitterIcon className="w-6 h-6 ml-1" />
+        </View>
+      </View>
     </View>
   );
 };

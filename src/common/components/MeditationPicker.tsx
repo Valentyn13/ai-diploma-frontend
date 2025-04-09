@@ -1,4 +1,3 @@
-
 import {
   BottomSheetBackdrop,
   BottomSheetFlatList,
@@ -8,6 +7,11 @@ import {
 } from '@gorhom/bottom-sheet';
 import { useNavigation } from '@react-navigation/native';
 import { useUser } from '@services/hooks/useUser';
+import {
+  ChatCategories,
+  ChatCategoriesEnum,
+  useCategorizedChatFlowStore,
+} from '@store/useCategorizedChatFlowStore';
 import { useSheetStore } from '@store/useSheetStore';
 import React, {
   FC,
@@ -20,24 +24,14 @@ import React, {
 import { StyleSheet, Text } from 'react-native';
 import { scale } from 'react-native-size-matters';
 import Icon from 'react-native-vector-icons/Feather';
-import { useSelector } from 'react-redux';
 
 const FEELINGS = {
-  unsure: { label: 'לא בטוח/ה', emoji: '🤔' },
-  anxious: { label: 'חרדה', emoji: '😟' },
-  tired: { label: 'עייפות', emoji: '😪' },
-  sad: { label: 'עצב', emoji: '😢' },
-  unfocused: { label: 'חוסר מיקוד', emoji: '🙄' },
-  panicked: { label: 'פאניקה', emoji: '😖' },
-};
-
-const CATEGORY_NAMES = {
-  unsure: 'PocketMeditation',
-  anxious: 'Stress',
-  tired: 'Sleep',
-  sad: 'Empower',
-  unfocused: 'South',
-  panicked: 'Emergency',
+  unsure: { label: 'Задумливо', emoji: '🤔' },
+  anxious: { label: 'Тривожно', emoji: '😟' },
+  tired: { label: 'Втомлено', emoji: '😪' },
+  sad: { label: 'Сумно', emoji: '😢' },
+  unfocused: { label: 'Розсіяно ', emoji: '🙄' },
+  panicked: { label: 'Панічно', emoji: '😖' },
 };
 
 type Feeling = keyof typeof FEELINGS;
@@ -68,7 +62,7 @@ const Option = ({
       }}
       onPress={onPress}>
       <Text className="text-lg">{icon}</Text>
-      <Text className="text-black text-[16px]">{label}</Text>
+      <Text className="text-black text-[14px] text-center">{label}</Text>
     </TouchableOpacity>
   );
 };
@@ -106,7 +100,7 @@ const HowUFeel: FC<{ onNext: (f: Feeling) => void; isMale: boolean }> = ({
           alignSelf: 'center',
           marginBottom: 10,
         }}>
-        {isMale ? ' איך אתה מרגיש היום?' : ' איך את מרגישה היום?'}
+        {isMale ? ' Як ти почуваєшся сьогодні?' : ' Як ти почуваєшся сьогодні?'}
       </Text>
 
       <BottomSheetFlatList
@@ -129,78 +123,7 @@ const HowUFeel: FC<{ onNext: (f: Feeling) => void; isMale: boolean }> = ({
         }}
         disabled={!selectedFeeling}
         onPress={() => onNext(selectedFeeling!)}>
-        <Text className="text-lg text-white">המשך 👈</Text>
-      </TouchableOpacity>
-    </BottomSheetView>
-  );
-};
-const PLACES = {
-  home: { label: 'בבית', icon: '🏠' },
-  work: { label: 'בעבודה', icon: '💼' },
-  study: { label: 'בלימודים', icon: '🎓' },
-  way: { label: 'בדרך', icon: '🏃' },
-  army: { label: 'בצבא', icon: '🪖' },
-  bed: { label: 'במיטה', icon: '🛌' },
-};
-
-type Place = keyof typeof PLACES;
-
-const WhereYouAt: FC<{ onNext: (l: Place) => void }> = ({ onNext }) => {
-  const [selectedPlace, setSelectedPlace] = useState<
-    keyof typeof PLACES | null
-  >(null);
-
-  const renderItem = useCallback(
-    ({ item }: { item: keyof typeof PLACES }) => (
-      <Option
-        label={PLACES[item].label}
-        icon={PLACES[item].icon}
-        onPress={() => setSelectedPlace(item)}
-        selected={selectedPlace === item}
-      />
-    ),
-    [selectedPlace],
-  );
-
-  return (
-    <BottomSheetView
-      style={{
-        flex: 1,
-        width: '100%',
-        justifyContent: 'center',
-        alignItems: 'center',
-      }}>
-      <Text
-        style={{
-          color: 'black',
-          fontSize: 20,
-          alignSelf: 'center',
-          marginBottom: 10,
-        }}>
-        איפה אתה נמצא כרגע?
-      </Text>
-
-      <BottomSheetFlatList
-        style={{ marginBottom: 20 }}
-        data={Object.keys(PLACES)}
-        renderItem={renderItem}
-        keyExtractor={item => item}
-        numColumns={3}
-        scrollEnabled={true}
-      />
-      <TouchableOpacity
-        style={{
-          padding: 8,
-          marginBottom: 20,
-          borderRadius: 8,
-          justifyContent: 'center',
-          alignItems: 'center',
-          width: '80%',
-          backgroundColor: !selectedPlace ? '#ddd' : '#273051',
-        }}
-        disabled={!selectedPlace}
-        onPress={() => onNext(selectedPlace!)}>
-        <Text className="text-lg text-white">המשך 👈</Text>
+        <Text className="text-lg text-white">Далі 👈</Text>
       </TouchableOpacity>
     </BottomSheetView>
   );
@@ -210,12 +133,15 @@ const MeditationPicker = () => {
   const {
     user: { sex },
   } = useUser();
-  const meditations = useMemo(() => [], []);
   const navigation = useNavigation();
   const { isOpen, setIsOpen } = useSheetStore(state => state);
+  const { setCurrentStep, setSelectedCategory } = useCategorizedChatFlowStore(
+    state => ({
+      setSelectedCategory: state.setSelectedCategory,
+      setCurrentStep: state.setCurrentStep,
+    }),
+  );
   const bottomSheetRef = useRef<BottomSheetModal>(null);
-  //const [showWhereYouAt, setShowWhereYouAt] = useState(false);
-  //const [selectedFeeling, setSelectedFeeling] = useState<Feeling | null>(null);
 
   const snapPoints = useMemo(() => ['20%', 380], []);
 
@@ -238,28 +164,31 @@ const MeditationPicker = () => {
     bottomSheetRef.current?.close();
   };
 
-  // const handleNext = useCallback((f: Feeling) => {
-  //   setSelectedFeeling(f);
-  //   setShowWhereYouAt(true);
-  // }, []);
-
   const onFinish = useCallback(
     (f: Feeling) => {
       bottomSheetRef.current?.close();
+      const navigateToChats = (category: ChatCategories) => {
+        //@ts-ignore
+        navigation.navigate('Chat');
+        setCurrentStep('list');
+        setSelectedCategory(category);
+      };
 
-      const sessions = meditations.filter(
-        m => m.categoryName === CATEGORY_NAMES[f],
-      );
-
-      const title = `${FEELINGS[f].label} ${FEELINGS[f].emoji}`;
-
-      //@ts-ignore
-      navigation.navigate('Main', {
-        screen: 'Collection',
-        params: { title, sessions },
-      });
+      if (f === 'anxious') {
+        navigateToChats(ChatCategoriesEnum.ANXIETY);
+      } else if (f === 'unsure') {
+        navigateToChats(ChatCategoriesEnum.SELF_DEV);
+      } else if (f === 'tired') {
+        navigateToChats(ChatCategoriesEnum.BAD_HABITS);
+      } else if (f === 'sad') {
+        navigateToChats(ChatCategoriesEnum.ANXIETY);
+      } else if (f === 'unfocused') {
+        navigateToChats(ChatCategoriesEnum.NEGATIVE);
+      } else if (f === 'panicked') {
+        navigateToChats(ChatCategoriesEnum.NEGATIVE);
+      }
     },
-    [navigation, meditations],
+    [navigation, setCurrentStep, setSelectedCategory],
   );
 
   const renderBackdrop = useCallback(
@@ -323,11 +252,6 @@ const MeditationPicker = () => {
             justifyContent: 'center',
             alignItems: 'center',
           }}>
-          {/* {showWhereYouAt ? (
-            <WhereYouAt onNext={onFinish} />
-          ) : (
-
-          )} */}
           <HowUFeel onNext={onFinish} isMale={sex === 'M'} />
         </BottomSheetView>
       </BottomSheetView>

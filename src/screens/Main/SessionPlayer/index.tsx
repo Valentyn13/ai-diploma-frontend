@@ -20,7 +20,6 @@ import { meditationInstructor } from '@store/selectors';
 import { useBgTrackStore } from '@store/useBgTrackStore';
 import { useMichaelStore } from '@store/useMichaelStore';
 import logger from '@utils/logger';
-import { getVideoName } from '@utils/video';
 import React, {
   FC,
   useCallback,
@@ -149,10 +148,7 @@ const MeditationPlayer: FC = ({ navigation }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id]);
 
-  const video = useMemo(
-    () => getVideoName(categoryName, animation),
-    [animation, categoryName],
-  );
+  const video = ''
 
   useEffect(() => {
     dispatch(meditationStarted({ id }));

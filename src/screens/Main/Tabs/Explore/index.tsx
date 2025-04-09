@@ -5,7 +5,6 @@ import SessionsGrid from '@common/components/SessionsGrid';
 import Meditate from '@common/components/animation/Meditate';
 import NotFound from '@common/components/animation/NotFound';
 import {
-  CATEGORIES_TO_SHOW_IN_EXPLORE_CAROUSEL,
   CategoriesObject,
   MeditationCategoryKey,
   PICK_MEDITATION_CATEGORY_IDS,
@@ -88,7 +87,7 @@ const Explore = ({ navigation, copilot }) => {
 
   const categoriesToShowInCarousel = useMemo(() => {
     const forShow = categories.filter(c =>
-      CATEGORIES_TO_SHOW_IN_EXPLORE_CAROUSEL.includes(c.id),
+    []
     );
     forShow.unshift(regaCollection);
     return forShow;

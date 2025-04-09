@@ -1,21 +1,14 @@
 import Gradient from '@common/components/Gradient';
-import i18n from '@services/localization/i18n';
+import { useChatsStore } from '@store/useChatsStore';
+import { useDocumentChatStore } from '@store/useDocumentChatsStore';
 import React, { FC } from 'react';
 import { Text, View } from 'react-native';
 import Svg, { Path } from 'react-native-svg';
-import { useSelector } from 'react-redux';
 
 const ICONS = {
   minutes: ({ ...props }) => (
-    <Svg viewBox="0 0 18 18" fill="none" {...props}>
-      <Path
-        fill="#000"
-        d="M9 17.283C4.433 17.283.717 13.567.717 9 .717 4.433 4.433.717 9 .717c4.567 0 8.283 3.716 8.283 8.283 0 4.567-3.716 8.283-8.283 8.283Zm8.293-11.786a8.971 8.971 0 0 0-1.93-2.86A8.97 8.97 0 0 0 9 0a8.97 8.97 0 0 0-6.364 2.636A8.966 8.966 0 0 0 0 9a8.966 8.966 0 0 0 2.636 6.364A8.971 8.971 0 0 0 9 18a8.971 8.971 0 0 0 6.364-2.636A8.971 8.971 0 0 0 18 9a8.943 8.943 0 0 0-.707-3.503Z"
-      />
-      <Path
-        fill="#000"
-        d="M13.314 12.038 9.359 8.83V4.573a.359.359 0 0 0-.718 0V9c0 .108.05.21.133.278l4.088 3.317a.357.357 0 0 0 .504-.053.358.358 0 0 0-.052-.504Z"
-      />
+    <Svg viewBox="0 0 24 24" width="26px" height="26px" {...props}>
+      <Path d="M6 2c-1.094 0-2 .906-2 2v16c0 1.094.906 2 2 2h12c1.094 0 2-.906 2-2V6.586L15.414 2H6zm0 2h8v4h4v12H6V4zm2 6v2h8v-2H8zm0 3v2h8v-2H8zm0 3v2h5v-2H8z" />
     </Svg>
   ),
   sessions: ({ ...props }) => (
@@ -56,7 +49,7 @@ const MetricBox: FC<MetricBoxProps> = ({ id, value, title, ...props }) => {
           width: 22,
         }}
       />
-      <Text className="text-lg text-left text-black mt-2">{title}</Text>
+      <Text className="text-xl text-left text-black mt-2">{title}</Text>
       <Text className="text-4xl font-medium text-black text-left my-4">
         {value}
       </Text>
@@ -65,22 +58,22 @@ const MetricBox: FC<MetricBoxProps> = ({ id, value, title, ...props }) => {
 };
 
 const UserMetrics = () => {
-  const { meditationsPracticed, minutesPracticed } = useSelector(
-    state => state.userProgress,
-  );
+  const { documentChats } = useDocumentChatStore(state => ({
+    documentChats: state.documentChats,
+  }));
+
+  const { chats } = useChatsStore(state => ({
+    chats: state.chats,
+  }));
 
   return (
     <View className="flex flex-row flex-wrap content-center items-center gap-4 overflow-hidden pt-6 px-2">
       <MetricBox
-        value={Math.round(minutesPracticed)}
-        title={i18n.t('minutesSessions')}
+        value={documentChats.length}
+        title={'Активних документів'}
         id="minutes"
       />
-      <MetricBox
-        value={meditationsPracticed.length}
-        title={i18n.t('sessions')}
-        id="sessions"
-      />
+      <MetricBox value={chats.length} title={'Чатів з Майклом'} id="sessions" />
     </View>
   );
 };

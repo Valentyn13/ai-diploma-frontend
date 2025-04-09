@@ -15,7 +15,9 @@ import {
   ActivityIndicator,
   Alert,
   Image,
+  KeyboardAvoidingView,
   Modal,
+  Text,
   TouchableOpacity,
   View,
 } from 'react-native';
@@ -87,15 +89,19 @@ const Details: FC<DetailsProps> = ({ navigation }) => {
   };
 
   return (
-    <SafeAreaView className="flex-1 p-8 bg-primary-bg">
-      <View className="-ml-4 mb-4 -mt-4 z-10">
+    <SafeAreaView className="flex-1 p-6 bg-primary-bg">
+      <View className=" -ml-2 flex-row justify-between items-center mb-12 -mt-4 z-10">
         <CircleButton
           backgroundColor="#00000060"
           color="#fff"
           onPress={navigation.goBack}
           size={40}
-          icon="chevron-right"
+          icon="chevron-left"
         />
+        <Text className="text-xl text-black font-bold">
+          {' '}
+          Інформація про користувача
+        </Text>
       </View>
       <View>
         <Row label="name" value={name} />
@@ -107,14 +113,14 @@ const Details: FC<DetailsProps> = ({ navigation }) => {
       </View>
       <View className="w-full justify-center items-center z-10 bottom-10">
         <Button
-          title="ערוך פרופיל"
+          title="Редагувати профіль"
           big
           logout
           onPress={() => setToggleModal(true)}
         />
         <View className="mt-4" />
         <Button
-          title="שנה סיסמא"
+          title="Змінити пароль"
           big
           logout
           onPress={() => setPasswordModal(true)}
@@ -126,109 +132,121 @@ const Details: FC<DetailsProps> = ({ navigation }) => {
         onRequestClose={() => {
           console.log('Modal has been closed.');
         }}>
-        <View className="flex-1">
+        <KeyboardAvoidingView behavior="height" className="flex-1">
           <View
             style={{
-              flex: 1,
-              borderWidth: 2,
               backgroundColor: theme.colors.bgColor,
+              flex: 1,
             }}>
             <Title
-              t="עריכת פרופיל"
+              t="Редагування профілю"
               style={{
                 textAlign: 'center',
-                paddingTop: 60,
+                paddingTop: 40,
                 fontSize: 23,
                 fontWeight: '600',
               }}
             />
-            <View
-              style={{
-                backgroundColor: 'white',
-                paddingVertical: 10,
-                alignSelf: 'center',
-                paddingHorizontal: 10,
-                borderRadius: 8,
-                marginTop: scale(40),
-                flexDirection: 'row',
-                alignItems: 'center',
-                width: '90%',
-                height: scale(60),
-              }}>
-              <Image source={image('profile')} />
-              <AppTextInput
-                onChangeText={text => setNewName(text)}
-                returnKeyType="done"
-                placeholder="שם פרטי"
+            <View className="mt-[20px] p-4">
+              <Text className="text-left text-xl text-black">Ім'я</Text>
+              <View
                 style={{
-                  width: '90%',
-                  marginHorizontal: 20,
-                  fontSize: 20,
-                  textAlign: 'right',
-                }}
-                value={newName}
-              />
+                  backgroundColor: 'white',
+                  paddingVertical: 10,
+                  alignSelf: 'center',
+                  paddingHorizontal: 10,
+                  borderRadius: 8,
+                  marginTop: scale(10),
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                  width: '100%',
+                  height: scale(60),
+                }}>
+                <Image source={image('profile')} />
+                <AppTextInput
+                  onChangeText={text => setNewName(text)}
+                  returnKeyType="done"
+                  placeholder="Ім'я"
+                  style={{
+                    width: '90%',
+                    marginHorizontal: 20,
+                    fontSize: 20,
+                    textAlign: 'right',
+                  }}
+                  value={newName}
+                />
+              </View>
             </View>
-            <View
-              style={{
-                alignItems: 'center',
-                alignSelf: 'center',
-                width: '90%',
-                marginTop: 30,
-              }}>
-              <TouchableOpacity
-                onPress={() => setNewSex('F')}
+
+            <View className="p-4">
+              <Text className="text-left text-xl text-black">
+                Вибрати стать
+              </Text>
+              <View
                 style={{
                   alignItems: 'center',
+                  alignSelf: 'center',
                   width: '100%',
-                  paddingVertical: 36,
-                  paddingHorizontal: 20,
-                  backgroundColor: newsex === 'F' ? '#D66366' : 'white',
-                  borderRadius: 12,
-                  height: 100,
+                  marginTop: 10,
                 }}>
-                <AppText
+                <TouchableOpacity
+                  onPress={() => setNewSex('F')}
                   style={{
-                    color: newsex === 'F' ? 'white' : '#D66366',
-                    fontSize: 20,
+                    alignItems: 'center',
+                    width: '100%',
+                    paddingVertical: 36,
+                    paddingHorizontal: 20,
+                    backgroundColor: newsex === 'F' ? '#D66366' : 'white',
+                    borderRadius: 12,
+                    height: 100,
                   }}>
-                  נקבה
-                </AppText>
-              </TouchableOpacity>
-              <TouchableOpacity
-                onPress={() => setNewSex('M')}
-                style={{
-                  alignItems: 'center',
-                  width: '100%',
-                  marginTop: scale(15),
-                  paddingVertical: 36,
-                  paddingHorizontal: 20,
-                  backgroundColor: newsex === 'M' ? '#D66366' : 'white',
-                  borderRadius: 12,
-                  height: 100,
-                }}>
-                <AppText
+                  <AppText
+                    style={{
+                      color: newsex === 'F' ? 'white' : '#D66366',
+                      fontSize: 20,
+                    }}>
+                    Жіночий
+                  </AppText>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  onPress={() => setNewSex('M')}
                   style={{
-                    color: newsex === 'M' ? 'white' : '#D66366',
-                    fontSize: 20,
+                    alignItems: 'center',
+                    width: '100%',
+                    marginTop: scale(15),
+                    paddingVertical: 36,
+                    paddingHorizontal: 20,
+                    backgroundColor: newsex === 'M' ? '#D66366' : 'white',
+                    borderRadius: 12,
+                    height: 100,
                   }}>
-                  זכר
-                </AppText>
-              </TouchableOpacity>
+                  <AppText
+                    style={{
+                      color: newsex === 'M' ? 'white' : '#D66366',
+                      fontSize: 20,
+                    }}>
+                    Чоловічий
+                  </AppText>
+                </TouchableOpacity>
+              </View>
             </View>
           </View>
-          <View className="absolute bottom-10 w-full flex items-center">
-            <View className="flex flex-col space-y-4 w-11/12">
-              <AppButton onPress={() => submit()} style={{}}>
-                שנה פרטים
+          <View
+            style={{
+              backgroundColor: theme.colors.bgColor,
+            }}
+            className="w-full flex items-center p-4">
+            <View className="flex flex-col h-[130px] justify-between w-full">
+              <AppButton className="" onPress={() => submit()} style={{}}>
+                Змінити деталі
               </AppButton>
 
               <AppButton onPress={() => setToggleModal(false)} style={{}}>
-                ביטול
+                Назад
               </AppButton>
             </View>
           </View>
-        </View>
+        </KeyboardAvoidingView>
         {updateloader && (
           <View style={{ position: 'absolute', top: '60%', left: '50%' }}>
             <ActivityIndicator size="large" color="blue" />
@@ -237,87 +255,103 @@ const Details: FC<DetailsProps> = ({ navigation }) => {
       </Modal>
 
       <Modal visible={passwordModal}>
-        <View className="flex-1">
+        <KeyboardAvoidingView
+          keyboardVerticalOffset={10}
+          behavior="height"
+          className="flex-1">
           <View
             className="flex-1 px-8 py-4"
             style={{
-              flex: 1,
-              borderWidth: 2,
               backgroundColor: theme.colors.bgColor,
             }}>
             <Title
-              t="שינוי סיסמא"
+              t="Змінити пароль"
               style={{
                 textAlign: 'center',
                 paddingTop: 60,
                 fontSize: 23,
                 fontWeight: '600',
+                marginBottom: 40,
               }}
             />
-            <View
-              style={{
-                backgroundColor: 'white',
-                paddingVertical: 10,
-                paddingHorizontal: 10,
-                borderRadius: 10,
-                marginTop: scale(14),
-                flexDirection: 'row',
-                alignItems: 'center',
-                width: '100%',
-                height: scale(60),
-              }}>
-              <Image source={image('lock')} />
-              <AppTextInput
-                onChangeText={text => setPassword(text)}
-                returnKeyType="done"
-                secureTextEntry
-                placeholder="סיסמא"
+            <View className="p-4">
+              <Text className="text-black text-left text-xl">
+                Ваш новий пароль
+              </Text>
+              <View
                 style={{
-                  width: '90%',
-                  marginHorizontal: 20,
-                  fontSize: 20,
-                  textAlign: 'right',
-                }}
-              />
+                  backgroundColor: 'white',
+                  paddingVertical: 10,
+                  paddingHorizontal: 10,
+                  borderRadius: 10,
+                  marginTop: scale(14),
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                  width: '100%',
+                  height: scale(60),
+                }}>
+                <Image source={image('lock')} />
+                <AppTextInput
+                  onChangeText={text => setPassword(text)}
+                  returnKeyType="done"
+                  secureTextEntry
+                  placeholder="Пароль"
+                  style={{
+                    width: '90%',
+                    marginHorizontal: 20,
+                    fontSize: 20,
+                    textAlign: 'right',
+                  }}
+                />
+              </View>
             </View>
-            <View
-              style={{
-                backgroundColor: 'white',
-                paddingVertical: 10,
-                paddingHorizontal: 10,
-                borderRadius: 8,
-                marginTop: scale(14),
-                flexDirection: 'row',
-                alignItems: 'center',
-                width: '100%',
-                height: scale(60),
-              }}>
-              <Image source={image('lock')} />
-              <AppTextInput
-                onChangeText={text => setVerifyPassword(text)}
-                returnKeyType="done"
-                secureTextEntry
-                placeholder="וידוא סיסמא"
+            <View className="p-4 mt-[10px]">
+              <Text className="text-xl text-left text-black">
+                Повторіть пароль
+              </Text>
+              <View
                 style={{
-                  width: '90%',
-                  marginHorizontal: 20,
-                  fontSize: 20,
-                  textAlign: 'right',
-                }}
-              />
+                  backgroundColor: 'white',
+                  paddingVertical: 10,
+                  paddingHorizontal: 10,
+                  borderRadius: 8,
+                  marginTop: scale(14),
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                  width: '100%',
+                  height: scale(60),
+                }}>
+                <Image source={image('lock')} />
+                <AppTextInput
+                  onChangeText={text => setVerifyPassword(text)}
+                  returnKeyType="done"
+                  secureTextEntry
+                  placeholder="Перевірка пароля"
+                  style={{
+                    width: '90%',
+                    marginHorizontal: 20,
+                    fontSize: 20,
+                    textAlign: 'right',
+                  }}
+                />
+              </View>
             </View>
           </View>
-          <View className="absolute bottom-10 w-full flex items-center">
-            <View className="flex flex-col space-y-4 w-11/12">
+          <View
+            style={{
+              backgroundColor: theme.colors.bgColor,
+            }}
+            className="w-full flex items-center p-4">
+            <View className="flex flex-col h-[120px] justify-between w-full">
               <AppButton onPress={() => submitChangePassword()} style={{}}>
-                שנה סיסמא
+                Змінити пароль
               </AppButton>
               <AppButton onPress={() => setPasswordModal(false)} style={{}}>
-                ביטול
+                Назад
               </AppButton>
             </View>
           </View>
-        </View>
+        </KeyboardAvoidingView>
         {updateloader && (
           <View style={{ position: 'absolute', top: '60%', left: '50%' }}>
             <ActivityIndicator size="large" color="blue" />

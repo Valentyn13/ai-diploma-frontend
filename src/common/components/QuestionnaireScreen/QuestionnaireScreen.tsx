@@ -3,7 +3,6 @@ import image from '@common/assets/images';
 import { AMPLITUDE_EVENTS } from '@common/constants';
 import CheckBox from '@react-native-community/checkbox';
 import { useNavigation } from '@react-navigation/native';
-import { useLogViewedScreenEvent } from '@services/hooks/amplitude';
 import { InsightSteps, useStarterChatStore } from '@store/useStarterChatStore';
 import { logAmplitudeEvent } from '@utils/amplitude-helpers';
 import { useState } from 'react';
@@ -14,18 +13,18 @@ import FastImage from 'react-native-fast-image';
 const AGREEMENT_LIST = [
   {
     title:
-      'שדרגנו את מיכאל כדי להכיר אתכם טוב יותר ולהתאים את התמיכה שלו במיוחד בשבילכם',
+      'Ми оновили Майкла, щоб краще пізнати вас і адаптувати його підтримку спеціально для вас',
     icon: image('stars_agreement'),
     size: 25,
   },
   {
     title:
-      'כמה שאלות קצרות (וקצת אישיות) יעזרו למיכאל להעניק לכם הכוונה מדויקת ותובנות משמעותיות ',
+      'Кілька коротких (і трохи особистих) запитань допоможуть Майклу дати вам точні вказівки та значущі ідеї',
     icon: image('notes_agreement'),
     size: 26,
   },
   {
-    title: 'אל דאגה – הכל נשמר אנונימי ומאובטח!',
+    title: 'Не хвилюйтеся – все зберігається анонімно та безпечно!',
     icon: image('lock_agreement'),
     size: 25,
   },
@@ -33,10 +32,9 @@ const AGREEMENT_LIST = [
 
 type Props = {
   setStep: (step: InsightSteps) => void;
-  shouldShowPaywall: boolean;
 };
 
-const QuestionnaireScreen = ({ setStep, shouldShowPaywall }: Props) => {
+const QuestionnaireScreen = ({ setStep }: Props) => {
   const navigation = useNavigation();
 
   const { setIsStarterChatActivated } = useStarterChatStore(state => ({
@@ -65,11 +63,6 @@ const QuestionnaireScreen = ({ setStep, shouldShowPaywall }: Props) => {
     navigation.goBack();
   };
 
-  useLogViewedScreenEvent(
-    AMPLITUDE_EVENTS.STARTER_CHAT.VIEWED_STARTER_CHAT_AGREEMENT_SCREEN,
-    { shouldIgnore: shouldShowPaywall },
-  );
-
   return (
     <ScrollView
       contentContainerStyle={{
@@ -87,8 +80,9 @@ const QuestionnaireScreen = ({ setStep, shouldShowPaywall }: Props) => {
         className="w-full aspect-[4/4] mt-[-20px]"
       />
 
-      <Text className="text-[#273051] mt-[-20px] text-[24px] font-semibold text-left">
-        מיכאל התחדש! כמה שאלות קצרות יעזרו לו להכיר אותך טוב יותר
+      <Text className="text-[#273051] mt-[-20px] text-[20px] text-center font-semibold text-left">
+        Михайло оновився! Кілька коротких запитань допоможуть йому пізнати вас
+        краще
       </Text>
       <View className="mt-[18px] w-full">
         {AGREEMENT_LIST.map((item, index) => (
@@ -132,8 +126,9 @@ const QuestionnaireScreen = ({ setStep, shouldShowPaywall }: Props) => {
             />
           </View>
           <Text className="text-[#00000087] text-[13px] font-medium max-w-[320px] font-medium text-left">
-            אני מאשר/ת כי אני מבין/ה שהשירות בבטא ואינו תחליף לייעוץ מקצועי, וכי
-            'רגע' אינה אחראית על תוצאות השימוש בצ'אט.
+            Я підтверджую, що я розумію, що додаток знаходиться в бета-версії та
+            не замінює професійну консультацію і розробник не несе
+            відповідальності за результати використання чату.
           </Text>
         </View>
         <View className="pt-[35px] relative">
@@ -141,7 +136,7 @@ const QuestionnaireScreen = ({ setStep, shouldShowPaywall }: Props) => {
             <View className="flex-row absolute top-2 left-2 items-center">
               <AlertSvgIcon />
               <Text className="text-[#F90007] text-[13px] font-medium ml-[15px]">
-                רגע, שכחת לאשר את התנאים!
+                Зачекайте, ви забули підтвердити умови!
               </Text>
             </View>
           )}
@@ -150,14 +145,14 @@ const QuestionnaireScreen = ({ setStep, shouldShowPaywall }: Props) => {
             onPress={handleAgreedPress}
             className="bg-[#283A7E] p-[16px] w-full rounded-[8px]">
             <Text className="font-semibold text-[#FFFFFF] text-center">
-              למילוי השאלון
+              Далі
             </Text>
           </TouchableOpacity>
           <TouchableOpacity
             onPress={handleLaterPress}
             className="p-[16px] w-full rounded-[8px]">
             <Text className="text-[#3C3C3CB5] font-semibold text-center">
-              לא עכשיו
+              Повернутися назад
             </Text>
           </TouchableOpacity>
         </View>

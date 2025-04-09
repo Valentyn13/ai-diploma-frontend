@@ -2,11 +2,7 @@ import QuestionnaireScreen from '@common/components/QuestionnaireScreen/Question
 import StarterChat from '@common/components/StarterChat';
 import { useStarterChatStore } from '@store/useStarterChatStore';
 
-interface UserInsightViewProps {
-  shouldShowPaywall: boolean;
-}
-
-const UserInsightView = ({ shouldShowPaywall }: UserInsightViewProps) => {
+const UserInsightView = () => {
   const { currentStarterChatStep, setStarterChatStep } = useStarterChatStore(
     state => ({
       currentStarterChatStep: state.currentStarterChatStep,
@@ -15,20 +11,10 @@ const UserInsightView = ({ shouldShowPaywall }: UserInsightViewProps) => {
   );
 
   if (currentStarterChatStep === 'agreement') {
-    return (
-      <QuestionnaireScreen
-        shouldShowPaywall={shouldShowPaywall}
-        setStep={setStarterChatStep}
-      />
-    );
+    return <QuestionnaireScreen setStep={setStarterChatStep} />;
   }
 
-  return (
-    <StarterChat
-      shouldShowPaywall={shouldShowPaywall}
-      setStep={setStarterChatStep}
-    />
-  );
+  return <StarterChat setStep={setStarterChatStep} />;
 };
 
 export default UserInsightView;

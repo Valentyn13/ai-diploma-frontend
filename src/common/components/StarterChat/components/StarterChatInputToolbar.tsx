@@ -23,7 +23,7 @@ const StarterChatInputToolbar = ({
         <TouchableOpacity
           onPress={() => handleSendPollResult(starterChatResults)}
           className="h-[60px] w-full bg-[#283A7E] items-center justify-center rounded-[12px] absolute bottom-[18px]">
-          <Text className="text-lg bold text-white">בואו נתחיל</Text>
+          <Text className="text-lg bold text-white">Завершити </Text>
         </TouchableOpacity>
       </View>
     );
@@ -35,8 +35,7 @@ const StarterChatInputToolbar = ({
       containerStyle={{ justifyContent: 'flex-end', paddingBottom: 0 }}
       // @ts-ignore
       textInputStyle={{
-        textAlign: 'right',
-        direction: 'rtl',
+        textAlign: 'left',
         color: 'black',
         lineHeight: 20,
       }}

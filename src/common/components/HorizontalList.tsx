@@ -3,29 +3,21 @@ import theme from '@common/theme';
 import React, { FC } from 'react';
 import { FlatList, ListRenderItem } from 'react-native';
 
-interface Item {
+export interface Item {
   id: string;
   name: string;
-  colors: string[];
+  duration: number;
+  categoryName: string;
 }
 
 interface HorizontalListProps {
   data: Item[];
-  height?: string;
-  renderUsing?: React.ElementType<{
-    item: Item;
-  }>;
 }
 
-const HorizontalList: FC<HorizontalListProps> = ({
-  data,
-  renderUsing = null,
-}) => {
-  const Child = renderUsing || SessionCard;
-
+const HorizontalList: FC<HorizontalListProps> = ({ data }) => {
   const renderItem: ListRenderItem<any> = ({ item, index }) => {
     return (
-      <Child
+      <SessionCard
         item={item}
         index={index}
         height={264}

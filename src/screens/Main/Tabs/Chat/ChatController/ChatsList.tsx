@@ -177,11 +177,6 @@ const ChatsList = ({ chats, category }: ChatListType) => {
               }}>
               {category.title}
             </Text>
-            {category.sessionCount !== 0 && (
-              <Text className="text-[20px] text-[#273051] mt-[6px]">
-                Чатів в категорії {category.sessionCount}
-              </Text>
-            )}
           </View>
         )}
         renderStickyHeader={() => (

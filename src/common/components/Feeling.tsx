@@ -12,10 +12,10 @@ const Feeling = ({ onClick = () => {}, isMale = true }) => (
         <SmilesSvgIcon />
       </View>
       <Text className="text-[#4B5EA1] font-medium text-[18px] leading-[21px]">
-        איך אתה מרגיש?
+        Який в тебе настрій?
       </Text>
     </View>
-    <Icon name="chevron-left" size={25} color="#4B5EA1CF" />
+    <Icon name="chevron-right" size={25} color="#4B5EA1CF" />
   </TouchableOpacity>
 );
 

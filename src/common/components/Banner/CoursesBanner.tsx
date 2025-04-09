@@ -9,7 +9,7 @@ const CoursesBanner = () => {
     <View className="px-[18px]">
       <TouchableOpacity
         onPress={() => navigation.navigate('Courses')}
-        className="h-[98px] w-full flex items-start relative rounded-[10px] p-4">
+        className="h-[138px] w-full flex items-start relative rounded-[10px] p-4">
         <FastImage
           resizeMode="cover"
           className="rounded-[10px]"
@@ -23,12 +23,13 @@ const CoursesBanner = () => {
         />
 
         <Text className="font-medium mb-1.5 text-left text-[#623F1A] text-[18px] leading-[21px]">
-          קורסים במיינדפולנס והעצמה
+          Професійні помічники
         </Text>
         <View>
           <Text className="max-w-[65%] text-left leading-[16px] text-[#623F1A]">
-            למדו מיינדפולנס, התחברו לגוף וטפחו שיח פנימי חיובי בסדרת שיעורים
-            קצרים
+            Виберіть тему, з якої ви хочете отримати допомогу, завантажте
+            документи та досліджуйте їх разом з помічником та спілкуйтеся на
+            проесійні теми.
           </Text>
         </View>
       </TouchableOpacity>

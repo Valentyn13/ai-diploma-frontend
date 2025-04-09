@@ -198,7 +198,7 @@ const DocumentChatPage = ({ selectedChat }: DocumentChatProps) => {
           <TouchableOpacityBottomSheet onPress={deleteDocumentChatPress}>
             <View className="flex-row items-center p-2 bg-green-100">
               <TrashSvgIcon />
-              <Text>Delete chat</Text>
+              <Text>Видалити чат</Text>
             </View>
           </TouchableOpacityBottomSheet>
         </BottomSheetView>
