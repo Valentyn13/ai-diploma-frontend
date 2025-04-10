@@ -34,13 +34,7 @@ export default () => {
     shouldDispatch: () => false,
   });
 
-  const cancelSubscription = reason => {
-    const { fetch } = sendCancelSubscription;
-    fetch({ data: { reason } });
-  };
-
   return {
     DeleteUserData,
-    cancelSubscription,
   };
 };

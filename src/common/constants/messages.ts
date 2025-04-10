@@ -6,84 +6,77 @@ export enum ERROR_MESSAGES {
 }
 
 export const USER_EXIST_WITH_THIS_EMAIL_ERROR_MESSAGE =
-  'משתמש עם כתובת דוא"ל זו כבר קיים';
+  'Користувач з цією електронною адресою вже існує';
 
-export const INCORRECT_PASSWORD = 'הסיסמה שהזנת שגויה. אנא נסה/י שוב.';
+export const INCORRECT_PASSWORD =
+  'Введений вами пароль неправильний. Будь ласка, спробуйте ще раз.';
 
-export const NON_EXISTING_USER = 'משתמש זה אינו קיים';
+export const NON_EXISTING_USER = 'Цей користувач не існує';
 
-export const EMAIL_ERROR_MESSAGE = 'נא למלא את המייל הנכון';
+export const EMAIL_ERROR_MESSAGE =
+  'Будь ласка, введіть правильну електронну адресу';
 
-export const RESET_CODE_ERROR_MESSAGE = 'קוד איפוס לא תקין';
+export const RESET_CODE_ERROR_MESSAGE = 'Неправильний код скидання';
 
 export const PASSWORD_LENGTH_ERROR_MESSAGE =
-  'הסיסמה צריכה להיות באורך של לפחות 6 תווים';
+  'Пароль повинен містити щонайменше 6 символів';
 
-export const CONFIRM_PASSWORD_ERROR = 'הסיסמאות לא תואמות אחת לשניה';
+export const CONFIRM_PASSWORD_ERROR = 'Паролі не збігаються';
 
 export const REGISTER_LICENSE_IS_NOT_ACCEPTED_ERROR =
-  'אנא אשר את תנאי השימוש ומדיניות הפרטיות';
+  'Будь ласка, підтвердіть умови використання та політику конфіденційності';
 
-export const NAME_ERROR_MESSAGE = 'אנא הכנס שם';
+export const NAME_ERROR_MESSAGE = 'Будь ласка, введіть ім’я';
 
-export const MISSING_EMAIL_ERROR_MESSAGE = 'אנא הכנס אימייל';
+export const MISSING_EMAIL_ERROR_MESSAGE =
+  'Будь ласка, введіть електронну адресу';
 
-export const MISSING_PASSWORD_ERROR_MESSAGE = 'אנא הכנס סיסמא';
+export const MISSING_PASSWORD_ERROR_MESSAGE = 'Будь ласка, введіть пароль';
 
-export const LOGIN_DEFAULT_ERROR_MESSAGE = 'אנא נסה שנית דרך ערוץ אחר';
+export const LOGIN_DEFAULT_ERROR_MESSAGE =
+  'Будь ласка, спробуйте ще раз через інший спосіб входу';
 
 export const RESET_PASSWORD_ERROR_MESSAGE =
-  'ישנה בעיה באיפוס הסיסמה, אנא נסו שנית עם קוד אחר';
+  'Проблема зі скиданням пароля, спробуйте інший код';
 
-export const PASSWORD_NOT_MATCH = 'הסיסמה לא תואמת';
+export const PASSWORD_NOT_MATCH = 'Пароль не збігається';
 
-export const NO_SUBSCRIPTION_ERROR_MESSAGE = 'אין מנוי פעיל במכשיר זה.';
 
-export const SUBSCRIPTION_ERROR_MESSAGE_CONTACT_SUPPORT =
-  'מצטערים קרתה תקלה, אנא פנו לתמיכה שלנו באינסטגרם @rega.app';
-
-export const ERROR_TITLE = 'שגיאה';
+export const ERROR_TITLE = 'Помилка';
 
 export const ERROR_WHILE_LOADING =
-  'אירעה שגיאה בזמן הטעינה, נסה שנית מאוחר יותר';
+  'Сталася помилка під час завантаження, спробуйте пізніше';
 
-export const PRACTICE_PLAYER_ERROR_TITLE = 'בעיה בניגון התרגול הנבחר';
+export const PRACTICE_PLAYER_ERROR_TITLE =
+  'Проблема з відтворенням вибраної практики';
 
-export const PRACTICE_PLAYER_ERROR_MESSAGE = 'אנא נסו שנית';
+export const PRACTICE_PLAYER_ERROR_MESSAGE = 'Будь ласка, спробуйте ще раз';
 
-export const UNABLE_TO_OPEN_APP = 'לא ניתן לפתוח את האפליקציה';
-
-// MESSAGES
 export const LOGOUT_CONFIRM_TITLE = 'Вихід з акаунту';
 
 export const LOGOUT_CONFIRM_MESSAGE =
-  'Нам шкода, що ви залишаєте нас, ви впевнені?';
+  'Нам шкода, що ви залишаєте нас. Ви впевнені?';
 
-export const COPIED_DATA_TITLE = 'הנתונים הועתקו';
+export const COPIED_DATA_TITLE = 'Дані скопійовано';
 
 export const COPIED_DATA_MESSAGE_CONTACT_SUPPORT_WITH =
-  'נתוני משתמש הועתקו, אנא הדביקו אותם בשיחה עם התמיכה';
+  'Дані користувача скопійовано, вставте їх у чаті з підтримкою';
 
 export const LOGGING_CHANNLE_ERROR_MESSAGE =
-  'היי אנחנו חווים תקלה בהתחברות דרך ערוץ זה, אנא נסו שנית או בחרו ערוץ התחברות אחר';
+  'Привіт, сталася помилка при вході через цей спосіб. Будь ласка, спробуйте ще раз або виберіть інший спосіб входу';
 
-export const REQUEST_FAILED_ERROR_MESSAGE = 'הבקשה נכשלה';
+export const REQUEST_FAILED_ERROR_MESSAGE = 'Запит не вдався';
 
-export const CONTACT_WATSAPP_SUPPORT = 'אנא צרו קשר עם התמיכה בוואטסאפ';
+export const LOGIN_ALERT_TITLE = 'Помилка під час входу';
 
-export const LOGIN_ALERT_TITLE = 'שגיאה בהתחברות';
-
-export const PASSWORD_CHANGED_SUCCESSFULLY_MESSAGE = 'הסיסמא שונתה בהצלחה';
-
-export const CONTACT_EMAIL_SUPPORT =
-  'אנא צרו קשר עם התמיכה במייל hello@rega-app.com, תודה';
+export const PASSWORD_CHANGED_SUCCESSFULLY_MESSAGE = 'Пароль успішно змінено';
 
 export const DELETE_DATA_CONFIRM_TITLE = 'Видалити дані';
 
 export const DELETE_DATA_CONFIRM_MESSAGE =
   'Ви впевнені, що хочете видалити свій обліковий запис?';
 
-export const UNSUBSCRIBE_CONFIRM_TITLE = 'ביטול מנוי';
+export const UNSUBSCRIBE_CONFIRM_TITLE = 'Скасування підписки';
 
 export const UNSUBSCRIBE_CONFIRM_MESSAGE =
-  'אנא הזינו את הסיבה לביטול המנוי, על מנת שנוכל לשפר את השירות';
+  'Будь ласка, введіть причину скасування підписки, щоб ми могли покращити сервіс';

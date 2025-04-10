@@ -19,7 +19,6 @@ import useAppData from '@services/hooks/useAppData';
 import useLogin from '@services/hooks/useLogin';
 import { useUser } from '@services/hooks/useUser';
 import { logAmplitudeEvent } from '@utils/amplitude-helpers';
-import { logEvent } from '@utils/analytics';
 import { initializeThirdParties } from '@utils/initialize-third-parties';
 import validateEmail from '@utils/validateEmail';
 import React, { useEffect, useState } from 'react';
@@ -35,8 +34,6 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { scale } from 'react-native-size-matters';
 import { useSelector } from 'react-redux';
-
-import { getFcmToken } from '../../../helper/pushNotifications';
 
 const Register = ({ navigation }) => {
   const [name, setName] = useState('');
@@ -55,39 +52,26 @@ const Register = ({ navigation }) => {
       return;
     }
 
-    const trimmedPassword = !!password ? password.trim() : '';
+    const trimmedPassword = password ? password.trim() : '';
 
     if (!toggleCheckBox) {
-      console.log(1)
       Alert.alert(REGISTER_LICENSE_IS_NOT_ACCEPTED_ERROR);
       return;
     } else if (!name) {
-      console.log(2)
       Alert.alert(NAME_ERROR_MESSAGE);
       return;
     } else if (!email) {
-      console.log(3)
       Alert.alert(MISSING_EMAIL_ERROR_MESSAGE);
       return;
     } else if (!trimmedPassword) {
-      console.log(4)
       Alert.alert(MISSING_PASSWORD_ERROR_MESSAGE);
       return;
     } else if (trimmedPassword.length < 6) {
-      // TODO: Add new message
-      console.log(5)
       Alert.alert(PASSWORD_LENGTH_ERROR_MESSAGE);
     } else if (password !== verifyPassword) {
-      console.log(6)
       Alert.alert(CONFIRM_PASSWORD_ERROR);
     } else {
-      const fcmToken = await getFcmToken();
-
-      if (fcmToken) {
-        signUp(email, password, name, fcmToken);
-      } else {
-        signUp(email, password, name);
-      }
+      signUp(email, password, name);
     }
   };
   const {
@@ -106,10 +90,6 @@ const Register = ({ navigation }) => {
 
     AppEventsLogger.logEvent(AppEventsLogger.AppEvents.CompletedRegistration, {
       [AppEventsLogger.AppEventParams.RegistrationMethod]: 'email',
-    });
-    logEvent('register', {
-      userName: name,
-      email: useremail,
     });
   }, [accessToken, id, getAppData]);
 
@@ -290,7 +270,7 @@ const Register = ({ navigation }) => {
                 textDecorationLine: 'underline',
                 textAlign: 'left',
               }}>
-             Політика конфіденційності та умови використання
+              Політика конфіденційності та умови використання
             </AppText>
           </TouchableOpacity>
         </View>

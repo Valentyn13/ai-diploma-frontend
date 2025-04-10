@@ -4,8 +4,7 @@ import theme from '@common/theme';
 import { BottomSheetModalProvider } from '@gorhom/bottom-sheet';
 import * as Sentry from '@sentry/react-native';
 import useSentry from '@services/hooks/useSentry';
-import WithFeatureFlag from '@utils/WithFeatureFlag';
-import React, { useEffect } from 'react';
+import React from 'react';
 import { StatusBar, StyleSheet, Text, TextInput, View } from 'react-native';
 import { CopilotProvider } from 'react-native-copilot';
 import { Settings } from 'react-native-fbsdk-next';
@@ -16,10 +15,6 @@ import { PersistGate } from 'redux-persist/integration/react';
 import { ThemeProvider } from 'styled-components';
 
 import './PolyfillConfig';
-import {
-  notificationListner,
-  requestUserPermission,
-} from './helper/pushNotifications';
 import RootNavigator from './screens/RootNavigator';
 import configureStore from './store';
 
@@ -47,44 +42,38 @@ setDefaultProps(Text, {
 
 const App: React.FC = () => {
   useSentry();
-  useEffect(() => {
-    requestUserPermission();
-    notificationListner();
-  }, []);
 
   return (
     <GestureHandlerRootView className="flex-1">
       <Provider store={store}>
-        <WithFeatureFlag>
-          <BottomSheetModalProvider>
-            <PersistGate loading={null} persistor={persistor}>
-              <StatusBar backgroundColor="transparent" translucent={true} />
-              <ThemeProvider theme={theme}>
-                <TrackPlayerProvider>
-                  <CopilotProvider
-                    backdropColor="rgba(0, 0, 0, 0.7)"
-                    overlay="svg"
-                    arrowColor="#513F73"
-                    labels={{
-                      skip: 'דלג',
-                      previous: 'חזור',
-                      next: 'הבא',
-                      finish: 'סיום',
-                    }}
-                    tooltipStyle={{
-                      borderRadius: 8,
-                      padding: 8,
-                      backgroundColor: '#513F73',
-                    }}>
-                    <View style={styles.rootContainer}>
-                      <RootNavigator />
-                    </View>
-                  </CopilotProvider>
-                </TrackPlayerProvider>
-              </ThemeProvider>
-            </PersistGate>
-          </BottomSheetModalProvider>
-        </WithFeatureFlag>
+        <BottomSheetModalProvider>
+          <PersistGate loading={null} persistor={persistor}>
+            <StatusBar backgroundColor="transparent" translucent={true} />
+            <ThemeProvider theme={theme}>
+              <TrackPlayerProvider>
+                <CopilotProvider
+                  backdropColor="rgba(0, 0, 0, 0.7)"
+                  overlay="svg"
+                  arrowColor="#513F73"
+                  labels={{
+                    skip: 'Пропустити',
+                    previous: 'Назад',
+                    next: 'Далі',
+                    finish: 'Завершити',
+                  }}
+                  tooltipStyle={{
+                    borderRadius: 8,
+                    padding: 8,
+                    backgroundColor: '#513F73',
+                  }}>
+                  <View style={styles.rootContainer}>
+                    <RootNavigator />
+                  </View>
+                </CopilotProvider>
+              </TrackPlayerProvider>
+            </ThemeProvider>
+          </PersistGate>
+        </BottomSheetModalProvider>
       </Provider>
     </GestureHandlerRootView>
   );

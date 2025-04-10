@@ -8,7 +8,6 @@ import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { RootStackParamList } from '@screens/RootNavigator';
 import useAppData from '@services/hooks/useAppData';
 import { useUser } from '@services/hooks/useUser';
-import { firstCourseSelector } from '@store/selectors';
 import { useLoginStore } from '@store/useLoginStore';
 import React, { FC, useEffect } from 'react';
 import { ActivityIndicator, Dimensions, Text } from 'react-native';
@@ -34,7 +33,6 @@ const PreLogin: FC<PreLoginProps> = ({ navigation: { navigate } }) => {
   const appDataLoaded = useSelector<any, boolean>(
     state => state.appData.loaded,
   );
-  const firstCourse = useSelector<any, any>(firstCourseSelector);
 
   useEffect(() => {
     if (accessToken) {
@@ -47,7 +45,7 @@ const PreLogin: FC<PreLoginProps> = ({ navigation: { navigate } }) => {
       // @ts-ignore TODO: fix this
       navigate('Main', { screen: 'Home' });
     }
-  }, [appDataLoaded, firstCourse, navigate]);
+  }, [appDataLoaded, navigate]);
 
   const insets = useSafeAreaInsets();
   const { width } = Dimensions.get('screen');

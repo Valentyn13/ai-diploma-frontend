@@ -7,8 +7,6 @@ import { REHYDRATE } from 'redux-persist';
 
 import * as actions from '../actions';
 
-const timestamp = () => new Date().toLocaleString();
-
 const MINUTES_PRACTICED_TO_SHOW_REMINDER_POPUP = 2;
 
 const initialState = {
@@ -53,26 +51,6 @@ const userProgress = (state = initialState, { type, payload }) => {
       }
       return state;
     }
-    case actions.meditationStarted.actionName: {
-      const { id } = payload;
-      const { meditationsPracticed } = state;
-      return {
-        ...state,
-        meditationsPracticed: [
-          ...meditationsPracticed,
-          {
-            timestamp: timestamp(),
-            id,
-          },
-        ],
-      };
-    }
-    case actions.turnOffShowReminderPopup.actionName: {
-      return {
-        ...state,
-        shouldShowReminderPopup: SHOULD_SHOW_REMINDER_POPUP_STATUS_TURNED_OFF,
-      };
-    }
     case actions.minutesPracticed.actionName: {
       const { minutesPlayed } = payload;
       const { minutesPracticed, shouldShowReminderPopup } = state;
@@ -88,20 +66,6 @@ const userProgress = (state = initialState, { type, payload }) => {
         ...state,
         shouldShowReminderPopup: shouldShowReminderPopupNewValue,
         minutesPracticed: minutesPracticed + minutesPlayed,
-      };
-    }
-    case actions.badgeAchieved.actionName: {
-      const { badge } = payload;
-      const { badgesAchieved } = state;
-      return {
-        ...state,
-        badgesAchieved: [
-          ...badgesAchieved,
-          {
-            timestamp: timestamp(),
-            badge,
-          },
-        ],
       };
     }
     case actions.logout.actionName:

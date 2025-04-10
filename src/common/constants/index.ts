@@ -6,15 +6,12 @@ import {
   Sleep,
   Stress,
 } from '@common/assets/illustrations';
+import { DocumentChatCategory } from '@screens/Main/Tabs/Courses/DocumentChatCategoryList';
 import {
   ChatCategories,
   ChatCategoriesEnum,
 } from '@store/useCategorizedChatFlowStore';
 import { Category } from 'types/Category';
-
-// CHAT CATEGORIES CONSTANTS
-import { PersonalizedState } from '../../../types/Personalized';
-import { DocumentChatCategory } from '@screens/Main/Tabs/Courses/DocumentChatCategoryList';
 
 export * from './amplitude-events';
 
@@ -64,9 +61,7 @@ export const CATEGORY_COLOR = {
   Visual: '#0F42E0',
 } as const;
 
-
 export const LIMIT_MAX_MEDITATIONS_FEED = 3;
-
 
 export const COUNTRY_CODE = 'IL';
 

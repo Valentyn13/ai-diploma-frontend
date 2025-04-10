@@ -77,12 +77,12 @@ export default () => {
     shouldDispatch: () => false,
   });
 
-  const loginWithEmail = (email, password, fcmToken) => {
+  const loginWithEmail = (email, password) => {
     const { fetch } = emailLogin;
-    return fetch({ email, password, fcmToken });
+    return fetch({ email, password });
   };
 
-  const signUp = (email, password, name, fcmToken) => {
+  const signUp = (email, password, name) => {
     dispatch(setLoder());
     const { fetch } = register;
     const { sex } = user;
@@ -94,7 +94,6 @@ export default () => {
       name,
       sex: sex || 'M',
       categories: selectedCategories || [],
-      fcmToken,
     });
   };
 

@@ -1,7 +1,6 @@
 import { PurchasesPackage } from '@revenuecat/purchases-typescript-internal';
 import { useAmplitude } from '@services/hooks/useAmplitude';
 import { useUser } from '@services/hooks/useUser';
-import logger from '@utils/logger';
 import React, {
   PropsWithChildren,
   createContext,
@@ -63,9 +62,7 @@ export const PurchaseProvider: React.FC<PropsWithChildren> = ({ children }) => {
 
       setPlans(offerings.current);
       setIdentify(true);
-    } catch (e: any) {
-      logger.error('usePurchases: failed to get offerings', e.message || e);
-    }
+    } catch (e: any) {}
   }, []);
 
   useEffect(() => {

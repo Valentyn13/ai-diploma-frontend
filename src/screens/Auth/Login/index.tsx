@@ -25,8 +25,6 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { scale } from 'react-native-size-matters';
 import { useSelector } from 'react-redux';
 
-import { getFcmToken } from '../../../helper/pushNotifications';
-
 const Login: FC = () => {
   const { loginWithEmail } = useLogin();
   const navigation = useNavigation();
@@ -46,9 +44,8 @@ const Login: FC = () => {
       alert(EMAIL_ERROR_MESSAGE);
       return;
     }
-    const fcmToken = await getFcmToken();
     setLoader(true);
-    await loginWithEmail(email, password, fcmToken);
+    await loginWithEmail(email, password);
     setLoader(false);
   };
 
@@ -58,7 +55,7 @@ const Login: FC = () => {
       logAmplitudeEvent(AMPLITUDE_EVENTS.LOGIN_SCREEN.LOGIN_SUCCESS);
       getAppData();
     }
-  }, [user.accessToken, getAppData]);
+  }, [user.accessToken, getAppData, user.id, user.email]);
 
   useEffect(() => {
     if (appDataloaded) {

@@ -1,14 +1,13 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { applyMiddleware, combineReducers, compose, createStore } from 'redux';
+import { combineReducers, createStore } from 'redux';
 import { persistReducer, persistStore } from 'redux-persist';
 
-import badgesMiddleware from './middlewares/badgesMiddleware';
 import * as reducers from './reducers';
 
 const persistConfig = {
   key: 'root',
   storage: AsyncStorage,
-  whitelist: ['userDetails', 'userPreferences', 'userProgress'],
+  whitelist: ['userDetails'],
 };
 
 export default function configureStore() {
@@ -17,8 +16,7 @@ export default function configureStore() {
   });
 
   const persistedReducer = persistReducer(persistConfig, reducer);
-  const enhancer = compose(applyMiddleware(badgesMiddleware));
-  const store = createStore(persistedReducer, enhancer);
+  const store = createStore(persistedReducer);
   const persistor = persistStore(store);
 
   return { store, persistor };

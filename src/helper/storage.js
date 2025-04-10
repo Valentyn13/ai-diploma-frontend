@@ -4,7 +4,6 @@ const STORAGE_KEYS = {
   USER_ID: 'userId',
   USER_TOKEN: 'userToken',
   USER_EMAIL: 'userEmail',
-  // FCM_TOKEN: 'fcmToken',
   GET_NOTIFICATIONS: 'getNotifications',
 };
 

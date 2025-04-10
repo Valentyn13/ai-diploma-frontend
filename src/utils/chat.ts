@@ -10,13 +10,8 @@ import { generateUUID } from './generateUUID';
 
 export const SYSTEM_USER = {
   _id: 'DR_MICHAEL',
-  name: 'מיכאל',
+  name: 'Майкл',
   avatar: image('michael_chat'),
-} as const;
-
-export const CLIENT_USER = {
-  _id: 'USER',
-  name: 'אני',
 } as const;
 
 const getBasicMessage = (name: string) => {

@@ -1,6 +1,5 @@
 import { BG_TRACKS, SOUNDS_URL } from '@common/constants';
 import { useBgTrackStore } from '@store/useBgTrackStore';
-import logger from '@utils/logger';
 import React, { FC, useMemo } from 'react';
 import Video from 'react-native-video';
 
@@ -28,9 +27,6 @@ const BgPlayer: FC = () => {
       ignoreSilentSwitch="ignore"
       source={{
         uri,
-      }}
-      onError={error => {
-        logger.log('error', JSON.stringify(error));
       }}
       audioOnly
       playInBackground

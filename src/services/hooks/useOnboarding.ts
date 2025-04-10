@@ -1,15 +1,12 @@
 import { KEY_PLAYED_FIRST } from '@common/constants';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { firstCourseSelector } from '@store/selectors';
 import { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
 
 const KEY_SECOND_TIME = 'secondTime';
 
-export const useOnboarding = (navigation: any) => {
+export const useOnboarding = () => {
   const [isOldUser, setIsOldUser] = useState(true);
-  const [playedFirst, setPlayedFirst] = useState(true);
-  const firstCourse = useSelector<any, any>(firstCourseSelector);
+  const [, setPlayedFirst] = useState(true);
 
   useEffect(() => {
     const fetchIsOldUser = async () => {
@@ -33,17 +30,6 @@ export const useOnboarding = (navigation: any) => {
     fetchIsFirstPlayed();
   }, []);
 
-  useEffect(() => {
-    if (!isOldUser && !playedFirst && firstCourse?.meditations?.length) {
-      navigation.replace('Main', {
-        screen: 'MeditationPlayer',
-        params: {
-          item: firstCourse.meditations[0],
-          isFirstTime: true,
-        },
-      });
-    }
-  }, [isOldUser, firstCourse, playedFirst, navigation]);
 
   const updateIsOldUser = async (isOld = true) => {
     setIsOldUser(isOld);

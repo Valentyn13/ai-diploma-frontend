@@ -50,7 +50,6 @@ const SessionCard: FC<MeditationItemProps> = memo(
         setCurrentStep('list');
         navigate('Courses');
       } else {
-        console.log(id)
         setChatCategory(id as ChatCategories);
         setChatStep('list');
         navigate('Chat');

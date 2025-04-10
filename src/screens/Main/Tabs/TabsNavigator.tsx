@@ -1,5 +1,4 @@
 import MeditationPicker from '@common/components/MeditationPicker';
-import MichaelAsk from '@common/components/MichaelAsk';
 import theme from '@common/theme';
 import Theme from '@common/theme';
 import {
@@ -255,7 +254,6 @@ const TabNavigator = ({ route }) => {
         ))}
       </Tab.Navigator>
       <MeditationPicker />
-      <MichaelAsk />
     </SafeAreaView>
   );
 };

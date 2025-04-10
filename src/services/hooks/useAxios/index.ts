@@ -8,7 +8,6 @@ import * as Sentry from '@sentry/react-native';
 import api from '@services/api';
 import { logout, setAccessToken, setLoaderFalse } from '@store/actions';
 import alert from '@utils/alert';
-import logger from '@utils/logger';
 import { getToken, storeToken } from '@utils/tokenHolder';
 import axios from 'axios';
 import { useCallback, useEffect, useMemo, useReducer } from 'react';
@@ -82,10 +81,10 @@ export const refreshAccessToken = async (
       return data;
     } catch (error) {
       const err = extractError(error);
-      logger.log('failed to refresh token', err);
+      console.log('failed to refresh token', err);
     }
   } else {
-    logger.log('missing refreshToken params');
+    console.log('no email or refresh token');
   }
   return {};
 };
@@ -191,24 +190,14 @@ export default ({
 
             if (showError) {
               if (
-                requestApi.url === 'auth/apple' ||
-                requestApi.url === 'auth/facebook' ||
-                requestApi.url === 'auth/google'
+                requestApi.url === 'auth/register' ||
+                requestApi.url === 'auth/login'
               ) {
-                console.error(error);
-                alert(LOGGING_CHANNLE_ERROR_MESSAGE);
                 dispatchAction(setLoaderFalse());
-              } else {
-                if (
-                  requestApi.url === 'auth/register' ||
-                  requestApi.url === 'auth/login'
-                ) {
-                  dispatchAction(setLoaderFalse());
-                }
-                // alert(message);
-
-                dispatch({ type: actions.fail, payload: message });
               }
+              // alert(message);
+
+              dispatch({ type: actions.fail, payload: message });
             }
           }
         } else {
@@ -221,6 +210,7 @@ export default ({
       };
     },
     [
+      clearChatStore,
       dispatchAction,
       params,
       requestApi,

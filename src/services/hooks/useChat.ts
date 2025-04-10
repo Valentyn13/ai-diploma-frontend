@@ -102,7 +102,7 @@ export const useChat = ({ userId, chatId }: Props) => {
         ]);
       } catch (error) {
         const errorMessage = createIMessage(
-          'משהו השתבש בבקשה נסה שוב',
+          'Помилка при створення чату, спробуйте пізніше.',
           'assistant',
         );
         setMessages(prevItems => [...prevItems, errorMessage]);
@@ -125,7 +125,7 @@ export const useChat = ({ userId, chatId }: Props) => {
       );
     } catch (error) {
       const errorMessage = createIMessage(
-        'משהו השתבש בבקשה נסה שוב',
+        'Помилка при обробці повідомлення, спробуйте створити новий чат',
         'assistant',
       );
       setMessages(prevItems => [...prevItems, errorMessage]);
