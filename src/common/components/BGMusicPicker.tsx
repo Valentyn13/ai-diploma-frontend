@@ -78,14 +78,14 @@ const MusicModal = () => {
       </View>
       <View className="w-full flex flex-col">
         <Text className="text-center text-3xl font-semibold mb-6 text-black">
-          עוצמת קול
+        Гучність звуку
         </Text>
         <View>
           <Volume volume={volume} setVolume={setVolume} />
         </View>
 
         <Text className="text-center text-3xl font-semibold mt-12 mb-6 text-black">
-          בחרו מוזיקת רקע
+        Виберіть фонову музику
         </Text>
         <FlatList
           className="w-full"
@@ -98,7 +98,7 @@ const MusicModal = () => {
           scrollEnabled={false}
           data={[
             ...BG_TRACKS,
-            { id: 'off', name: 'ללא מוזיקה', value: '', emoji: '🔇' },
+            { id: 'off', name: 'Без музики', value: '', emoji: '🔇' },
           ]}
           renderItem={renderItem}
           keyExtractor={item => item.id.toString()}

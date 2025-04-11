@@ -1,3 +1,4 @@
+import image from '@common/assets/images';
 import AppText from '@common/components/AppText';
 import Gradient from '@common/components/Gradient';
 import Logo from '@common/components/Logo';
@@ -11,6 +12,7 @@ import { useUser } from '@services/hooks/useUser';
 import { useLoginStore } from '@store/useLoginStore';
 import React, { FC, useEffect } from 'react';
 import { ActivityIndicator, Dimensions, Text } from 'react-native';
+import FastImage from 'react-native-fast-image';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { scale } from 'react-native-size-matters';
 import { TouchableOpacity, View } from 'react-native-ui-lib';
@@ -68,14 +70,21 @@ const PreLogin: FC<PreLoginProps> = ({ navigation: { navigate } }) => {
           paddingTop: insets.top,
         }}>
         <View className="flex-col items-center">
-          <Logo height={40} />
+          <View>
+            <FastImage
+              className="w-[40px] h-[40px]"
+              resizeMode="cover"
+              source={image('logo')}
+            />
+          </View>
+
           <AppText
             style={{
-              fontSize: 42,
+              fontSize: 32,
               marginTop: scale(4),
               color: '#fff',
             }}>
-            רגע
+            Quill
           </AppText>
         </View>
         <View

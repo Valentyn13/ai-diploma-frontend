@@ -1,3 +1,4 @@
+import image from '@common/assets/images';
 import Gradient from '@common/components/Gradient';
 import Logo from '@common/components/Logo';
 import WithPulse from '@common/components/transitions/WIthPulse';
@@ -16,6 +17,7 @@ import { logout } from '@store/actions';
 import { initializeThirdParties } from '@utils/initialize-third-parties';
 import React, { FC, useEffect, useState } from 'react';
 import { View } from 'react-native';
+import FastImage from 'react-native-fast-image';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { RootStackParamList } from './RootNavigator';
@@ -85,7 +87,11 @@ const Splash: FC<SplashProps> = ({ navigation: { navigate, replace } }) => {
       <Gradient colors={['#4F84D5', '#A9B8E8', '#FFF8EE']} angle={0} />
       <WithFadeIn delay={0} duration={1000}>
         <WithPulse scaleMin={0.9} scaleMax={1.2} duration={2000}>
-          <Logo transform={[{ rotate: '-10deg' }]} />
+          <FastImage
+            className="w-[60px] h-[60px]"
+            resizeMode="cover"
+            source={image('logo')}
+          />
         </WithPulse>
       </WithFadeIn>
     </View>
