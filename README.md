@@ -1,1 +1,1 @@
-# Rega Mobile App
+# Quill Mobile AI App
