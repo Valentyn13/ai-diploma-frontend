@@ -8,7 +8,7 @@ import {
 
 Colors.loadColors({
   primaryColor: theme.colors.primaryColor, // Soft Red
-  secondaryColor: '#D66366', // Lavender
+  secondaryColor: '#D66366', // Lavenders
   backgroundColor: '#FFF8EE', // Light Beige
   accentColor: '#273051', // Light Peach
   textColor: '#273051', // Dark Blue

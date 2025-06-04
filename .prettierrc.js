@@ -6,5 +6,6 @@ module.exports = {
   trailingComma: 'all',
   importOrder: ['^@core/(.*)$', '^@server/(.*)$', '^@ui/(.*)$', '^[./]'],
   importOrderSeparation: true,
+  importOrderCaseInsensitive: true,
   importOrderSortSpecifiers: true,
 };

@@ -9,8 +9,6 @@ import './FoundationConfig.js';
 import { name as appName } from './app.json';
 import { PlaybackService } from './service';
 
-// import './src/ReactotronConfig.js';
-
 messaging().setBackgroundMessageHandler(async remoteMessage => {});
 
 TrackPlayer.registerPlaybackService(() => PlaybackService);
